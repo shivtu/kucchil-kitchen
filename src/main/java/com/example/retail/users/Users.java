@@ -11,12 +11,20 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(unique = true)
     private String userName;
+
+
     private String password;
+
     private boolean accountNonExpired;
+
     private boolean accountNonLocked;
+
     private boolean credentialsNonExpired;
+
     private boolean enabled;
+
     private String roles;
 
     public Users(){}

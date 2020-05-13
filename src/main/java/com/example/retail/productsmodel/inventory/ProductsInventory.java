@@ -1,8 +1,14 @@
 package com.example.retail.productsmodel.inventory;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 
 @Entity
 public class ProductsInventory {
@@ -11,39 +17,18 @@ public class ProductsInventory {
     @GeneratedValue
     private Integer productsInventory_TableId;
 
-    private String productsInventory_SubId;
+    @Column(unique = true)
+    private String productsInventory_Id; // this is the productsId (productName+addedBy+expiry ...) from other classes
 
-    private Float productsInventory_InventoryCount;
+    private Float productsInventory_CostPrice;
+
+    private Date productsInventory_Expiry;
+
+    private Float productsInventory_MaxDiscount;
+
+    private String productsInventory_AddedBy;
+
+    private HashMap<String, ArrayList> productsInventory_UpdateDetails; // {"InventoryAddition":[{"dateTimeAdded":"12/5/2019"},{"IncCount":10},{"fixedCost":500}]}
 
     public ProductsInventory(){}
-
-    public ProductsInventory(Integer productsInventory_TableId, String productsInventory_SubId, Float productsInventory_InventoryCount) {
-        this.productsInventory_TableId = productsInventory_TableId;
-        this.productsInventory_SubId = productsInventory_SubId;
-        this.productsInventory_InventoryCount = productsInventory_InventoryCount;
-    }
-
-    public Integer getProductsInventory_TableId() {
-        return productsInventory_TableId;
-    }
-
-    public void setProductsInventory_TableId(Integer productsInventory_TableId) {
-        this.productsInventory_TableId = productsInventory_TableId;
-    }
-
-    public String getProductsInventory_SubId() {
-        return productsInventory_SubId;
-    }
-
-    public void setProductsInventory_SubId(String productsInventory_SubId) {
-        this.productsInventory_SubId = productsInventory_SubId;
-    }
-
-    public Float getProductsInventory_InventoryCount() {
-        return productsInventory_InventoryCount;
-    }
-
-    public void setProductsInventory_InventoryCount(Float productsInventory_InventoryCount) {
-        this.productsInventory_InventoryCount = productsInventory_InventoryCount;
-    }
 }

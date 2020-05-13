@@ -47,10 +47,10 @@ public class VegitablesRetailerController {
 
                 newVegitables.forEach(eachVeg->{
                     // Create inventory object for "ProductsInventory"
-                    ProductsInventory inventory = new ProductsInventory();
-                    inventory.setProductsInventory_SubId(eachVeg.getVegitable_SubId());
-                    inventory.setProductsInventory_InventoryCount(eachVeg.getVegitable_Quantity());
-                    inventoryList.add(inventory);
+//                    ProductsInventory inventory = new ProductsInventory();
+//                    inventory.setProductsInventory_SubId(eachVeg.getVegitable_SubId());
+//                    inventory.setProductsInventory_InventoryCount(eachVeg.getVegitable_Quantity());
+//                    inventoryList.add(inventory);
 
 
                     // Add date-time and "AdditionDetails" fields to request body
