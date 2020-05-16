@@ -1,19 +1,39 @@
 package com.example.retail.users.profiles;
 
+import com.example.retail.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@RequestMapping(value = "/api/v1/admin/userprofile")
+import javax.servlet.http.HttpServletRequest;
+import java.net.URI;
+import java.util.HashMap;
+
+@RequestMapping(value = "/api/v1/userprofile")
 @RestController
 public class UsersProfileController {
 
     @Autowired
     UsersProfileService usersProfileService;
 
-    @RequestMapping(value = "/add")
-    public UsersProfile addUserProfile(@RequestBody UsersProfile newUsersProfile) {
-        return usersProfileService.adduserProfile(newUsersProfile);
+    @Autowired
+    JwtUtil jwtUtil;
+
+    @PostMapping(value = "/update")
+    public ResponseEntity addUserProfile(@RequestBody UsersProfile usersProfile, HttpServletRequest httpServletRequest) throws Exception {
+
+        final String authorizationHeader = httpServletRequest.getHeader("Authorization");
+        final String jwt = authorizationHeader.substring(7);
+        String requesterUserName = jwtUtil.extractUsername(jwt);
+        String userProfileUserName = usersProfile.getUserName();
+
+        if (requesterUserName.equals(userProfileUserName)) {
+            UsersProfile updatedProfile = usersProfileService.adduserProfile(usersProfile);
+            return new ResponseEntity(updatedProfile, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity("Forbidden", HttpStatus.FORBIDDEN);
+        }
     }
 }

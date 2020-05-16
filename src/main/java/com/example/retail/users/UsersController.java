@@ -8,16 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
+@RequestMapping(value = "/api/v1/admin")
 public class UsersController {
 
     @Autowired
     UsersService usersService;
 
-    @PostMapping(value = "/adduser", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(code = HttpStatus.CREATED)
-    public Users addUser(@RequestBody(required = true) Users newUser) {
-        return usersService.addUser(newUser);
-    }
 
     @GetMapping("/allusers")
     public Iterable<Users> getAllUsers() {

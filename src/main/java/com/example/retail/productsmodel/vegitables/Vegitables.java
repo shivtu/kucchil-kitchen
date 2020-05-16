@@ -60,5 +60,122 @@ public class Vegitables {
     public Vegitables(){
     }
 
+    public Vegitables(@NotNull @NotEmpty String vegitable_Name, String vegitable_Descp, String vegitable_variant, String vegitable_Recepie, Float vegitable_SellingPrice, Float vegitable_MaxDiscount, Float vegitable_OfferedDiscount, Boolean vegitable_ShowDiscount, Float vegitable_Quantity, boolean vegitable_Available, Float vegitable_Tax, String vegitable_MeasureMentUnit) {
+        this.vegitable_Name = vegitable_Name;
+        this.vegitable_Descp = vegitable_Descp;
+        this.vegitable_variant = vegitable_variant;
+        this.vegitable_Recepie = vegitable_Recepie;
+        this.vegitable_SellingPrice = vegitable_SellingPrice;
+        this.vegitable_MaxDiscount = vegitable_MaxDiscount;
+        this.vegitable_OfferedDiscount = vegitable_OfferedDiscount;
+        this.vegitable_ShowDiscount = vegitable_ShowDiscount;
+        this.vegitable_Quantity = vegitable_Quantity;
+        this.vegitable_Available = vegitable_Available;
+        this.vegitable_Tax = vegitable_Tax;
+        this.vegitable_MeasureMentUnit = vegitable_MeasureMentUnit;
+    }
 
+    public Long getVegitable_TableId() {
+        return vegitable_TableId;
+    }
+
+    public void setVegitable_TableId(Long vegitable_TableId) {
+        this.vegitable_TableId = vegitable_TableId;
+    }
+
+    public String getVegitable_Name() {
+        return vegitable_Name;
+    }
+
+    public void setVegitable_Name(String vegitable_Name) {
+        this.vegitable_Name = vegitable_Name;
+    }
+
+    public String getVegitable_Descp() {
+        return vegitable_Descp;
+    }
+
+    public void setVegitable_Descp(String vegitable_Descp) {
+        this.vegitable_Descp = vegitable_Descp;
+    }
+
+    public String getVegitable_variant() {
+        return vegitable_variant;
+    }
+
+    public void setVegitable_variant(String vegitable_variant) {
+        this.vegitable_variant = vegitable_variant;
+    }
+
+    public String getVegitable_Recepie() {
+        return vegitable_Recepie;
+    }
+
+    public void setVegitable_Recepie(String vegitable_Recepie) {
+        this.vegitable_Recepie = vegitable_Recepie;
+    }
+
+    public Float getVegitable_SellingPrice() {
+        return vegitable_SellingPrice;
+    }
+
+    public void setVegitable_SellingPrice(Float vegitable_SellingPrice) {
+        this.vegitable_SellingPrice = vegitable_SellingPrice;
+    }
+
+    public Float getVegitable_MaxDiscount() {
+        return vegitable_MaxDiscount;
+    }
+
+    public void setVegitable_MaxDiscount(Float vegitable_MaxDiscount) {
+        this.vegitable_MaxDiscount = vegitable_MaxDiscount;
+    }
+
+    public Float getVegitable_OfferedDiscount() {
+        return vegitable_OfferedDiscount;
+    }
+
+    public void setVegitable_OfferedDiscount(Float vegitable_OfferedDiscount) {
+        this.vegitable_OfferedDiscount = vegitable_OfferedDiscount;
+    }
+
+    public Boolean getVegitable_ShowDiscount() {
+        return vegitable_ShowDiscount;
+    }
+
+    public void setVegitable_ShowDiscount(Boolean vegitable_ShowDiscount) {
+        this.vegitable_ShowDiscount = vegitable_ShowDiscount;
+    }
+
+    public Float getVegitable_Quantity() {
+        return vegitable_Quantity;
+    }
+
+    public void setVegitable_Quantity(Float vegitable_Quantity) {
+        this.vegitable_Quantity = vegitable_Quantity;
+    }
+
+    public boolean isVegitable_Available() {
+        return vegitable_Available;
+    }
+
+    public void setVegitable_Available(boolean vegitable_Available) {
+        this.vegitable_Available = vegitable_Available;
+    }
+
+    public Float getVegitable_Tax() {
+        return vegitable_Tax;
+    }
+
+    public void setVegitable_Tax(Float vegitable_Tax) {
+        this.vegitable_Tax = vegitable_Tax;
+    }
+
+    public String getVegitable_MeasureMentUnit() {
+        return vegitable_MeasureMentUnit;
+    }
+
+    public void setVegitable_MeasureMentUnit(String vegitable_MeasureMentUnit) {
+        this.vegitable_MeasureMentUnit = vegitable_MeasureMentUnit;
+    }
 }

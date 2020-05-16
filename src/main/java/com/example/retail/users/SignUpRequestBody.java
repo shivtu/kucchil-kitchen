@@ -1,28 +1,17 @@
-package com.example.retail.users.profiles;
+package com.example.retail.users;
 
-import com.example.retail.users.Users;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-@Entity
-@Table(name = "users_profile")
-public class UsersProfile implements Serializable {
+public class SignUpRequestBody implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "users_profile_table_id")
-    private Long userProfile_TableId;
-
-    @Column(name = "user_name", unique = true)
     private String userName;
+
+    private String password;
 
     private String userProfile_GivenName;
 
-    @Min(18)
-    @Max(100)
     private Integer userProfile_Age;
 
     private Integer userProfile_PhoneNumber;
@@ -37,10 +26,11 @@ public class UsersProfile implements Serializable {
 
     private String userProfile_Image;
 
-    public UsersProfile(){}
+    public SignUpRequestBody(){}
 
-    public UsersProfile(String userName, String userProfile_GivenName, @Min(18) @Max(100) Integer userProfile_Age, Integer userProfile_PhoneNumber, String userProfile_Address, char userProfile_Gender, ArrayList<String> userProfile_SocialMedia, String userProfile_Kyc, String userProfile_Image) {
+    public SignUpRequestBody(String userName, String password, String userProfile_GivenName, Integer userProfile_Age, Integer userProfile_PhoneNumber, String userProfile_Address, char userProfile_Gender, ArrayList<String> userProfile_SocialMedia, String userProfile_Kyc, String userProfile_Image) {
         this.userName = userName;
+        this.password = password;
         this.userProfile_GivenName = userProfile_GivenName;
         this.userProfile_Age = userProfile_Age;
         this.userProfile_PhoneNumber = userProfile_PhoneNumber;
@@ -51,20 +41,20 @@ public class UsersProfile implements Serializable {
         this.userProfile_Image = userProfile_Image;
     }
 
-    public Long getUserProfile_TableId() {
-        return userProfile_TableId;
-    }
-
-    public void setUserProfile_TableId(Long userProfile_TableId) {
-        this.userProfile_TableId = userProfile_TableId;
-    }
-
     public String getUserName() {
         return userName;
     }
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getUserProfile_GivenName() {

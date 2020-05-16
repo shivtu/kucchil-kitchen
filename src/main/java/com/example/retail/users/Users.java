@@ -1,8 +1,11 @@
 package com.example.retail.users;
 
+import com.example.retail.users.profiles.UsersProfile;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "users")
@@ -10,10 +13,11 @@ public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @Column(unique = true)
-    private String userName;
+    @Column(name = "users_table_id")
+    private Long users_TableId;
 
+    @Column(name = "user_name", unique = true)
+    private String userName;
 
     private String password;
 
@@ -27,9 +31,13 @@ public class Users {
 
     private String roles;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "users_table_id", referencedColumnName = "users_profile_table_id")
+    private UsersProfile connectedUsersProfile;
+
     public Users(){}
 
-    public Users(String userName, String password, boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired, boolean enabled, String roles) {
+    public Users(String userName, String password, boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired, boolean enabled, String roles, UsersProfile connectedUsersProfile) {
         this.userName = userName;
         this.password = password;
         this.accountNonExpired = accountNonExpired;
@@ -37,14 +45,15 @@ public class Users {
         this.credentialsNonExpired = credentialsNonExpired;
         this.enabled = enabled;
         this.roles = roles;
+        this.connectedUsersProfile = connectedUsersProfile;
     }
 
-    public Long getId() {
-        return id;
+    public Long getUsers_TableId() {
+        return users_TableId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUsers_TableId(Long users_TableId) {
+        this.users_TableId = users_TableId;
     }
 
     public String getUserName() {
@@ -101,5 +110,13 @@ public class Users {
 
     public void setRoles(String roles) {
         this.roles = roles;
+    }
+
+    public UsersProfile getConnectedUsersProfile() {
+        return connectedUsersProfile;
+    }
+
+    public void setConnectedUsersProfile(UsersProfile connectedUsersProfile) {
+        this.connectedUsersProfile = connectedUsersProfile;
     }
 }
