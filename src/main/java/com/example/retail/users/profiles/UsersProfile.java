@@ -1,18 +1,26 @@
 package com.example.retail.users.profiles;
 
-import com.example.retail.users.Users;
+import com.vladmihalcea.hibernate.type.array.StringArrayType;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 
+@TypeDefs({
+        @TypeDef(
+                name = "string-array",
+                typeClass = StringArrayType.class
+        )
+})
 @Entity
 @Table(name = "users_profile")
 public class UsersProfile implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "users_profile_table_id")
     private Long userProfile_TableId;
 
@@ -21,7 +29,7 @@ public class UsersProfile implements Serializable {
 
     private String userProfile_GivenName;
 
-    @Min(18)
+    @Min(value = 18, message = "You must be 18 years or older")
     @Max(100)
     private Integer userProfile_Age;
 
@@ -31,7 +39,13 @@ public class UsersProfile implements Serializable {
 
     private char userProfile_Gender;
 
-    private ArrayList<String> userProfile_SocialMedia;
+    @Type(type = "string-array")
+    @Column(columnDefinition = "text[]")
+    private String[] userProfile_SocialMedia;
+
+    private String userProfile_AddedOnDate;
+
+    private String userProfile_AddedOnTime;
 
     private String userProfile_Kyc;
 
@@ -39,7 +53,7 @@ public class UsersProfile implements Serializable {
 
     public UsersProfile(){}
 
-    public UsersProfile(String userName, String userProfile_GivenName, @Min(18) @Max(100) Integer userProfile_Age, Integer userProfile_PhoneNumber, String userProfile_Address, char userProfile_Gender, ArrayList<String> userProfile_SocialMedia, String userProfile_Kyc, String userProfile_Image) {
+    public UsersProfile(String userName, String userProfile_GivenName, @Min(value = 18, message = "You must be 18 years or older") @Max(100) Integer userProfile_Age, Integer userProfile_PhoneNumber, String userProfile_Address, char userProfile_Gender, String[] userProfile_SocialMedia, String userProfile_AddedOnDate, String userProfile_AddedOnTime, String userProfile_Kyc, String userProfile_Image) {
         this.userName = userName;
         this.userProfile_GivenName = userProfile_GivenName;
         this.userProfile_Age = userProfile_Age;
@@ -47,6 +61,8 @@ public class UsersProfile implements Serializable {
         this.userProfile_Address = userProfile_Address;
         this.userProfile_Gender = userProfile_Gender;
         this.userProfile_SocialMedia = userProfile_SocialMedia;
+        this.userProfile_AddedOnDate = userProfile_AddedOnDate;
+        this.userProfile_AddedOnTime = userProfile_AddedOnTime;
         this.userProfile_Kyc = userProfile_Kyc;
         this.userProfile_Image = userProfile_Image;
     }
@@ -107,12 +123,28 @@ public class UsersProfile implements Serializable {
         this.userProfile_Gender = userProfile_Gender;
     }
 
-    public ArrayList<String> getUserProfile_SocialMedia() {
+    public String[] getUserProfile_SocialMedia() {
         return userProfile_SocialMedia;
     }
 
-    public void setUserProfile_SocialMedia(ArrayList<String> userProfile_SocialMedia) {
+    public void setUserProfile_SocialMedia(String[] userProfile_SocialMedia) {
         this.userProfile_SocialMedia = userProfile_SocialMedia;
+    }
+
+    public String getUserProfile_AddedOnDate() {
+        return userProfile_AddedOnDate;
+    }
+
+    public void setUserProfile_AddedOnDate(String userProfile_AddedOnDate) {
+        this.userProfile_AddedOnDate = userProfile_AddedOnDate;
+    }
+
+    public String getUserProfile_AddedOnTime() {
+        return userProfile_AddedOnTime;
+    }
+
+    public void setUserProfile_AddedOnTime(String userProfile_AddedOnTime) {
+        this.userProfile_AddedOnTime = userProfile_AddedOnTime;
     }
 
     public String getUserProfile_Kyc() {

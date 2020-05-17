@@ -5,6 +5,9 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -12,13 +15,17 @@ import java.io.Serializable;
 public class Users {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "users_table_id")
     private Long users_TableId;
 
     @Column(name = "user_name", unique = true)
+    @Email
     private String userName;
 
+    @NotEmpty
+    @NotNull
+    @NotBlank
     private String password;
 
     private boolean accountNonExpired;

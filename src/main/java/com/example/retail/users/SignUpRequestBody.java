@@ -20,7 +20,11 @@ public class SignUpRequestBody implements Serializable {
 
     private char userProfile_Gender;
 
-    private ArrayList<String> userProfile_SocialMedia;
+    private String[] userProfile_SocialMedia;
+
+    private String userProfile_AddedOnDate;
+
+    private String userProfile_AddedOnTime;
 
     private String userProfile_Kyc;
 
@@ -28,7 +32,7 @@ public class SignUpRequestBody implements Serializable {
 
     public SignUpRequestBody(){}
 
-    public SignUpRequestBody(String userName, String password, String userProfile_GivenName, Integer userProfile_Age, Integer userProfile_PhoneNumber, String userProfile_Address, char userProfile_Gender, ArrayList<String> userProfile_SocialMedia, String userProfile_Kyc, String userProfile_Image) {
+    public SignUpRequestBody(String userName, String password, String userProfile_GivenName, Integer userProfile_Age, Integer userProfile_PhoneNumber, String userProfile_Address, char userProfile_Gender, String[] userProfile_SocialMedia, String userProfile_AddedOnDate, String userProfile_AddedOnTime, String userProfile_Kyc, String userProfile_Image) {
         this.userName = userName;
         this.password = password;
         this.userProfile_GivenName = userProfile_GivenName;
@@ -37,6 +41,8 @@ public class SignUpRequestBody implements Serializable {
         this.userProfile_Address = userProfile_Address;
         this.userProfile_Gender = userProfile_Gender;
         this.userProfile_SocialMedia = userProfile_SocialMedia;
+        this.userProfile_AddedOnDate = userProfile_AddedOnDate;
+        this.userProfile_AddedOnTime = userProfile_AddedOnTime;
         this.userProfile_Kyc = userProfile_Kyc;
         this.userProfile_Image = userProfile_Image;
     }
@@ -97,12 +103,28 @@ public class SignUpRequestBody implements Serializable {
         this.userProfile_Gender = userProfile_Gender;
     }
 
-    public ArrayList<String> getUserProfile_SocialMedia() {
+    public String[] getUserProfile_SocialMedia() {
         return userProfile_SocialMedia;
     }
 
-    public void setUserProfile_SocialMedia(ArrayList<String> userProfile_SocialMedia) {
+    public void setUserProfile_SocialMedia(String[] userProfile_SocialMedia) {
         this.userProfile_SocialMedia = userProfile_SocialMedia;
+    }
+
+    public String getUserProfile_AddedOnDate() {
+        return userProfile_AddedOnDate;
+    }
+
+    public void setUserProfile_AddedOnDate(String userProfile_AddedOnDate) {
+        this.userProfile_AddedOnDate = userProfile_AddedOnDate;
+    }
+
+    public String getUserProfile_AddedOnTime() {
+        return userProfile_AddedOnTime;
+    }
+
+    public void setUserProfile_AddedOnTime(String userProfile_AddedOnTime) {
+        this.userProfile_AddedOnTime = userProfile_AddedOnTime;
     }
 
     public String getUserProfile_Kyc() {

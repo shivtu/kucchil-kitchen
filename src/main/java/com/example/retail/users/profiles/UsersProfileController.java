@@ -2,14 +2,11 @@ package com.example.retail.users.profiles;
 
 import com.example.retail.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.net.URI;
-import java.util.HashMap;
 
 @RequestMapping(value = "/api/v1/userprofile")
 @RestController

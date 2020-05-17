@@ -7,6 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime; // Import the LocalDateTime class
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter; // Import the DateTimeFormatter class
 
 @RestController
 @RequestMapping(value = "api/v1/signup")
@@ -17,7 +21,7 @@ public class UsersSignUpController {
 
     @PostMapping(value = "/customer", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(code = HttpStatus.CREATED)
-    public UsersProfile addUser(HttpEntity<SignUpRequestBody> signUpRequestBody) {
+    public ResponseEntity addUser(HttpEntity<SignUpRequestBody> signUpRequestBody) {
 
         UsersProfile usersProfile = new UsersProfile();
         usersProfile.setUserName(signUpRequestBody.getBody().getUserName());
@@ -27,6 +31,8 @@ public class UsersSignUpController {
         usersProfile.setUserProfile_Address(signUpRequestBody.getBody().getUserProfile_Address());
         usersProfile.setUserProfile_Gender(signUpRequestBody.getBody().getUserProfile_Gender());
         usersProfile.setUserProfile_SocialMedia(signUpRequestBody.getBody().getUserProfile_SocialMedia());
+        usersProfile.setUserProfile_AddedOnDate(LocalDate.now().toString()); // Get Current Date
+        usersProfile.setUserProfile_AddedOnTime(LocalTime.now().toString());
         usersProfile.setUserProfile_Kyc(signUpRequestBody.getBody().getUserProfile_Kyc());
         usersProfile.setUserProfile_Image(signUpRequestBody.getBody().getUserProfile_Image());
 
@@ -42,7 +48,7 @@ public class UsersSignUpController {
 
         Users createdUser = usersService.addUser(users);
 
-        return createdUser.getConnectedUsersProfile();
+        return new ResponseEntity(createdUser.getConnectedUsersProfile(), HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/retailer", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
