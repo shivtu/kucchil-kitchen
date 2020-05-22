@@ -19,10 +19,7 @@ public class UsersSignUpController {
     @Autowired
     UsersService usersService;
 
-    @PostMapping(value = "/customer", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(code = HttpStatus.CREATED)
-    public ResponseEntity addUser(HttpEntity<SignUpRequestBody> signUpRequestBody) {
-
+    private UsersProfile createUserProfile(HttpEntity<SignUpRequestBody> signUpRequestBody) {
         UsersProfile usersProfile = new UsersProfile();
         usersProfile.setUserName(signUpRequestBody.getBody().getUserName());
         usersProfile.setUserProfile_GivenName(signUpRequestBody.getBody().getUserProfile_GivenName());
@@ -36,6 +33,13 @@ public class UsersSignUpController {
         usersProfile.setUserProfile_Kyc(signUpRequestBody.getBody().getUserProfile_Kyc());
         usersProfile.setUserProfile_Image(signUpRequestBody.getBody().getUserProfile_Image());
 
+        return usersProfile;
+    }
+
+    @PostMapping(value = "/customer", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public ResponseEntity addUser(HttpEntity<SignUpRequestBody> signUpRequestBody) {
+
         Users users = new Users();
         users.setUserName(signUpRequestBody.getBody().getUserName());
         users.setPassword(signUpRequestBody.getBody().getPassword());
@@ -44,7 +48,7 @@ public class UsersSignUpController {
         users.setCredentialsNonExpired(true);
         users.setEnabled(true);
         users.setRoles("ROLE_CUSTOMER");
-        users.setConnectedUsersProfile(usersProfile);
+        users.setConnectedUsersProfile(createUserProfile(signUpRequestBody));
 
         Users createdUser = usersService.addUser(users);
 
@@ -53,12 +57,20 @@ public class UsersSignUpController {
 
     @PostMapping(value = "/retailer", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Users addRetailer (@RequestBody(required = true) Users newRetailer) {
-        newRetailer.setRoles("ROLE_RETAILER");
-        newRetailer.setEnabled(false);
-        newRetailer.setAccountNonExpired(true);
-        newRetailer.setAccountNonLocked(true);
-        newRetailer.setCredentialsNonExpired(true);
-        return usersService.addUser(newRetailer);
+    public ResponseEntity addRetailer (HttpEntity<SignUpRequestBody> signUpRequestBody) {
+
+        Users users = new Users();
+        users.setUserName(signUpRequestBody.getBody().getUserName());
+        users.setPassword(signUpRequestBody.getBody().getPassword());
+        users.setAccountNonExpired(true);
+        users.setAccountNonLocked(true);
+        users.setCredentialsNonExpired(true);
+        users.setEnabled(false);
+        users.setRoles("ROLE_RETAILER");
+        users.setConnectedUsersProfile(createUserProfile(signUpRequestBody));
+
+        Users createdUser = usersService.addUser(users);
+
+        return new ResponseEntity(createdUser.getConnectedUsersProfile(), HttpStatus.CREATED);
     }
 }

@@ -19,7 +19,7 @@ public class UsersProfileController {
     JwtUtil jwtUtil;
 
     @PostMapping(value = "/update")
-    public ResponseEntity addUserProfile(@RequestBody UsersProfile usersProfile, HttpServletRequest httpServletRequest) throws Exception {
+    public ResponseEntity updateUsersProfile(@RequestBody UsersProfile usersProfile, HttpServletRequest httpServletRequest) throws Exception {
 
         final String authorizationHeader = httpServletRequest.getHeader("Authorization");
         final String jwt = authorizationHeader.substring(7);
@@ -27,7 +27,7 @@ public class UsersProfileController {
         String userProfileUserName = usersProfile.getUserName();
 
         if (requesterUserName.equals(userProfileUserName)) {
-            UsersProfile updatedProfile = usersProfileService.adduserProfile(usersProfile);
+            UsersProfile updatedProfile = usersProfileService.updateUsersProfile(usersProfile);
             return new ResponseEntity(updatedProfile, HttpStatus.CREATED);
         } else {
             return new ResponseEntity("Forbidden", HttpStatus.FORBIDDEN);

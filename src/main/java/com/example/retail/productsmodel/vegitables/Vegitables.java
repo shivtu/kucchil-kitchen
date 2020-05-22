@@ -1,24 +1,34 @@
 package com.example.retail.productsmodel.vegitables;
 
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
+import org.springframework.beans.factory.annotation.Value;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
-import java.util.HashMap;
+import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name="vegitables")
+@TypeDefs({
+        @TypeDef(
+                name = "psql-jsonb",
+                typeClass = JsonBinaryType.class
+        )
+})
 public class Vegitables {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="vegitable_tableid")
     private Long vegitable_TableId;
+
+    @Column(unique = true, nullable = false, updatable = false)
+    private String vegitable_productId;
 
     @NotNull
     @NotEmpty
@@ -31,36 +41,46 @@ public class Vegitables {
     @Column(name = "vegitable_variant")
     private String vegitable_variant;
 
-    @Column(name = "vegitable_recepie")
-    private String vegitable_Recepie;
+    @Column(name = "vegitable_recepie", columnDefinition = "jsonb")
+    @Type(type = "psql-jsonb")
+    private List<VegitableRecipes> vegitable_Recepie;
 
+    @NotNull
     @Column(name="vegitable_sellingprice")
     private Float vegitable_SellingPrice;
 
-    @Column(name="vegitable_maxdiscount")
+    @Value("0")
     private Float vegitable_MaxDiscount;
 
+    @Value("0")
     @Column(name = "vegitable_offered_discount")
     private Float vegitable_OfferedDiscount;
 
+    @NotNull(message = "Should discount be available for this item")
     @Column(name = "vegitable_show_discount")
     private Boolean vegitable_ShowDiscount;
 
+    @NotNull
     @Column(name="vegitable_quantity")
     private Float vegitable_Quantity;
 
     private boolean vegitable_Available;
-
+    @Value("0")
     @Column(name="vegitable_tax")
     private Float vegitable_Tax;
 
+    @NotNull
+    @NotEmpty
     @Column(name="vegitable_measurementunit")
     private String vegitable_MeasureMentUnit;
 
     public Vegitables(){
     }
 
-    public Vegitables(@NotNull @NotEmpty String vegitable_Name, String vegitable_Descp, String vegitable_variant, String vegitable_Recepie, Float vegitable_SellingPrice, Float vegitable_MaxDiscount, Float vegitable_OfferedDiscount, Boolean vegitable_ShowDiscount, Float vegitable_Quantity, boolean vegitable_Available, Float vegitable_Tax, String vegitable_MeasureMentUnit) {
+    public Vegitables(@NotNull @NotEmpty String vegitable_Name, String vegitable_Descp, String vegitable_variant,
+                      List<VegitableRecipes> vegitable_Recepie, Float vegitable_SellingPrice, Float vegitable_MaxDiscount,
+                      Float vegitable_OfferedDiscount, Boolean vegitable_ShowDiscount, Float vegitable_Quantity,
+                      boolean vegitable_Available, Float vegitable_Tax, String vegitable_MeasureMentUnit) {
         this.vegitable_Name = vegitable_Name;
         this.vegitable_Descp = vegitable_Descp;
         this.vegitable_variant = vegitable_variant;
@@ -107,11 +127,11 @@ public class Vegitables {
         this.vegitable_variant = vegitable_variant;
     }
 
-    public String getVegitable_Recepie() {
+    public List<VegitableRecipes> getVegitable_Recepie() {
         return vegitable_Recepie;
     }
 
-    public void setVegitable_Recepie(String vegitable_Recepie) {
+    public void setVegitable_Recepie(List<VegitableRecipes> vegitable_Recepie) {
         this.vegitable_Recepie = vegitable_Recepie;
     }
 

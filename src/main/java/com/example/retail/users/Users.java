@@ -4,11 +4,7 @@ import com.example.retail.users.profiles.UsersProfile;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
+import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "users")
@@ -16,10 +12,10 @@ public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "users_table_id")
+    @Column(name = "users_table_id", updatable = false, nullable = false)
     private Long users_TableId;
 
-    @Column(name = "user_name", unique = true)
+    @Column(name = "user_name", unique = true, nullable = false)
     @Email
     private String userName;
 

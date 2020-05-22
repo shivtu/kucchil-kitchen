@@ -21,7 +21,7 @@ public class UsersProfile implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "users_profile_table_id")
+    @Column(name = "users_profile_table_id", updatable = false)
     private Long userProfile_TableId;
 
     @Column(name = "user_name", unique = true)
@@ -33,11 +33,12 @@ public class UsersProfile implements Serializable {
     @Max(100)
     private Integer userProfile_Age;
 
+    @Column(nullable = false, unique = true)
     private Integer userProfile_PhoneNumber;
 
     private String userProfile_Address;
 
-    private char userProfile_Gender;
+    private UserProfileGender userProfile_Gender;
 
     @Type(type = "string-array")
     @Column(columnDefinition = "text[]")
@@ -53,7 +54,7 @@ public class UsersProfile implements Serializable {
 
     public UsersProfile(){}
 
-    public UsersProfile(String userName, String userProfile_GivenName, @Min(value = 18, message = "You must be 18 years or older") @Max(100) Integer userProfile_Age, Integer userProfile_PhoneNumber, String userProfile_Address, char userProfile_Gender, String[] userProfile_SocialMedia, String userProfile_AddedOnDate, String userProfile_AddedOnTime, String userProfile_Kyc, String userProfile_Image) {
+    public UsersProfile(String userName, String userProfile_GivenName, @Min(value = 18, message = "You must be 18 years or older") @Max(100) Integer userProfile_Age, Integer userProfile_PhoneNumber, String userProfile_Address, UserProfileGender userProfile_Gender, String[] userProfile_SocialMedia, String userProfile_AddedOnDate, String userProfile_AddedOnTime, String userProfile_Kyc, String userProfile_Image) {
         this.userName = userName;
         this.userProfile_GivenName = userProfile_GivenName;
         this.userProfile_Age = userProfile_Age;
@@ -115,11 +116,11 @@ public class UsersProfile implements Serializable {
         this.userProfile_Address = userProfile_Address;
     }
 
-    public char getUserProfile_Gender() {
+    public UserProfileGender getUserProfile_Gender() {
         return userProfile_Gender;
     }
 
-    public void setUserProfile_Gender(char userProfile_Gender) {
+    public void setUserProfile_Gender(UserProfileGender userProfile_Gender) {
         this.userProfile_Gender = userProfile_Gender;
     }
 

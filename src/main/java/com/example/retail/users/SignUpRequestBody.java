@@ -1,8 +1,8 @@
 package com.example.retail.users;
 
-import javax.persistence.criteria.CriteriaBuilder;
+import com.example.retail.users.profiles.UserProfileGender;
+
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class SignUpRequestBody implements Serializable {
 
@@ -18,7 +18,7 @@ public class SignUpRequestBody implements Serializable {
 
     private String userProfile_Address;
 
-    private char userProfile_Gender;
+    private UserProfileGender userProfile_Gender;
 
     private String[] userProfile_SocialMedia;
 
@@ -32,7 +32,7 @@ public class SignUpRequestBody implements Serializable {
 
     public SignUpRequestBody(){}
 
-    public SignUpRequestBody(String userName, String password, String userProfile_GivenName, Integer userProfile_Age, Integer userProfile_PhoneNumber, String userProfile_Address, char userProfile_Gender, String[] userProfile_SocialMedia, String userProfile_AddedOnDate, String userProfile_AddedOnTime, String userProfile_Kyc, String userProfile_Image) {
+    public SignUpRequestBody(String userName, String password, String userProfile_GivenName, Integer userProfile_Age, Integer userProfile_PhoneNumber, String userProfile_Address, UserProfileGender userProfile_Gender, String[] userProfile_SocialMedia, String userProfile_AddedOnDate, String userProfile_AddedOnTime, String userProfile_Kyc, String userProfile_Image) {
         this.userName = userName;
         this.password = password;
         this.userProfile_GivenName = userProfile_GivenName;
@@ -95,11 +95,11 @@ public class SignUpRequestBody implements Serializable {
         this.userProfile_Address = userProfile_Address;
     }
 
-    public char getUserProfile_Gender() {
+    public UserProfileGender getUserProfile_Gender() {
         return userProfile_Gender;
     }
 
-    public void setUserProfile_Gender(char userProfile_Gender) {
+    public void setUserProfile_Gender(UserProfileGender userProfile_Gender) {
         this.userProfile_Gender = userProfile_Gender;
     }
 
