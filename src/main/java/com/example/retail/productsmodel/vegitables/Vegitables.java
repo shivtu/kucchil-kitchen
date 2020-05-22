@@ -1,5 +1,6 @@
 package com.example.retail.productsmodel.vegitables;
 
+import com.example.retail.productsmodel.inventory.ProductsInventory;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -23,7 +23,7 @@ import java.util.List;
 public class Vegitables {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="vegitable_tableid")
     private Long vegitable_TableId;
 
@@ -73,6 +73,10 @@ public class Vegitables {
     @NotEmpty
     @Column(name="vegitable_measurementunit")
     private String vegitable_MeasureMentUnit;
+
+//    @OneToMany(mappedBy = "vegitables", targetEntity = Vegitables.class, cascade = CascadeType.ALL)
+//    @JoinColumn(referencedColumnName = "vegitable_tableid")
+//    private List<ProductsInventory> productsInventory;
 
     public Vegitables(){
     }

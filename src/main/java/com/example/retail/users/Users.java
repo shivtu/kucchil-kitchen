@@ -1,6 +1,8 @@
 package com.example.retail.users;
 
 import com.example.retail.users.profiles.UsersProfile;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.persistence.*;
@@ -36,6 +38,7 @@ public class Users {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "users_table_id", referencedColumnName = "users_profile_table_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private UsersProfile connectedUsersProfile;
 
     public Users(){}
