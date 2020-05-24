@@ -1,5 +1,6 @@
 package com.example.retail.controllers.retailer.vegitables_retailer;
 
+import com.example.retail.productsmodel.vegitables.VegitableInventoryService;
 import com.example.retail.productsmodel.vegitables.Vegitables;
 import com.example.retail.productsmodel.vegitables.VegitablesInventory;
 import com.example.retail.productsmodel.vegitables.VegitablesService;
@@ -9,13 +10,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -27,17 +24,20 @@ public class VegitablesRetailerController {
     VegitablesService vegitablesService;
 
     @Autowired
+    VegitableInventoryService vegitableInventoryService;
+
+    @Autowired
     JwtUtil jwtUtil;
 
     @RequestMapping(value = "/findall", method = RequestMethod.GET)
-    public Iterable<Vegitables> getAllVegitables() {
-        return vegitablesService.getAllVegitables();
+    public ResponseEntity getAllVegitables() {
+        return new ResponseEntity(vegitablesService.getAllVegitables(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/addmultiple", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
+    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addAllVegitables(HttpServletRequest request,
-                                           HttpEntity<AddVegitablesRequestBody> newVegitables) {
+                                           @RequestBody AddVegitablesRequestBody newVegitables) {
 
                 // Get authorization header and find current user
                 final String authorizationHeader = request.getHeader("Authorization");
@@ -45,42 +45,48 @@ public class VegitablesRetailerController {
                 String vegitable_AddedBy = jwtUtil.extractUsername(jwt);
                 try {
 
+                    // create new vegitable
                     Vegitables vegitables = new Vegitables();
-                    AddVegitablesRequestBody newVegitablesBody = newVegitables.getBody();
+                    vegitables.setVegitable_Name(newVegitables.getVegitable_Name());
+                    vegitables.setVegitable_Descp(newVegitables.getVegitable_Descp());
+                    vegitables.setVegitable_Variant(newVegitables.getVegitable_Variant());
+                    vegitables.setVegitable_Recepie(newVegitables.getVegitable_Recepie());
+                    vegitables.setVegitable_SellingPrice(newVegitables.getVegitable_SellingPrice());
+                    vegitables.setVegitable_OfferedDiscount(newVegitables.getVegitable_OfferedDiscount());
+                    vegitables.setVegitable_ShowDiscount(newVegitables.getVegitable_ShowDiscount());
+                    vegitables.setVegitable_Quantity(newVegitables.getVegitable_Quantity());
+                    vegitables.setVegitable_Available(newVegitables.isVegitable_Available());
+                    vegitables.setVegitable_Tax(newVegitables.getVegitable_Tax());
+                    vegitables.setVegitable_MeasureMentUnit(newVegitables.getVegitable_MeasureMentUnit());
+                    // Create a unique subID
+                    vegitables.setVegitable_SubId(newVegitables.getVegitable_Name() + newVegitables.getVegitable_Variant()
+                            + newVegitables.getVegitablesInventory_CostPrice() + newVegitables.getVegitablesInventory_Expiry()
+                            + newVegitables.getVegitablesInventory_FixedCost());
 
-                    vegitables.setVegitable_productId(newVegitablesBody.getVegitable_Name()
-                            + newVegitablesBody.getVegitable_variant()
-                            + newVegitablesBody.getVegitableInventory_Expiry()
-                            +newVegitablesBody.getVegitableInventory_AddedBy()
-                            + newVegitablesBody.getVegitableInventory_CostPrice());
-
-                    vegitables.setVegitable_Name(newVegitablesBody.getVegitable_Name());
-                    vegitables.setVegitable_Descp(newVegitablesBody.getVegitable_Descp());
-                    vegitables.setVegitable_variant(newVegitablesBody.getVegitable_variant());
-                    vegitables.setVegitable_Recepie(newVegitablesBody.getVegitable_Recepie());
-                    vegitables.setVegitable_SellingPrice(newVegitablesBody.getVegitable_SellingPrice());
-                    vegitables.setVegitable_MaxDiscount(newVegitablesBody.getVegitable_MaxDiscount());
-                    vegitables.setVegitable_OfferedDiscount(newVegitablesBody.getVegitable_OfferedDiscount());
-                    vegitables.setVegitable_ShowDiscount(newVegitablesBody.getVegitable_ShowDiscount());
-                    vegitables.setVegitable_Quantity(newVegitablesBody.getVegitable_Quantity());
-                    vegitables.setVegitable_Tax(newVegitablesBody.getVegitable_Tax());
-                    vegitables.setVegitable_MeasureMentUnit(newVegitablesBody.getVegitable_MeasureMentUnit());
-
+                    // Create vegitable inventory
                     VegitablesInventory vegitablesInventory = new VegitablesInventory();
-                    vegitablesInventory.setVegitablesInventory_CostPrice(newVegitablesBody.getVegitableInventory_CostPrice());
-                    vegitablesInventory.setVegitablesInventory_Expiry(newVegitablesBody.getVegitableInventory_Expiry());
-                    vegitablesInventory.setVegitablesInventory_MaxDiscount(newVegitablesBody.getVegitableInventory_MaxDiscount());
-                    vegitablesInventory.setVegitablesInventory_AddedBy(newVegitablesBody.getVegitableInventory_AddedBy());
-                    vegitablesInventory.setVegitables_DateTimeAdded(LocalDateTime.now().toString());
-                    vegitablesInventory.setVegitables_IncCount(newVegitablesBody.getVegitableInventory_IncCount());
-                    vegitablesInventory.setVegitables_FixedCost(newVegitablesBody.getVegitableInventory_FixedCost());
+                    vegitablesInventory.setVegitablesInventory_CostPrice(newVegitables.getVegitablesInventory_CostPrice());
+                    vegitablesInventory.setVegitablesInventory_Expiry(newVegitables.getVegitablesInventory_Expiry());
+                    vegitablesInventory.setVegitablesInventory_MaxDiscount(newVegitables.getVegitablesInventory_MaxDiscount());
+                    vegitablesInventory.setVegitablesInventory_AddedBy(vegitable_AddedBy);
+                    vegitablesInventory.setVegitablesInventory_DateTimeAdded(LocalDateTime.now().toString());
+                    vegitablesInventory.setVegitablesInventory_IncCount(newVegitables.getVegitable_Quantity()); // Increament quantity = the quantity when adding the product
+                    vegitablesInventory.setVegitablesInventory_FixedCost(newVegitables.getVegitablesInventory_FixedCost());
+                    // Create a unique subID
+                    vegitablesInventory.setVegitable_SubId(newVegitables.getVegitable_Name() + newVegitables.getVegitable_Variant()
+                            + newVegitables.getVegitablesInventory_CostPrice() + newVegitables.getVegitablesInventory_Expiry()
+                            + newVegitables.getVegitablesInventory_FixedCost());
 
-                    List vegitableInventoryList = new ArrayList();
-                    vegitableInventoryList.add(vegitablesInventory);
+                    // Persist the vegitable
+                    Vegitables createdVeg = vegitablesService.addOneVegitable(vegitables);
+                    // Persist the vegitable inventory
+                    VegitablesInventory createdVegInventory = vegitableInventoryService.addInventory(vegitablesInventory);
 
-                    vegitables.setVegitablesInventoryList(vegitableInventoryList);
+                    HashMap res = new HashMap();
+                    res.put("Vegitables", createdVeg);
+                    res.put("InventoryUpdate", createdVegInventory);
 
-                    return new ResponseEntity(vegitablesService.addOneVegitable(vegitables), HttpStatus.CREATED);
+                    return new ResponseEntity(res, HttpStatus.CREATED);
 
                 }catch (Exception e) {
                     return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -88,8 +94,15 @@ public class VegitablesRetailerController {
 
     }
 
-    @RequestMapping(value = "/addone")
-    public Vegitables addOneVegitable(@RequestBody Vegitables newVegitable){
-        return vegitablesService.addOneVegitable(newVegitable);
+    @RequestMapping(method = RequestMethod.PUT, value = "/update/{vegitable_tableid}")
+    public ResponseEntity updateQty(@PathVariable Long vegitable_tableid, @RequestBody HashMap requestBody){
+        try{
+            requestBody.put("vegitable_tableid", vegitable_tableid);
+            vegitablesService.updateQty(requestBody);
+           return new ResponseEntity(requestBody, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity("fault", HttpStatus.BAD_REQUEST);
+        }
+
     }
 }

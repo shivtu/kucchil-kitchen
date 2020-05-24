@@ -1,5 +1,6 @@
 package com.example.retail.productsmodel.vegitables;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,15 +20,13 @@ import java.util.List;
                 typeClass = JsonBinaryType.class
         )
 })
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Vegitables {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="vegitable_tableid")
     private Long vegitable_TableId;
-
-    @Column(unique = true, nullable = false, updatable = false)
-    private String vegitable_productId;
 
     @NotNull
     @NotEmpty
@@ -39,7 +37,7 @@ public class Vegitables {
     private String vegitable_Descp;
 
     @Column(name = "vegitable_variant")
-    private String vegitable_variant;
+    private String vegitable_Variant;
 
     @Column(name = "vegitable_recepie", columnDefinition = "jsonb")
     @Type(type = "psql-jsonb")
@@ -48,9 +46,6 @@ public class Vegitables {
     @NotNull
     @Column(name="vegitable_sellingprice")
     private Float vegitable_SellingPrice;
-
-    @Value("0")
-    private Float vegitable_MaxDiscount;
 
     @Value("0")
     @Column(name = "vegitable_offered_discount")
@@ -74,27 +69,25 @@ public class Vegitables {
     @Column(name="vegitable_measurementunit")
     private String vegitable_MeasureMentUnit;
 
-    @OneToMany(mappedBy = "vegitables", cascade = CascadeType.ALL)
-    private List<VegitablesInventory> vegitablesInventoryList;
+    @Column(name = "vegitable_subid", updatable = false, unique = true)
+    private String vegitable_SubId;
 
     public Vegitables(){
     }
 
-    public Vegitables(String vegitable_productId, @NotNull @NotEmpty String vegitable_Name, String vegitable_Descp, String vegitable_variant, List<VegitableRecipes> vegitable_Recepie, @NotNull Float vegitable_SellingPrice, Float vegitable_MaxDiscount, Float vegitable_OfferedDiscount, @NotNull(message = "Should discount be available for this item") Boolean vegitable_ShowDiscount, @NotNull Float vegitable_Quantity, boolean vegitable_Available, Float vegitable_Tax, @NotNull @NotEmpty String vegitable_MeasureMentUnit, List<VegitablesInventory> vegitablesInventoryList) {
-        this.vegitable_productId = vegitable_productId;
+    public Vegitables(@NotNull @NotEmpty String vegitable_Name, String vegitable_Descp, String vegitable_Variant, List<VegitableRecipes> vegitable_Recepie, @NotNull Float vegitable_SellingPrice, Float vegitable_OfferedDiscount, @NotNull(message = "Should discount be available for this item") Boolean vegitable_ShowDiscount, @NotNull Float vegitable_Quantity, boolean vegitable_Available, Float vegitable_Tax, @NotNull @NotEmpty String vegitable_MeasureMentUnit, String vegitable_SubId) {
         this.vegitable_Name = vegitable_Name;
         this.vegitable_Descp = vegitable_Descp;
-        this.vegitable_variant = vegitable_variant;
+        this.vegitable_Variant = vegitable_Variant;
         this.vegitable_Recepie = vegitable_Recepie;
         this.vegitable_SellingPrice = vegitable_SellingPrice;
-        this.vegitable_MaxDiscount = vegitable_MaxDiscount;
         this.vegitable_OfferedDiscount = vegitable_OfferedDiscount;
         this.vegitable_ShowDiscount = vegitable_ShowDiscount;
         this.vegitable_Quantity = vegitable_Quantity;
         this.vegitable_Available = vegitable_Available;
         this.vegitable_Tax = vegitable_Tax;
         this.vegitable_MeasureMentUnit = vegitable_MeasureMentUnit;
-        this.vegitablesInventoryList = vegitablesInventoryList;
+        this.vegitable_SubId = vegitable_SubId;
     }
 
     public Long getVegitable_TableId() {
@@ -103,14 +96,6 @@ public class Vegitables {
 
     public void setVegitable_TableId(Long vegitable_TableId) {
         this.vegitable_TableId = vegitable_TableId;
-    }
-
-    public String getVegitable_productId() {
-        return vegitable_productId;
-    }
-
-    public void setVegitable_productId(String vegitable_productId) {
-        this.vegitable_productId = vegitable_productId;
     }
 
     public String getVegitable_Name() {
@@ -129,12 +114,12 @@ public class Vegitables {
         this.vegitable_Descp = vegitable_Descp;
     }
 
-    public String getVegitable_variant() {
-        return vegitable_variant;
+    public String getVegitable_Variant() {
+        return vegitable_Variant;
     }
 
-    public void setVegitable_variant(String vegitable_variant) {
-        this.vegitable_variant = vegitable_variant;
+    public void setVegitable_Variant(String vegitable_Variant) {
+        this.vegitable_Variant = vegitable_Variant;
     }
 
     public List<VegitableRecipes> getVegitable_Recepie() {
@@ -151,14 +136,6 @@ public class Vegitables {
 
     public void setVegitable_SellingPrice(Float vegitable_SellingPrice) {
         this.vegitable_SellingPrice = vegitable_SellingPrice;
-    }
-
-    public Float getVegitable_MaxDiscount() {
-        return vegitable_MaxDiscount;
-    }
-
-    public void setVegitable_MaxDiscount(Float vegitable_MaxDiscount) {
-        this.vegitable_MaxDiscount = vegitable_MaxDiscount;
     }
 
     public Float getVegitable_OfferedDiscount() {
@@ -209,11 +186,11 @@ public class Vegitables {
         this.vegitable_MeasureMentUnit = vegitable_MeasureMentUnit;
     }
 
-    public List<VegitablesInventory> getVegitablesInventoryList() {
-        return vegitablesInventoryList;
+    public String getVegitable_SubId() {
+        return vegitable_SubId;
     }
 
-    public void setVegitablesInventoryList(List<VegitablesInventory> vegitablesInventoryList) {
-        this.vegitablesInventoryList = vegitablesInventoryList;
+    public void setVegitable_SubId(String vegitable_SubId) {
+        this.vegitable_SubId = vegitable_SubId;
     }
 }

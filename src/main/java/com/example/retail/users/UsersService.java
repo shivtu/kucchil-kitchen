@@ -23,4 +23,8 @@ public class UsersService {
     public Optional<Users> getUserByName(String userName) {
         return usersRepository.findByUserName(userName);
     }
+
+    public Users enableUser(String userName) {
+       return usersRepository.enableUser(userName);
+    }
 }

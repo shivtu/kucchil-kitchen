@@ -1,46 +1,56 @@
 package com.example.retail.productsmodel.vegitables;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
-public class VegitablesInventory {
+@Table(name = "vegitables_inventory")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class VegitablesInventory implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "vegitablesinventory_tableid", nullable = false, updatable = false)
     private Long vegitableInventory_TableId;
 
+    @Column(name = "vegitablesinventory_costprice")
     private Float vegitablesInventory_CostPrice;
 
-    private Date vegitablesInventory_Expiry;
+    @Column(name = "vegitablesinventory_expiry")
+    private LocalDate vegitablesInventory_Expiry;
 
+    @Column(name = "vegitablesinventory_maxdiscount")
     private Float vegitablesInventory_MaxDiscount;
 
+    @Column(name = "vegitablesinventory_addedby")
     private String vegitablesInventory_AddedBy;
 
-    private String vegitables_DateTimeAdded;
+    @Column(name = "vegitablesinventory_datetime_added")
+    private String vegitablesInventory_DateTimeAdded;
 
-    private Float vegitables_IncCount;
+    @Column(name = "vegitablesinventory_inccount")
+    private Float vegitablesInventory_IncCount;
 
-    private Float vegitables_FixedCost;
+    @Column(name = "vegitablesinventory_fixedcost")
+    private Float vegitablesInventory_FixedCost;
 
-    @ManyToOne(targetEntity = Vegitables.class)
-    private Vegitables vegitables;
+    private String vegitable_SubId;
 
     public VegitablesInventory(){}
 
-    public VegitablesInventory(Float vegitablesInventory_CostPrice, Date vegitablesInventory_Expiry, Float vegitablesInventory_MaxDiscount, String vegitablesInventory_AddedBy, String vegitables_DateTimeAdded, Float vegitables_IncCount, Float vegitables_FixedCost, Vegitables vegitables) {
+    public VegitablesInventory(Float vegitablesInventory_CostPrice, LocalDate vegitablesInventory_Expiry, Float vegitablesInventory_MaxDiscount, String vegitablesInventory_AddedBy, String vegitablesInventory_DateTimeAdded, Float vegitablesInventory_IncCount, Float vegitablesInventory_FixedCost, String vegitable_SubId) {
         this.vegitablesInventory_CostPrice = vegitablesInventory_CostPrice;
         this.vegitablesInventory_Expiry = vegitablesInventory_Expiry;
         this.vegitablesInventory_MaxDiscount = vegitablesInventory_MaxDiscount;
         this.vegitablesInventory_AddedBy = vegitablesInventory_AddedBy;
-        this.vegitables_DateTimeAdded = vegitables_DateTimeAdded;
-        this.vegitables_IncCount = vegitables_IncCount;
-        this.vegitables_FixedCost = vegitables_FixedCost;
-        this.vegitables = vegitables;
+        this.vegitablesInventory_DateTimeAdded = vegitablesInventory_DateTimeAdded;
+        this.vegitablesInventory_IncCount = vegitablesInventory_IncCount;
+        this.vegitablesInventory_FixedCost = vegitablesInventory_FixedCost;
+        this.vegitable_SubId = vegitable_SubId;
     }
 
     public Long getVegitableInventory_TableId() {
@@ -59,11 +69,11 @@ public class VegitablesInventory {
         this.vegitablesInventory_CostPrice = vegitablesInventory_CostPrice;
     }
 
-    public Date getVegitablesInventory_Expiry() {
+    public LocalDate getVegitablesInventory_Expiry() {
         return vegitablesInventory_Expiry;
     }
 
-    public void setVegitablesInventory_Expiry(Date vegitablesInventory_Expiry) {
+    public void setVegitablesInventory_Expiry(LocalDate vegitablesInventory_Expiry) {
         this.vegitablesInventory_Expiry = vegitablesInventory_Expiry;
     }
 
@@ -83,35 +93,35 @@ public class VegitablesInventory {
         this.vegitablesInventory_AddedBy = vegitablesInventory_AddedBy;
     }
 
-    public String getVegitables_DateTimeAdded() {
-        return vegitables_DateTimeAdded;
+    public String getVegitablesInventory_DateTimeAdded() {
+        return vegitablesInventory_DateTimeAdded;
     }
 
-    public void setVegitables_DateTimeAdded(String vegitables_DateTimeAdded) {
-        this.vegitables_DateTimeAdded = vegitables_DateTimeAdded;
+    public void setVegitablesInventory_DateTimeAdded(String vegitablesInventory_DateTimeAdded) {
+        this.vegitablesInventory_DateTimeAdded = vegitablesInventory_DateTimeAdded;
     }
 
-    public Float getVegitables_IncCount() {
-        return vegitables_IncCount;
+    public Float getVegitablesInventory_IncCount() {
+        return vegitablesInventory_IncCount;
     }
 
-    public void setVegitables_IncCount(Float vegitables_IncCount) {
-        this.vegitables_IncCount = vegitables_IncCount;
+    public void setVegitablesInventory_IncCount(Float vegitablesInventory_IncCount) {
+        this.vegitablesInventory_IncCount = vegitablesInventory_IncCount;
     }
 
-    public Float getVegitables_FixedCost() {
-        return vegitables_FixedCost;
+    public Float getVegitablesInventory_FixedCost() {
+        return vegitablesInventory_FixedCost;
     }
 
-    public void setVegitables_FixedCost(Float vegitables_FixedCost) {
-        this.vegitables_FixedCost = vegitables_FixedCost;
+    public void setVegitablesInventory_FixedCost(Float vegitablesInventory_FixedCost) {
+        this.vegitablesInventory_FixedCost = vegitablesInventory_FixedCost;
     }
 
-    public Vegitables getVegitables() {
-        return vegitables;
+    public String getVegitable_SubId() {
+        return vegitable_SubId;
     }
 
-    public void setVegitables(Vegitables vegitables) {
-        this.vegitables = vegitables;
+    public void setVegitable_SubId(String vegitable_SubId) {
+        this.vegitable_SubId = vegitable_SubId;
     }
 }
