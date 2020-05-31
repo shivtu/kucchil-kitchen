@@ -11,4 +11,8 @@ public class VegitableInventoryService {
     public VegitablesInventory addInventory(VegitablesInventory vegitablesInventory) {
         return vegitableInventoryRepository.save(vegitablesInventory);
     }
+
+    public Integer updateVegitableQty(Long tableId, Float increamentCount){
+        return vegitableInventoryRepository.updateVegitableQty(tableId, increamentCount);
+    }
 }

@@ -1,17 +1,14 @@
 package com.example.retail.controllers.retailer.vegitables_retailer;
 
-import com.example.retail.productsmodel.vegitables.VegitableInventoryService;
-import com.example.retail.productsmodel.vegitables.Vegitables;
-import com.example.retail.productsmodel.vegitables.VegitablesInventory;
-import com.example.retail.productsmodel.vegitables.VegitablesService;
+import com.example.retail.productsmodel.vegitables.*;
 import com.example.retail.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.*;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -28,6 +25,9 @@ public class VegitablesRetailerController {
 
     @Autowired
     JwtUtil jwtUtil;
+
+    @Autowired
+    EntityManagerFactory emf;
 
     @RequestMapping(value = "/findall", method = RequestMethod.GET)
     public ResponseEntity getAllVegitables() {
@@ -94,14 +94,20 @@ public class VegitablesRetailerController {
 
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/update/{vegitable_tableid}")
-    public ResponseEntity updateQty(@PathVariable Long vegitable_tableid, @RequestBody HashMap requestBody){
-        try{
-            requestBody.put("vegitable_tableid", vegitable_tableid);
-            vegitablesService.updateQty(requestBody);
-           return new ResponseEntity(requestBody, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity("fault", HttpStatus.BAD_REQUEST);
+    @RequestMapping(value = "/update/{tableId}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity updateVegitableQty (@PathVariable Long tableId, @RequestBody HashMap<String, Float> requestBody){
+        try {
+            if(requestBody.get("increamentCount") < 0) {
+                return new ResponseEntity("Quantity not allowed", HttpStatus.BAD_REQUEST);
+            }
+            if(vegitableInventoryService.updateVegitableQty(tableId, requestBody.get("increamentCount")).equals(1)){
+                return new ResponseEntity("Update success", HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity("Update unsuccessfull", HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception ex){
+            return new ResponseEntity(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }

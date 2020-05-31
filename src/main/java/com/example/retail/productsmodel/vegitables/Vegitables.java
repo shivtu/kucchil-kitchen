@@ -1,6 +1,5 @@
 package com.example.retail.productsmodel.vegitables;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -20,7 +19,6 @@ import java.util.List;
                 typeClass = JsonBinaryType.class
         )
 })
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Vegitables {
 
     @Id
