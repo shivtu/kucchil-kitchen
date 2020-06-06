@@ -25,175 +25,186 @@ public class Vegitables {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="vegitable_tableid")
-    private Long vegitable_TableId;
+    private Long vegitableTableId;
 
     @NotNull
     @NotEmpty
     @Column(name="vagitable_name")
-    private String vegitable_Name;
+    private String vegitableName;
 
     @Column(name = "vegitable_description")
     @Value("No description available")
-    private String vegitable_Descp;
+    private String vegitableDescp;
 
     @Value("No information available")
     @Column(name = "vegitable_variant")
-    private String vegitable_Variant;
+    private String vegitableVariant;
 
     @Column(name = "vegitable_recepie", columnDefinition = "jsonb")
     @Type(type = "psql-jsonb")
-    private List<VegitableRecipes> vegitable_Recepie;
+    private List<VegitableRecipes> vegitableRecepie;
 
     @NotNull
     @Column(name="vegitable_sellingprice")
     @Min(value = 1, message = "Selling price cannot be less than 1")
-    private Float vegitable_SellingPrice;
+    private Float vegitableSellingPrice;
 
     @Value("0")
     @Column(name = "vegitable_offered_discount")
-    private Float vegitable_OfferedDiscount;
+    private Float vegitableOfferedDiscount;
 
     @NotNull(message = "Should discount be available for this item")
     @Column(name = "vegitable_show_discount")
-    private Boolean vegitable_ShowDiscount;
+    private Boolean vegitableShowDiscount;
 
     @NotNull
     @Min(value = 0, message = "Quantity cannot be less than 0")
     @Column(name="vegitable_quantity")
-    private Float vegitable_Quantity;
+    private Float vegitableQuantity;
 
-    private boolean vegitable_Available;
+    private boolean vegitableAvailable;
     @Value("0")
     @Column(name="vegitable_tax")
-    private Float vegitable_Tax;
+    private Float vegitableTax;
 
     @NotNull
     @NotEmpty
     @Column(name="vegitable_measurementunit")
-    private String vegitable_MeasureMentUnit;
+    private String vegitableMeasureMentUnit;
 
     @Column(name = "vegitable_subid", updatable = false, unique = true)
-    private String vegitable_SubId;
+    private String vegitableSubId;
 
     public Vegitables(){
     }
 
-    public Vegitables(@NotNull @NotEmpty String vegitable_Name, String vegitable_Descp, String vegitable_Variant, List<VegitableRecipes> vegitable_Recepie, @NotNull Float vegitable_SellingPrice, Float vegitable_OfferedDiscount, @NotNull(message = "Should discount be available for this item") Boolean vegitable_ShowDiscount, @NotNull Float vegitable_Quantity, boolean vegitable_Available, Float vegitable_Tax, @NotNull @NotEmpty String vegitable_MeasureMentUnit, String vegitable_SubId) {
-        this.vegitable_Name = vegitable_Name;
-        this.vegitable_Descp = vegitable_Descp;
-        this.vegitable_Variant = vegitable_Variant;
-        this.vegitable_Recepie = vegitable_Recepie;
-        this.vegitable_SellingPrice = vegitable_SellingPrice;
-        this.vegitable_OfferedDiscount = vegitable_OfferedDiscount;
-        this.vegitable_ShowDiscount = vegitable_ShowDiscount;
-        this.vegitable_Quantity = vegitable_Quantity;
-        this.vegitable_Available = vegitable_Available;
-        this.vegitable_Tax = vegitable_Tax;
-        this.vegitable_MeasureMentUnit = vegitable_MeasureMentUnit;
-        this.vegitable_SubId = vegitable_SubId;
+    public Vegitables(
+            @NotNull @NotEmpty String vegitableName,
+            String vegitableDescp, String vegitableVariant,
+            List<VegitableRecipes> vegitableRecepie,
+            @NotNull @Min(value = 1, message = "Selling price cannot be less than 1") Float vegitableSellingPrice,
+            Float vegitableOfferedDiscount,
+            @NotNull(message = "Should discount be available for this item") Boolean vegitableShowDiscount,
+            @NotNull @Min(value = 0, message = "Quantity cannot be less than 0") Float vegitableQuantity,
+            boolean vegitableAvailable,
+            Float vegitableTax,
+            @NotNull @NotEmpty String vegitableMeasureMentUnit,
+            String vegitableSubId) {
+        this.vegitableName = vegitableName;
+        this.vegitableDescp = vegitableDescp;
+        this.vegitableVariant = vegitableVariant;
+        this.vegitableRecepie = vegitableRecepie;
+        this.vegitableSellingPrice = vegitableSellingPrice;
+        this.vegitableOfferedDiscount = vegitableOfferedDiscount;
+        this.vegitableShowDiscount = vegitableShowDiscount;
+        this.vegitableQuantity = vegitableQuantity;
+        this.vegitableAvailable = vegitableAvailable;
+        this.vegitableTax = vegitableTax;
+        this.vegitableMeasureMentUnit = vegitableMeasureMentUnit;
+        this.vegitableSubId = vegitableSubId;
     }
 
-    public Long getVegitable_TableId() {
-        return vegitable_TableId;
+    public Long getVegitableTableId() {
+        return vegitableTableId;
     }
 
-    public void setVegitable_TableId(Long vegitable_TableId) {
-        this.vegitable_TableId = vegitable_TableId;
+    public void setVegitableTableId(Long vegitableTableId) {
+        this.vegitableTableId = vegitableTableId;
     }
 
-    public String getVegitable_Name() {
-        return vegitable_Name;
+    public String getVegitableName() {
+        return vegitableName;
     }
 
-    public void setVegitable_Name(String vegitable_Name) {
-        this.vegitable_Name = vegitable_Name;
+    public void setVegitableName(String vegitableName) {
+        this.vegitableName = vegitableName;
     }
 
-    public String getVegitable_Descp() {
-        return vegitable_Descp;
+    public String getVegitableDescp() {
+        return vegitableDescp;
     }
 
-    public void setVegitable_Descp(String vegitable_Descp) {
-        this.vegitable_Descp = vegitable_Descp;
+    public void setVegitableDescp(String vegitableDescp) {
+        this.vegitableDescp = vegitableDescp;
     }
 
-    public String getVegitable_Variant() {
-        return vegitable_Variant;
+    public String getVegitableVariant() {
+        return vegitableVariant;
     }
 
-    public void setVegitable_Variant(String vegitable_Variant) {
-        this.vegitable_Variant = vegitable_Variant;
+    public void setVegitableVariant(String vegitableVariant) {
+        this.vegitableVariant = vegitableVariant;
     }
 
-    public List<VegitableRecipes> getVegitable_Recepie() {
-        return vegitable_Recepie;
+    public List<VegitableRecipes> getVegitableRecepie() {
+        return vegitableRecepie;
     }
 
-    public void setVegitable_Recepie(List<VegitableRecipes> vegitable_Recepie) {
-        this.vegitable_Recepie = vegitable_Recepie;
+    public void setVegitableRecepie(List<VegitableRecipes> vegitableRecepie) {
+        this.vegitableRecepie = vegitableRecepie;
     }
 
-    public Float getVegitable_SellingPrice() {
-        return vegitable_SellingPrice;
+    public Float getVegitableSellingPrice() {
+        return vegitableSellingPrice;
     }
 
-    public void setVegitable_SellingPrice(Float vegitable_SellingPrice) {
-        this.vegitable_SellingPrice = vegitable_SellingPrice;
+    public void setVegitableSellingPrice(Float vegitableSellingPrice) {
+        this.vegitableSellingPrice = vegitableSellingPrice;
     }
 
-    public Float getVegitable_OfferedDiscount() {
-        return vegitable_OfferedDiscount;
+    public Float getVegitableOfferedDiscount() {
+        return vegitableOfferedDiscount;
     }
 
-    public void setVegitable_OfferedDiscount(Float vegitable_OfferedDiscount) {
-        this.vegitable_OfferedDiscount = vegitable_OfferedDiscount;
+    public void setVegitableOfferedDiscount(Float vegitableOfferedDiscount) {
+        this.vegitableOfferedDiscount = vegitableOfferedDiscount;
     }
 
-    public Boolean getVegitable_ShowDiscount() {
-        return vegitable_ShowDiscount;
+    public Boolean getVegitableShowDiscount() {
+        return vegitableShowDiscount;
     }
 
-    public void setVegitable_ShowDiscount(Boolean vegitable_ShowDiscount) {
-        this.vegitable_ShowDiscount = vegitable_ShowDiscount;
+    public void setVegitableShowDiscount(Boolean vegitableShowDiscount) {
+        this.vegitableShowDiscount = vegitableShowDiscount;
     }
 
-    public Float getVegitable_Quantity() {
-        return vegitable_Quantity;
+    public Float getVegitableQuantity() {
+        return vegitableQuantity;
     }
 
-    public void setVegitable_Quantity(Float vegitable_Quantity) {
-        this.vegitable_Quantity = vegitable_Quantity;
+    public void setVegitableQuantity(Float vegitableQuantity) {
+        this.vegitableQuantity = vegitableQuantity;
     }
 
-    public boolean isVegitable_Available() {
-        return vegitable_Available;
+    public boolean isVegitableAvailable() {
+        return vegitableAvailable;
     }
 
-    public void setVegitable_Available(boolean vegitable_Available) {
-        this.vegitable_Available = vegitable_Available;
+    public void setVegitableAvailable(boolean vegitableAvailable) {
+        this.vegitableAvailable = vegitableAvailable;
     }
 
-    public Float getVegitable_Tax() {
-        return vegitable_Tax;
+    public Float getVegitableTax() {
+        return vegitableTax;
     }
 
-    public void setVegitable_Tax(Float vegitable_Tax) {
-        this.vegitable_Tax = vegitable_Tax;
+    public void setVegitableTax(Float vegitableTax) {
+        this.vegitableTax = vegitableTax;
     }
 
-    public String getVegitable_MeasureMentUnit() {
-        return vegitable_MeasureMentUnit;
+    public String getVegitableMeasureMentUnit() {
+        return vegitableMeasureMentUnit;
     }
 
-    public void setVegitable_MeasureMentUnit(String vegitable_MeasureMentUnit) {
-        this.vegitable_MeasureMentUnit = vegitable_MeasureMentUnit;
+    public void setVegitableMeasureMentUnit(String vegitableMeasureMentUnit) {
+        this.vegitableMeasureMentUnit = vegitableMeasureMentUnit;
     }
 
-    public String getVegitable_SubId() {
-        return vegitable_SubId;
+    public String getVegitableSubId() {
+        return vegitableSubId;
     }
 
-    public void setVegitable_SubId(String vegitable_SubId) {
-        this.vegitable_SubId = vegitable_SubId;
+    public void setVegitableSubId(String vegitableSubId) {
+        this.vegitableSubId = vegitableSubId;
     }
 }

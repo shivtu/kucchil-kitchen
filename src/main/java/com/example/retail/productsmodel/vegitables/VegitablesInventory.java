@@ -28,100 +28,101 @@ public class VegitablesInventory implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "vegitablesinventory_tableid", nullable = false, updatable = false)
-    private Long vegitableInventory_TableId;
+    private Long vegitableInventoryTableId;
 
     @Column(name = "vegitablesinventory_costprice")
     @Min(value = 0, message = "Cost price cannot be 0")
-    private Float vegitablesInventory_CostPrice;
+    private Float vegitablesInventoryCostPrice;
 
     @Column(name = "vegitablesinventory_expiry")
-    private LocalDate vegitablesInventory_Expiry;
+    private LocalDate vegitablesInventoryExpiry;
 
     @Column(name = "vegitablesinventory_maxdiscount")
     @Min(value = 0)
-    private Float vegitablesInventory_MaxDiscount;
+    private Float vegitablesInventoryMaxDiscount;
 
     @Column(name = "vegitablesinventory_fixedcost")
-    private Float vegitablesInventory_FixedCost;
+    private Float vegitablesInventoryFixedCost;
 
     @Column(name = "vegitablesinventory_addtion_details", columnDefinition = "jsonb")
     @Type(type = "psql-jsonb")
-    private List<VegitableAdditionDetails> vegitablesInventory_AdditionDetails;
+    private List<VegitableAdditionDetails> vegitablesInventoryAdditionDetails;
 
 
     @Column(name = "vegitable_subid")
-    private String vegitable_SubId;
+    private String vegitableSubId;
 
-    public VegitablesInventory(){}
+    public VegitablesInventory() {
+    }
 
     public VegitablesInventory(
-            @Min(value = 0, message = "Cost price cannot be 0") Float vegitablesInventory_CostPrice,
-            LocalDate vegitablesInventory_Expiry,
-            @Min(value = 0) Float vegitablesInventory_MaxDiscount,
-            Float vegitablesInventory_FixedCost,
-            List<VegitableAdditionDetails> vegitablesInventory_AdditionDetails,
-            String vegitable_SubId) {
-        this.vegitablesInventory_CostPrice = vegitablesInventory_CostPrice;
-        this.vegitablesInventory_Expiry = vegitablesInventory_Expiry;
-        this.vegitablesInventory_MaxDiscount = vegitablesInventory_MaxDiscount;
-        this.vegitablesInventory_FixedCost = vegitablesInventory_FixedCost;
-        this.vegitablesInventory_AdditionDetails = vegitablesInventory_AdditionDetails;
-        this.vegitable_SubId = vegitable_SubId;
+            @Min(value = 0, message = "Cost price cannot be 0") Float vegitablesInventoryCostPrice,
+            LocalDate vegitablesInventoryExpiry,
+            @Min(value = 0) Float vegitablesInventoryMaxDiscount,
+            Float vegitablesInventoryFixedCost,
+            List<VegitableAdditionDetails> vegitablesInventoryAdditionDetails,
+            String vegitableSubId) {
+        this.vegitablesInventoryCostPrice = vegitablesInventoryCostPrice;
+        this.vegitablesInventoryExpiry = vegitablesInventoryExpiry;
+        this.vegitablesInventoryMaxDiscount = vegitablesInventoryMaxDiscount;
+        this.vegitablesInventoryFixedCost = vegitablesInventoryFixedCost;
+        this.vegitablesInventoryAdditionDetails = vegitablesInventoryAdditionDetails;
+        this.vegitableSubId = vegitableSubId;
     }
 
-    public Long getVegitableInventory_TableId() {
-        return vegitableInventory_TableId;
+    public Long getVegitableInventoryTableId() {
+        return vegitableInventoryTableId;
     }
 
-    public void setVegitableInventory_TableId(Long vegitableInventory_TableId) {
-        this.vegitableInventory_TableId = vegitableInventory_TableId;
+    public void setVegitableInventoryTableId(Long vegitableInventoryTableId) {
+        this.vegitableInventoryTableId = vegitableInventoryTableId;
     }
 
-    public Float getVegitablesInventory_CostPrice() {
-        return vegitablesInventory_CostPrice;
+    public Float getVegitablesInventoryCostPrice() {
+        return vegitablesInventoryCostPrice;
     }
 
-    public void setVegitablesInventory_CostPrice(Float vegitablesInventory_CostPrice) {
-        this.vegitablesInventory_CostPrice = vegitablesInventory_CostPrice;
+    public void setVegitablesInventoryCostPrice(Float vegitablesInventoryCostPrice) {
+        this.vegitablesInventoryCostPrice = vegitablesInventoryCostPrice;
     }
 
-    public LocalDate getVegitablesInventory_Expiry() {
-        return vegitablesInventory_Expiry;
+    public LocalDate getVegitablesInventoryExpiry() {
+        return vegitablesInventoryExpiry;
     }
 
-    public void setVegitablesInventory_Expiry(LocalDate vegitablesInventory_Expiry) {
-        this.vegitablesInventory_Expiry = vegitablesInventory_Expiry;
+    public void setVegitablesInventoryExpiry(LocalDate vegitablesInventoryExpiry) {
+        this.vegitablesInventoryExpiry = vegitablesInventoryExpiry;
     }
 
-    public Float getVegitablesInventory_MaxDiscount() {
-        return vegitablesInventory_MaxDiscount;
+    public Float getVegitablesInventoryMaxDiscount() {
+        return vegitablesInventoryMaxDiscount;
     }
 
-    public void setVegitablesInventory_MaxDiscount(Float vegitablesInventory_MaxDiscount) {
-        this.vegitablesInventory_MaxDiscount = vegitablesInventory_MaxDiscount;
+    public void setVegitablesInventoryMaxDiscount(Float vegitablesInventoryMaxDiscount) {
+        this.vegitablesInventoryMaxDiscount = vegitablesInventoryMaxDiscount;
     }
 
-    public Float getVegitablesInventory_FixedCost() {
-        return vegitablesInventory_FixedCost;
+    public Float getVegitablesInventoryFixedCost() {
+        return vegitablesInventoryFixedCost;
     }
 
-    public void setVegitablesInventory_FixedCost(Float vegitablesInventory_FixedCost) {
-        this.vegitablesInventory_FixedCost = vegitablesInventory_FixedCost;
+    public void setVegitablesInventoryFixedCost(Float vegitablesInventoryFixedCost) {
+        this.vegitablesInventoryFixedCost = vegitablesInventoryFixedCost;
     }
 
-    public List<VegitableAdditionDetails> getVegitablesInventory_AdditionDetails() {
-        return vegitablesInventory_AdditionDetails;
+    public List<VegitableAdditionDetails> getVegitablesInventoryAdditionDetails() {
+        return vegitablesInventoryAdditionDetails;
     }
 
-    public void setVegitablesInventory_AdditionDetails(List<VegitableAdditionDetails> vegitablesInventory_AdditionDetails) {
-        this.vegitablesInventory_AdditionDetails = vegitablesInventory_AdditionDetails;
+    public void setVegitablesInventoryAdditionDetails(List<VegitableAdditionDetails> vegitablesInventoryAdditionDetails) {
+        this.vegitablesInventoryAdditionDetails = vegitablesInventoryAdditionDetails;
     }
 
-    public String getVegitable_SubId() {
-        return vegitable_SubId;
+    public String getVegitableSubId() {
+        return vegitableSubId;
     }
 
-    public void setVegitable_SubId(String vegitable_SubId) {
-        this.vegitable_SubId = vegitable_SubId;
+    public void setVegitableSubId(String vegitableSubId) {
+        this.vegitableSubId = vegitableSubId;
     }
 }

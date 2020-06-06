@@ -23,7 +23,7 @@ public class VegitableInventoryService {
         return vegitableInventoryRepository.findById(id);
     }
 
-    public Optional<VegitablesInventory> getVegitableInventoryBySubId(String subId) {
-        return vegitableInventoryRepository.getVegitableInventoryBySubId(subId);
+    public VegitablesInventory findByvegitableSubId(String vegitableSubId) {
+        return vegitableInventoryRepository.findByVegitableSubId(vegitableSubId);
     }
 }

@@ -42,6 +42,11 @@ public class VegitablesRetailerController {
         return new ResponseEntity(vegitablesService.getAllVegitables(), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/find/subid/{vegitableSubId}")
+    public VegitablesInventory findBySubId(@PathVariable String vegitableSubId) {
+        return vegitableInventoryService.findByvegitableSubId(vegitableSubId);
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addAllVegitables(HttpServletRequest request,
@@ -51,45 +56,48 @@ public class VegitablesRetailerController {
 
                     // create new vegitable
                     Vegitables vegitables = new Vegitables();
-                    vegitables.setVegitable_Name(newVegitables.getVegitable_Name());
-                    vegitables.setVegitable_Descp(newVegitables.getVegitable_Descp());
-                    vegitables.setVegitable_Variant(newVegitables.getVegitable_Variant());
+                    vegitables.setVegitableName(newVegitables.getVegitableName());
+                    vegitables.setVegitableDescp(newVegitables.getVegitableDescp());
+                    vegitables.setVegitableVariant(newVegitables.getVegitableVariant());
+
+                    // Create new List and add recepie to the List
                     List vegitableRecepieList = new ArrayList();
-                    vegitableRecepieList.add(newVegitables.getVegitable_Recepie());
-                    vegitables.setVegitable_Recepie(vegitableRecepieList);
-                    vegitables.setVegitable_SellingPrice(newVegitables.getVegitable_SellingPrice());
-                    vegitables.setVegitable_OfferedDiscount(newVegitables.getVegitable_OfferedDiscount());
-                    vegitables.setVegitable_ShowDiscount(newVegitables.getVegitable_ShowDiscount());
-                    vegitables.setVegitable_Quantity(newVegitables.getVegitable_Quantity());
-                    vegitables.setVegitable_Available(newVegitables.isVegitable_Available());
-                    vegitables.setVegitable_Tax(newVegitables.getVegitable_Tax());
-                    vegitables.setVegitable_MeasureMentUnit(newVegitables.getVegitable_MeasureMentUnit());
+                    vegitableRecepieList.add(newVegitables.getVegitableRecepie());
+
+                    vegitables.setVegitableRecepie(vegitableRecepieList);
+                    vegitables.setVegitableSellingPrice(newVegitables.getVegitableSellingPrice());
+                    vegitables.setVegitableOfferedDiscount(newVegitables.getVegitableOfferedDiscount());
+                    vegitables.setVegitableShowDiscount(newVegitables.getVegitableShowDiscount());
+                    vegitables.setVegitableQuantity(newVegitables.getVegitableQuantity());
+                    vegitables.setVegitableAvailable(newVegitables.isVegitableAvailable());
+                    vegitables.setVegitableTax(newVegitables.getVegitableTax());
+                    vegitables.setVegitableMeasureMentUnit(newVegitables.getVegitableMeasureMentUnit());
                     // Create a unique subID
-                    vegitables.setVegitable_SubId(newVegitables.getVegitable_Name() + newVegitables.getVegitable_Variant()
-                            + newVegitables.getVegitablesInventory_CostPrice() + newVegitables.getVegitablesInventory_Expiry()
-                            + newVegitables.getVegitablesInventory_FixedCost());
+                    vegitables.setVegitableSubId(newVegitables.getVegitableName() + newVegitables.getVegitableVariant()
+                            + newVegitables.getVegitablesInventoryCostPrice() + newVegitables.getVegitablesInventoryExpiry()
+                            + newVegitables.getVegitablesInventoryFixedCost());
 
                     // Create vegitable inventory
                     VegitablesInventory vegitablesInventory = new VegitablesInventory();
-                    vegitablesInventory.setVegitablesInventory_CostPrice(newVegitables.getVegitablesInventory_CostPrice());
-                    vegitablesInventory.setVegitablesInventory_Expiry(newVegitables.getVegitablesInventory_Expiry());
-                    vegitablesInventory.setVegitablesInventory_MaxDiscount(newVegitables.getVegitablesInventory_MaxDiscount());
+                    vegitablesInventory.setVegitablesInventoryCostPrice(newVegitables.getVegitablesInventoryCostPrice());
+                    vegitablesInventory.setVegitablesInventoryExpiry(newVegitables.getVegitablesInventoryExpiry());
+                    vegitablesInventory.setVegitablesInventoryMaxDiscount(newVegitables.getVegitablesInventoryMaxDiscount());
 
                     // Create VegitableAdditionDetails
                     VegitableAdditionDetails vegitableAdditionDetails = new VegitableAdditionDetails();
                     vegitableAdditionDetails.setAddedBy(vegitable_AddedBy);
                     vegitableAdditionDetails.setAddedDateTime(LocalDateTime.now());
-                    vegitableAdditionDetails.setIncreamentCount(newVegitables.getVegitable_Quantity());
+                    vegitableAdditionDetails.setIncreamentCount(newVegitables.getVegitableQuantity());
 
                     List vegitableDetailsList = new ArrayList();
                     vegitableDetailsList.add(vegitableAdditionDetails);
 
-                    vegitablesInventory.setVegitablesInventory_AdditionDetails(vegitableDetailsList);
-                    vegitablesInventory.setVegitablesInventory_FixedCost(newVegitables.getVegitablesInventory_FixedCost());
+                    vegitablesInventory.setVegitablesInventoryAdditionDetails(vegitableDetailsList);
+                    vegitablesInventory.setVegitablesInventoryFixedCost(newVegitables.getVegitablesInventoryFixedCost());
                     // Create a unique subID
-                    vegitablesInventory.setVegitable_SubId(newVegitables.getVegitable_Name() + newVegitables.getVegitable_Variant()
-                            + newVegitables.getVegitablesInventory_CostPrice() + newVegitables.getVegitablesInventory_Expiry()
-                            + newVegitables.getVegitablesInventory_FixedCost());
+                    vegitablesInventory.setVegitableSubId(newVegitables.getVegitableName() + newVegitables.getVegitableVariant()
+                            + newVegitables.getVegitablesInventoryCostPrice() + newVegitables.getVegitablesInventoryExpiry()
+                            + newVegitables.getVegitablesInventoryFixedCost());
 
                     // Persist the vegitable
                     Vegitables createdVeg = vegitablesService.addOneVegitable(vegitables);

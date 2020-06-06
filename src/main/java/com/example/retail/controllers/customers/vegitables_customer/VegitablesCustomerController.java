@@ -24,7 +24,7 @@ public class VegitablesCustomerController {
         List<Object> finalResponse = new ArrayList<Object>();
         result.forEach(vegitables -> {
             HashMap<String, Object> perObject = new HashMap<>();
-            perObject.put("productName", vegitables.getVegitable_Name());
+            perObject.put("productName", vegitables.getVegitableName());
             finalResponse.add(perObject);
             perObject = null;
         });

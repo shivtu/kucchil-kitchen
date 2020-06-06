@@ -7,211 +7,213 @@ import java.util.List;
 
 public class AddVegitablesRequestBody {
 
-    private String vegitable_Name;
+    private String vegitableName;
 
-    private String vegitable_Descp;
+    private String vegitableDescp;
 
-    private String vegitable_Variant;
+    private String vegitableVariant;
 
-    private VegitableRecipes vegitable_Recepie;
+    private VegitableRecipes vegitableRecepie;
 
-    private Float vegitable_SellingPrice;
+    private Float vegitableSellingPrice;
 
-    private Float vegitable_MaxDiscount;
+    private Float vegitableMaxDiscount;
 
-    private Float vegitable_OfferedDiscount;
+    private Float vegitableOfferedDiscount;
 
-    private Boolean vegitable_ShowDiscount;
+    private Boolean vegitableShowDiscount;
 
-    private Float vegitable_Quantity;
+    private Float vegitableQuantity;
 
-    private boolean vegitable_Available;
+    private boolean vegitableAvailable;
 
-    private Float vegitable_Tax;
+    private Float vegitableTax;
 
-    private String vegitable_MeasureMentUnit;
+    private String vegitableMeasureMentUnit;
 
-    private Float vegitablesInventory_CostPrice;
+    private Float vegitablesInventoryCostPrice;
 
-    private LocalDate vegitablesInventory_Expiry;
+    private LocalDate vegitablesInventoryExpiry;
 
-    private Float vegitablesInventory_MaxDiscount;
+    private Float vegitablesInventoryMaxDiscount;
 
-    private Float vegitablesInventory_FixedCost;
+    private Float vegitablesInventoryFixedCost;
 
-    private String vegitable_SubId;
+    private String vegitableSubId;
 
     public AddVegitablesRequestBody(){}
 
     public AddVegitablesRequestBody(
-            String vegitable_Name,
-            String vegitable_Descp, String vegitable_Variant,
-            VegitableRecipes vegitable_Recepie,
-            Float vegitable_SellingPrice,
-            Float vegitable_MaxDiscount,
-            Float vegitable_OfferedDiscount,
-            Boolean vegitable_ShowDiscount,
-            Float vegitable_Quantity,
-            boolean vegitable_Available,
-            Float vegitable_Tax,
-            String vegitable_MeasureMentUnit,
-            Float vegitablesInventory_CostPrice,
-            LocalDate vegitablesInventory_Expiry,
-            Float vegitablesInventory_MaxDiscount,
-            Float vegitablesInventory_FixedCost,
-            String vegitable_SubId) {
-        this.vegitable_Name = vegitable_Name;
-        this.vegitable_Descp = vegitable_Descp;
-        this.vegitable_Variant = vegitable_Variant;
-        this.vegitable_Recepie = vegitable_Recepie;
-        this.vegitable_SellingPrice = vegitable_SellingPrice;
-        this.vegitable_MaxDiscount = vegitable_MaxDiscount;
-        this.vegitable_OfferedDiscount = vegitable_OfferedDiscount;
-        this.vegitable_ShowDiscount = vegitable_ShowDiscount;
-        this.vegitable_Quantity = vegitable_Quantity;
-        this.vegitable_Available = vegitable_Available;
-        this.vegitable_Tax = vegitable_Tax;
-        this.vegitable_MeasureMentUnit = vegitable_MeasureMentUnit;
-        this.vegitablesInventory_CostPrice = vegitablesInventory_CostPrice;
-        this.vegitablesInventory_Expiry = vegitablesInventory_Expiry;
-        this.vegitablesInventory_MaxDiscount = vegitablesInventory_MaxDiscount;
-        this.vegitablesInventory_FixedCost = vegitablesInventory_FixedCost;
-        this.vegitable_SubId = vegitable_SubId;
+            String vegitableName,
+            String vegitableDescp,
+            String vegitableVariant,
+            VegitableRecipes vegitableRecepie,
+            Float vegitableSellingPrice,
+            Float vegitableMaxDiscount,
+            Float vegitableOfferedDiscount,
+            Boolean vegitableShowDiscount,
+            Float vegitableQuantity,
+            boolean vegitableAvailable,
+            Float vegitableTax,
+            String vegitableMeasureMentUnit,
+            Float vegitablesInventoryCostPrice,
+            LocalDate vegitablesInventoryExpiry,
+            Float vegitablesInventoryMaxDiscount,
+            Float vegitablesInventoryFixedCost,
+            String vegitableSubId) {
+
+        this.vegitableName = vegitableName;
+        this.vegitableDescp = vegitableDescp;
+        this.vegitableVariant = vegitableVariant;
+        this.vegitableRecepie = vegitableRecepie;
+        this.vegitableSellingPrice = vegitableSellingPrice;
+        this.vegitableMaxDiscount = vegitableMaxDiscount;
+        this.vegitableOfferedDiscount = vegitableOfferedDiscount;
+        this.vegitableShowDiscount = vegitableShowDiscount;
+        this.vegitableQuantity = vegitableQuantity;
+        this.vegitableAvailable = vegitableAvailable;
+        this.vegitableTax = vegitableTax;
+        this.vegitableMeasureMentUnit = vegitableMeasureMentUnit;
+        this.vegitablesInventoryCostPrice = vegitablesInventoryCostPrice;
+        this.vegitablesInventoryExpiry = vegitablesInventoryExpiry;
+        this.vegitablesInventoryMaxDiscount = vegitablesInventoryMaxDiscount;
+        this.vegitablesInventoryFixedCost = vegitablesInventoryFixedCost;
+        this.vegitableSubId = vegitableSubId;
     }
 
-    public String getVegitable_Name() {
-        return vegitable_Name;
+    public String getVegitableName() {
+        return vegitableName;
     }
 
-    public void setVegitable_Name(String vegitable_Name) {
-        this.vegitable_Name = vegitable_Name;
+    public void setVegitableName(String vegitableName) {
+        this.vegitableName = vegitableName;
     }
 
-    public String getVegitable_Descp() {
-        return vegitable_Descp;
+    public String getVegitableDescp() {
+        return vegitableDescp;
     }
 
-    public void setVegitable_Descp(String vegitable_Descp) {
-        this.vegitable_Descp = vegitable_Descp;
+    public void setVegitableDescp(String vegitableDescp) {
+        this.vegitableDescp = vegitableDescp;
     }
 
-    public String getVegitable_Variant() {
-        return vegitable_Variant;
+    public String getVegitableVariant() {
+        return vegitableVariant;
     }
 
-    public void setVegitable_Variant(String vegitable_Variant) {
-        this.vegitable_Variant = vegitable_Variant;
+    public void setVegitableVariant(String vegitableVariant) {
+        this.vegitableVariant = vegitableVariant;
     }
 
-    public VegitableRecipes getVegitable_Recepie() {
-        return vegitable_Recepie;
+    public VegitableRecipes getVegitableRecepie() {
+        return vegitableRecepie;
     }
 
-    public void setVegitable_Recepie(VegitableRecipes vegitable_Recepie) {
-        this.vegitable_Recepie = vegitable_Recepie;
+    public void setVegitableRecepie(VegitableRecipes vegitableRecepie) {
+        this.vegitableRecepie = vegitableRecepie;
     }
 
-    public Float getVegitable_SellingPrice() {
-        return vegitable_SellingPrice;
+    public Float getVegitableSellingPrice() {
+        return vegitableSellingPrice;
     }
 
-    public void setVegitable_SellingPrice(Float vegitable_SellingPrice) {
-        this.vegitable_SellingPrice = vegitable_SellingPrice;
+    public void setVegitableSellingPrice(Float vegitableSellingPrice) {
+        this.vegitableSellingPrice = vegitableSellingPrice;
     }
 
-    public Float getVegitable_MaxDiscount() {
-        return vegitable_MaxDiscount;
+    public Float getVegitableMaxDiscount() {
+        return vegitableMaxDiscount;
     }
 
-    public void setVegitable_MaxDiscount(Float vegitable_MaxDiscount) {
-        this.vegitable_MaxDiscount = vegitable_MaxDiscount;
+    public void setVegitableMaxDiscount(Float vegitableMaxDiscount) {
+        this.vegitableMaxDiscount = vegitableMaxDiscount;
     }
 
-    public Float getVegitable_OfferedDiscount() {
-        return vegitable_OfferedDiscount;
+    public Float getVegitableOfferedDiscount() {
+        return vegitableOfferedDiscount;
     }
 
-    public void setVegitable_OfferedDiscount(Float vegitable_OfferedDiscount) {
-        this.vegitable_OfferedDiscount = vegitable_OfferedDiscount;
+    public void setVegitableOfferedDiscount(Float vegitableOfferedDiscount) {
+        this.vegitableOfferedDiscount = vegitableOfferedDiscount;
     }
 
-    public Boolean getVegitable_ShowDiscount() {
-        return vegitable_ShowDiscount;
+    public Boolean getVegitableShowDiscount() {
+        return vegitableShowDiscount;
     }
 
-    public void setVegitable_ShowDiscount(Boolean vegitable_ShowDiscount) {
-        this.vegitable_ShowDiscount = vegitable_ShowDiscount;
+    public void setVegitableShowDiscount(Boolean vegitableShowDiscount) {
+        this.vegitableShowDiscount = vegitableShowDiscount;
     }
 
-    public Float getVegitable_Quantity() {
-        return vegitable_Quantity;
+    public Float getVegitableQuantity() {
+        return vegitableQuantity;
     }
 
-    public void setVegitable_Quantity(Float vegitable_Quantity) {
-        this.vegitable_Quantity = vegitable_Quantity;
+    public void setVegitableQuantity(Float vegitableQuantity) {
+        this.vegitableQuantity = vegitableQuantity;
     }
 
-    public boolean isVegitable_Available() {
-        return vegitable_Available;
+    public boolean isVegitableAvailable() {
+        return vegitableAvailable;
     }
 
-    public void setVegitable_Available(boolean vegitable_Available) {
-        this.vegitable_Available = vegitable_Available;
+    public void setVegitableAvailable(boolean vegitableAvailable) {
+        this.vegitableAvailable = vegitableAvailable;
     }
 
-    public Float getVegitable_Tax() {
-        return vegitable_Tax;
+    public Float getVegitableTax() {
+        return vegitableTax;
     }
 
-    public void setVegitable_Tax(Float vegitable_Tax) {
-        this.vegitable_Tax = vegitable_Tax;
+    public void setVegitableTax(Float vegitableTax) {
+        this.vegitableTax = vegitableTax;
     }
 
-    public String getVegitable_MeasureMentUnit() {
-        return vegitable_MeasureMentUnit;
+    public String getVegitableMeasureMentUnit() {
+        return vegitableMeasureMentUnit;
     }
 
-    public void setVegitable_MeasureMentUnit(String vegitable_MeasureMentUnit) {
-        this.vegitable_MeasureMentUnit = vegitable_MeasureMentUnit;
+    public void setVegitableMeasureMentUnit(String vegitableMeasureMentUnit) {
+        this.vegitableMeasureMentUnit = vegitableMeasureMentUnit;
     }
 
-    public Float getVegitablesInventory_CostPrice() {
-        return vegitablesInventory_CostPrice;
+    public Float getVegitablesInventoryCostPrice() {
+        return vegitablesInventoryCostPrice;
     }
 
-    public void setVegitablesInventory_CostPrice(Float vegitablesInventory_CostPrice) {
-        this.vegitablesInventory_CostPrice = vegitablesInventory_CostPrice;
+    public void setVegitablesInventoryCostPrice(Float vegitablesInventoryCostPrice) {
+        this.vegitablesInventoryCostPrice = vegitablesInventoryCostPrice;
     }
 
-    public LocalDate getVegitablesInventory_Expiry() {
-        return vegitablesInventory_Expiry;
+    public LocalDate getVegitablesInventoryExpiry() {
+        return vegitablesInventoryExpiry;
     }
 
-    public void setVegitablesInventory_Expiry(LocalDate vegitablesInventory_Expiry) {
-        this.vegitablesInventory_Expiry = vegitablesInventory_Expiry;
+    public void setVegitablesInventoryExpiry(LocalDate vegitablesInventoryExpiry) {
+        this.vegitablesInventoryExpiry = vegitablesInventoryExpiry;
     }
 
-    public Float getVegitablesInventory_MaxDiscount() {
-        return vegitablesInventory_MaxDiscount;
+    public Float getVegitablesInventoryMaxDiscount() {
+        return vegitablesInventoryMaxDiscount;
     }
 
-    public void setVegitablesInventory_MaxDiscount(Float vegitablesInventory_MaxDiscount) {
-        this.vegitablesInventory_MaxDiscount = vegitablesInventory_MaxDiscount;
+    public void setVegitablesInventoryMaxDiscount(Float vegitablesInventoryMaxDiscount) {
+        this.vegitablesInventoryMaxDiscount = vegitablesInventoryMaxDiscount;
     }
 
-    public Float getVegitablesInventory_FixedCost() {
-        return vegitablesInventory_FixedCost;
+    public Float getVegitablesInventoryFixedCost() {
+        return vegitablesInventoryFixedCost;
     }
 
-    public void setVegitablesInventory_FixedCost(Float vegitablesInventory_FixedCost) {
-        this.vegitablesInventory_FixedCost = vegitablesInventory_FixedCost;
+    public void setVegitablesInventoryFixedCost(Float vegitablesInventoryFixedCost) {
+        this.vegitablesInventoryFixedCost = vegitablesInventoryFixedCost;
     }
 
-    public String getVegitable_SubId() {
-        return vegitable_SubId;
+    public String getVegitableSubId() {
+        return vegitableSubId;
     }
 
-    public void setVegitable_SubId(String vegitable_SubId) {
-        this.vegitable_SubId = vegitable_SubId;
+    public void setVegitableSubId(String vegitableSubId) {
+        this.vegitableSubId = vegitableSubId;
     }
 }

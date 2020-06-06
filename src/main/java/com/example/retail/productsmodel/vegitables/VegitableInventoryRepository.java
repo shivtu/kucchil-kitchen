@@ -17,6 +17,8 @@ public interface VegitableInventoryRepository extends JpaRepository<VegitablesIn
 //    @Query(value = "UPDATE VegitablesInventory vi SET vi.vegitablesInventory_AdditionDetails = increamentCount WHERE vi.vegitableInventory_TableId=:tableId")
 //    Integer updateVegitableQty(@Param("tableId") Long tableId, @Param("increamentCount") Float increamentCount);
 
-    @Query(value = "SELECT vegitablesInventory_CostPrice FROM VegitablesInventory vi WHERE vi.vegitable_SubId= :subId")
-    Optional<VegitablesInventory> getVegitableInventoryBySubId(@Param("subId") String vegitable_SubId);
+//    @Query(value = "SELECT vegitablesInventory_CostPrice FROM VegitablesInventory vi WHERE vi.vegitable_SubId= :subId")
+//    Optional<VegitablesInventory> getVegitableInventoryBySubId(@Param("subId") String vegitable_SubId);
+
+    public VegitablesInventory findByVegitableSubId(String vegitableSubId);
 }
