@@ -29,6 +29,14 @@ public class VegitablesRetailerController {
     @Autowired
     EntityManagerFactory emf;
 
+    private String getUserName(HttpServletRequest request) {
+        // Get authorization header and find current user
+        final String authorizationHeader = request.getHeader("Authorization");
+        String jwt = authorizationHeader.substring(7);
+        String requestingUser = jwtUtil.extractUsername(jwt);
+        return requestingUser;
+    }
+
     @RequestMapping(value = "/findall", method = RequestMethod.GET)
     public ResponseEntity getAllVegitables() {
         return new ResponseEntity(vegitablesService.getAllVegitables(), HttpStatus.OK);
@@ -38,11 +46,7 @@ public class VegitablesRetailerController {
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addAllVegitables(HttpServletRequest request,
                                            @RequestBody AddVegitablesRequestBody newVegitables) {
-
-                // Get authorization header and find current user
-                final String authorizationHeader = request.getHeader("Authorization");
-                String jwt = authorizationHeader.substring(7);
-                String vegitable_AddedBy = jwtUtil.extractUsername(jwt);
+                String vegitable_AddedBy = getUserName(request);
                 try {
 
                     // create new vegitable
@@ -50,7 +54,9 @@ public class VegitablesRetailerController {
                     vegitables.setVegitable_Name(newVegitables.getVegitable_Name());
                     vegitables.setVegitable_Descp(newVegitables.getVegitable_Descp());
                     vegitables.setVegitable_Variant(newVegitables.getVegitable_Variant());
-                    vegitables.setVegitable_Recepie(newVegitables.getVegitable_Recepie());
+                    List vegitableRecepieList = new ArrayList();
+                    vegitableRecepieList.add(newVegitables.getVegitable_Recepie());
+                    vegitables.setVegitable_Recepie(vegitableRecepieList);
                     vegitables.setVegitable_SellingPrice(newVegitables.getVegitable_SellingPrice());
                     vegitables.setVegitable_OfferedDiscount(newVegitables.getVegitable_OfferedDiscount());
                     vegitables.setVegitable_ShowDiscount(newVegitables.getVegitable_ShowDiscount());
@@ -68,9 +74,17 @@ public class VegitablesRetailerController {
                     vegitablesInventory.setVegitablesInventory_CostPrice(newVegitables.getVegitablesInventory_CostPrice());
                     vegitablesInventory.setVegitablesInventory_Expiry(newVegitables.getVegitablesInventory_Expiry());
                     vegitablesInventory.setVegitablesInventory_MaxDiscount(newVegitables.getVegitablesInventory_MaxDiscount());
-                    vegitablesInventory.setVegitablesInventory_AddedBy(vegitable_AddedBy);
-                    vegitablesInventory.setVegitablesInventory_DateTimeAdded(LocalDateTime.now().toString());
-                    vegitablesInventory.setVegitablesInventory_IncCount(newVegitables.getVegitable_Quantity()); // Increament quantity = the quantity when adding the product
+
+                    // Create VegitableAdditionDetails
+                    VegitableAdditionDetails vegitableAdditionDetails = new VegitableAdditionDetails();
+                    vegitableAdditionDetails.setAddedBy(vegitable_AddedBy);
+                    vegitableAdditionDetails.setAddedDateTime(LocalDateTime.now());
+                    vegitableAdditionDetails.setIncreamentCount(newVegitables.getVegitable_Quantity());
+
+                    List vegitableDetailsList = new ArrayList();
+                    vegitableDetailsList.add(vegitableAdditionDetails);
+
+                    vegitablesInventory.setVegitablesInventory_AdditionDetails(vegitableDetailsList);
                     vegitablesInventory.setVegitablesInventory_FixedCost(newVegitables.getVegitablesInventory_FixedCost());
                     // Create a unique subID
                     vegitablesInventory.setVegitable_SubId(newVegitables.getVegitable_Name() + newVegitables.getVegitable_Variant()
@@ -96,18 +110,24 @@ public class VegitablesRetailerController {
 
     @RequestMapping(value = "/update/{tableId}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity updateVegitableQty (@PathVariable Long tableId, @RequestBody HashMap<String, Float> requestBody){
+    public ResponseEntity updateVegitableQty (@PathVariable Long tableId, @RequestBody AddVegitablesRequestBody requestBody,
+                                              HttpServletRequest request){
         try {
-            if(requestBody.get("increamentCount") < 0) {
-                return new ResponseEntity("Quantity not allowed", HttpStatus.BAD_REQUEST);
-            }
-            if(vegitableInventoryService.updateVegitableQty(tableId, requestBody.get("increamentCount")).equals(1)){
-                return new ResponseEntity("Update success", HttpStatus.CREATED);
-            } else {
-                return new ResponseEntity("Update unsuccessfull", HttpStatus.BAD_REQUEST);
-            }
+//            String addedBy = getUserName(request);
+//            Float increamentCount = requestBody.getVegitable_Quantity();
+//            LocalDateTime dateTimeAdded = LocalDateTime.now();
+//            String subId = requestBody.getVegitable_SubId();
+//
+//            vegitableInventoryService.getVegitableInventoryBySubId(subId);
+//            if(vegitablesService.updateQty(tableId, increamentCount).equals(1)
+//                    && vegitableInventoryService.updateVegitableQty(tableId, increamentCount).equals(1)) {
+//                return new ResponseEntity("Created", HttpStatus.CREATED);
+//            } else {
+//                return new ResponseEntity("Failed", HttpStatus.INTERNAL_SERVER_ERROR);
+//            }
+            return new ResponseEntity("ok", HttpStatus.OK);
         }catch (Exception ex){
-            return new ResponseEntity(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }

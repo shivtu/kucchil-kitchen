@@ -33,7 +33,7 @@ public class VegitablesService {
         return vegitablesRepository.findById(vegitableTableId);
     }
 
-    public Vegitables updateQty(HashMap requestBody) {
-        return vegitablesRepository.updateQty(requestBody);
+    public Integer updateQty(Long tableId, Float increamentCount) {
+        return vegitablesRepository.updateQty(tableId, increamentCount);
     }
 }

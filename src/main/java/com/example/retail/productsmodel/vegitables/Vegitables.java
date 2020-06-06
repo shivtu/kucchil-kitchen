@@ -7,6 +7,7 @@ import org.hibernate.annotations.TypeDefs;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -32,8 +33,10 @@ public class Vegitables {
     private String vegitable_Name;
 
     @Column(name = "vegitable_description")
+    @Value("No description available")
     private String vegitable_Descp;
 
+    @Value("No information available")
     @Column(name = "vegitable_variant")
     private String vegitable_Variant;
 
@@ -43,6 +46,7 @@ public class Vegitables {
 
     @NotNull
     @Column(name="vegitable_sellingprice")
+    @Min(value = 1, message = "Selling price cannot be less than 1")
     private Float vegitable_SellingPrice;
 
     @Value("0")
@@ -54,6 +58,7 @@ public class Vegitables {
     private Boolean vegitable_ShowDiscount;
 
     @NotNull
+    @Min(value = 0, message = "Quantity cannot be less than 0")
     @Column(name="vegitable_quantity")
     private Float vegitable_Quantity;
 
