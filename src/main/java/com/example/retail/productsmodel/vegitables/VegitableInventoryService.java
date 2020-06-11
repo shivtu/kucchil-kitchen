@@ -1,7 +1,5 @@
 package com.example.retail.productsmodel.vegitables;
 
-import com.google.gson.JsonElement;
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

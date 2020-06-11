@@ -49,7 +49,7 @@ public class Vegitables {
     @Min(value = 1, message = "Selling price cannot be less than 1")
     private Float vegitableSellingPrice;
 
-    @Value("0")
+    @Min(value = 0)
     @Column(name = "vegitable_offered_discount")
     private Float vegitableOfferedDiscount;
 
