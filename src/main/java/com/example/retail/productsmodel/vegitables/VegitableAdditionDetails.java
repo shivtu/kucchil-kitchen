@@ -3,7 +3,7 @@ package com.example.retail.productsmodel.vegitables;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class VegitableAdditionDetails implements Serializable {
+public class VegitableAdditionDetails{
 
     private String addedBy;
     private LocalDateTime addedDateTime;

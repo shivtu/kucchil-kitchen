@@ -7,18 +7,21 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
-public interface VegitableInventoryRepository extends JpaRepository<VegitablesInventory, Long> {
+public interface VegitableInventoryRepository extends JpaRepository<VegitablesInventory, Long>, VegitableInventoryRepositoryCustom {
 
 //    @Transactional
 //    @Modifying
-//    @Query(value = "UPDATE VegitablesInventory vi SET vi.vegitablesInventory_AdditionDetails = increamentCount WHERE vi.vegitableInventory_TableId=:tableId")
-//    Integer updateVegitableQty(@Param("tableId") Long tableId, @Param("increamentCount") Float increamentCount);
+//    @Query(value = "UPDATE VegitablesInventory vi  SET vi.vegitablesInventoryAdditionDetails = to_jsonb(:updatedAdditionDetails) WHERE vegitableSubId = :subId")
+//    Integer updateVegitablesAdditionDetails(@Param("subId") String subId, @Param("updatedAdditionDetails") List<VegitableAdditionDetails> updatedAdditionDetails);
 
-//    @Query(value = "SELECT vegitablesInventory_CostPrice FROM VegitablesInventory vi WHERE vi.vegitable_SubId= :subId")
-//    Optional<VegitablesInventory> getVegitableInventoryBySubId(@Param("subId") String vegitable_SubId);
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE vegitables_inventory  SET vegitablesinventory_addtion_details=to_jsonb(:updatedAdditionDetails)", nativeQuery = true)
+    int updateVegitablesAdditionDetails(@Param("updatedAdditionDetails") String updatedAdditionDetails);
 
-    public VegitablesInventory findByVegitableSubId(String vegitableSubId);
+    @Query(value = "SELECT * FROM vegitables_inventory WHERE vegitable_subid= :subId", nativeQuery = true)
+    VegitablesInventory getVegitableInventoryBySubId(@Param("subId") String subId);
 }

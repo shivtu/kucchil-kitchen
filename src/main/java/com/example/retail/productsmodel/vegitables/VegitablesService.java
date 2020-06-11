@@ -33,7 +33,7 @@ public class VegitablesService {
         return vegitablesRepository.findById(vegitableTableId);
     }
 
-    public Integer updateQty(Long tableId, Float increamentCount) {
-        return vegitablesRepository.updateQty(tableId, increamentCount);
+    public Integer updateVegitablesQty(Long tableId, Float increamentCount) {
+        return vegitablesRepository.updateVegitablesQty(tableId, increamentCount);
     }
 }
