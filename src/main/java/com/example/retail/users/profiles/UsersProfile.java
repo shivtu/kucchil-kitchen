@@ -53,12 +53,13 @@ public class UsersProfile implements Serializable {
 
     private String userProfile_Image;
 
-    private List<String> userProfile_wishList;
+    private String[] userProfile_wishList;
 
     public UsersProfile(){}
 
     public UsersProfile(
-            String userName, String userProfile_GivenName,
+            String userName,
+            String userProfile_GivenName,
             @Min(value = 18, message = "You must be 18 years or older") @Max(100) Integer userProfile_Age,
             Integer userProfile_PhoneNumber,
             String userProfile_Address,
@@ -68,7 +69,7 @@ public class UsersProfile implements Serializable {
             String userProfile_AddedOnTime,
             String userProfile_Kyc,
             String userProfile_Image,
-            List<String> userProfile_wishList) {
+            String[] userProfile_wishList) {
 
         this.userName = userName;
         this.userProfile_GivenName = userProfile_GivenName;
@@ -180,11 +181,11 @@ public class UsersProfile implements Serializable {
         this.userProfile_Image = userProfile_Image;
     }
 
-    public List<String> getUserProfile_wishList() {
+    public String[] getUserProfile_wishList() {
         return userProfile_wishList;
     }
 
-    public void setUserProfile_wishList(List<String> userProfile_wishList) {
+    public void setUserProfile_wishList(String[] userProfile_wishList) {
         this.userProfile_wishList = userProfile_wishList;
     }
 }
