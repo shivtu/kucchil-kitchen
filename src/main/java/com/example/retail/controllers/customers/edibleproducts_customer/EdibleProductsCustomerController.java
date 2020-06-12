@@ -1,7 +1,7 @@
 package com.example.retail.controllers.customers.edibleproducts_customer;
 
-import com.example.retail.productsmodel.edibleproducts.EdibleProducts;
-import com.example.retail.productsmodel.edibleproducts.EdibleProductsService;
+import com.example.retail.models.edibleproducts.EdibleProducts;
+import com.example.retail.models.edibleproducts.EdibleProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;

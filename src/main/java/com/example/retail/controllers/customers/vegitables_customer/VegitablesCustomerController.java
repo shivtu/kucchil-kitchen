@@ -1,7 +1,7 @@
 package com.example.retail.controllers.customers.vegitables_customer;
 
-import com.example.retail.productsmodel.vegitables.Vegitables;
-import com.example.retail.productsmodel.vegitables.VegitablesService;
+import com.example.retail.models.vegitables.Vegitables;
+import com.example.retail.models.vegitables.services.VegitablesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

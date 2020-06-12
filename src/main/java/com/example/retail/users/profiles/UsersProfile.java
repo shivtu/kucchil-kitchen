@@ -8,6 +8,7 @@ import org.hibernate.annotations.TypeDefs;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.List;
 
 @TypeDefs({
         @TypeDef(
@@ -52,9 +53,23 @@ public class UsersProfile implements Serializable {
 
     private String userProfile_Image;
 
+    private List<String> userProfile_wishList;
+
     public UsersProfile(){}
 
-    public UsersProfile(String userName, String userProfile_GivenName, @Min(value = 18, message = "You must be 18 years or older") @Max(100) Integer userProfile_Age, Integer userProfile_PhoneNumber, String userProfile_Address, UserProfileGender userProfile_Gender, String[] userProfile_SocialMedia, String userProfile_AddedOnDate, String userProfile_AddedOnTime, String userProfile_Kyc, String userProfile_Image) {
+    public UsersProfile(
+            String userName, String userProfile_GivenName,
+            @Min(value = 18, message = "You must be 18 years or older") @Max(100) Integer userProfile_Age,
+            Integer userProfile_PhoneNumber,
+            String userProfile_Address,
+            UserProfileGender userProfile_Gender,
+            String[] userProfile_SocialMedia,
+            String userProfile_AddedOnDate,
+            String userProfile_AddedOnTime,
+            String userProfile_Kyc,
+            String userProfile_Image,
+            List<String> userProfile_wishList) {
+
         this.userName = userName;
         this.userProfile_GivenName = userProfile_GivenName;
         this.userProfile_Age = userProfile_Age;
@@ -66,6 +81,7 @@ public class UsersProfile implements Serializable {
         this.userProfile_AddedOnTime = userProfile_AddedOnTime;
         this.userProfile_Kyc = userProfile_Kyc;
         this.userProfile_Image = userProfile_Image;
+        this.userProfile_wishList = userProfile_wishList;
     }
 
     public Long getUserProfile_TableId() {
@@ -162,5 +178,13 @@ public class UsersProfile implements Serializable {
 
     public void setUserProfile_Image(String userProfile_Image) {
         this.userProfile_Image = userProfile_Image;
+    }
+
+    public List<String> getUserProfile_wishList() {
+        return userProfile_wishList;
+    }
+
+    public void setUserProfile_wishList(List<String> userProfile_wishList) {
+        this.userProfile_wishList = userProfile_wishList;
     }
 }

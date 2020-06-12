@@ -1,9 +1,8 @@
 package com.example.retail.controllers.retailer.vegitables_retailer;
 
-import com.example.retail.productsmodel.vegitables.VegitableRecipes;
+import com.example.retail.models.vegitables.VegitableRecipes;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class AddVegitablesRequestBody {
 

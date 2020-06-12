@@ -1,6 +1,9 @@
 package com.example.retail.controllers.retailer.vegitables_retailer;
 
-import com.example.retail.productsmodel.vegitables.*;
+import com.example.retail.models.vegitables.*;
+import com.example.retail.models.vegitables.repository.VegitableInventoryRepositoryImpl;
+import com.example.retail.models.vegitables.services.VegitableInventoryService;
+import com.example.retail.models.vegitables.services.VegitablesService;
 import com.example.retail.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
