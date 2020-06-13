@@ -22,6 +22,8 @@ public class VegitablesService {
         return vegitablesRepository.findById(id);
     }
 
+    public Optional<Vegitables> findBySubId(String subId) { return vegitablesRepository.findBySubId(subId); }
+
     public Iterable<Vegitables> addAllVegitables(List<Vegitables> newVegitables) {
         return vegitablesRepository.saveAll(newVegitables);
     }
@@ -34,7 +36,7 @@ public class VegitablesService {
         return vegitablesRepository.findById(vegitableTableId);
     }
 
-    public Integer updateVegitablesQty(Long tableId, Float increamentCount) {
-        return vegitablesRepository.updateVegitablesQty(tableId, increamentCount);
+    public Integer updateVegitablesQty(String subId, Float increamentCount) {
+        return vegitablesRepository.updateVegitablesQty(subId, increamentCount);
     }
 }

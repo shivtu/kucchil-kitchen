@@ -7,10 +7,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 public interface VegitablesRepository extends JpaRepository<Vegitables, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE Vegitables v set v.vegitableQuantity= v.vegitableQuantity+ :increamentCount WHERE v.vegitableTableId= :tableId")
-    public Integer updateVegitablesQty(@Param("tableId") Long tableId, @Param("increamentCount") Float increamentCount);
+    @Query(value = "UPDATE Vegitables v set v.vegitableQuantity= v.vegitableQuantity+ :vegitableQuantity WHERE v.vegitableSubId= :subId")
+    public Integer updateVegitablesQty(@Param("subId") String subId, @Param("vegitableQuantity") Float vegitableQuantity);
+
+    @Query(value = "SELECT * FROM vegitables WHERE vegitable_subid = :subId", nativeQuery = true)
+    public Optional<Vegitables> findBySubId(@Param("subId") String vegitable_subid);
 }

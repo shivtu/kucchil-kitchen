@@ -1,7 +1,9 @@
 package com.example.retail.models.vegitables.services;
 
+import com.example.retail.models.vegitables.VegitableAdditionDetails;
 import com.example.retail.models.vegitables.VegitablesInventory;
 import com.example.retail.models.vegitables.repository.VegitableInventoryRepository;
+import com.example.retail.models.vegitables.repository.VegitableInventoryRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +14,11 @@ public class VegitableInventoryService {
     @Autowired
     VegitableInventoryRepository vegitableInventoryRepository;
 
+    @Autowired
+    VegitableInventoryRepositoryImpl vegitableInventoryRepositoryImpl;
+
     public VegitablesInventory addInventory(VegitablesInventory vegitablesInventory) {
         return vegitableInventoryRepository.save(vegitablesInventory);
-    }
-
-    public int updateVegitablesAdditionDetails(String updatedAdditionDetails){
-        return vegitableInventoryRepository.updateVegitablesAdditionDetails(updatedAdditionDetails);
     }
 
     public String findById(Long id) {
@@ -30,5 +31,9 @@ public class VegitableInventoryService {
 
     public VegitablesInventory getVegitableInventoryBySubId (String subId) {
         return vegitableInventoryRepository.getVegitableInventoryBySubId(subId);
+    }
+
+    public int updateVegitablesAdditionDetails (String subId, List<VegitableAdditionDetails> updatedAdditionDetails) {
+        return vegitableInventoryRepositoryImpl.updateVegitablesAdditionDetails(subId, updatedAdditionDetails);
     }
 }

@@ -4,7 +4,10 @@ import com.example.retail.models.vegitables.*;
 import com.example.retail.models.vegitables.repository.VegitableInventoryRepositoryImpl;
 import com.example.retail.models.vegitables.services.VegitableInventoryService;
 import com.example.retail.models.vegitables.services.VegitablesService;
+import com.example.retail.util.ErrorResponse;
 import com.example.retail.util.JwtUtil;
+import com.example.retail.util.SuccessResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,7 +31,10 @@ public class VegitablesRetailerController {
     JwtUtil jwtUtil;
 
     @Autowired
-    VegitableInventoryRepositoryImpl vegitableInventoryRepositoryImpl;
+    ErrorResponse errorResponse;
+
+    @Autowired
+    SuccessResponse successResponse;
 
     private String getUserName(HttpServletRequest request) {
         // Get authorization header and find current user
@@ -134,9 +140,18 @@ public class VegitablesRetailerController {
             newVegitableAdditionDetails.setAddedBy(addedBy);
 
             updatedAdditionDetails.add(newVegitableAdditionDetails);
-            vegitableInventoryRepositoryImpl.updateVegitablesAdditionDetails(subId, updatedAdditionDetails);
+            int resultVegInventory = vegitableInventoryService.updateVegitablesAdditionDetails(subId, updatedAdditionDetails);
+            int resultVeg = vegitablesService.updateVegitablesQty(subId, vegitableQuantity);
+            if(resultVegInventory == 1 && resultVeg == 1) {
+                return new ResponseEntity(vegitablesService.findBySubId(subId), HttpStatus.CREATED);
+            }
 
-            return new ResponseEntity("ok", HttpStatus.CREATED);
+            errorResponse.setErrorCode(500);
+            errorResponse.setErrorMessage("Unable to add inventory");
+            errorResponse.setAdditionalInfo("NA");
+            ObjectMapper mapper = new ObjectMapper();
+            String error = mapper.writeValueAsString(errorResponse);
+            return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (Exception ex){
             return new ResponseEntity(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
