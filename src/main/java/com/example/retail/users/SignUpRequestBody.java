@@ -14,7 +14,7 @@ public class SignUpRequestBody implements Serializable {
 
     private Integer userProfile_Age;
 
-    private Integer userProfile_PhoneNumber;
+    private Long userProfile_PhoneNumber;
 
     private String userProfile_Address;
 
@@ -32,7 +32,20 @@ public class SignUpRequestBody implements Serializable {
 
     public SignUpRequestBody(){}
 
-    public SignUpRequestBody(String userName, String password, String userProfile_GivenName, Integer userProfile_Age, Integer userProfile_PhoneNumber, String userProfile_Address, UserProfileGender userProfile_Gender, String[] userProfile_SocialMedia, String userProfile_AddedOnDate, String userProfile_AddedOnTime, String userProfile_Kyc, String userProfile_Image) {
+    public SignUpRequestBody(
+            String userName,
+            String password,
+            String userProfile_GivenName,
+            Integer userProfile_Age,
+            Long userProfile_PhoneNumber,
+            String userProfile_Address,
+            UserProfileGender userProfile_Gender,
+            String[] userProfile_SocialMedia,
+            String userProfile_AddedOnDate,
+            String userProfile_AddedOnTime,
+            String userProfile_Kyc,
+            String userProfile_Image) {
+
         this.userName = userName;
         this.password = password;
         this.userProfile_GivenName = userProfile_GivenName;
@@ -79,11 +92,11 @@ public class SignUpRequestBody implements Serializable {
         this.userProfile_Age = userProfile_Age;
     }
 
-    public Integer getUserProfile_PhoneNumber() {
+    public Long getUserProfile_PhoneNumber() {
         return userProfile_PhoneNumber;
     }
 
-    public void setUserProfile_PhoneNumber(Integer userProfile_PhoneNumber) {
+    public void setUserProfile_PhoneNumber(Long userProfile_PhoneNumber) {
         this.userProfile_PhoneNumber = userProfile_PhoneNumber;
     }
 

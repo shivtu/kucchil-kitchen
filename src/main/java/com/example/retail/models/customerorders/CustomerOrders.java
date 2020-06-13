@@ -25,9 +25,8 @@ public class CustomerOrders {
     private Long orderTableId;
 
     @NotNull
-    @NotEmpty
     @Column(name = "orders_usertableid")
-    private String userTableId;
+    private Long userTableId;
 
     @NotNull
     @NotEmpty
@@ -40,17 +39,14 @@ public class CustomerOrders {
     private String userGivenName;
 
     @NotNull
-    @NotEmpty
     @Column(name = "orders_userphonennumber")
-    private Integer userPhoneNumber;
+    private Long userPhoneNumber;
 
     @NotNull
-    @NotEmpty
     @Column(name = "orders_useraddress")
     private String userAddress;
 
     @NotNull
-    @NotEmpty
     @Column(name = "orders_deliveryaddress")
     private String deliveryAddress;
 
@@ -90,10 +86,10 @@ public class CustomerOrders {
     public CustomerOrders() {}
 
     public CustomerOrders(
-            @NotNull @NotEmpty String userTableId,
+            @NotNull @NotEmpty Long userTableId,
             @NotNull @NotEmpty String userName,
             @NotNull @NotEmpty String userGivenName,
-            @NotNull @NotEmpty Integer userPhoneNumber,
+            @NotNull @NotEmpty Long userPhoneNumber,
             @NotNull @NotEmpty String userAddress,
             @NotNull @NotEmpty String deliveryAddress, @NotNull @Min(value = 0) Float deliveryCharges,
             Float appliedDiscount,
@@ -131,11 +127,11 @@ public class CustomerOrders {
         this.orderTableId = orderTableId;
     }
 
-    public String getUserTableId() {
+    public Long getUserTableId() {
         return userTableId;
     }
 
-    public void setUserTableId(String userTableId) {
+    public void setUserTableId(Long userTableId) {
         this.userTableId = userTableId;
     }
 
@@ -155,11 +151,11 @@ public class CustomerOrders {
         this.userGivenName = userGivenName;
     }
 
-    public Integer getUserPhoneNumber() {
+    public Long getUserPhoneNumber() {
         return userPhoneNumber;
     }
 
-    public void setUserPhoneNumber(Integer userPhoneNumber) {
+    public void setUserPhoneNumber(Long userPhoneNumber) {
         this.userPhoneNumber = userPhoneNumber;
     }
 

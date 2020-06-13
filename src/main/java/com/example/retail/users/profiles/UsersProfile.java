@@ -35,7 +35,7 @@ public class UsersProfile implements Serializable {
     private Integer userProfile_Age;
 
     @Column(nullable = false, unique = true)
-    private Integer userProfile_PhoneNumber;
+    private Long userProfile_PhoneNumber;
 
     private String userProfile_Address;
 
@@ -61,7 +61,7 @@ public class UsersProfile implements Serializable {
             String userName,
             String userProfile_GivenName,
             @Min(value = 18, message = "You must be 18 years or older") @Max(100) Integer userProfile_Age,
-            Integer userProfile_PhoneNumber,
+            Long userProfile_PhoneNumber,
             String userProfile_Address,
             UserProfileGender userProfile_Gender,
             String[] userProfile_SocialMedia,
@@ -117,11 +117,11 @@ public class UsersProfile implements Serializable {
         this.userProfile_Age = userProfile_Age;
     }
 
-    public Integer getUserProfile_PhoneNumber() {
+    public Long getUserProfile_PhoneNumber() {
         return userProfile_PhoneNumber;
     }
 
-    public void setUserProfile_PhoneNumber(Integer userProfile_PhoneNumber) {
+    public void setUserProfile_PhoneNumber(Long userProfile_PhoneNumber) {
         this.userProfile_PhoneNumber = userProfile_PhoneNumber;
     }
 

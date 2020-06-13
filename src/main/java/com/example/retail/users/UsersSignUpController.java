@@ -8,9 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime; // Import the LocalDateTime class
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter; // Import the DateTimeFormatter class
 
 @RestController
 @RequestMapping(value = "api/v1/signup")
