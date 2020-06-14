@@ -1,12 +1,10 @@
 package com.example.retail.controllers.retailer.vegitables_retailer;
 
 import com.example.retail.models.vegitables.*;
-import com.example.retail.models.vegitables.repository.VegitableInventoryRepositoryImpl;
 import com.example.retail.models.vegitables.services.VegitableInventoryService;
 import com.example.retail.models.vegitables.services.VegitablesService;
 import com.example.retail.util.ErrorResponse;
-import com.example.retail.util.JwtUtil;
-import com.example.retail.util.SuccessResponse;
+import com.example.retail.util.JWTDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,21 +26,10 @@ public class VegitablesRetailerController {
     VegitableInventoryService vegitableInventoryService;
 
     @Autowired
-    JwtUtil jwtUtil;
+    JWTDetails JWTDetails;
 
     @Autowired
     ErrorResponse errorResponse;
-
-    @Autowired
-    SuccessResponse successResponse;
-
-    private String getUserName(HttpServletRequest request) {
-        // Get authorization header and find current user
-        final String authorizationHeader = request.getHeader("Authorization");
-        String jwt = authorizationHeader.substring(7);
-        String requestingUser = jwtUtil.extractUsername(jwt);
-        return requestingUser;
-    }
 
     @RequestMapping(value = "/findall", method = RequestMethod.GET)
     public ResponseEntity getAllVegitables() {
@@ -58,7 +45,7 @@ public class VegitablesRetailerController {
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<java.io.Serializable> addAllVegitables(HttpServletRequest request,
                                                                  @RequestBody AddVegitablesRequestBody newVegitables) {
-                String vegitable_AddedBy = getUserName(request);
+                String vegitable_AddedBy = JWTDetails.userName(request);
                 try {
 
                     // create new vegitable
@@ -128,7 +115,7 @@ public class VegitablesRetailerController {
     public ResponseEntity updateVegitableQty (@PathVariable Long tableId, @RequestBody AddVegitablesRequestBody requestBody,
                                               HttpServletRequest request){
         try {
-            String addedBy = getUserName(request);
+            String addedBy = JWTDetails.userName(request);
             Float vegitableQuantity = requestBody.getVegitableQuantity();
             LocalDateTime dateTimeAdded = LocalDateTime.now();
             String subId = requestBody.getVegitableSubId();

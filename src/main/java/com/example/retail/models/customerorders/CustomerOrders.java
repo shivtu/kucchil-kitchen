@@ -46,7 +46,6 @@ public class CustomerOrders {
     @Column(name = "orders_useraddress")
     private String userAddress;
 
-    @NotNull
     @Column(name = "orders_deliveryaddress")
     private String deliveryAddress;
 
