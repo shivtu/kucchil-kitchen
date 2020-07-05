@@ -5,13 +5,18 @@ import com.example.retail.models.vegitables.services.VegitableInventoryService;
 import com.example.retail.models.vegitables.services.VegitablesService;
 import com.example.retail.util.ErrorResponse;
 import com.example.retail.util.JWTDetails;
+import com.example.retail.util.OpsResponse;
+import com.example.retail.util.Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -31,6 +36,9 @@ public class VegitablesRetailerController {
     @Autowired
     ErrorResponse errorResponse;
 
+    @Autowired
+    Utils utils;
+
     @RequestMapping(value = "/findall", method = RequestMethod.GET)
     public ResponseEntity getAllVegitables() {
         List<VegitablesInventory> vi = vegitableInventoryService.findAllVegitableInventory();
@@ -42,20 +50,31 @@ public class VegitablesRetailerController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<java.io.Serializable> addAllVegitables(HttpServletRequest request,
-                                                                 @RequestBody AddVegitablesRequestBody newVegitables) {
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity addAllVegitables(HttpServletRequest request,
+                                           @ModelAttribute AddVegitablesRequestBody newVegitables,
+                                           @RequestParam("images") ArrayList<MultipartFile> images) {
                 String vegitable_AddedBy = JWTDetails.userName(request);
+                LocalDate vegitableInventoryExpiry = LocalDate.parse(newVegitables.getVegitablesInventoryExpiry());
                 try {
-
                     // create new vegitable
                     Vegitables vegitables = new Vegitables();
+                    if (!images.isEmpty() && images != null) {
+                        OpsResponse opsResponse = utils.saveVegitableImages(images);
+                        int errorCheck = opsResponse.getResponseCode();
+                        if(errorCheck != 200){
+                            return new ResponseEntity(opsResponse, HttpStatus.valueOf(opsResponse.getResponseCode()));
+                        } else {
+                            vegitables.setVegitableImagesLocation(opsResponse.getOpsResponseArray());
+                        }
+                    }
+
                     vegitables.setVegitableName(newVegitables.getVegitableName());
                     vegitables.setVegitableDescp(newVegitables.getVegitableDescp());
                     vegitables.setVegitableVariant(newVegitables.getVegitableVariant());
 
                     // Create new List and add recepie to the List
-                    List<VegitableRecipes> vegitableRecepieList = new ArrayList<VegitableRecipes>();
+                    ArrayList vegitableRecepieList = new ArrayList<>();
                     vegitableRecepieList.add(newVegitables.getVegitableRecepie());
 
                     vegitables.setVegitableRecepie(vegitableRecepieList);
@@ -74,7 +93,7 @@ public class VegitablesRetailerController {
                     // Create vegitable inventory
                     VegitablesInventory vegitablesInventory = new VegitablesInventory();
                     vegitablesInventory.setVegitablesInventoryCostPrice(newVegitables.getVegitablesInventoryCostPrice());
-                    vegitablesInventory.setVegitablesInventoryExpiry(newVegitables.getVegitablesInventoryExpiry());
+                    vegitablesInventory.setVegitablesInventoryExpiry(vegitableInventoryExpiry);
                     vegitablesInventory.setVegitablesInventoryMaxDiscount(newVegitables.getVegitablesInventoryMaxDiscount());
 
                     // Create VegitableAdditionDetails
@@ -107,7 +126,6 @@ public class VegitablesRetailerController {
                 }catch (Exception e) {
                     return new ResponseEntity<java.io.Serializable>(e, HttpStatus.INTERNAL_SERVER_ERROR);
                 }
-
     }
 
     @RequestMapping(value = "/update/{tableId}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE,

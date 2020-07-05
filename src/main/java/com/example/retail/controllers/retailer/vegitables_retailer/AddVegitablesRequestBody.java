@@ -1,9 +1,11 @@
 package com.example.retail.controllers.retailer.vegitables_retailer;
 
 import com.example.retail.models.vegitables.VegitableRecipes;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
+@Component
 public class AddVegitablesRequestBody {
 
     private String vegitableName;
@@ -32,7 +34,7 @@ public class AddVegitablesRequestBody {
 
     private Float vegitablesInventoryCostPrice;
 
-    private LocalDate vegitablesInventoryExpiry;
+    private String vegitablesInventoryExpiry;
 
     private Float vegitablesInventoryMaxDiscount;
 
@@ -56,7 +58,7 @@ public class AddVegitablesRequestBody {
             Float vegitableTax,
             String vegitableMeasureMentUnit,
             Float vegitablesInventoryCostPrice,
-            LocalDate vegitablesInventoryExpiry,
+            String vegitablesInventoryExpiry,
             Float vegitablesInventoryMaxDiscount,
             Float vegitablesInventoryFixedCost,
             String vegitableSubId) {
@@ -184,11 +186,11 @@ public class AddVegitablesRequestBody {
         this.vegitablesInventoryCostPrice = vegitablesInventoryCostPrice;
     }
 
-    public LocalDate getVegitablesInventoryExpiry() {
+    public String getVegitablesInventoryExpiry() {
         return vegitablesInventoryExpiry;
     }
 
-    public void setVegitablesInventoryExpiry(LocalDate vegitablesInventoryExpiry) {
+    public void setVegitablesInventoryExpiry(String vegitablesInventoryExpiry) {
         this.vegitablesInventoryExpiry = vegitablesInventoryExpiry;
     }
 

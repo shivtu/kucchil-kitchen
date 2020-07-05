@@ -5,8 +5,6 @@ import com.example.retail.models.customerorders.services.CustomerOrderServices;
 import com.example.retail.users.profiles.UsersProfile;
 import com.example.retail.users.profiles.UsersProfileService;
 import com.example.retail.util.JWTDetails;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

@@ -4,32 +4,32 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SuccessResponse {
-    private int responseCode;
-    private String message;
+    private int successCode;
+    private String successMessage;
     private String additionalInfo;
 
     public SuccessResponse() {}
 
     public SuccessResponse(int responseCode, String message, String additionalInfo) {
-        this.responseCode = responseCode;
-        this.message = message;
+        this.successCode = responseCode;
+        this.successMessage = message;
         this.additionalInfo = additionalInfo;
     }
 
     public int getResponseCode() {
-        return responseCode;
+        return successCode;
     }
 
     public void setResponseCode(int responseCode) {
-        this.responseCode = responseCode;
+        this.successCode = responseCode;
     }
 
     public String getMessage() {
-        return message;
+        return successMessage;
     }
 
     public void setMessage(String message) {
-        this.message = message;
+        this.successMessage = message;
     }
 
     public String getAdditionalInfo() {

@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -70,6 +71,10 @@ public class Vegitables {
     @Column(name = "vegitable_subid", updatable = false, unique = true)
     private String vegitableSubId;
 
+    @NotNull
+    @Column(name = "vegitable_images_location")
+    private ArrayList<String> vegitableImagesLocation;
+
     public Vegitables(){
     }
 
@@ -84,7 +89,7 @@ public class Vegitables {
             boolean vegitableAvailable,
             Float vegitableTax,
             @NotNull @NotEmpty String vegitableMeasureMentUnit,
-            String vegitableSubId) {
+            String vegitableSubId, ArrayList<String> vegitableImagesLocation) {
         this.vegitableName = vegitableName;
         this.vegitableDescp = vegitableDescp;
         this.vegitableVariant = vegitableVariant;
@@ -97,6 +102,7 @@ public class Vegitables {
         this.vegitableTax = vegitableTax;
         this.vegitableMeasureMentUnit = vegitableMeasureMentUnit;
         this.vegitableSubId = vegitableSubId;
+        this.vegitableImagesLocation = vegitableImagesLocation;
     }
 
     public Long getVegitableTableId() {
@@ -201,5 +207,13 @@ public class Vegitables {
 
     public void setVegitableSubId(String vegitableSubId) {
         this.vegitableSubId = vegitableSubId;
+    }
+
+    public ArrayList<String> getVegitableImagesLocation() {
+        return vegitableImagesLocation;
+    }
+
+    public void setVegitableImagesLocation(ArrayList<String> vegitableImagesLocation) {
+        this.vegitableImagesLocation = vegitableImagesLocation;
     }
 }
