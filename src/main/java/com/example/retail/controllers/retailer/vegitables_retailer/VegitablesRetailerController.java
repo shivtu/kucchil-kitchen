@@ -59,7 +59,7 @@ public class VegitablesRetailerController {
                 try {
                     // create new vegitable
                     Vegitables vegitables = new Vegitables();
-                    System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + images.size());
+
                     if (!images.isEmpty()) {
                         OpsResponse opsResponse = utils.saveVegitableImages(images);
                         int errorCheck = opsResponse.getResponseCode();
