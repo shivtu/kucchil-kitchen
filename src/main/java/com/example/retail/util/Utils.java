@@ -1,12 +1,12 @@
 package com.example.retail.util;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Objects;
 
 @Component
 public class Utils {
@@ -20,11 +20,11 @@ public class Utils {
     public String imagesLocationKey = "imagesLocation";
 
     public OpsResponse saveVegitableImages(ArrayList<MultipartFile> images) {
-        final ArrayList userFiles = new ArrayList();
+        final ArrayList<String> userFiles = new ArrayList<>();
         final OpsResponse opsResponse = new OpsResponse();
         try {
             for(MultipartFile mf: images) {
-                if (mf.getContentType().equals("image/jpeg") || mf.getContentType().equals("image/png")) {
+                if (Objects.equals(mf.getContentType(), "image/jpeg") || Objects.equals(mf.getContentType(), "image/png")) {
                     if(mf.getSize() > vegImageMaxSizeBytes) {
                         opsResponse.setResponseCode(422);
                         opsResponse.setResponseMessage(vegImageSizeError);

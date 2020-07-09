@@ -7,7 +7,6 @@ import org.hibernate.annotations.TypeDefs;
 import javax.persistence.*;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.Past;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
@@ -49,8 +48,7 @@ public class VegitablesInventory implements Serializable {
     @Column(name = "vegitable_subid")
     private String vegitableSubId;
 
-    public VegitablesInventory() {
-    }
+    public VegitablesInventory() {}
 
     public VegitablesInventory(
             @Min(value = 0, message = "Cost price cannot be 0") Float vegitablesInventoryCostPrice,

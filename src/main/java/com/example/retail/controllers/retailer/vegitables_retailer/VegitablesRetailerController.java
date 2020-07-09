@@ -40,13 +40,13 @@ public class VegitablesRetailerController {
     Utils utils;
 
     @RequestMapping(value = "/findall", method = RequestMethod.GET)
-    public ResponseEntity getAllVegitables() {
+    public ResponseEntity<HashMap<Object, Object>> getAllVegitables() {
         List<VegitablesInventory> vi = vegitableInventoryService.findAllVegitableInventory();
         Iterable<Vegitables> v = vegitablesService.getAllVegitables();
-        HashMap response = new HashMap<>();
+        HashMap<Object, Object> response = new HashMap<>();
         response.put("vegitable", v);
         response.put("vegitableInventory", vi);
-        return new ResponseEntity(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
@@ -59,7 +59,8 @@ public class VegitablesRetailerController {
                 try {
                     // create new vegitable
                     Vegitables vegitables = new Vegitables();
-                    if (!images.isEmpty() && images != null) {
+                    System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + images.size());
+                    if (!images.isEmpty()) {
                         OpsResponse opsResponse = utils.saveVegitableImages(images);
                         int errorCheck = opsResponse.getResponseCode();
                         if(errorCheck != 200){
@@ -67,6 +68,8 @@ public class VegitablesRetailerController {
                         } else {
                             vegitables.setVegitableImagesLocation(opsResponse.getOpsResponseArray());
                         }
+                    } else {
+                        vegitables.setVegitableImagesLocation(new ArrayList<>());
                     }
 
                     vegitables.setVegitableName(newVegitables.getVegitableName());
@@ -130,8 +133,8 @@ public class VegitablesRetailerController {
 
     @RequestMapping(value = "/update/{tableId}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity updateVegitableQty (@PathVariable Long tableId, @RequestBody AddVegitablesRequestBody requestBody,
-                                              HttpServletRequest request){
+    public ResponseEntity<Object> updateVegitableQty (@PathVariable Long tableId, @RequestBody AddVegitablesRequestBody requestBody,
+                                                      HttpServletRequest request){
         try {
             String addedBy = JWTDetails.userName(request);
             Float vegitableQuantity = requestBody.getVegitableQuantity();
@@ -148,7 +151,7 @@ public class VegitablesRetailerController {
             int resultVegInventory = vegitableInventoryService.updateVegitablesAdditionDetails(subId, updatedAdditionDetails);
             int resultVeg = vegitablesService.updateVegitablesQty(subId, vegitableQuantity);
             if(resultVegInventory == 1 && resultVeg == 1) {
-                return new ResponseEntity(vegitablesService.findBySubId(subId), HttpStatus.CREATED);
+                return new ResponseEntity<Object>(vegitablesService.findBySubId(subId), HttpStatus.CREATED);
             }
 
             errorResponse.setErrorCode(500);
@@ -156,9 +159,9 @@ public class VegitablesRetailerController {
             errorResponse.setAdditionalInfo("NA");
             ObjectMapper mapper = new ObjectMapper();
             String error = mapper.writeValueAsString(errorResponse);
-            return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<Object>(error, HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (Exception ex){
-            return new ResponseEntity(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<Object>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
