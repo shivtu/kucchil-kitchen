@@ -60,6 +60,11 @@ public class VegitablesRetailerController {
                     // create new vegitable
                     Vegitables vegitables = new Vegitables();
 
+                    // Create a unique subID
+                    String vegSubId = newVegitables.getVegitableName() + newVegitables.getVegitableVariant()
+                            + newVegitables.getVegitablesInventoryCostPrice().toString() + newVegitables.getVegitablesInventoryExpiry()
+                            + newVegitables.getVegitablesInventoryFixedCost().toString();
+
                     if (!images.isEmpty()) {
                         OpsResponse opsResponse = utils.saveVegitableImages(images);
                         int errorCheck = opsResponse.getResponseCode();
@@ -69,7 +74,10 @@ public class VegitablesRetailerController {
                             vegitables.setVegitableImagesLocation(opsResponse.getOpsResponseArray());
                         }
                     } else {
-                        vegitables.setVegitableImagesLocation(new ArrayList<>());
+                        ArrayList<String> placeholder = new ArrayList<String>();
+                        // TODO : give correct path to image placeholder
+                        placeholder.add("src/main/resources/assets/veg-images/veg-image-placeholder.png");
+                        vegitables.setVegitableImagesLocation(placeholder);
                     }
 
                     vegitables.setVegitableName(newVegitables.getVegitableName());
@@ -88,10 +96,8 @@ public class VegitablesRetailerController {
                     vegitables.setVegitableAvailable(newVegitables.isVegitableAvailable());
                     vegitables.setVegitableTax(newVegitables.getVegitableTax());
                     vegitables.setVegitableMeasureMentUnit(newVegitables.getVegitableMeasureMentUnit());
-                    // Create a unique subID
-                    vegitables.setVegitableSubId(newVegitables.getVegitableName() + newVegitables.getVegitableVariant()
-                            + newVegitables.getVegitablesInventoryCostPrice().toString() + newVegitables.getVegitablesInventoryExpiry()
-                            + newVegitables.getVegitablesInventoryFixedCost().toString());
+
+                    vegitables.setVegitableSubId(vegSubId);
 
                     // Create vegitable inventory
                     VegitablesInventory vegitablesInventory = new VegitablesInventory();
@@ -110,10 +116,8 @@ public class VegitablesRetailerController {
 
                     vegitablesInventory.setVegitablesInventoryAdditionDetails(vegitableDetailsList);
                     vegitablesInventory.setVegitablesInventoryFixedCost(newVegitables.getVegitablesInventoryFixedCost());
-                    // Create a unique subID
-                    vegitablesInventory.setVegitableSubId(newVegitables.getVegitableName() + newVegitables.getVegitableVariant()
-                            + newVegitables.getVegitablesInventoryCostPrice().toString() + newVegitables.getVegitablesInventoryExpiry()
-                            + newVegitables.getVegitablesInventoryFixedCost().toString());
+
+                    vegitablesInventory.setVegitableSubId(vegSubId);
 
                     // Persist the vegitable
                     Vegitables createdVeg = vegitablesService.addOneVegitable(vegitables);

@@ -2,6 +2,7 @@ package com.example.retail.util;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import java.time.LocalDateTime;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,7 +32,8 @@ public class Utils {
                         opsResponse.setOpsResponseArray(userFiles);
                         break;
                     } else {
-                        String imageLocation = new File("ProductImages").getAbsolutePath() + "\\" + mf.getOriginalFilename();
+                        String imageNamePreffix = LocalDateTime.now().toString();
+                        String imageLocation = new File("src/main/resources/assets/veg-images").getAbsolutePath()+"/" +imageNamePreffix+ mf.getOriginalFilename();
                         FileOutputStream fout = new FileOutputStream(imageLocation);
                         fout.write(mf.getBytes());
                         fout.close();
