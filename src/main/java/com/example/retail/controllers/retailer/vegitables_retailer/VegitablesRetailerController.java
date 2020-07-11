@@ -90,7 +90,7 @@ public class VegitablesRetailerController {
                     vegitables.setVegitableMeasureMentUnit(newVegitables.getVegitableMeasureMentUnit());
                     // Create a unique subID
                     vegitables.setVegitableSubId(newVegitables.getVegitableName() + newVegitables.getVegitableVariant()
-                            + newVegitables.getVegitablesInventoryCostPrice().toString() + newVegitables.getVegitablesInventoryExpiry().toString()
+                            + newVegitables.getVegitablesInventoryCostPrice().toString() + newVegitables.getVegitablesInventoryExpiry()
                             + newVegitables.getVegitablesInventoryFixedCost().toString());
 
                     // Create vegitable inventory
@@ -112,7 +112,7 @@ public class VegitablesRetailerController {
                     vegitablesInventory.setVegitablesInventoryFixedCost(newVegitables.getVegitablesInventoryFixedCost());
                     // Create a unique subID
                     vegitablesInventory.setVegitableSubId(newVegitables.getVegitableName() + newVegitables.getVegitableVariant()
-                            + newVegitables.getVegitablesInventoryCostPrice().toString() + newVegitables.getVegitablesInventoryExpiry().toString()
+                            + newVegitables.getVegitablesInventoryCostPrice().toString() + newVegitables.getVegitablesInventoryExpiry()
                             + newVegitables.getVegitablesInventoryFixedCost().toString());
 
                     // Persist the vegitable
