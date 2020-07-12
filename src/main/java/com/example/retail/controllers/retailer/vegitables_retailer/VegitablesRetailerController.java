@@ -3,10 +3,7 @@ package com.example.retail.controllers.retailer.vegitables_retailer;
 import com.example.retail.models.vegitables.*;
 import com.example.retail.models.vegitables.services.VegitableInventoryService;
 import com.example.retail.models.vegitables.services.VegitablesService;
-import com.example.retail.util.ErrorResponse;
-import com.example.retail.util.JWTDetails;
-import com.example.retail.util.OpsResponse;
-import com.example.retail.util.Utils;
+import com.example.retail.util.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,6 +36,12 @@ public class VegitablesRetailerController {
     @Autowired
     Utils utils;
 
+    @Autowired
+    Validations validations;
+
+    @Autowired
+    OpsResponse opsResponse;
+
     @RequestMapping(value = "/findall", method = RequestMethod.GET)
     public ResponseEntity<HashMap<Object, Object>> getAllVegitables() {
         List<VegitablesInventory> vi = vegitableInventoryService.findAllVegitableInventory();
@@ -53,10 +56,17 @@ public class VegitablesRetailerController {
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity addAllVegitables(HttpServletRequest request,
                                            @ModelAttribute AddVegitablesRequestBody newVegitables,
-                                           @RequestParam("images") ArrayList<MultipartFile> images) {
-                String vegitable_AddedBy = JWTDetails.userName(request);
-                LocalDate vegitableInventoryExpiry = LocalDate.parse(newVegitables.getVegitablesInventoryExpiry());
+                                           @RequestParam("images") ArrayList<MultipartFile> files) {
                 try {
+                    // Validate vegitables
+                    int validationStatus = validations.validateNewVegitables(newVegitables).getResponseCode();
+                    if (validationStatus != 200) {
+                        return new ResponseEntity(opsResponse, HttpStatus.valueOf(opsResponse.getResponseCode()));
+                    }
+
+                    String vegitable_AddedBy = JWTDetails.userName(request);
+                    LocalDate vegitableInventoryExpiry = LocalDate.parse(newVegitables.getVegitablesInventoryExpiry());
+
                     // create new vegitable
                     Vegitables vegitables = new Vegitables();
 
@@ -65,9 +75,9 @@ public class VegitablesRetailerController {
                             + newVegitables.getVegitablesInventoryCostPrice().toString() + newVegitables.getVegitablesInventoryExpiry()
                             + newVegitables.getVegitablesInventoryFixedCost().toString();
 
-                    if (!images.isEmpty()) {
-                        OpsResponse opsResponse = utils.saveVegitableImages(images);
-                        int errorCheck = opsResponse.getResponseCode();
+                    if (!files.isEmpty()) {
+                        // opsResponse = utils.saveFiles(files, "vegitableImages");
+                        int errorCheck = utils.saveFiles(files, "vegitableImages").getResponseCode();
                         if(errorCheck != 200){
                             return new ResponseEntity(opsResponse, HttpStatus.valueOf(opsResponse.getResponseCode()));
                         } else {
@@ -94,7 +104,6 @@ public class VegitablesRetailerController {
                     vegitables.setVegitableShowDiscount(newVegitables.getVegitableShowDiscount());
                     vegitables.setVegitableQuantity(newVegitables.getVegitableQuantity());
                     vegitables.setVegitableAvailable(newVegitables.isVegitableAvailable());
-                    vegitables.setVegitableTax(newVegitables.getVegitableTax());
                     vegitables.setVegitableMeasureMentUnit(newVegitables.getVegitableMeasureMentUnit());
 
                     vegitables.setVegitableSubId(vegSubId);
@@ -131,7 +140,7 @@ public class VegitablesRetailerController {
                     return new ResponseEntity<>(res, HttpStatus.CREATED);
 
                 }catch (Exception e) {
-                    return new ResponseEntity<java.io.Serializable>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+                    return new ResponseEntity<java.io.Serializable>(e.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
                 }
     }
 

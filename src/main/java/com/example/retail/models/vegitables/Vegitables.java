@@ -58,10 +58,8 @@ public class Vegitables {
     @Column(name="vegitable_quantity")
     private Float vegitableQuantity;
 
+    @NotNull
     private boolean vegitableAvailable;
-    @Value("0")
-    @Column(name="vegitable_tax")
-    private Float vegitableTax;
 
     @NotNull
     @NotEmpty
@@ -87,7 +85,6 @@ public class Vegitables {
             @NotNull(message = "Should discount be available for this item") Boolean vegitableShowDiscount,
             @NotNull @Min(value = 0, message = "Quantity cannot be less than 0") Float vegitableQuantity,
             boolean vegitableAvailable,
-            Float vegitableTax,
             @NotNull @NotEmpty String vegitableMeasureMentUnit,
             String vegitableSubId, ArrayList<String> vegitableImagesLocation) {
         this.vegitableName = vegitableName;
@@ -99,7 +96,6 @@ public class Vegitables {
         this.vegitableShowDiscount = vegitableShowDiscount;
         this.vegitableQuantity = vegitableQuantity;
         this.vegitableAvailable = vegitableAvailable;
-        this.vegitableTax = vegitableTax;
         this.vegitableMeasureMentUnit = vegitableMeasureMentUnit;
         this.vegitableSubId = vegitableSubId;
         this.vegitableImagesLocation = vegitableImagesLocation;
@@ -183,14 +179,6 @@ public class Vegitables {
 
     public void setVegitableAvailable(boolean vegitableAvailable) {
         this.vegitableAvailable = vegitableAvailable;
-    }
-
-    public Float getVegitableTax() {
-        return vegitableTax;
-    }
-
-    public void setVegitableTax(Float vegitableTax) {
-        this.vegitableTax = vegitableTax;
     }
 
     public String getVegitableMeasureMentUnit() {

@@ -1,8 +1,10 @@
 package com.example.retail.util;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-
+@Component
 public class OpsResponse {
 
     private int responseCode;

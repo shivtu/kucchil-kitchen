@@ -3,8 +3,6 @@ package com.example.retail.controllers.retailer.vegitables_retailer;
 import com.example.retail.models.vegitables.VegitableRecipes;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-
 @Component
 public class AddVegitablesRequestBody {
 
@@ -18,8 +16,6 @@ public class AddVegitablesRequestBody {
 
     private Float vegitableSellingPrice;
 
-    private Float vegitableMaxDiscount;
-
     private Float vegitableOfferedDiscount;
 
     private Boolean vegitableShowDiscount;
@@ -27,8 +23,6 @@ public class AddVegitablesRequestBody {
     private Float vegitableQuantity;
 
     private boolean vegitableAvailable;
-
-    private Float vegitableTax;
 
     private String vegitableMeasureMentUnit;
 
@@ -50,12 +44,10 @@ public class AddVegitablesRequestBody {
             String vegitableVariant,
             VegitableRecipes vegitableRecepie,
             Float vegitableSellingPrice,
-            Float vegitableMaxDiscount,
             Float vegitableOfferedDiscount,
             Boolean vegitableShowDiscount,
             Float vegitableQuantity,
             boolean vegitableAvailable,
-            Float vegitableTax,
             String vegitableMeasureMentUnit,
             Float vegitablesInventoryCostPrice,
             String vegitablesInventoryExpiry,
@@ -68,12 +60,10 @@ public class AddVegitablesRequestBody {
         this.vegitableVariant = vegitableVariant;
         this.vegitableRecepie = vegitableRecepie;
         this.vegitableSellingPrice = vegitableSellingPrice;
-        this.vegitableMaxDiscount = vegitableMaxDiscount;
         this.vegitableOfferedDiscount = vegitableOfferedDiscount;
         this.vegitableShowDiscount = vegitableShowDiscount;
         this.vegitableQuantity = vegitableQuantity;
         this.vegitableAvailable = vegitableAvailable;
-        this.vegitableTax = vegitableTax;
         this.vegitableMeasureMentUnit = vegitableMeasureMentUnit;
         this.vegitablesInventoryCostPrice = vegitablesInventoryCostPrice;
         this.vegitablesInventoryExpiry = vegitablesInventoryExpiry;
@@ -122,14 +112,6 @@ public class AddVegitablesRequestBody {
         this.vegitableSellingPrice = vegitableSellingPrice;
     }
 
-    public Float getVegitableMaxDiscount() {
-        return vegitableMaxDiscount;
-    }
-
-    public void setVegitableMaxDiscount(Float vegitableMaxDiscount) {
-        this.vegitableMaxDiscount = vegitableMaxDiscount;
-    }
-
     public Float getVegitableOfferedDiscount() {
         return vegitableOfferedDiscount;
     }
@@ -160,14 +142,6 @@ public class AddVegitablesRequestBody {
 
     public void setVegitableAvailable(boolean vegitableAvailable) {
         this.vegitableAvailable = vegitableAvailable;
-    }
-
-    public Float getVegitableTax() {
-        return vegitableTax;
-    }
-
-    public void setVegitableTax(Float vegitableTax) {
-        this.vegitableTax = vegitableTax;
     }
 
     public String getVegitableMeasureMentUnit() {
