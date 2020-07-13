@@ -71,9 +71,7 @@ public class VegitablesRetailerController {
                     Vegitables vegitables = new Vegitables();
 
                     // Create a unique subID
-                    String vegSubId = newVegitables.getVegitableName() + newVegitables.getVegitableVariant()
-                            + newVegitables.getVegitablesInventoryCostPrice().toString() + newVegitables.getVegitablesInventoryExpiry()
-                            + newVegitables.getVegitablesInventoryFixedCost().toString();
+                    String vegSubId = newVegitables.getVegitableName()+newVegitables.getVegitableVariant()+newVegitables.getVegitablesInventoryCostPrice().toString() + newVegitables.getVegitablesInventoryExpiry()+newVegitables.getVegitablesInventoryFixedCost().toString();
 
                     if (!files.isEmpty()) {
                         // opsResponse = utils.saveFiles(files, "vegitableImages");
