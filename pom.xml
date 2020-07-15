@@ -113,7 +113,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>kcchil-kitchen</finalName>
+		<finalName>kucchil-kitchen</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
