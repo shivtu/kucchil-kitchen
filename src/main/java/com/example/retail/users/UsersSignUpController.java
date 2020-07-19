@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "api/v1/signup")
@@ -36,10 +37,10 @@ public class UsersSignUpController {
 
     @PostMapping(value = "/customer", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(code = HttpStatus.CREATED)
-    public ResponseEntity addUser(HttpEntity<SignUpRequestBody> signUpRequestBody) {
+    public ResponseEntity<UsersProfile> addUser(HttpEntity<SignUpRequestBody> signUpRequestBody) {
 
         Users users = new Users();
-        users.setUserName(signUpRequestBody.getBody().getUserName());
+        users.setUserName(Objects.requireNonNull(signUpRequestBody.getBody()).getUserName());
         users.setPassword(signUpRequestBody.getBody().getPassword());
         users.setAccountNonExpired(true);
         users.setAccountNonLocked(true);
@@ -50,15 +51,15 @@ public class UsersSignUpController {
 
         Users createdUser = usersService.addUser(users);
 
-        return new ResponseEntity(createdUser.getConnectedUsersProfile(), HttpStatus.CREATED);
+        return new ResponseEntity<>(createdUser.getConnectedUsersProfile(), HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/retailer", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(code = HttpStatus.CREATED)
-    public ResponseEntity addRetailer (HttpEntity<SignUpRequestBody> signUpRequestBody) {
+    public ResponseEntity<UsersProfile> addRetailer (HttpEntity<SignUpRequestBody> signUpRequestBody) {
 
         Users users = new Users();
-        users.setUserName(signUpRequestBody.getBody().getUserName());
+        users.setUserName(Objects.requireNonNull(signUpRequestBody.getBody()).getUserName());
         users.setPassword(signUpRequestBody.getBody().getPassword());
         users.setAccountNonExpired(true);
         users.setAccountNonLocked(true);
@@ -69,6 +70,6 @@ public class UsersSignUpController {
 
         Users createdUser = usersService.addUser(users);
 
-        return new ResponseEntity(createdUser.getConnectedUsersProfile(), HttpStatus.CREATED);
+        return new ResponseEntity<>(createdUser.getConnectedUsersProfile(), HttpStatus.CREATED);
     }
 }
