@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = RetailApplication.class)
-class RetailApplicationTests {
+public class RetailApplicationTests {
 
 	@Mock
 	WelcomeController welcomeController;

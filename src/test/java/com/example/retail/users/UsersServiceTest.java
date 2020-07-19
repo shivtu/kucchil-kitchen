@@ -8,11 +8,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UsersServiceTest {
@@ -31,9 +32,7 @@ class UsersServiceTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test
-    void getUserByName() {
-
+    public Users getMockUser () {
         String[] socialMedia = new String[0];
 
         UsersProfile usersProfile = new UsersProfile();
@@ -60,12 +59,30 @@ class UsersServiceTest {
         users.setUserName("batman@gmail.com");
         users.setUsers_TableId(1l);
 
-        when(usersRepository.findByUserName("batman@gmail.com")).thenReturn(Optional.of(users));
+        return users;
+    }
+
+    @Test
+    void getUserByName() {
+
+        when(usersRepository.findByUserName("batman@gmail.com")).thenReturn(Optional.of(getMockUser()));
 
         Optional<Users> resUser = usersService.getUserByName("batman@gmail.com");
 
         assertNotNull(resUser);
         assertEquals("batman@gmail.com", resUser.get().getUserName());
+    }
+
+    @Test
+    void getAllUsers() {
+
+        ArrayList<Users> userList = new ArrayList<>();
+        userList.add(getMockUser());
+
+        when(usersRepository.findAll()).thenReturn(userList);
+
+        assertEquals("200 OK", HttpStatus.OK.toString());
+
     }
 
 }
