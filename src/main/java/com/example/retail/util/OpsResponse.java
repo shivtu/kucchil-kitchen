@@ -4,17 +4,19 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+
 @Component
 public class OpsResponse {
 
     private int responseCode;
     private String responseMessage;
-    private HashMap responseObject;
+    private Map responseObject;
     private ArrayList opsResponseArray;
 
     public OpsResponse(){}
 
-    public OpsResponse(int responseCode, String responseMessage, HashMap responseObject, ArrayList opsResponseArray) {
+    public OpsResponse(int responseCode, String responseMessage, Map responseObject, ArrayList opsResponseArray) {
         this.responseCode = responseCode;
         this.responseMessage = responseMessage;
         this.responseObject = responseObject;
@@ -37,11 +39,11 @@ public class OpsResponse {
         this.responseMessage = responseMessage;
     }
 
-    public HashMap getResponseObject() {
+    public Map getResponseObject() {
         return responseObject;
     }
 
-    public void setResponseObject(HashMap responseObject) {
+    public void setResponseObject(Map responseObject) {
         this.responseObject = responseObject;
     }
 

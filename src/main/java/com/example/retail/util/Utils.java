@@ -1,15 +1,21 @@
 package com.example.retail.util;
 
+import com.example.retail.users.SignUpRequestBody;
+import com.example.retail.users.profiles.UsersProfile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.swing.text.Document;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 @Component
@@ -26,14 +32,14 @@ public class Utils {
     @Autowired
     OpsResponse opsResponse;
 
-    public String vegSaveImageError = "Unable to save file";
-    public String vegSaveImageTypeError = "File type not allowed";
-    public String vegSaveImageSuccess = "Image saved";
-    public String vegImageSizeError = "File size not allowed";
-    public Long vegImageMaxSizeBytes = 30000L;
-    public int opsSuccess = 200;
-    public String imagesLocationKey = "imagesLocation";
-    public String defaultSwitchCase = "This operation is not provisioned";
+    final public String vegSaveImageError = "Unable to save file";
+    final public String vegSaveImageTypeError = "File type not allowed";
+    final public String vegSaveImageSuccess = "Image saved";
+    final public String vegImageSizeError = "File size not allowed";
+    final public Long vegImageMaxSizeBytes = 30000L;
+    final public int opsSuccess = 1;
+    final public String imagesLocationKey = "imagesLocation";
+    final public String defaultSwitchCase = "This operation is not provisioned";
 
     public OpsResponse setFileSaveError (int errorCode, String errorMessage) {
         opsResponse.setResponseCode(errorCode);
@@ -51,8 +57,8 @@ public class Utils {
                             if(mf.getSize() > vegImageMaxSizeBytes) {
                                 return setFileSaveError(422, vegImageSizeError);
                             } else {
-                                String imageNamePreffix = LocalDateTime.now().toString();
-                                String imageLocation = new File("src/main/resources/assets/veg-images").getAbsolutePath()+"/" +imageNamePreffix+ mf.getOriginalFilename();
+                                String imageNamePrefix = LocalDateTime.now().toString();
+                                String imageLocation = new File("src/main/resources/assets/veg-images").getAbsolutePath()+"/" +imageNamePrefix+ mf.getOriginalFilename();
                                 FileOutputStream fout = new FileOutputStream(imageLocation);
                                 fout.write(mf.getBytes());
                                 fout.close();

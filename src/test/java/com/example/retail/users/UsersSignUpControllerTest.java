@@ -20,12 +20,4 @@ class UsersSignUpControllerTest {
     void addUser() {
 
     }
-
-    @Test
-    void testAddUser() {
-    }
-
-    @Test
-    void addRetailer() {
-    }
 }

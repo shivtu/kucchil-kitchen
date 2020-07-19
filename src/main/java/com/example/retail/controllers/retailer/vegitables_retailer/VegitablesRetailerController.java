@@ -60,7 +60,7 @@ public class VegitablesRetailerController {
                 try {
                     // Validate vegitables
                     int validationStatus = validations.validateNewVegitables(newVegitables).getResponseCode();
-                    if (validationStatus != 200) {
+                    if (validationStatus != 1) {
                         return new ResponseEntity(opsResponse, HttpStatus.valueOf(opsResponse.getResponseCode()));
                     }
 
@@ -76,7 +76,7 @@ public class VegitablesRetailerController {
                     if (!files.isEmpty()) {
                         // opsResponse = utils.saveFiles(files, "vegitableImages");
                         int errorCheck = utils.saveFiles(files, "vegitableImages").getResponseCode();
-                        if(errorCheck != 200){
+                        if(errorCheck != 1){
                             return new ResponseEntity(opsResponse, HttpStatus.valueOf(opsResponse.getResponseCode()));
                         } else {
                             vegitables.setVegitableImagesLocation(opsResponse.getOpsResponseArray());

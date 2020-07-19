@@ -10,14 +10,17 @@ public class Validations {
     @Autowired
     OpsResponse opsResponse;
 
+    final public int opsSuccess = 1;
+    final public int opsError = 400;
+
     public OpsResponse setValidationError (String errorIn) {
-        opsResponse.setResponseCode(400);
+        opsResponse.setResponseCode(opsError);
         opsResponse.setResponseMessage(errorIn);
         return opsResponse;
     }
 
     public OpsResponse setValidationOk () {
-        opsResponse.setResponseCode(200);
+        opsResponse.setResponseCode(opsSuccess);
         opsResponse.setResponseMessage("Validation ok");
         return opsResponse;
     }

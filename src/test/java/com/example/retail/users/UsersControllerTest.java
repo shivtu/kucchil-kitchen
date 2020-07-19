@@ -68,6 +68,10 @@ class UsersControllerTest extends RetailApplicationTests {
 
         Optional<Users> resUser = usersController.getUserByName("batman@gmail.com");
 
+        assertNotNull(resUser);
+
+        assertEquals("batman@gmail.com", resUser.get().getUserName());
+
         assertEquals("200 OK", HttpStatus.valueOf(200).toString());
     }
 
