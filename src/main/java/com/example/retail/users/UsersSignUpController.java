@@ -30,6 +30,7 @@ public class UsersSignUpController {
         usersProfile.setUserProfile_AddedOnDate(LocalDate.now().toString()); // Get Current Date
         usersProfile.setUserProfile_AddedOnTime(LocalTime.now().toString());
         usersProfile.setUserProfile_Kyc(signUpRequestBody.getBody().getUserProfile_Kyc());
+        // TODO: convert string to string Array and add default avatar
         usersProfile.setUserProfile_Image(signUpRequestBody.getBody().getUserProfile_Image());
 
         return usersProfile;
