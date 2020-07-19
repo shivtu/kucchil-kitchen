@@ -26,18 +26,17 @@ class UsersControllerTest extends RetailApplicationTests {
     @Mock
     UsersService usersService;
 
+    Users users;
+
     @BeforeEach
     void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-    }
 
-    @Test
-    public void getAllUsersTest() {
-        String[] socialMedia = new String[0];
+        final String[] socialMedia = new String[0];
 
         UsersProfile usersProfile = new UsersProfile();
 
-        Users users = new Users();
+        users = new Users();
         users.setConnectedUsersProfile(usersProfile);
         users.setRoles("ROLE_RETAILER");
         users.setEnabled(true);
@@ -47,6 +46,10 @@ class UsersControllerTest extends RetailApplicationTests {
         users.setPassword("sdrwer4r23r2++#$@#f");
         users.setUserName("batman@gmail.com");
         users.setUsers_TableId(1l);
+    }
+
+    @Test
+    public void getAllUsersTest() {
 
         ArrayList<Users> userList = new ArrayList<>();
         userList.add(users);
@@ -60,20 +63,6 @@ class UsersControllerTest extends RetailApplicationTests {
 
     @Test
     public void getUserByNameTest() {
-        String[] socialMedia = new String[0];
-
-        UsersProfile usersProfile = new UsersProfile();
-
-        Users users = new Users();
-        users.setConnectedUsersProfile(usersProfile);
-        users.setRoles("ROLE_RETAILER");
-        users.setEnabled(true);
-        users.setCredentialsNonExpired(true);
-        users.setAccountNonLocked(true);
-        users.setAccountNonExpired(true);
-        users.setPassword("sdrwer4r23r2++#$@#f");
-        users.setUserName("batman@gmail.com");
-        users.setUsers_TableId(1l);
 
         when(usersService.getUserByName(anyString())).thenReturn(Optional.of(users));
 

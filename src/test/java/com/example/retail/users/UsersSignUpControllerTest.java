@@ -18,5 +18,14 @@ class UsersSignUpControllerTest {
 
     @Test
     void addUser() {
+
+    }
+
+    @Test
+    void testAddUser() {
+    }
+
+    @Test
+    void addRetailer() {
     }
 }
