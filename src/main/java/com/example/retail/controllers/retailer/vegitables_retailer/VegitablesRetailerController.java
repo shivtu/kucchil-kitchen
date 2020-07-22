@@ -31,16 +31,10 @@ public class VegitablesRetailerController {
     JWTDetails JWTDetails;
 
     @Autowired
-    ErrorResponse errorResponse;
-
-    @Autowired
     Utils utils;
 
     @Autowired
     Validations validations;
-
-    @Autowired
-    OpsResponse opsResponse;
 
     @RequestMapping(value = "/findall", method = RequestMethod.GET)
     public ResponseEntity<HashMap<Object, Object>> getAllVegitables() {
@@ -54,14 +48,14 @@ public class VegitablesRetailerController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity addAllVegitables(HttpServletRequest request,
+    public ResponseEntity<Object>addVegitable(HttpServletRequest request,
                                            @ModelAttribute AddVegitablesRequestBody newVegitables,
                                            @RequestParam("images") ArrayList<MultipartFile> files) {
                 try {
                     // Validate vegitables
-                    int validationStatus = validations.validateNewVegitables(newVegitables).getResponseCode();
-                    if (validationStatus != 1) {
-                        return new ResponseEntity(opsResponse, HttpStatus.valueOf(opsResponse.getResponseCode()));
+                    ResponseEntity<Object> validationStatus = validations.validateNewVegitables(newVegitables);
+                    if (validationStatus.getStatusCodeValue() != 1) {
+                       return validationStatus;
                     }
 
                     String vegitable_AddedBy = JWTDetails.userName(request);
@@ -71,15 +65,16 @@ public class VegitablesRetailerController {
                     Vegitables vegitables = new Vegitables();
 
                     // Create a unique subID
-                    String vegSubId = newVegitables.getVegitableName()+newVegitables.getVegitableVariant()+newVegitables.getVegitablesInventoryCostPrice().toString() + newVegitables.getVegitablesInventoryExpiry()+newVegitables.getVegitablesInventoryFixedCost().toString();
+                    String vegSubId = newVegitables.getVegitableName()+newVegitables.getVegitableVariant()+
+                            newVegitables.getVegitablesInventoryExpiry()+newVegitables.getVegitablesInventoryFixedCost().toString();
 
                     if (!files.isEmpty()) {
-                        // opsResponse = utils.saveFiles(files, "vegitableImages");
-                        int errorCheck = utils.saveFiles(files, "vegitableImages").getResponseCode();
+                         ResponseEntity<Object> res = utils.saveFiles(files, "vegitableImages");
+                        int errorCheck = res.getStatusCodeValue();
                         if(errorCheck != 1){
-                            return new ResponseEntity(opsResponse, HttpStatus.valueOf(opsResponse.getResponseCode()));
+                            return res;
                         } else {
-                            vegitables.setVegitableImagesLocation(opsResponse.getOpsResponseArray());
+                            vegitables.setVegitableImagesLocation((ArrayList<String>) res.getBody());
                         }
                     } else {
                         ArrayList<String> placeholder = new ArrayList<String>();
@@ -93,7 +88,7 @@ public class VegitablesRetailerController {
                     vegitables.setVegitableVariant(newVegitables.getVegitableVariant());
 
                     // Create new List and add recepie to the List
-                    ArrayList vegitableRecepieList = new ArrayList<>();
+                    ArrayList<VegitableRecipes> vegitableRecepieList = new ArrayList<>();
                     vegitableRecepieList.add(newVegitables.getVegitableRecepie());
 
                     vegitables.setVegitableRecepie(vegitableRecepieList);
@@ -127,18 +122,32 @@ public class VegitablesRetailerController {
                     vegitablesInventory.setVegitableSubId(vegSubId);
 
                     // Persist the vegitable
-                    Vegitables createdVeg = vegitablesService.addOneVegitable(vegitables);
+                    Vegitables createdVeg = vegitablesService.addVegitable(vegitables);
                     // Persist the vegitable inventory
                     VegitablesInventory createdVegInventory = vegitableInventoryService.addInventory(vegitablesInventory);
 
                     HashMap<String, Object> res = new HashMap<String, Object>();
-                    res.put("Vegitables", createdVeg);
-                    res.put("InventoryUpdate", createdVegInventory);
+                    res.put("vegitable", createdVeg);
+                    res.put("VegitableInventory", createdVegInventory);
 
-                    return new ResponseEntity<>(res, HttpStatus.CREATED);
+                    ArrayList<Object> result = new ArrayList<>();
+                    result.add(res);
+
+                    return ResponseEntity.status(HttpStatus.CREATED).body(
+                            utils.createSuccessResponse(
+                                    201,
+                                    "Created",
+                                    result)
+                    );
 
                 }catch (Exception e) {
-                    return new ResponseEntity<java.io.Serializable>(e.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+                    return ResponseEntity.status(500).body(
+                            utils.createErrorResponse(
+                                    400,
+                                    e.getMessage(),
+                                    "NA"
+                            )
+                    );
                 }
     }
 
@@ -164,13 +173,7 @@ public class VegitablesRetailerController {
             if(resultVegInventory == 1 && resultVeg == 1) {
                 return new ResponseEntity<Object>(vegitablesService.findBySubId(subId), HttpStatus.CREATED);
             }
-
-            errorResponse.setErrorCode(500);
-            errorResponse.setErrorMessage("Unable to add inventory");
-            errorResponse.setAdditionalInfo("NA");
-            ObjectMapper mapper = new ObjectMapper();
-            String error = mapper.writeValueAsString(errorResponse);
-            return new ResponseEntity<Object>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<Object>("error", HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (Exception ex){
             return new ResponseEntity<Object>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }

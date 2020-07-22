@@ -5,32 +5,32 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ErrorResponse {
-    private int errorCode;
-    private String errorMessage;
+    private int statusCode;
+    private String statusMessage;
     private String additionalInfo;
 
     public ErrorResponse() {}
 
-    public ErrorResponse(int errorCode, String errorMessage, String additionalInfo) {
-        this.errorCode = errorCode;
-        this.errorMessage = errorMessage;
+    public ErrorResponse(int statusCode, String statusMessage, String additionalInfo) {
+        this.statusCode = statusCode;
+        this.statusMessage = statusMessage;
         this.additionalInfo = additionalInfo;
     }
 
-    public int getErrorCode() {
-        return errorCode;
+    public int getStatusCode() {
+        return statusCode;
     }
 
-    public void setErrorCode(int errorCode) {
-        this.errorCode = errorCode;
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getStatusMessage() {
+        return statusMessage;
     }
 
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public void setStatusMessage(String statusMessage) {
+        this.statusMessage = statusMessage;
     }
 
     public String getAdditionalInfo() {

@@ -2,41 +2,43 @@ package com.example.retail.util;
 
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class SuccessResponse {
-    private int successCode;
-    private String successMessage;
-    private String additionalInfo;
+    private int statusCode;
+    private String statusMessage;
+    private List<Object> result;
 
     public SuccessResponse() {}
 
-    public SuccessResponse(int responseCode, String message, String additionalInfo) {
-        this.successCode = responseCode;
-        this.successMessage = message;
-        this.additionalInfo = additionalInfo;
+    public SuccessResponse(int statusCode, String statusMessage, List<Object> result) {
+        this.statusCode = statusCode;
+        this.statusMessage = statusMessage;
+        this.result = result;
     }
 
-    public int getResponseCode() {
-        return successCode;
+    public int getStatusCode() {
+        return statusCode;
     }
 
-    public void setResponseCode(int responseCode) {
-        this.successCode = responseCode;
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
     }
 
-    public String getMessage() {
-        return successMessage;
+    public String getStatusMessage() {
+        return statusMessage;
     }
 
-    public void setMessage(String message) {
-        this.successMessage = message;
+    public void setStatusMessage(String statusMessage) {
+        this.statusMessage = statusMessage;
     }
 
-    public String getAdditionalInfo() {
-        return additionalInfo;
+    public List<Object> getResult() {
+        return result;
     }
 
-    public void setAdditionalInfo(String additionalInfo) {
-        this.additionalInfo = additionalInfo;
+    public void setResult(List<Object> result) {
+        this.result = result;
     }
 }
