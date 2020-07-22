@@ -34,6 +34,9 @@ public class VegitablesRetailerController {
     Utils utils;
 
     @Autowired
+    CreateResponse createResponse;
+
+    @Autowired
     Validations validations;
 
     @RequestMapping(value = "/findall", method = RequestMethod.GET)
@@ -134,7 +137,7 @@ public class VegitablesRetailerController {
                     result.add(res);
 
                     return ResponseEntity.status(HttpStatus.CREATED).body(
-                            utils.createSuccessResponse(
+                            createResponse.createSuccessResponse(
                                     201,
                                     "Created",
                                     result)
@@ -142,7 +145,7 @@ public class VegitablesRetailerController {
 
                 }catch (Exception e) {
                     return ResponseEntity.status(500).body(
-                            utils.createErrorResponse(
+                            createResponse.createErrorResponse(
                                     400,
                                     e.getMessage(),
                                     "NA"
