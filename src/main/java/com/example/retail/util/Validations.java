@@ -31,6 +31,17 @@ public class Validations {
             );
         }
 
+        // Check if discounts are negative numbers
+        if (newVegitables.getVegitablesInventoryMaxDiscount() < 0 || newVegitables.getVegitableOfferedDiscount() < 0) {
+            return ResponseEntity.badRequest().body(
+                    createResponse.createErrorResponse(
+                            400,
+                            "Invalid format for discounts",
+                            "Discounts are expressed in %, please provide a positive number"
+                    )
+            );
+        }
+
         // Check if selling price is less than cost price
         if (newVegitables.getVegitableSellingPrice() < newVegitables.getVegitablesInventoryCostPrice()) {
             return ResponseEntity.badRequest().body(
@@ -41,6 +52,10 @@ public class Validations {
                     )
             );
         }
+
+
+
+        // Check if cost price and/or cost price is negative
 
         return ResponseEntity.status(1).body("OK");
 

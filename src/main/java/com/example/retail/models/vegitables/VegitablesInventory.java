@@ -35,17 +35,18 @@ public class VegitablesInventory implements Serializable {
     private LocalDate vegitablesInventoryExpiry;
 
     @Column(name = "vegitablesinventory_maxdiscount")
-    @Min(value = 0)
+    @Min(value = 0, message = "discounts are expressed in %, valid range 0-100")
     private Float vegitablesInventoryMaxDiscount;
 
     @Column(name = "vegitablesinventory_fixedcost")
+    @Min(value = 0, message = "Fixed costs cannot be less than 0")
     private Float vegitablesInventoryFixedCost;
 
     @Column(name = "vegitablesinventory_addtiondetails", columnDefinition = "jsonb")
     @Type(type = "psql-jsonb")
     private List<VegitableAdditionDetails> vegitablesInventoryAdditionDetails;
 
-    @Column(name = "vegitable_subid")
+    @Column(name = "vegitable_subid", updatable = false, unique = true)
     private String vegitableSubId;
 
     public VegitablesInventory() {}

@@ -45,7 +45,7 @@ public class Vegitables {
     @Min(value = 1, message = "Selling price cannot be less than 1")
     private Float vegitableSellingPrice;
 
-    @Min(value = 0)
+    @Min(value = 0, message = "discounts are expressed in %, valid range 0-100")
     @Column(name = "vegitable_offereddiscount")
     private Float vegitableOfferedDiscount;
 
@@ -58,7 +58,7 @@ public class Vegitables {
     @Column(name="vegitable_quantity")
     private Float vegitableQuantity;
 
-    @NotNull
+    @NotNull(message = "Is this item available")
     private boolean vegitableAvailable;
 
     @NotNull
