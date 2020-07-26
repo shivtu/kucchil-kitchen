@@ -6,9 +6,7 @@ import com.example.retail.models.vegitables.Vegitables;
 import com.example.retail.models.vegitables.VegitablesInventory;
 import com.example.retail.models.vegitables.repository.VegitableInventoryRepository;
 import com.example.retail.models.vegitables.repository.VegitableInventoryRepositoryImpl;
-import com.example.retail.util.CreateResponse;
-import com.example.retail.util.ErrorResponse;
-import com.example.retail.util.JWTDetails;
+import com.example.retail.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -38,6 +36,9 @@ public class VegitableInventoryService {
     @Autowired
     VegitablesService vegitablesService;
 
+    @Autowired
+    Validations validations;
+
     public VegitablesInventory addNewInventory(VegitablesInventory newVegitablesInventory) {
         return vegitableInventoryRepository.save(newVegitablesInventory);
     }
@@ -63,18 +64,19 @@ public class VegitableInventoryService {
             /** get the vegitable using tableId **/
             Optional<Vegitables> vegitables = vegitablesService.getVegitableByTableId(tableId);
 
-            if(vegitables.isEmpty()) {
-                return ResponseEntity.status(400).body(
-                        createResponse.createErrorResponse(400, "No vegitable found with id " + tableId,
-                                "Try another ID")
-                );
-            }
-
             String vegSubId = vegitables.get().getVegitableName()
                     +vegitables.get().getVegitableVariant()
                     +updateVegitablesInventoryRequest.getVegitableInventoryFixedCost()
                     +updateVegitablesInventoryRequest.getVegitableInventoryCostPrice()
                     .toString().toLowerCase();
+            ValidationResponse validatedRes = validations.validateInventory(vegSubId, updateVegitablesInventoryRequest);
+            if(validatedRes.getStatusCode() != 1) {
+                return ResponseEntity.status(validatedRes.getStatusCode()).body(
+                        createResponse.createErrorResponse(validatedRes.getStatusCode(),
+                        validatedRes.getStatusMessage(),
+                        validatedRes.getAdditionalInfo())
+                );
+            }
 
             /** update the quantity in vegitables table and set the new subId in the same table **/
             vegitablesService.updateVegitableQtyAndSubID(tableId, updateVegitablesInventoryRequest.getVegitableQuantity(), vegSubId);

@@ -1,7 +1,9 @@
 package com.example.retail.util;
 
 import com.example.retail.controllers.retailer.vegitables_retailer.AddVegitablesRequestBody;
+import com.example.retail.controllers.retailer.vegitables_retailer.UpdateVegitablesInventoryRequest;
 import com.example.retail.models.vegitables.Vegitables;
+import com.example.retail.models.vegitables.VegitablesInventory;
 import com.example.retail.models.vegitables.services.VegitableInventoryService;
 import com.example.retail.models.vegitables.services.VegitablesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class Validations {
 
     @Autowired
     ValidationResponse validationResponse;
+
+    @Autowired
+    VegitableInventoryService vegitableInventoryService;
 
     public int validationSuccessCode = 1;
     public int uprocessableRequestCode = 422;
@@ -87,18 +92,25 @@ public class Validations {
 
     }
 
-//    public ResponseEntity<Object> validateNewInventory(String vegSubId) {
-//        Optional<VegitablesInventory> vegitablesInventory = vegitableInventoryService.findVegitableInventoryBySubId(vegSubId);
-//        if (!vegitablesInventory.isEmpty()) {
-//            return ResponseEntity.status(400).body(
-//                    createResponse.createErrorResponse(
-//                            400,
-//                            "This item with provided details already exists",
-//                            "Try updating the quantity only: /api/v1/retailer/vegitables/update/quantity/<id>/<quantity>"
-//                    )
-//
-//            );
-//        }
-//        return ResponseEntity.status(1).body("OK");
-//    }
+    public ValidationResponse validateInventory(String vegSubId, UpdateVegitablesInventoryRequest updateVegitablesInventoryRequest) {
+        Optional<VegitablesInventory> vegitablesInventory = vegitableInventoryService.findVegitableInventoryBySubId(vegSubId);
+        if (!vegitablesInventory.isEmpty()) {
+            return
+                createResponse.createValidationResponse(
+                400,
+            "This item with provided details already exists",
+            "Try updating the quantity only: /api/v1/retailer/vegitables/update/quantity/<id>/<quantity>"
+            );
+        }
+
+        if(updateVegitablesInventoryRequest.getVegitableSellingPrice() < updateVegitablesInventoryRequest.getVegitableInventoryCostPrice()) {
+            return createResponse.createValidationResponse(
+                    badRequestCode,
+                    "Selling price of the vegitable is less than the cost price",
+                    "Selling price must be more than cost price to make a profit"
+            );
+        }
+
+        return createResponse.createValidationResponse(validationSuccessCode, "OK", null);
+    }
 }

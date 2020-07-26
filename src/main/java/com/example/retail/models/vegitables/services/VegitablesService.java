@@ -63,6 +63,10 @@ public class VegitablesService {
         return vegitablesRepository.saveAll(newVegitables);
     }
 
+    public int updateVegitableQtyAndSubID(Long tableId, Float increamentCount, String subId) {
+        return vegitablesRepository.updateVegitableQtyAndSubId(tableId, increamentCount, subId);
+    }
+
     public ResponseEntity<Object> addNewVegitable(HttpServletRequest request, AddVegitablesRequestBody newVegitables,
                                                ArrayList<MultipartFile> images) throws Exception {
         try {
@@ -175,9 +179,5 @@ public class VegitablesService {
 
     public Integer updateVegitableQty(Long tableId, Float increamentCount) {
         return vegitablesRepository.updateVegitableQty(tableId, increamentCount);
-    }
-
-    public int updateVegitableQtyAndSubID(Long tableId, Float increamentCount, String subId) {
-        return vegitablesRepository.updateVegitableQtyAndSubId(tableId, increamentCount, subId);
     }
 }
