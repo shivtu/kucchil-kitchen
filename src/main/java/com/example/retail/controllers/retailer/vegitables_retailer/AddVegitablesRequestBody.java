@@ -26,32 +26,30 @@ public class AddVegitablesRequestBody {
 
     private String vegitableMeasureMentUnit;
 
-    private Float vegitablesInventoryCostPrice;
+    private Float vegitableInventoryCostPrice;
 
-    private String vegitablesInventoryExpiry;
+    private String vegitableInventoryExpiry;
 
-    private Float vegitablesInventoryMaxDiscount;
+    private Float vegitableInventoryMaxDiscount;
 
-    private Float vegitablesInventoryFixedCost;
+    private Float vegitableInventoryFixedCost;
 
     public AddVegitablesRequestBody(){}
 
-    public AddVegitablesRequestBody(
-            String vegitableName,
-            String vegitableDescp,
-            String vegitableVariant,
-            VegitableRecipes vegitableRecepie,
-            Float vegitableSellingPrice,
-            Float vegitableOfferedDiscount,
-            Boolean vegitableShowDiscount,
-            Float vegitableQuantity,
-            boolean vegitableAvailable,
-            String vegitableMeasureMentUnit,
-            Float vegitablesInventoryCostPrice,
-            String vegitablesInventoryExpiry,
-            Float vegitablesInventoryMaxDiscount,
-            Float vegitablesInventoryFixedCost) {
-
+    public AddVegitablesRequestBody(String vegitableName,
+                                    String vegitableDescp,
+                                    String vegitableVariant,
+                                    VegitableRecipes vegitableRecepie,
+                                    Float vegitableSellingPrice,
+                                    Float vegitableOfferedDiscount,
+                                    Boolean vegitableShowDiscount,
+                                    Float vegitableQuantity,
+                                    boolean vegitableAvailable,
+                                    String vegitableMeasureMentUnit,
+                                    Float vegitableInventoryCostPrice,
+                                    String vegitableInventoryExpiry,
+                                    Float vegitableInventoryMaxDiscount,
+                                    Float vegitableInventoryFixedCost) {
         this.vegitableName = vegitableName;
         this.vegitableDescp = vegitableDescp;
         this.vegitableVariant = vegitableVariant;
@@ -62,10 +60,10 @@ public class AddVegitablesRequestBody {
         this.vegitableQuantity = vegitableQuantity;
         this.vegitableAvailable = vegitableAvailable;
         this.vegitableMeasureMentUnit = vegitableMeasureMentUnit;
-        this.vegitablesInventoryCostPrice = vegitablesInventoryCostPrice;
-        this.vegitablesInventoryExpiry = vegitablesInventoryExpiry;
-        this.vegitablesInventoryMaxDiscount = vegitablesInventoryMaxDiscount;
-        this.vegitablesInventoryFixedCost = vegitablesInventoryFixedCost;
+        this.vegitableInventoryCostPrice = vegitableInventoryCostPrice;
+        this.vegitableInventoryExpiry = vegitableInventoryExpiry;
+        this.vegitableInventoryMaxDiscount = vegitableInventoryMaxDiscount;
+        this.vegitableInventoryFixedCost = vegitableInventoryFixedCost;
     }
 
     public String getVegitableName() {
@@ -148,35 +146,35 @@ public class AddVegitablesRequestBody {
         this.vegitableMeasureMentUnit = vegitableMeasureMentUnit;
     }
 
-    public Float getVegitablesInventoryCostPrice() {
-        return vegitablesInventoryCostPrice;
+    public Float getVegitableInventoryCostPrice() {
+        return vegitableInventoryCostPrice;
     }
 
-    public void setVegitablesInventoryCostPrice(Float vegitablesInventoryCostPrice) {
-        this.vegitablesInventoryCostPrice = vegitablesInventoryCostPrice;
+    public void setVegitableInventoryCostPrice(Float vegitableInventoryCostPrice) {
+        this.vegitableInventoryCostPrice = vegitableInventoryCostPrice;
     }
 
-    public String getVegitablesInventoryExpiry() {
-        return vegitablesInventoryExpiry;
+    public String getVegitableInventoryExpiry() {
+        return vegitableInventoryExpiry;
     }
 
-    public void setVegitablesInventoryExpiry(String vegitablesInventoryExpiry) {
-        this.vegitablesInventoryExpiry = vegitablesInventoryExpiry;
+    public void setVegitableInventoryExpiry(String vegitableInventoryExpiry) {
+        this.vegitableInventoryExpiry = vegitableInventoryExpiry;
     }
 
-    public Float getVegitablesInventoryMaxDiscount() {
-        return vegitablesInventoryMaxDiscount;
+    public Float getVegitableInventoryMaxDiscount() {
+        return vegitableInventoryMaxDiscount;
     }
 
-    public void setVegitablesInventoryMaxDiscount(Float vegitablesInventoryMaxDiscount) {
-        this.vegitablesInventoryMaxDiscount = vegitablesInventoryMaxDiscount;
+    public void setVegitableInventoryMaxDiscount(Float vegitableInventoryMaxDiscount) {
+        this.vegitableInventoryMaxDiscount = vegitableInventoryMaxDiscount;
     }
 
-    public Float getVegitablesInventoryFixedCost() {
-        return vegitablesInventoryFixedCost;
+    public Float getVegitableInventoryFixedCost() {
+        return vegitableInventoryFixedCost;
     }
 
-    public void setVegitablesInventoryFixedCost(Float vegitablesInventoryFixedCost) {
-        this.vegitablesInventoryFixedCost = vegitablesInventoryFixedCost;
+    public void setVegitableInventoryFixedCost(Float vegitableInventoryFixedCost) {
+        this.vegitableInventoryFixedCost = vegitableInventoryFixedCost;
     }
 }

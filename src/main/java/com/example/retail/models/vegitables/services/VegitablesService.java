@@ -69,8 +69,8 @@ public class VegitablesService {
             // Create a unique subID
             String vegSubId = newVegitables.getVegitableName()
                     +newVegitables.getVegitableVariant()
-                    +newVegitables.getVegitablesInventoryFixedCost()
-                    +newVegitables.getVegitablesInventoryCostPrice()
+                    +newVegitables.getVegitableInventoryFixedCost()
+                    +newVegitables.getVegitableInventoryCostPrice()
                     .toString().toLowerCase();
 
             // Validate vegitables
@@ -82,7 +82,7 @@ public class VegitablesService {
             }
 
             String vegitable_AddedBy = JWTDetails.userName(request);
-            LocalDate vegitableInventoryExpiry = LocalDate.parse(newVegitables.getVegitablesInventoryExpiry());
+            LocalDate vegitableInventoryExpiry = LocalDate.parse(newVegitables.getVegitableInventoryExpiry());
 
             // create new vegitable
             Vegitables vegitables = new Vegitables();
@@ -123,11 +123,11 @@ public class VegitablesService {
 
             /** Create vegitable inventory **/
             VegitablesInventory vegitablesInventory = new VegitablesInventory();
-            vegitablesInventory.setVegitablesInventoryCostPrice(newVegitables.getVegitablesInventoryCostPrice());
-            vegitablesInventory.setVegitablesInventoryFixedCost(newVegitables.getVegitablesInventoryFixedCost());
+            vegitablesInventory.setVegitableInventoryCostPrice(newVegitables.getVegitableInventoryCostPrice());
+            vegitablesInventory.setVegitableInventoryFixedCost(newVegitables.getVegitableInventoryFixedCost());
             vegitablesInventory.setVegitableInventorySellingPrice(newVegitables.getVegitableSellingPrice());
-            vegitablesInventory.setVegitablesInventoryExpiry(vegitableInventoryExpiry);
-            vegitablesInventory.setVegitablesInventoryMaxDiscount(newVegitables.getVegitablesInventoryMaxDiscount());
+            vegitablesInventory.setVegitableInventoryExpiry(vegitableInventoryExpiry);
+            vegitablesInventory.setVegitableInventoryMaxDiscount(newVegitables.getVegitableInventoryMaxDiscount());
 
             /** Create VegitableAdditionDetails **/
             VegitableAdditionDetails vegitableAdditionDetails = new VegitableAdditionDetails();
@@ -138,8 +138,8 @@ public class VegitablesService {
             List<VegitableAdditionDetails> vegitableDetailsList = new ArrayList<>();
             vegitableDetailsList.add(vegitableAdditionDetails);
 
-            vegitablesInventory.setVegitablesInventoryAdditionDetails(vegitableDetailsList);
-            vegitablesInventory.setVegitablesInventoryFixedCost(newVegitables.getVegitablesInventoryFixedCost());
+            vegitablesInventory.setVegitableInventoryAdditionDetails(vegitableDetailsList);
+            vegitablesInventory.setVegitableInventoryFixedCost(newVegitables.getVegitableInventoryFixedCost());
 
             vegitablesInventory.setVegitableSubId(vegSubId);
 

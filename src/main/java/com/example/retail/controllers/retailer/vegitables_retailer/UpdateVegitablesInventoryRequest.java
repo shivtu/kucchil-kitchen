@@ -7,72 +7,72 @@ import java.time.LocalDate;
 @Component
 public class UpdateVegitablesInventoryRequest {
 
-    private Float vegitablesInventoryCostPrice;
+    private Float vegitableInventoryCostPrice;
 
-    private Float vegitablesInventoryFixedCost;
+    private Float vegitableInventoryFixedCost;
 
-    private Float vegitablesInventorySellingPrice;
+    private Float vegitableSellingPrice;
 
-    private LocalDate vegitablesInventoryExpiry;
+    private LocalDate vegitableInventoryExpiry;
 
-    private Float vegitablesInventoryMaxDiscount;
+    private Float vegitableInventoryMaxDiscount;
 
     private Float vegitableQuantity;
 
     public UpdateVegitablesInventoryRequest(){}
 
-    public UpdateVegitablesInventoryRequest(Float vegitablesInventoryCostPrice,
-                                            Float vegitablesInventoryFixedCost,
-                                            Float vegitablesInventorySellingPrice,
-                                            LocalDate vegitablesInventoryExpiry,
-                                            Float vegitablesInventoryMaxDiscount,
+    public UpdateVegitablesInventoryRequest(Float vegitableInventoryCostPrice,
+                                            Float vegitableInventoryFixedCost,
+                                            Float vegitableSellingPrice,
+                                            LocalDate vegitableInventoryExpiry,
+                                            Float vegitableInventoryMaxDiscount,
                                             Float vegitableQuantity) {
-        this.vegitablesInventoryCostPrice = vegitablesInventoryCostPrice;
-        this.vegitablesInventoryFixedCost = vegitablesInventoryFixedCost;
-        this.vegitablesInventorySellingPrice = vegitablesInventorySellingPrice;
-        this.vegitablesInventoryExpiry = vegitablesInventoryExpiry;
-        this.vegitablesInventoryMaxDiscount = vegitablesInventoryMaxDiscount;
+        this.vegitableInventoryCostPrice = vegitableInventoryCostPrice;
+        this.vegitableInventoryFixedCost = vegitableInventoryFixedCost;
+        this.vegitableSellingPrice = vegitableSellingPrice;
+        this.vegitableInventoryExpiry = vegitableInventoryExpiry;
+        this.vegitableInventoryMaxDiscount = vegitableInventoryMaxDiscount;
         this.vegitableQuantity = vegitableQuantity;
     }
 
-    public Float getVegitablesInventoryCostPrice() {
-        return vegitablesInventoryCostPrice;
+    public Float getVegitableInventoryCostPrice() {
+        return vegitableInventoryCostPrice;
     }
 
-    public void setVegitablesInventoryCostPrice(Float vegitablesInventoryCostPrice) {
-        this.vegitablesInventoryCostPrice = vegitablesInventoryCostPrice;
+    public void setVegitableInventoryCostPrice(Float vegitableInventoryCostPrice) {
+        this.vegitableInventoryCostPrice = vegitableInventoryCostPrice;
     }
 
-    public Float getVegitablesInventoryFixedCost() {
-        return vegitablesInventoryFixedCost;
+    public Float getVegitableInventoryFixedCost() {
+        return vegitableInventoryFixedCost;
     }
 
-    public void setVegitablesInventoryFixedCost(Float vegitablesInventoryFixedCost) {
-        this.vegitablesInventoryFixedCost = vegitablesInventoryFixedCost;
+    public void setVegitableInventoryFixedCost(Float vegitableInventoryFixedCost) {
+        this.vegitableInventoryFixedCost = vegitableInventoryFixedCost;
     }
 
-    public Float getVegitablesInventorySellingPrice() {
-        return vegitablesInventorySellingPrice;
+    public Float getVegitableSellingPrice() {
+        return vegitableSellingPrice;
     }
 
-    public void setVegitablesInventorySellingPrice(Float vegitablesInventorySellingPrice) {
-        this.vegitablesInventorySellingPrice = vegitablesInventorySellingPrice;
+    public void setVegitableSellingPrice(Float vegitableSellingPrice) {
+        this.vegitableSellingPrice = vegitableSellingPrice;
     }
 
-    public LocalDate getVegitablesInventoryExpiry() {
-        return vegitablesInventoryExpiry;
+    public LocalDate getVegitableInventoryExpiry() {
+        return vegitableInventoryExpiry;
     }
 
-    public void setVegitablesInventoryExpiry(LocalDate vegitablesInventoryExpiry) {
-        this.vegitablesInventoryExpiry = vegitablesInventoryExpiry;
+    public void setVegitableInventoryExpiry(LocalDate vegitableInventoryExpiry) {
+        this.vegitableInventoryExpiry = vegitableInventoryExpiry;
     }
 
-    public Float getVegitablesInventoryMaxDiscount() {
-        return vegitablesInventoryMaxDiscount;
+    public Float getVegitableInventoryMaxDiscount() {
+        return vegitableInventoryMaxDiscount;
     }
 
-    public void setVegitablesInventoryMaxDiscount(Float vegitablesInventoryMaxDiscount) {
-        this.vegitablesInventoryMaxDiscount = vegitablesInventoryMaxDiscount;
+    public void setVegitableInventoryMaxDiscount(Float vegitableInventoryMaxDiscount) {
+        this.vegitableInventoryMaxDiscount = vegitableInventoryMaxDiscount;
     }
 
     public Float getVegitableQuantity() {

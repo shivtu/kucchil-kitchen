@@ -42,6 +42,18 @@ public class VegitableInventoryService {
         return vegitableInventoryRepository.save(newVegitablesInventory);
     }
 
+    public String findById(Long id) {
+        return vegitableInventoryRepository.findById(id).toString();
+    }
+
+    public List<VegitablesInventory> findAllVegitableInventory() {
+        return vegitableInventoryRepository.findAll();
+    }
+
+    public Optional<VegitablesInventory> findVegitableInventoryBySubId (String subId) {
+        return vegitableInventoryRepository.findVegitableInventoryBySubId(subId);
+    }
+
     public ResponseEntity<Object> addInventory(Long tableId, UpdateVegitablesInventoryRequest updateVegitablesInventoryRequest,
                                                       HttpServletRequest request) {
         try {
@@ -60,8 +72,8 @@ public class VegitableInventoryService {
 
             String vegSubId = vegitables.get().getVegitableName()
                     +vegitables.get().getVegitableVariant()
-                    +updateVegitablesInventoryRequest.getVegitablesInventoryFixedCost()
-                    +updateVegitablesInventoryRequest.getVegitablesInventoryCostPrice()
+                    +updateVegitablesInventoryRequest.getVegitableInventoryFixedCost()
+                    +updateVegitablesInventoryRequest.getVegitableInventoryCostPrice()
                     .toString().toLowerCase();
 
             /** update the quantity in vegitables table and set the new subId in the same table **/
@@ -78,11 +90,11 @@ public class VegitableInventoryService {
              * New Expiry
              * New Discounts
              */
-            vegitablesInventory.setVegitablesInventoryCostPrice(updateVegitablesInventoryRequest.getVegitablesInventoryCostPrice());
-            vegitablesInventory.setVegitablesInventoryFixedCost(updateVegitablesInventoryRequest.getVegitablesInventoryFixedCost());
-            vegitablesInventory.setVegitableInventorySellingPrice(updateVegitablesInventoryRequest.getVegitablesInventorySellingPrice());
-            vegitablesInventory.setVegitablesInventoryExpiry(updateVegitablesInventoryRequest.getVegitablesInventoryExpiry());
-            vegitablesInventory.setVegitablesInventoryMaxDiscount(updateVegitablesInventoryRequest.getVegitablesInventoryMaxDiscount());
+            vegitablesInventory.setVegitableInventoryCostPrice(updateVegitablesInventoryRequest.getVegitableInventoryCostPrice());
+            vegitablesInventory.setVegitableInventoryFixedCost(updateVegitablesInventoryRequest.getVegitableInventoryFixedCost());
+            vegitablesInventory.setVegitableInventorySellingPrice(updateVegitablesInventoryRequest.getVegitableSellingPrice());
+            vegitablesInventory.setVegitableInventoryExpiry(updateVegitablesInventoryRequest.getVegitableInventoryExpiry());
+            vegitablesInventory.setVegitableInventoryMaxDiscount(updateVegitablesInventoryRequest.getVegitableInventoryMaxDiscount());
             vegitablesInventory.setVegitableSubId(vegSubId);
 
             /*
@@ -101,7 +113,7 @@ public class VegitableInventoryService {
             vegitableAdditionDetailsList.add(vegitableAdditionDetails);
 
             /** add additionDetails to vegitables_inventory **/
-            vegitablesInventory.setVegitablesInventoryAdditionDetails(vegitableAdditionDetailsList);
+            vegitablesInventory.setVegitableInventoryAdditionDetails(vegitableAdditionDetailsList);
 
             VegitablesInventory res = vegitableInventoryRepository.save(vegitablesInventory);
 
@@ -119,19 +131,6 @@ public class VegitableInventoryService {
         }
 
     }
-
-    public String findById(Long id) {
-        return vegitableInventoryRepository.findById(id).toString();
-    }
-
-    public List<VegitablesInventory> findAllVegitableInventory() {
-        return vegitableInventoryRepository.findAll();
-    }
-
-    public Optional<VegitablesInventory> findVegitableInventoryBySubId (String subId) {
-        return vegitableInventoryRepository.findVegitableInventoryBySubId(subId);
-    }
-
 
     public ResponseEntity<Object> updateVegitableQty (Long tableId, Float quantity, HttpServletRequest request) {
         try{

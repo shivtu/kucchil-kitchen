@@ -47,7 +47,7 @@ public class Validations {
         }
 
         // Check if max discount in inventory table is less than offered discount
-        if (newVegitables.getVegitablesInventoryMaxDiscount() < newVegitables.getVegitableOfferedDiscount()) {
+        if (newVegitables.getVegitableInventoryMaxDiscount() < newVegitables.getVegitableOfferedDiscount()) {
 
             return     createResponse.createValidationResponse(
                     badRequestCode,
@@ -57,7 +57,7 @@ public class Validations {
         }
 
         // Check if discounts are negative numbers
-        if (newVegitables.getVegitablesInventoryMaxDiscount() < 0 || newVegitables.getVegitableOfferedDiscount() < 0) {
+        if (newVegitables.getVegitableInventoryMaxDiscount() < 0 || newVegitables.getVegitableOfferedDiscount() < 0) {
             return
                     createResponse.createValidationResponse(
                             badRequestCode,
@@ -68,7 +68,7 @@ public class Validations {
         }
 
         // Check if selling price is less than cost price
-        if (newVegitables.getVegitableSellingPrice() < newVegitables.getVegitablesInventoryCostPrice()) {
+        if (newVegitables.getVegitableSellingPrice() < newVegitables.getVegitableInventoryCostPrice()) {
 
               return createResponse.createValidationResponse(
                       badRequestCode,
