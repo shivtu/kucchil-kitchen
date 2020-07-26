@@ -26,8 +26,12 @@ public class UsersProfile implements Serializable {
     private Long userProfile_TableId;
 
     @Column(name = "user_name", unique = true)
+    @Email
     private String userName;
 
+    @NotNull
+    @NotEmpty
+    @Size(min = 3)
     private String userProfile_GivenName;
 
     @Min(value = 18, message = "You must be 18 years or older")
@@ -37,22 +41,40 @@ public class UsersProfile implements Serializable {
     @Column(nullable = false, unique = true)
     private Long userProfile_PhoneNumber;
 
+    @Column(name = "user_profile_address")
+    @NotNull
+    @NotEmpty
+    @Size(min = 6, max = 200)
     private String userProfile_Address;
 
+    @Column(name = "user_profile_gender")
+    @NotNull
     private UserProfileGender userProfile_Gender;
 
     @Type(type = "string-array")
-    @Column(columnDefinition = "text[]")
+    @Column(columnDefinition = "text[]", name = "user_profile_social_media")
     private String[] userProfile_SocialMedia;
 
+    @Column(name = "user_profile_added_on_date")
+    @NotNull
+    @NotEmpty
     private String userProfile_AddedOnDate;
 
+    @Column(name = "user_profile_added_on_time")
+    @NotNull
+    @NotEmpty
     private String userProfile_AddedOnTime;
 
+    @Column(name = "user_profile_kyc")
+    @NotNull
+    @NotEmpty
     private String userProfile_Kyc;
 
+    @Column(name = "user_profile_image")
+    @NotNull
     private String userProfile_Image;
 
+    @Column(name = "user_profile_wish_list")
     private String[] userProfile_wishList;
 
     public UsersProfile(){}

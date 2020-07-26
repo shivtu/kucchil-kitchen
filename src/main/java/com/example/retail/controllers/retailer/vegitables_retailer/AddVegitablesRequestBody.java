@@ -34,8 +34,6 @@ public class AddVegitablesRequestBody {
 
     private Float vegitablesInventoryFixedCost;
 
-    private String vegitableSubId;
-
     public AddVegitablesRequestBody(){}
 
     public AddVegitablesRequestBody(
@@ -52,8 +50,7 @@ public class AddVegitablesRequestBody {
             Float vegitablesInventoryCostPrice,
             String vegitablesInventoryExpiry,
             Float vegitablesInventoryMaxDiscount,
-            Float vegitablesInventoryFixedCost,
-            String vegitableSubId) {
+            Float vegitablesInventoryFixedCost) {
 
         this.vegitableName = vegitableName;
         this.vegitableDescp = vegitableDescp;
@@ -69,7 +66,6 @@ public class AddVegitablesRequestBody {
         this.vegitablesInventoryExpiry = vegitablesInventoryExpiry;
         this.vegitablesInventoryMaxDiscount = vegitablesInventoryMaxDiscount;
         this.vegitablesInventoryFixedCost = vegitablesInventoryFixedCost;
-        this.vegitableSubId = vegitableSubId;
     }
 
     public String getVegitableName() {
@@ -182,13 +178,5 @@ public class AddVegitablesRequestBody {
 
     public void setVegitablesInventoryFixedCost(Float vegitablesInventoryFixedCost) {
         this.vegitablesInventoryFixedCost = vegitablesInventoryFixedCost;
-    }
-
-    public String getVegitableSubId() {
-        return vegitableSubId;
-    }
-
-    public void setVegitableSubId(String vegitableSubId) {
-        this.vegitableSubId = vegitableSubId;
     }
 }

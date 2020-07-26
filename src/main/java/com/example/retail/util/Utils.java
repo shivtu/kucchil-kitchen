@@ -15,74 +15,62 @@ import java.util.*;
 @Component
 public class Utils {
 
-    private static Utils utilInstance = new Utils();
-
-    private Utils (){}
-
-    public static Utils getUtilInstance() {
-        return utilInstance;
-    }
+//    private static Utils utilInstance = new Utils();
+//
+//    private Utils (){}
+//
+//    public static Utils getUtilInstance() {
+//        return utilInstance;
+//    }
 
     @Autowired
    CreateResponse createResponse;
 
     final public String vegSaveImageError = "Unable to save file";
     final public String vegSaveImageTypeError = "File type not allowed";
-    final public String vegSaveImageSuccess = "Image saved";
     final public String vegImageSizeError = "File size not allowed";
     final public Long vegImageMaxSizeBytes = 30000L;
     final public int opsSuccess = 1;
-    final public String imagesLocationKey = "imagesLocation";
+    private String savedImagePath = "src/main/resources/assets/veg-images";
     final public String defaultSwitchCase = "This operation is not provisioned";
 
-    public ResponseEntity<Object> saveFiles(ArrayList<MultipartFile> images, String caseType) {
+    public OpsResponse saveFiles(ArrayList<MultipartFile> images, String caseType) {
         switch(caseType) {
             case "vegitableImages":
-                final ArrayList<String> userFiles = new ArrayList<>();
                 try {
-                    for(MultipartFile mf: images) {
+                    final List<String> savedFileResArray = new ArrayList<>();
+                    for (MultipartFile mf : images) {
                         if (Objects.equals(mf.getContentType(), "image/jpeg") || Objects.equals(mf.getContentType(), "image/png")) {
                             if (mf.getSize() > vegImageMaxSizeBytes) {
-                                return ResponseEntity.status(0).body(createResponse.createErrorResponse(
-                                        400,
-                                        vegImageSizeError,
-                                        "File size cannot exceed " + vegImageMaxSizeBytes
-                                ));
+                                return createResponse.createOpsResponse(400, vegImageSizeError, "Allowed size is less than " + vegImageMaxSizeBytes,
+                                        null, null);
                             } else {
                                 String imageNamePrefix = LocalDateTime.now().toString();
-                                String imageLocation = new File("src/main/resources/assets/veg-images").getAbsolutePath() + "/" + imageNamePrefix + mf.getOriginalFilename();
+                                String imageLocation = new File(savedImagePath).getAbsolutePath() + "/" + imageNamePrefix + mf.getOriginalFilename();
                                 FileOutputStream fout = new FileOutputStream(imageLocation);
                                 fout.write(mf.getBytes());
                                 fout.close();
-                                ResponseEntity.status(1).body(new ArrayList<String>(Collections.singleton(imageLocation)));
+                                savedFileResArray.add(imageLocation);
+                                return createResponse.createOpsResponse(opsSuccess, "File saved", "NA",
+                                        savedFileResArray, null);
                             }
                         } else {
-                            return ResponseEntity.status(0).body(
-                                    createResponse.createErrorResponse(
-                                            400,
-                                            vegSaveImageTypeError,
-                                            "Allowed types are jpeg and png"
-                                    )
+                            return createResponse.createOpsResponse(400, vegSaveImageTypeError,
+                                    "Allowed types are jpeg and png", null, null
                             );
                         }
                     }
                 } catch (Exception e) {
-                    return ResponseEntity.status(1).body(
-                            createResponse.createErrorResponse(
-                                    500,
-                                    e.getMessage(),
-                                    "Unable to save file"
-                            )
-                    );
+                    return createResponse.createOpsResponse(500, e.getMessage(), vegSaveImageError, null, null);
                 }
-
             default:
-                return ResponseEntity.status(422).body(createResponse.createErrorResponse(
+                return createResponse.createOpsResponse(
                         422,
                         defaultSwitchCase,
-                        ""
-                ));
+                        "NA",
+                        null,
+                        null
+                );
         }
-
     }
 }

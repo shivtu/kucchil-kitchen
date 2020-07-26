@@ -54,7 +54,7 @@ public class Vegitables {
     private Boolean vegitableShowDiscount;
 
     @NotNull
-    @Min(value = 0, message = "Quantity cannot be less than 0")
+    @Min(value = 1, message = "Quantity cannot be less than 0")
     @Column(name="vegitable_quantity")
     private Float vegitableQuantity;
 
@@ -66,7 +66,7 @@ public class Vegitables {
     @Column(name="vegitable_measurementunit")
     private String vegitableMeasureMentUnit;
 
-    @Column(name = "vegitable_subid", updatable = false, unique = true)
+    @Column(name = "vegitable_subid", updatable = false)
     private String vegitableSubId;
 
     @NotNull

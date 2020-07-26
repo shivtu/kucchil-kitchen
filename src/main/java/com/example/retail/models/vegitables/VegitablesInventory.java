@@ -30,6 +30,14 @@ public class VegitablesInventory implements Serializable {
     @Min(value = 0, message = "Cost price cannot be 0")
     private Float vegitablesInventoryCostPrice;
 
+    @Column(name = "vegitablesinventory_fixedcost")
+    @Min(value = 0, message = "Fixed costs cannot be less than 0")
+    private Float vegitablesInventoryFixedCost;
+
+    @Column
+    @Min(value = 0, message = "Selling price cannot be less than 0")
+    private Float vegitableInventorySellingPrice;
+
     @Future
     @Column(name = "vegitablesinventory_expiry")
     private LocalDate vegitablesInventoryExpiry;
@@ -37,10 +45,6 @@ public class VegitablesInventory implements Serializable {
     @Column(name = "vegitablesinventory_maxdiscount")
     @Min(value = 0, message = "discounts are expressed in %, valid range 0-100")
     private Float vegitablesInventoryMaxDiscount;
-
-    @Column(name = "vegitablesinventory_fixedcost")
-    @Min(value = 0, message = "Fixed costs cannot be less than 0")
-    private Float vegitablesInventoryFixedCost;
 
     @Column(name = "vegitablesinventory_addtiondetails", columnDefinition = "jsonb")
     @Type(type = "psql-jsonb")
@@ -51,17 +55,19 @@ public class VegitablesInventory implements Serializable {
 
     public VegitablesInventory() {}
 
-    public VegitablesInventory(
-            @Min(value = 0, message = "Cost price cannot be 0") Float vegitablesInventoryCostPrice,
-            LocalDate vegitablesInventoryExpiry,
-            @Min(value = 0) Float vegitablesInventoryMaxDiscount,
-            Float vegitablesInventoryFixedCost,
-            List<VegitableAdditionDetails> vegitablesInventoryAdditionDetails,
-            String vegitableSubId) {
+    public VegitablesInventory(Long vegitableInventoryTableId,
+                               @Min(value = 0, message = "Cost price cannot be 0") Float vegitablesInventoryCostPrice,
+                               @Min(value = 0, message = "Fixed costs cannot be less than 0") Float vegitablesInventoryFixedCost,
+                               @Min(value = 0, message = "Selling price cannot be less than 0") Float vegitableInventorySellingPrice,
+                               @Future LocalDate vegitablesInventoryExpiry,
+                               @Min(value = 0, message = "discounts are expressed in %, valid range 0-100") Float vegitablesInventoryMaxDiscount,
+                               List<VegitableAdditionDetails> vegitablesInventoryAdditionDetails, String vegitableSubId) {
+        this.vegitableInventoryTableId = vegitableInventoryTableId;
         this.vegitablesInventoryCostPrice = vegitablesInventoryCostPrice;
+        this.vegitablesInventoryFixedCost = vegitablesInventoryFixedCost;
+        this.vegitableInventorySellingPrice = vegitableInventorySellingPrice;
         this.vegitablesInventoryExpiry = vegitablesInventoryExpiry;
         this.vegitablesInventoryMaxDiscount = vegitablesInventoryMaxDiscount;
-        this.vegitablesInventoryFixedCost = vegitablesInventoryFixedCost;
         this.vegitablesInventoryAdditionDetails = vegitablesInventoryAdditionDetails;
         this.vegitableSubId = vegitableSubId;
     }
@@ -82,6 +88,22 @@ public class VegitablesInventory implements Serializable {
         this.vegitablesInventoryCostPrice = vegitablesInventoryCostPrice;
     }
 
+    public Float getVegitablesInventoryFixedCost() {
+        return vegitablesInventoryFixedCost;
+    }
+
+    public void setVegitablesInventoryFixedCost(Float vegitablesInventoryFixedCost) {
+        this.vegitablesInventoryFixedCost = vegitablesInventoryFixedCost;
+    }
+
+    public Float getVegitableInventorySellingPrice() {
+        return vegitableInventorySellingPrice;
+    }
+
+    public void setVegitableInventorySellingPrice(Float vegitableInventorySellingPrice) {
+        this.vegitableInventorySellingPrice = vegitableInventorySellingPrice;
+    }
+
     public LocalDate getVegitablesInventoryExpiry() {
         return vegitablesInventoryExpiry;
     }
@@ -96,14 +118,6 @@ public class VegitablesInventory implements Serializable {
 
     public void setVegitablesInventoryMaxDiscount(Float vegitablesInventoryMaxDiscount) {
         this.vegitablesInventoryMaxDiscount = vegitablesInventoryMaxDiscount;
-    }
-
-    public Float getVegitablesInventoryFixedCost() {
-        return vegitablesInventoryFixedCost;
-    }
-
-    public void setVegitablesInventoryFixedCost(Float vegitablesInventoryFixedCost) {
-        this.vegitablesInventoryFixedCost = vegitablesInventoryFixedCost;
     }
 
     public List<VegitableAdditionDetails> getVegitablesInventoryAdditionDetails() {

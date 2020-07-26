@@ -13,8 +13,14 @@ public interface VegitablesRepository extends JpaRepository<Vegitables, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE Vegitables v set v.vegitableQuantity= v.vegitableQuantity+ :vegitableQuantity WHERE v.vegitableSubId= :subId")
-    public Integer updateVegitablesQty(@Param("subId") String subId, @Param("vegitableQuantity") Float vegitableQuantity);
+    @Query(value = "UPDATE Vegitables v set v.vegitableQuantity= v.vegitableQuantity+ :vegitableQuantity WHERE v.vegitableTableId= :tableId")
+    public Integer updateVegitableQty(@Param("tableId") Long tableId, @Param("vegitableQuantity") Float vegitableQuantity);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE Vegitables v set v.vegitableQuantity= v.vegitableQuantity+ :vegitableQuantity, v.vegitableSubId= :subId WHERE v.vegitableTableId= :tableId")
+    public Integer updateVegitableQtyAndSubId(@Param("tableId") Long tableId, @Param("vegitableQuantity") Float vegitableQuantity,
+                                              @Param("subId") String subId);
 
     @Query(value = "SELECT * FROM vegitables WHERE vegitable_subid = :subId", nativeQuery = true)
     public Optional<Vegitables> findBySubId(@Param("subId") String vegitable_subid);

@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Repository
 public interface VegitableInventoryRepository extends JpaRepository<VegitablesInventory, Long>, VegitableInventoryRepositoryCustom {
 
@@ -22,5 +24,5 @@ public interface VegitableInventoryRepository extends JpaRepository<VegitablesIn
     int updateVegitablesAdditionDetails(@Param("updatedAdditionDetails") String updatedAdditionDetails);
 
     @Query(value = "SELECT * FROM vegitables_inventory WHERE vegitable_subid= :subId", nativeQuery = true)
-    VegitablesInventory getVegitableInventoryBySubId(@Param("subId") String subId);
+    Optional<VegitablesInventory> findVegitableInventoryBySubId(@Param("subId") String subId);
 }

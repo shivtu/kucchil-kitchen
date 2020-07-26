@@ -4,7 +4,6 @@ import com.example.retail.models.vegitables.*;
 import com.example.retail.models.vegitables.services.VegitableInventoryService;
 import com.example.retail.models.vegitables.services.VegitablesService;
 import com.example.retail.util.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
@@ -28,16 +25,7 @@ public class VegitablesRetailerController {
     VegitableInventoryService vegitableInventoryService;
 
     @Autowired
-    JWTDetails JWTDetails;
-
-    @Autowired
-    Utils utils;
-
-    @Autowired
     CreateResponse createResponse;
-
-    @Autowired
-    Validations validations;
 
     @RequestMapping(value = "/findall", method = RequestMethod.GET)
     public ResponseEntity<HashMap<Object, Object>> getAllVegitables() {
@@ -49,136 +37,53 @@ public class VegitablesRetailerController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+
+    /** User adds a new item that is not available yet
+     The business logic goes as follows
+     1. The user introduces a new vegitabble
+     2. We create a new row entry in the DB for vegitables table
+     3. Additionally we also create a corrosponding entry in the inventory table for the newly created product
+     **/
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Object>addVegitable(HttpServletRequest request,
+    public Object addNewVegitable(HttpServletRequest request,
                                            @ModelAttribute AddVegitablesRequestBody newVegitables,
-                                           @RequestParam("images") ArrayList<MultipartFile> files) {
-                try {
-                    // Validate vegitables
-                    ResponseEntity<Object> validationStatus = validations.validateNewVegitables(newVegitables);
-                    if (validationStatus.getStatusCodeValue() != 1) {
-                       return validationStatus;
-                    }
-
-                    String vegitable_AddedBy = JWTDetails.userName(request);
-                    LocalDate vegitableInventoryExpiry = LocalDate.parse(newVegitables.getVegitablesInventoryExpiry());
-
-                    // create new vegitable
-                    Vegitables vegitables = new Vegitables();
-
-                    // Create a unique subID
-                    String vegSubId = newVegitables.getVegitableName()+newVegitables.getVegitableVariant()+
-                            newVegitables.getVegitablesInventoryExpiry()+newVegitables.getVegitablesInventoryFixedCost().toString();
-
-                    if (!files.isEmpty()) {
-                         ResponseEntity<Object> res = utils.saveFiles(files, "vegitableImages");
-                        int errorCheck = res.getStatusCodeValue();
-                        if(errorCheck != 1){
-                            return res;
-                        } else {
-                            vegitables.setVegitableImagesLocation((ArrayList<String>) res.getBody());
-                        }
-                    } else {
-                        ArrayList<String> placeholder = new ArrayList<String>();
-                        // TODO : give correct path to image placeholder
-                        placeholder.add("src/main/resources/assets/veg-images/veg-image-placeholder.png");
-                        vegitables.setVegitableImagesLocation(placeholder);
-                    }
-
-                    vegitables.setVegitableName(newVegitables.getVegitableName());
-                    vegitables.setVegitableDescp(newVegitables.getVegitableDescp());
-                    vegitables.setVegitableVariant(newVegitables.getVegitableVariant());
-
-                    // Create new List and add recepie to the List
-                    ArrayList<VegitableRecipes> vegitableRecepieList = new ArrayList<>();
-                    vegitableRecepieList.add(newVegitables.getVegitableRecepie());
-
-                    vegitables.setVegitableRecepie(vegitableRecepieList);
-                    vegitables.setVegitableSellingPrice(newVegitables.getVegitableSellingPrice());
-                    vegitables.setVegitableOfferedDiscount(newVegitables.getVegitableOfferedDiscount());
-                    vegitables.setVegitableShowDiscount(newVegitables.getVegitableShowDiscount());
-                    vegitables.setVegitableQuantity(newVegitables.getVegitableQuantity());
-                    vegitables.setVegitableAvailable(newVegitables.isVegitableAvailable());
-                    vegitables.setVegitableMeasureMentUnit(newVegitables.getVegitableMeasureMentUnit());
-
-                    vegitables.setVegitableSubId(vegSubId);
-
-                    // Create vegitable inventory
-                    VegitablesInventory vegitablesInventory = new VegitablesInventory();
-                    vegitablesInventory.setVegitablesInventoryCostPrice(newVegitables.getVegitablesInventoryCostPrice());
-                    vegitablesInventory.setVegitablesInventoryExpiry(vegitableInventoryExpiry);
-                    vegitablesInventory.setVegitablesInventoryMaxDiscount(newVegitables.getVegitablesInventoryMaxDiscount());
-
-                    // Create VegitableAdditionDetails
-                    VegitableAdditionDetails vegitableAdditionDetails = new VegitableAdditionDetails();
-                    vegitableAdditionDetails.setAddedBy(vegitable_AddedBy);
-                    vegitableAdditionDetails.setAddedDateTime(LocalDateTime.now());
-                    vegitableAdditionDetails.setIncreamentCount(newVegitables.getVegitableQuantity());
-
-                    List<VegitableAdditionDetails> vegitableDetailsList = new ArrayList<>();
-                    vegitableDetailsList.add(vegitableAdditionDetails);
-
-                    vegitablesInventory.setVegitablesInventoryAdditionDetails(vegitableDetailsList);
-                    vegitablesInventory.setVegitablesInventoryFixedCost(newVegitables.getVegitablesInventoryFixedCost());
-
-                    vegitablesInventory.setVegitableSubId(vegSubId);
-
-                    // Persist the vegitable
-                    Vegitables createdVeg = vegitablesService.addVegitable(vegitables);
-                    // Persist the vegitable inventory
-                    VegitablesInventory createdVegInventory = vegitableInventoryService.addInventory(vegitablesInventory);
-
-                    HashMap<String, Object> res = new HashMap<String, Object>();
-                    res.put("vegitable", createdVeg);
-                    res.put("VegitableInventory", createdVegInventory);
-
-                    ArrayList<Object> result = new ArrayList<>();
-                    result.add(res);
-
-                    return ResponseEntity.status(HttpStatus.CREATED).body(
-                            createResponse.createSuccessResponse(
-                                    201,
-                                    "Created",
-                                    result)
-                    );
-
-                }catch (Exception e) {
-                    return ResponseEntity.status(500).body(
-                            createResponse.createErrorResponse(
-                                    400,
-                                    e.getMessage(),
-                                    "NA"
-                            )
-                    );
-                }
+                                           @RequestParam("images") ArrayList<MultipartFile> images) throws Exception {
+        return vegitablesService.addNewVegitable(request, newVegitables, images);
     }
 
-    @RequestMapping(value = "/update/{tableId}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> updateVegitableQty (@PathVariable Long tableId, @RequestBody AddVegitablesRequestBody requestBody,
+
+    /* User updates the quantity only for an existing item */
+    @RequestMapping(value = "/update/{tableId}/increamentQuantity/{quantity}", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> updateVegitableQty (@PathVariable Long tableId, @PathVariable Float quantity,
                                                       HttpServletRequest request){
-        try {
-            String addedBy = JWTDetails.userName(request);
-            Float vegitableQuantity = requestBody.getVegitableQuantity();
-            LocalDateTime dateTimeAdded = LocalDateTime.now();
-            String subId = requestBody.getVegitableSubId();
-            List<VegitableAdditionDetails> updatedAdditionDetails = new ArrayList<>();
-
-            VegitableAdditionDetails newVegitableAdditionDetails = new VegitableAdditionDetails();
-            newVegitableAdditionDetails.setIncreamentCount(vegitableQuantity);
-            newVegitableAdditionDetails.setAddedDateTime(dateTimeAdded);
-            newVegitableAdditionDetails.setAddedBy(addedBy);
-
-            updatedAdditionDetails.add(newVegitableAdditionDetails);
-            int resultVegInventory = vegitableInventoryService.updateVegitablesAdditionDetails(subId, updatedAdditionDetails);
-            int resultVeg = vegitablesService.updateVegitablesQty(subId, vegitableQuantity);
-            if(resultVegInventory == 1 && resultVeg == 1) {
-                return new ResponseEntity<Object>(vegitablesService.findBySubId(subId), HttpStatus.CREATED);
-            }
-            return new ResponseEntity<Object>("error", HttpStatus.INTERNAL_SERVER_ERROR);
-        }catch (Exception ex){
-            return new ResponseEntity<Object>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        /** Increament quantity of vegitables **/
+        if(vegitablesService.updateVegitableQty(tableId, quantity) == 1){;
+            /** Update the vegitable_addition_details in vegitable_inventory **/
+            return vegitableInventoryService.updateVegitableQty(tableId, quantity, request);
+        } else {
+            return ResponseEntity.status(400).body(
+                    createResponse.createErrorResponse(400, "Vegitable not found",
+                            "This item does not exist")
+            );
         }
+    }
+
+
+    /** The user will update the inventory only for a vegitable that already exists
+     Here we create a new inventory row in the DB for an existing vegitable
+     The business logic as follows
+     1. Vegitable has already been created
+     2. The retailer buys more stock at new cost
+     3. We add the quantity provided by the user to the existing quantity in vegitable table
+     4. We make new row entry in the DB for the inventory with new cost price, selling price and discount
+     5. We add the new subID to vegitables table (this acts as a pointer)
+     **/
+    @RequestMapping(value = "/add/newInventory/{tableId}", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE,
+    consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object>  addInventory(@PathVariable Long tableId,
+                                                   @RequestBody UpdateVegitablesInventoryRequest updateVegitablesInventoryRequest,
+                                                   HttpServletRequest request) {
+        return vegitableInventoryService.addInventory(tableId, updateVegitablesInventoryRequest, request);
     }
 }
