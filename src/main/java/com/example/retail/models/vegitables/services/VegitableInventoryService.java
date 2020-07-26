@@ -79,7 +79,7 @@ public class VegitableInventoryService {
             }
 
             /** update the quantity in vegitables table and set the new subId in the same table **/
-            vegitablesService.updateVegitableQtyAndSubID(tableId, updateVegitablesInventoryRequest.getVegitableQuantity(), vegSubId);
+            vegitablesService.updateVegitableAsPerInventory(tableId, updateVegitablesInventoryRequest.getVegitableQuantity(), vegSubId, updateVegitablesInventoryRequest.getVegitableSellingPrice());
 
             /** Create a vegitableInventory object to add new row in the vegitables_inventory table **/
             VegitablesInventory vegitablesInventory = new VegitablesInventory();

@@ -79,7 +79,7 @@ public class VegitablesRetailerController {
      4. We make new row entry in the DB for the inventory with new cost price, selling price and discount
      5. We add the new subID to vegitables table (this acts as a pointer)
      **/
-    @RequestMapping(value = "/add/newInventory/{tableId}", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE,
+    @RequestMapping(value = "/add/inventory/{tableId}", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE,
     consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object>  addInventory(@PathVariable Long tableId,
                                                    @RequestBody UpdateVegitablesInventoryRequest updateVegitablesInventoryRequest,

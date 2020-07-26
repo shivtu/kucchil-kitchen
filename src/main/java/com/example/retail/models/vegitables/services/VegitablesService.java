@@ -63,8 +63,8 @@ public class VegitablesService {
         return vegitablesRepository.saveAll(newVegitables);
     }
 
-    public int updateVegitableQtyAndSubID(Long tableId, Float increamentCount, String subId) {
-        return vegitablesRepository.updateVegitableQtyAndSubId(tableId, increamentCount, subId);
+    public int updateVegitableAsPerInventory(Long tableId, Float increamentCount, String subId, Float newSellingPrice) {
+        return vegitablesRepository.updateVegitableAsPerInventory(tableId, increamentCount, subId, newSellingPrice);
     }
 
     public ResponseEntity<Object> addNewVegitable(HttpServletRequest request, AddVegitablesRequestBody newVegitables,
