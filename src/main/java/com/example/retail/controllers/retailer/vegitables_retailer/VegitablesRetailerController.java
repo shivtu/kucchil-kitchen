@@ -58,7 +58,7 @@ public class VegitablesRetailerController {
     public ResponseEntity<Object> updateVegitableQty (@PathVariable Long tableId, @PathVariable Float quantity,
                                                       HttpServletRequest request){
         /** Increament quantity of vegitables **/
-        if(vegitablesService.updateVegitableQty(tableId, quantity) == 1){;
+        if(vegitablesService.updateVegitableQty(tableId, quantity) == 1){
             /** Update the vegitable_addition_details in vegitable_inventory **/
             return vegitableInventoryService.updateVegitableQty(tableId, quantity, request);
         } else {

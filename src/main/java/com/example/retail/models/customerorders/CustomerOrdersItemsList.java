@@ -1,26 +1,25 @@
 package com.example.retail.models.customerorders;
 
 public class CustomerOrdersItemsList {
-    Long productTableId;
-    String productSubId;
-    String productName;
-    String productVariant;
-    Float productQty;
-    String productMeasurementUnit;
-    Float productSellingPrice;
-    Float productTax;
+    private Long productTableId;
+    private String productSubId;
+    private String productName;
+    private String productVariant;
+    private Float productQty;
+    private String productMeasurementUnit;
+    private Float productSellingPrice;
+    private Float productTax;
 
     public CustomerOrdersItemsList() {}
 
-    public CustomerOrdersItemsList(
-            Long productTableId,
-            String productSubId,
-            String productName,
-            String productVariant,
-            Float productQty,
-            String productMeasurementUnit,
-            Float productSellingPrice,
-            Float productTax) {
+    public CustomerOrdersItemsList(Long productTableId,
+                                   String productSubId,
+                                   String productName,
+                                   String productVariant,
+                                   Float productQty,
+                                   String productMeasurementUnit,
+                                   Float productSellingPrice,
+                                   Float productTax) {
 
         this.productTableId = productTableId;
         this.productSubId = productSubId;

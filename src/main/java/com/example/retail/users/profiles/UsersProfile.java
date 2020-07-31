@@ -77,21 +77,25 @@ public class UsersProfile implements Serializable {
     @Column(name = "user_profile_wish_list")
     private String[] userProfile_wishList;
 
+    @Column(name = "user_profile_applied_loyalty_points")
+    @Min(value = 0)
+    private Float userProfile_AppliedloyaltyPoints;
+
     public UsersProfile(){}
 
-    public UsersProfile(
-            String userName,
-            String userProfile_GivenName,
-            @Min(value = 18, message = "You must be 18 years or older") @Max(100) Integer userProfile_Age,
-            Long userProfile_PhoneNumber,
-            String userProfile_Address,
-            UserProfileGender userProfile_Gender,
-            String[] userProfile_SocialMedia,
-            String userProfile_AddedOnDate,
-            String userProfile_AddedOnTime,
-            String userProfile_Kyc,
-            String userProfile_Image,
-            String[] userProfile_wishList) {
+    public UsersProfile(@Email String userName,
+                        @NotNull @NotEmpty @Size(min = 3) String userProfile_GivenName,
+                        @Min(value = 18, message = "You must be 18 years or older") @Max(100) Integer userProfile_Age,
+                        Long userProfile_PhoneNumber,
+                        @NotNull @NotEmpty @Size(min = 6, max = 200) String userProfile_Address,
+                        @NotNull UserProfileGender userProfile_Gender,
+                        String[] userProfile_SocialMedia,
+                        @NotNull @NotEmpty String userProfile_AddedOnDate,
+                        @NotNull @NotEmpty String userProfile_AddedOnTime,
+                        @NotNull @NotEmpty String userProfile_Kyc,
+                        @NotNull String userProfile_Image,
+                        String[] userProfile_wishList,
+                        Float userProfile_AppliedloyaltyPoints) {
 
         this.userName = userName;
         this.userProfile_GivenName = userProfile_GivenName;
@@ -105,6 +109,7 @@ public class UsersProfile implements Serializable {
         this.userProfile_Kyc = userProfile_Kyc;
         this.userProfile_Image = userProfile_Image;
         this.userProfile_wishList = userProfile_wishList;
+        this.userProfile_AppliedloyaltyPoints = userProfile_AppliedloyaltyPoints;
     }
 
     public Long getUserProfile_TableId() {
@@ -209,5 +214,13 @@ public class UsersProfile implements Serializable {
 
     public void setUserProfile_wishList(String[] userProfile_wishList) {
         this.userProfile_wishList = userProfile_wishList;
+    }
+
+    public Float getUserProfile_AppliedloyaltyPoints() {
+        return userProfile_AppliedloyaltyPoints;
+    }
+
+    public void setUserProfile_AppliedloyaltyPoints(Float userProfile_AppliedloyaltyPoints) {
+        this.userProfile_AppliedloyaltyPoints = userProfile_AppliedloyaltyPoints;
     }
 }

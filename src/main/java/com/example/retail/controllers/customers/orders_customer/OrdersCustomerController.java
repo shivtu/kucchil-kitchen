@@ -29,33 +29,13 @@ public class OrdersCustomerController {
     @Autowired
     CustomerOrderServices customerOrderServices;
 
-    @Autowired
-    JWTDetails jwtDetails;
 
-    @Autowired
-    UsersProfileService usersProfileService;
 
     @RequestMapping(value = "/save", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity save(@RequestBody CustomerOrders customerOrders, HttpServletRequest request) {
-        String orderCreatedBy = jwtDetails.userName(request);
-        UsersProfile userDetails = usersProfileService.findByUserName(orderCreatedBy);
+    public ResponseEntity<Object> save(@RequestBody CustomerOrders customerOrders, HttpServletRequest request) {
 
-        // TODO : perform validation on customerOrdersItemsList
-
-        customerOrders.setOrderDelivered(false);
-        customerOrders.setAppliedDiscount(0f);
-        customerOrders.setPurchaseDate(LocalDate.now());
-        customerOrders.setPurchaseTime(LocalTime.now());
-        customerOrders.setDeliveryCharges(0f);
-        customerOrders.setUserAddress(userDetails.getUserProfile_Address());
-        customerOrders.setUserPhoneNumber(userDetails.getUserProfile_PhoneNumber());
-        customerOrders.setUserName(orderCreatedBy);
-        customerOrders.setUserGivenName(userDetails.getUserProfile_GivenName());
-        customerOrders.setOrdersPaybleamount(80f);
-        customerOrders.setUserTableId(userDetails.getUserProfile_TableId());
-
-        return new ResponseEntity(customerOrderServices.save(customerOrders), HttpStatus.CREATED);
+        return customerOrderServices.createOrder(customerOrders, request);
     }
 
 }

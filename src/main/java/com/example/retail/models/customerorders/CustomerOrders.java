@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "customer_orders")
@@ -54,8 +55,16 @@ public class CustomerOrders {
     @Column(name = "orders_deliverycharges")
     private Float deliveryCharges;
 
-    @Column(name = "orders_applieddiscount")
-    private Float appliedDiscount;
+    @Column(name = "orders_totaldiscount")
+    @Min(value = 0)
+    private Float totalDiscount;
+
+    @Column(name = "orders_specialdiscount")
+    @Min(value = 0)
+    private Float speacialDiscountValue;
+
+    @Column(name = "orders_specialdiscountname")
+    private String speacialDiscountName;
 
     @NotEmpty
     @NotNull
@@ -71,35 +80,25 @@ public class CustomerOrders {
 
     @NotNull
     @Min(value = 1)
+    @Column(name = "orders_paybleamount")
     private Float ordersPaybleamount;
 
+    @Column(name = "orders_paymentmode")
     private String ordersPaymentMode;
 
+    @Column(name = "orders_paymentdatetime")
     private LocalDateTime paymentDateTime;
 
+    @Column(name = "orders_paidby")
     private String paidBy;
 
     @NotNull
+    @Column(name = "orders_isdelivered")
     private Boolean isOrderDelivered;
 
     public CustomerOrders() {}
 
-    public CustomerOrders(
-            @NotNull @NotEmpty Long userTableId,
-            @NotNull @NotEmpty String userName,
-            @NotNull @NotEmpty String userGivenName,
-            @NotNull @NotEmpty Long userPhoneNumber,
-            @NotNull @NotEmpty String userAddress,
-            @NotNull @NotEmpty String deliveryAddress, @NotNull @Min(value = 0) Float deliveryCharges,
-            Float appliedDiscount,
-            @NotEmpty @NotNull List<CustomerOrdersItemsList> customerOrdersItemsList,
-            @NotNull LocalDate purchaseDate,
-            @NotNull LocalTime purchaseTime,
-            @NotNull @Min(value = 1) Float ordersPaybleamount,
-            String ordersPaymentMode,
-            LocalDateTime paymentDateTime,
-            String paidBy, @NotNull Boolean isOrderDelivered) {
-
+    public CustomerOrders(@NotNull Long userTableId, @NotNull @NotEmpty String userName, @NotNull @NotEmpty String userGivenName, @NotNull Long userPhoneNumber, @NotNull String userAddress, String deliveryAddress, @NotNull @Min(value = 0) Float deliveryCharges, @Min(value = 0) Float totalDiscount, @Min(value = 0) Float speacialDiscountValue, String speacialDiscountName, @NotEmpty @NotNull List<CustomerOrdersItemsList> customerOrdersItemsList, @NotNull LocalDate purchaseDate, @NotNull LocalTime purchaseTime, @NotNull @Min(value = 1) Float ordersPaybleamount, String ordersPaymentMode, LocalDateTime paymentDateTime, String paidBy, @NotNull Boolean isOrderDelivered) {
         this.userTableId = userTableId;
         this.userName = userName;
         this.userGivenName = userGivenName;
@@ -107,7 +106,9 @@ public class CustomerOrders {
         this.userAddress = userAddress;
         this.deliveryAddress = deliveryAddress;
         this.deliveryCharges = deliveryCharges;
-        this.appliedDiscount = appliedDiscount;
+        this.totalDiscount = totalDiscount;
+        this.speacialDiscountValue = speacialDiscountValue;
+        this.speacialDiscountName = speacialDiscountName;
         this.customerOrdersItemsList = customerOrdersItemsList;
         this.purchaseDate = purchaseDate;
         this.purchaseTime = purchaseTime;
@@ -182,12 +183,28 @@ public class CustomerOrders {
         this.deliveryCharges = deliveryCharges;
     }
 
-    public Float getAppliedDiscount() {
-        return appliedDiscount;
+    public Float getTotalDiscount() {
+        return totalDiscount;
     }
 
-    public void setAppliedDiscount(Float appliedDiscount) {
-        this.appliedDiscount = appliedDiscount;
+    public void setTotalDiscount(Float totalDiscount) {
+        this.totalDiscount = totalDiscount;
+    }
+
+    public Float getSpeacialDiscountValue() {
+        return speacialDiscountValue;
+    }
+
+    public void setSpeacialDiscountValue(Float speacialDiscountValue) {
+        this.speacialDiscountValue = speacialDiscountValue;
+    }
+
+    public String getSpeacialDiscountName() {
+        return speacialDiscountName;
+    }
+
+    public void setSpeacialDiscountName(String speacialDiscountName) {
+        this.speacialDiscountName = speacialDiscountName;
     }
 
     public List<CustomerOrdersItemsList> getCustomerOrdersItemsList() {
@@ -238,19 +255,19 @@ public class CustomerOrders {
         this.paymentDateTime = paymentDateTime;
     }
 
-    public Boolean getOrderDelivered() {
-        return isOrderDelivered;
-    }
-
-    public void setOrderDelivered(Boolean orderDelivered) {
-        isOrderDelivered = orderDelivered;
-    }
-
     public String getPaidBy() {
         return paidBy;
     }
 
     public void setPaidBy(String paidBy) {
         this.paidBy = paidBy;
+    }
+
+    public Boolean getOrderDelivered() {
+        return isOrderDelivered;
+    }
+
+    public void setOrderDelivered(Boolean orderDelivered) {
+        isOrderDelivered = orderDelivered;
     }
 }
