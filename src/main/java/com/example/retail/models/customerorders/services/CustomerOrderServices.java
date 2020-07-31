@@ -4,10 +4,7 @@ import com.example.retail.models.customerorders.CustomerOrders;
 import com.example.retail.models.customerorders.repository.CustomerOrdersRepository;
 import com.example.retail.users.profiles.UsersProfile;
 import com.example.retail.users.profiles.UsersProfileService;
-import com.example.retail.util.CreateResponse;
-import com.example.retail.util.JWTDetails;
-import com.example.retail.util.ValidationResponse;
-import com.example.retail.util.Validations;
+import com.example.retail.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -36,20 +33,32 @@ public class CustomerOrderServices {
     @Autowired
     Validations validations;
 
+    @Autowired
+    Utils utils;
+
     public ResponseEntity<Object> createOrder(CustomerOrders customerOrders, HttpServletRequest request) {
         try {
             // TODO: calculate total amount before and after tax
+            String orderCreatedBy = jwtDetails.userName(request);
+            UsersProfile userDetails = usersProfileService.findByUserName(orderCreatedBy);
+
             ValidationResponse validationRes = validations.validateCustomerOrder(customerOrders);
             int validationResStatusCode = validationRes.getStatusCode();
 
+            Float loyaltyDiscount = 0F;
+
             if(validationResStatusCode != validations.validationSuccessCode) {
                 return ResponseEntity.status(validationResStatusCode).body(
-                        createResponse.createErrorResponse(validationResStatusCode, validationRes.getStatusMessage(), validationRes.getAdditionalInfo())
+                        createResponse.createErrorResponse(validationResStatusCode, validationRes.getStatusMessage(),
+                                validationRes.getAdditionalInfo())
                 );
             }
 
-            String orderCreatedBy = jwtDetails.userName(request);
-            UsersProfile userDetails = usersProfileService.findByUserName(orderCreatedBy);
+            if (customerOrders.getSpeacialDiscountName().equals("loyaltyDiscount")) {
+                loyaltyDiscount = utils.calcLoyaltyDiscount();
+            }
+
+
 
             customerOrders.setOrderDelivered(false);
             customerOrders.setSpeacialDiscountName(customerOrders.getSpeacialDiscountName());

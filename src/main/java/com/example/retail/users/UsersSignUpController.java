@@ -1,14 +1,19 @@
 package com.example.retail.users;
 
 import com.example.retail.users.profiles.UsersProfile;
+import com.example.retail.util.CreateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.w3c.dom.stylesheets.LinkStyle;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -17,6 +22,9 @@ public class UsersSignUpController {
 
     @Autowired
     UsersService usersService;
+
+    @Autowired
+    CreateResponse createResponse;
 
     private UsersProfile createUserProfile(HttpEntity<SignUpRequestBody> signUpRequestBody) {
         UsersProfile usersProfile = new UsersProfile();
@@ -27,7 +35,7 @@ public class UsersSignUpController {
         usersProfile.setUserProfile_Address(signUpRequestBody.getBody().getUserProfile_Address());
         usersProfile.setUserProfile_Gender(signUpRequestBody.getBody().getUserProfile_Gender());
         usersProfile.setUserProfile_SocialMedia(signUpRequestBody.getBody().getUserProfile_SocialMedia());
-        usersProfile.setUserProfile_AddedOnDate(LocalDate.now().toString()); // Get Current Date
+        usersProfile.setUserProfile_AddedOnDate(LocalDate.now().toString());
         usersProfile.setUserProfile_AddedOnTime(LocalTime.now().toString());
         usersProfile.setUserProfile_Kyc(signUpRequestBody.getBody().getUserProfile_Kyc());
         // TODO: convert string to string Array and add default avatar
@@ -38,39 +46,64 @@ public class UsersSignUpController {
 
     @PostMapping(value = "/customer", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(code = HttpStatus.CREATED)
-    public ResponseEntity<UsersProfile> addUser(HttpEntity<SignUpRequestBody> signUpRequestBody) {
+    public ResponseEntity<Object> addUser(HttpEntity<SignUpRequestBody> signUpRequestBody) {
 
-        Users users = new Users();
-        users.setUserName(Objects.requireNonNull(signUpRequestBody.getBody()).getUserName());
-        users.setPassword(signUpRequestBody.getBody().getPassword());
-        users.setAccountNonExpired(true);
-        users.setAccountNonLocked(true);
-        users.setCredentialsNonExpired(true);
-        users.setEnabled(true);
-        users.setRoles("ROLE_CUSTOMER");
-        users.setConnectedUsersProfile(createUserProfile(signUpRequestBody));
+        try {
+            Users users = new Users();
+            users.setUserName(Objects.requireNonNull(signUpRequestBody.getBody()).getUserName());
+            users.setPassword(signUpRequestBody.getBody().getPassword());
+            users.setAccountNonExpired(true);
+            users.setAccountNonLocked(true);
+            users.setCredentialsNonExpired(true);
+            users.setEnabled(true);
+            users.setRoles("ROLE_CUSTOMER");
+            users.setConnectedUsersProfile(createUserProfile(signUpRequestBody));
 
-        Users createdUser = usersService.addUser(users);
+            Users createdUser = usersService.addUser(users);
 
-        return new ResponseEntity<>(createdUser.getConnectedUsersProfile(), HttpStatus.CREATED);
+            List<Object> res = new ArrayList<>();
+
+            res.add(createdUser);
+
+            return ResponseEntity.status(201).body(
+                    createResponse.createSuccessResponse(201, "Signup success", res)
+            );
+
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(
+                    createResponse.createErrorResponse(500, e.getMessage(), "NA")
+            );
+        }
     }
 
     @PostMapping(value = "/retailer", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(code = HttpStatus.CREATED)
-    public ResponseEntity<UsersProfile> addRetailer (HttpEntity<SignUpRequestBody> signUpRequestBody) {
+    public ResponseEntity<Object> addRetailer (HttpEntity<SignUpRequestBody> signUpRequestBody) {
 
-        Users users = new Users();
-        users.setUserName(Objects.requireNonNull(signUpRequestBody.getBody()).getUserName());
-        users.setPassword(signUpRequestBody.getBody().getPassword());
-        users.setAccountNonExpired(true);
-        users.setAccountNonLocked(true);
-        users.setCredentialsNonExpired(true);
-        users.setEnabled(false);
-        users.setRoles("ROLE_RETAILER");
-        users.setConnectedUsersProfile(createUserProfile(signUpRequestBody));
+        try {
+            Users users = new Users();
+            users.setUserName(Objects.requireNonNull(signUpRequestBody.getBody()).getUserName());
+            users.setPassword(signUpRequestBody.getBody().getPassword());
+            users.setAccountNonExpired(true);
+            users.setAccountNonLocked(true);
+            users.setCredentialsNonExpired(true);
+            users.setEnabled(false);
+            users.setRoles("ROLE_RETAILER");
+            users.setConnectedUsersProfile(createUserProfile(signUpRequestBody));
 
-        Users createdUser = usersService.addUser(users);
+            Users createdUser = usersService.addUser(users);
 
-        return new ResponseEntity<>(createdUser.getConnectedUsersProfile(), HttpStatus.CREATED);
+            List<Object> res = new ArrayList<>();
+
+            res.add(createdUser.getConnectedUsersProfile());
+            return ResponseEntity.status(201).body(
+                    createResponse.createSuccessResponse(201, "Signup success", res)
+            );
+
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(
+                    createResponse.createErrorResponse(500, e.getMessage(), "NA")
+            );
+        }
     }
 }

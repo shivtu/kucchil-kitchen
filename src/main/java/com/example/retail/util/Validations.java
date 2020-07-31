@@ -136,7 +136,7 @@ public class Validations {
         }
 
         String specialDiscountName = customerOrders.getSpeacialDiscountName();
-        if(customerOrdersDiscountRepository.findAllByDiscountName(specialDiscountName).isEmpty()) {
+        if(customerOrdersDiscountRepository.findAllByDiscountName(specialDiscountName).isEmpty() || !specialDiscountName.equals("loayaltyDiscount")) {
             return createResponse.createValidationResponse(400, "Special discount applied does not exist",
                     "Apply a valid discount or remove it to default to 0");
         }

@@ -116,7 +116,23 @@ public class VegitablesService {
             vegitableRecepieList.add(newVegitables.getVegitableRecepie());
 
             vegitables.setVegitableRecepie(vegitableRecepieList);
-            vegitables.setVegitableSellingPrice(newVegitables.getVegitableSellingPrice());
+
+            Float vegitableSellingPrice = newVegitables.getVegitableSellingPrice();
+            vegitables.setVegitableSellingPrice(vegitableSellingPrice);
+
+            /* Calculate discounted vegitable price */
+            // TODO: Make a separate helper function to calculate discounts
+            Float discountPercent = newVegitables.getVegitableOfferedDiscount();
+            Float absoluteDiscount = 0F;
+            Float discountedPrice = 0F;
+            if (discountPercent > 0 && discountPercent < 100) {
+                absoluteDiscount = (discountPercent * vegitableSellingPrice)/100;
+                discountedPrice = vegitableSellingPrice - absoluteDiscount;
+            } else {
+                discountedPrice = vegitableSellingPrice;
+            }
+
+            vegitables.setVegitableDiscountedPrice(discountedPrice);
             vegitables.setVegitableOfferedDiscount(newVegitables.getVegitableOfferedDiscount());
             vegitables.setVegitableShowDiscount(newVegitables.getVegitableShowDiscount());
             vegitables.setVegitableQuantity(newVegitables.getVegitableQuantity());
@@ -169,7 +185,7 @@ public class VegitablesService {
         }catch (Exception e) {
             return ResponseEntity.status(500).body(
                     createResponse.createErrorResponse(
-                            400,
+                            500,
                             e.getMessage(),
                             "NA"
                     )

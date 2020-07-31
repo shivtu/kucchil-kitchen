@@ -73,4 +73,14 @@ public class Utils {
                 );
         }
     }
+
+    public Float calcLoyaltyDiscount () {
+
+        /* TODO:
+            loayalty points = average sales / 12
+            average sales = total sales / number of orders
+            CONSTRAINTS : atleast 3 orders or 1 order per month in the last 3 months
+         */
+        return 0F;
+    }
 }
