@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping(value = "/api/v1/retailer/discount")
 public class DiscountsRetailerControler {
@@ -18,8 +20,13 @@ public class DiscountsRetailerControler {
     CustomerOrdersDiscountServices customerOrdersDiscountServices;
 
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Object> createSpecialDiscount(@RequestBody CustomerOrdersDiscount customerOrdersDiscount) {
-        return customerOrdersDiscountServices.createSpecialDiscount(customerOrdersDiscount);
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> createSpecialDiscount(HttpServletRequest request, @RequestBody CustomerOrdersDiscount customerOrdersDiscount) {
+        return customerOrdersDiscountServices.createSpecialDiscount(request, customerOrdersDiscount);
+    }
+
+    @RequestMapping(value = "/findall", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> findAllDiscounts() {
+        return customerOrdersDiscountServices.findAllDiscounts();
     }
 }

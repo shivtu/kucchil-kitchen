@@ -29,7 +29,6 @@ public class CustomerOrdersDiscount {
     private String discountLastUpdatedBy;
 
     @NotNull
-    @NotEmpty
     @Column(name = "discount_addedon")
     private LocalDateTime discountAddedOn;
 
@@ -38,7 +37,10 @@ public class CustomerOrdersDiscount {
 
     public CustomerOrdersDiscount () {}
 
-    public CustomerOrdersDiscount(@Min(value = 0) @NotNull Float discountPercentage, @NotNull @NotEmpty String discountName, @Email String discountLastUpdatedBy, @NotNull @NotEmpty LocalDateTime discountAddedOn, Boolean isDiscountActive) {
+    public CustomerOrdersDiscount(@Min(value = 0) @NotNull Float discountPercentage,
+                                  @NotNull @NotEmpty String discountName, @Email String discountLastUpdatedBy,
+                                  @NotNull @NotEmpty LocalDateTime discountAddedOn, Boolean isDiscountActive) {
+
         this.discountPercentage = discountPercentage;
         this.discountName = discountName;
         this.discountLastUpdatedBy = discountLastUpdatedBy;

@@ -1,6 +1,7 @@
 package com.example.retail.models.vegitables.services;
 
 import com.example.retail.controllers.retailer.vegitables_retailer.AddVegitablesRequestBody;
+import com.example.retail.models.discounts.DiscountCalculator;
 import com.example.retail.models.vegitables.VegitableAdditionDetails;
 import com.example.retail.models.vegitables.VegitableRecipes;
 import com.example.retail.models.vegitables.Vegitables;
@@ -44,6 +45,9 @@ public class VegitablesService {
 
     @Autowired
     CreateResponse createResponse;
+
+    @Autowired
+    DiscountCalculator discountCalculator;
 
     public Iterable<Vegitables> getAllVegitables() {
         return vegitablesRepository.findAll();
@@ -120,19 +124,7 @@ public class VegitablesService {
             Float vegitableSellingPrice = newVegitables.getVegitableSellingPrice();
             vegitables.setVegitableSellingPrice(vegitableSellingPrice);
 
-            /* Calculate discounted vegitable price */
-            // TODO: Make a separate helper function to calculate discounts
-            Float discountPercent = newVegitables.getVegitableOfferedDiscount();
-            Float absoluteDiscount = 0F;
-            Float discountedPrice = 0F;
-            if (discountPercent > 0 && discountPercent < 100) {
-                absoluteDiscount = (discountPercent * vegitableSellingPrice)/100;
-                discountedPrice = vegitableSellingPrice - absoluteDiscount;
-            } else {
-                discountedPrice = vegitableSellingPrice;
-            }
-
-            vegitables.setVegitableDiscountedPrice(discountedPrice);
+            vegitables.setVegitableDiscountedPrice(discountCalculator.calcVegDiscountedPrice(vegitableSellingPrice, newVegitables.getVegitableOfferedDiscount())); /* Calculate discounted vegitable price */
             vegitables.setVegitableOfferedDiscount(newVegitables.getVegitableOfferedDiscount());
             vegitables.setVegitableShowDiscount(newVegitables.getVegitableShowDiscount());
             vegitables.setVegitableQuantity(newVegitables.getVegitableQuantity());

@@ -3,10 +3,13 @@ package com.example.retail.models.discounts.services;
 import com.example.retail.models.discounts.CustomerOrdersDiscount;
 import com.example.retail.models.discounts.repository.CustomerOrdersDiscountRepository;
 import com.example.retail.util.CreateResponse;
+import com.example.retail.util.JWTDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,8 +23,14 @@ public class CustomerOrdersDiscountServices {
     @Autowired
     CreateResponse createResponse;
 
-    public ResponseEntity<Object> createSpecialDiscount(CustomerOrdersDiscount customerOrdersDiscount) {
+    @Autowired
+    JWTDetails JWTDetails;
+
+    public ResponseEntity<Object> createSpecialDiscount(HttpServletRequest request, CustomerOrdersDiscount customerOrdersDiscount) {
         try {
+            LocalDateTime lastUpdatedOn = LocalDateTime.now();
+            customerOrdersDiscount.setDiscountAddedOn(lastUpdatedOn);
+            customerOrdersDiscount.setDiscountLastUpdatedBy(JWTDetails.userName(request));
             CustomerOrdersDiscount res = customerOrdersDiscountRepository.save(customerOrdersDiscount);
             List<Object> finalRes = new ArrayList<>();
             finalRes.add(res);
@@ -34,7 +43,6 @@ public class CustomerOrdersDiscountServices {
                     createResponse.createErrorResponse(500, e.getMessage(), "NA")
             );
         }
-
     }
 
     public ResponseEntity<Object> findAllByDiscountName(String discountName) {
@@ -60,6 +68,28 @@ public class CustomerOrdersDiscountServices {
             );
         }
 
+    }
+
+    public ResponseEntity<Object> findAllDiscounts() {
+        try{
+            List<CustomerOrdersDiscount> res = customerOrdersDiscountRepository.findAll();
+
+            int resuCount = 0;
+
+            if (!res.isEmpty()) {
+                resuCount = res.size();
+            }
+
+            ArrayList<Object> finalRes = new ArrayList<>(res);
+
+            return ResponseEntity.status(200).body(
+                    createResponse.createSuccessResponse(200, resuCount + " item(s) found", finalRes)
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(
+                    createResponse.createErrorResponse(500, e.getMessage(), "NA")
+            );
+        }
     }
 
 }
