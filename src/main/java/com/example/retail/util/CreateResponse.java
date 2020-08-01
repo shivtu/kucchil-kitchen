@@ -37,10 +37,11 @@ public class CreateResponse {
         return successResponse;
     }
 
-    public ValidationResponse createValidationResponse (int statusCode, String statusMessage, String additionalInfo) {
+    public ValidationResponse createValidationResponse (int statusCode, String statusMessage, String additionalInfo, Object additionalObjectsReturned) {
         validationResponse.setStatusCode(statusCode);
         validationResponse.setStatusMessage(statusMessage);
         validationResponse.setAdditionalInfo(additionalInfo);
+        validationResponse.setAdditionalObjectsToReturned(additionalObjectsReturned);
         return validationResponse;
     }
 

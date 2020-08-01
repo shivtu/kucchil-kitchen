@@ -16,7 +16,7 @@ public class UsersProfileService {
         return  usersProfileRepository.save(newUsersProfile);
     }
 
-    public UsersProfile findByUserName(String userName) {
+    public Optional<UsersProfile> findByUserName(String userName) {
         return usersProfileRepository.findByUserName(userName);
     }
 

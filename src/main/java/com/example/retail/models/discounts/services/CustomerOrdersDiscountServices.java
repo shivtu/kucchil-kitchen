@@ -48,7 +48,7 @@ public class CustomerOrdersDiscountServices {
     public ResponseEntity<Object> findAllByDiscountName(String discountName) {
 
         try {
-            Optional<CustomerOrdersDiscount> customerOrdersDiscount = customerOrdersDiscountRepository.findAllByDiscountName(discountName);
+            Optional<CustomerOrdersDiscount> customerOrdersDiscount = customerOrdersDiscountRepository.findByDiscountName(discountName);
 
             List<Object> res = new ArrayList<>();
             String successMessage = "One record found";
@@ -90,6 +90,10 @@ public class CustomerOrdersDiscountServices {
                     createResponse.createErrorResponse(500, e.getMessage(), "NA")
             );
         }
+    }
+
+    public List<CustomerOrdersDiscount> getAllActiveDiscounts() {
+        return customerOrdersDiscountRepository.getAllActiveDiscounts();
     }
 
 }

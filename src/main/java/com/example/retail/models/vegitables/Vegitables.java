@@ -23,6 +23,9 @@ public class Vegitables {
     @Column(name="vegitable_tableid")
     private Long vegitableTableId;
 
+    @Column(name = "category")
+    private String itemCategory = "vaegitableAndFruits";
+
     @NotNull
     @NotEmpty
     @Column(name="vagitable_name")
@@ -47,11 +50,11 @@ public class Vegitables {
 
     @NotNull
     @Column(name = "vagitable_discountedprice")
-    @Min(value = 0)
     private Float vegitableDiscountedPrice;
 
     @Min(value = 0, message = "discounts are expressed in %, valid range 0-100")
     @Column(name = "vegitable_offereddiscount")
+    @Min(value = 0)
     private Float vegitableOfferedDiscount;
 
     @NotNull(message = "Should discount be available for this item")

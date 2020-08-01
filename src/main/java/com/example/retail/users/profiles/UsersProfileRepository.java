@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface UsersProfileRepository extends JpaRepository<UsersProfile, Long> {
 
     @Query(value = "SELECT * FROM users_profile WHERE user_name= :userName", nativeQuery = true)
-    public UsersProfile findByUserName(@Param("userName") String userName);
+    Optional<UsersProfile> findByUserName(@Param("userName") String userName);
 }

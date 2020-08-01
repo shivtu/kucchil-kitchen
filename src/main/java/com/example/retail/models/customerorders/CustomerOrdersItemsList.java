@@ -1,5 +1,8 @@
 package com.example.retail.models.customerorders;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class CustomerOrdersItemsList {
     private Long productTableId;
     private String productSubId;
@@ -8,18 +11,14 @@ public class CustomerOrdersItemsList {
     private Float productQty;
     private String productMeasurementUnit;
     private Float productSellingPrice;
+    private Float productDiscountedPrice;
     private Float productTax;
 
     public CustomerOrdersItemsList() {}
 
-    public CustomerOrdersItemsList(Long productTableId,
-                                   String productSubId,
-                                   String productName,
-                                   String productVariant,
-                                   Float productQty,
-                                   String productMeasurementUnit,
-                                   Float productSellingPrice,
-                                   Float productTax) {
+    public CustomerOrdersItemsList(Long productTableId, String productSubId, String productName, String productVariant,
+                                   Float productQty, String productMeasurementUnit, Float productSellingPrice,
+                                   Float productDiscountedPrice, Float productTax) {
 
         this.productTableId = productTableId;
         this.productSubId = productSubId;
@@ -28,6 +27,7 @@ public class CustomerOrdersItemsList {
         this.productQty = productQty;
         this.productMeasurementUnit = productMeasurementUnit;
         this.productSellingPrice = productSellingPrice;
+        this.productDiscountedPrice = productDiscountedPrice;
         this.productTax = productTax;
     }
 
@@ -85,6 +85,14 @@ public class CustomerOrdersItemsList {
 
     public void setProductSellingPrice(Float productSellingPrice) {
         this.productSellingPrice = productSellingPrice;
+    }
+
+    public Float getProductDiscountedPrice() {
+        return productDiscountedPrice;
+    }
+
+    public void setProductDiscountedPrice(Float productDiscountedPrice) {
+        this.productDiscountedPrice = productDiscountedPrice;
     }
 
     public Float getProductTax() {

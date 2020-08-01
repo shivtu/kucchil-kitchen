@@ -30,7 +30,7 @@ public class AdminController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/user/find/{userName}")
-    public UsersProfile getUserName (@PathVariable String userName) {
+    public Optional<UsersProfile> getUserName (@PathVariable String userName) {
         return usersProfileService.findByUserName(userName);
     }
 }

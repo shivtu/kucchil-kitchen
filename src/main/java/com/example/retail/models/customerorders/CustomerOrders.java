@@ -53,11 +53,7 @@ public class CustomerOrders {
     @NotNull
     @Min(value = 0)
     @Column(name = "orders_deliverycharges")
-    private Float deliveryCharges;
-
-    @Column(name = "orders_totaldiscount")
-    @Min(value = 0)
-    private Float totalDiscount;
+    private Float deliveryCharges = 0F;
 
     @Column(name = "orders_specialdiscount")
     @Min(value = 0)
@@ -66,20 +62,16 @@ public class CustomerOrders {
     @Column(name = "orders_specialdiscountname")
     private String speacialDiscountName;
 
-    @NotEmpty
-    @NotNull
-    @Column(name = "orders_itemlist", columnDefinition = "jsonb", updatable = false, nullable = false)
-    @Type(type = "psql-jsonb")
-    private List<CustomerOrdersItemsList> customerOrdersItemsList;
+    @Column(name = "orders_amountbeforediscount")
+    private Float amountBeforeDiscount;
+
+    @Column(name = "orders_amountafterdiscount")
+    private Float amountAfterDiscount;
+
+    @Column(name = "orders_amountbeforetax")
+    private Float amountBeforeTax;
 
     @NotNull
-    private LocalDate purchaseDate;
-
-    @NotNull
-    private LocalTime purchaseTime;
-
-    @NotNull
-    @Min(value = 1)
     @Column(name = "orders_paybleamount")
     private Float ordersPaybleamount;
 
@@ -96,9 +88,21 @@ public class CustomerOrders {
     @Column(name = "orders_isdelivered")
     private Boolean isOrderDelivered;
 
+    @NotNull
+    private LocalDate purchaseDate;
+
+    @NotNull
+    private LocalTime purchaseTime;
+
+    @NotEmpty
+    @NotNull
+    @Column(name = "orders_itemlist", columnDefinition = "jsonb", updatable = false, nullable = false)
+    @Type(type = "psql-jsonb")
+    private List<CustomerOrdersItemsList> customerOrdersItemsList;
+
     public CustomerOrders() {}
 
-    public CustomerOrders(@NotNull Long userTableId, @NotNull @NotEmpty String userName, @NotNull @NotEmpty String userGivenName, @NotNull Long userPhoneNumber, @NotNull String userAddress, String deliveryAddress, @NotNull @Min(value = 0) Float deliveryCharges, @Min(value = 0) Float totalDiscount, @Min(value = 0) Float speacialDiscountValue, String speacialDiscountName, @NotEmpty @NotNull List<CustomerOrdersItemsList> customerOrdersItemsList, @NotNull LocalDate purchaseDate, @NotNull LocalTime purchaseTime, @NotNull @Min(value = 1) Float ordersPaybleamount, String ordersPaymentMode, LocalDateTime paymentDateTime, String paidBy, @NotNull Boolean isOrderDelivered) {
+    public CustomerOrders(@NotNull Long userTableId, @NotNull @NotEmpty String userName, @NotNull @NotEmpty String userGivenName, @NotNull Long userPhoneNumber, @NotNull String userAddress, String deliveryAddress, @NotNull @Min(value = 0) Float deliveryCharges, @Min(value = 0) Float speacialDiscountValue, String speacialDiscountName, Float amountBeforeDiscount, Float amountAfterDiscount, Float amountBeforeTax, @NotNull @Min(value = 1) Float ordersPaybleamount, String ordersPaymentMode, LocalDateTime paymentDateTime, String paidBy, @NotNull Boolean isOrderDelivered, @NotNull LocalDate purchaseDate, @NotNull LocalTime purchaseTime, @NotEmpty @NotNull List<CustomerOrdersItemsList> customerOrdersItemsList) {
         this.userTableId = userTableId;
         this.userName = userName;
         this.userGivenName = userGivenName;
@@ -106,17 +110,19 @@ public class CustomerOrders {
         this.userAddress = userAddress;
         this.deliveryAddress = deliveryAddress;
         this.deliveryCharges = deliveryCharges;
-        this.totalDiscount = totalDiscount;
         this.speacialDiscountValue = speacialDiscountValue;
         this.speacialDiscountName = speacialDiscountName;
-        this.customerOrdersItemsList = customerOrdersItemsList;
-        this.purchaseDate = purchaseDate;
-        this.purchaseTime = purchaseTime;
+        this.amountBeforeDiscount = amountBeforeDiscount;
+        this.amountAfterDiscount = amountAfterDiscount;
+        this.amountBeforeTax = amountBeforeTax;
         this.ordersPaybleamount = ordersPaybleamount;
         this.ordersPaymentMode = ordersPaymentMode;
         this.paymentDateTime = paymentDateTime;
         this.paidBy = paidBy;
         this.isOrderDelivered = isOrderDelivered;
+        this.purchaseDate = purchaseDate;
+        this.purchaseTime = purchaseTime;
+        this.customerOrdersItemsList = customerOrdersItemsList;
     }
 
     public Long getOrderTableId() {
@@ -183,14 +189,6 @@ public class CustomerOrders {
         this.deliveryCharges = deliveryCharges;
     }
 
-    public Float getTotalDiscount() {
-        return totalDiscount;
-    }
-
-    public void setTotalDiscount(Float totalDiscount) {
-        this.totalDiscount = totalDiscount;
-    }
-
     public Float getSpeacialDiscountValue() {
         return speacialDiscountValue;
     }
@@ -207,28 +205,28 @@ public class CustomerOrders {
         this.speacialDiscountName = speacialDiscountName;
     }
 
-    public List<CustomerOrdersItemsList> getCustomerOrdersItemsList() {
-        return customerOrdersItemsList;
+    public Float getAmountBeforeDiscount() {
+        return amountBeforeDiscount;
     }
 
-    public void setCustomerOrdersItemsList(List<CustomerOrdersItemsList> customerOrdersItemsList) {
-        this.customerOrdersItemsList = customerOrdersItemsList;
+    public void setAmountBeforeDiscount(Float amountBeforeDiscount) {
+        this.amountBeforeDiscount = amountBeforeDiscount;
     }
 
-    public LocalDate getPurchaseDate() {
-        return purchaseDate;
+    public Float getAmountAfterDiscount() {
+        return amountAfterDiscount;
     }
 
-    public void setPurchaseDate(LocalDate purchaseDate) {
-        this.purchaseDate = purchaseDate;
+    public void setAmountAfterDiscount(Float amountAfterDiscount) {
+        this.amountAfterDiscount = amountAfterDiscount;
     }
 
-    public LocalTime getPurchaseTime() {
-        return purchaseTime;
+    public Float getAmountBeforeTax() {
+        return amountBeforeTax;
     }
 
-    public void setPurchaseTime(LocalTime purchaseTime) {
-        this.purchaseTime = purchaseTime;
+    public void setAmountBeforeTax(Float amountBeforeTax) {
+        this.amountBeforeTax = amountBeforeTax;
     }
 
     public Float getOrdersPaybleamount() {
@@ -269,5 +267,29 @@ public class CustomerOrders {
 
     public void setOrderDelivered(Boolean orderDelivered) {
         isOrderDelivered = orderDelivered;
+    }
+
+    public LocalDate getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public void setPurchaseDate(LocalDate purchaseDate) {
+        this.purchaseDate = purchaseDate;
+    }
+
+    public LocalTime getPurchaseTime() {
+        return purchaseTime;
+    }
+
+    public void setPurchaseTime(LocalTime purchaseTime) {
+        this.purchaseTime = purchaseTime;
+    }
+
+    public List<CustomerOrdersItemsList> getCustomerOrdersItemsList() {
+        return customerOrdersItemsList;
+    }
+
+    public void setCustomerOrdersItemsList(List<CustomerOrdersItemsList> customerOrdersItemsList) {
+        this.customerOrdersItemsList = customerOrdersItemsList;
     }
 }

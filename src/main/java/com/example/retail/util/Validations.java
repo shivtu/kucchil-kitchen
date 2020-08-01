@@ -56,7 +56,8 @@ public class Validations {
                 return createResponse.createValidationResponse(
                         uprocessableRequestCode,
                             "This item already exists",
-                            "Try updating this item instead"
+                            "Try updating this item instead",
+                        null
                     );
 
         }
@@ -67,7 +68,8 @@ public class Validations {
             return     createResponse.createValidationResponse(
                     badRequestCode,
                             "Offered discount is set more than the max discount",
-                            "Offered discount must always be less than the maximum discount set for an item"
+                            "Offered discount must always be less than the maximum discount set for an item",
+                    null
                     );
         }
 
@@ -77,7 +79,8 @@ public class Validations {
                     createResponse.createValidationResponse(
                             badRequestCode,
                             "Invalid format for discounts",
-                            "Discounts are expressed in %, please provide a positive number"
+                            "Discounts are expressed in %, please provide a positive number",
+                            null
 
             );
         }
@@ -88,7 +91,8 @@ public class Validations {
               return createResponse.createValidationResponse(
                       badRequestCode,
                             "Selling price of the vegitable is less than the cost price",
-                            "Selling price must be more than cost price to make a profit"
+                            "Selling price must be more than cost price to make a profit",
+                      null
                     );
 
         }
@@ -96,7 +100,8 @@ public class Validations {
         return createResponse.createValidationResponse(
                 validationSuccessCode,
                 "OK",
-                "NA"
+                "NA",
+                null
 
         );
 
@@ -109,7 +114,8 @@ public class Validations {
                 createResponse.createValidationResponse(
                 400,
             "This item with provided details already exists",
-            "Try updating the quantity only: /api/v1/retailer/vegitables/update/quantity/<id>/<quantity>"
+            "Try updating the quantity only: /api/v1/retailer/vegitables/update/quantity/<id>/<quantity>",
+                        null
             );
         }
 
@@ -117,11 +123,12 @@ public class Validations {
             return createResponse.createValidationResponse(
                     badRequestCode,
                     "Selling price of the vegitable is less than the cost price",
-                    "Selling price must be more than cost price to make a profit"
+                    "Selling price must be more than cost price to make a profit",
+                    null
             );
         }
 
-        return createResponse.createValidationResponse(validationSuccessCode, "OK", null);
+        return createResponse.createValidationResponse(validationSuccessCode, "OK", null, null);
     }
 
     public ValidationResponse validateCustomerOrder (CustomerOrders customerOrders) {
@@ -131,28 +138,42 @@ public class Validations {
 
         for (int i = 0; i < ordersItemsListLength; i++) {
             if(!validatorSet.add(orderedItemsList.get(i).getProductTableId())) {
-                return createResponse.createValidationResponse(422, "Duplicate items in the list", "Increase the quantity of the items in the list instead of adding duplicates");
+                return createResponse.createValidationResponse(422, "Duplicate items in the list", "Increase the quantity of the items in the list instead of adding duplicates", null);
             }
         }
 
         String specialDiscountName = customerOrders.getSpeacialDiscountName();
-        if(customerOrdersDiscountRepository.findAllByDiscountName(specialDiscountName).isEmpty() || !specialDiscountName.equals("loayaltyDiscount")) {
-            return createResponse.createValidationResponse(400, "Special discount applied does not exist",
-                    "Apply a valid discount or remove it to default to 0");
+        Optional<CustomerOrdersDiscount> customerDiscount = Optional.empty();
+
+        /* If user has added a discount */
+        if(specialDiscountName != null) {
+
+            customerDiscount = customerOrdersDiscountRepository.findByDiscountName(specialDiscountName);
+
+            /* If applied discount is not active */
+            if(customerDiscount.isPresent() && !customerDiscount.get().getDiscountActive()) {
+                return createResponse.createValidationResponse(400, "Special discount applied is not active",
+                        "Apply an active discount or remove it to default to 0", null);
+            }
+
+            /* if there is no customer discount found with given discount names */
+            if(customerDiscount.isEmpty() && !specialDiscountName.equals("loyaltyDiscount")) {
+                return createResponse.createValidationResponse(400, "Special discount applied does not exist",
+                        "Apply a valid discount or remove it to default to 0", null);
+            }
         }
 
-
-        return createResponse.createValidationResponse(validationSuccessCode, "OK", null);
+        return createResponse.createValidationResponse(validationSuccessCode, "OK", null, customerDiscount);
     }
 
     public  ValidationResponse validateNewDiscount (CustomerOrdersDiscount customerOrdersDiscount) {
 
         String discountName = customerOrdersDiscount.getDiscountName();
-        Optional<CustomerOrdersDiscount> res = customerOrdersDiscountRepository.findAllByDiscountName(discountName);
+        Optional<CustomerOrdersDiscount> res = customerOrdersDiscountRepository.findByDiscountName(discountName);
         if(!res.isEmpty()) {
             return createResponse.createValidationResponse(422, "The discount with name " + discountName + " already exists",
-                    "Try creating a discount with another name or ammend the existing one");
+                    "Try creating a discount with another name or ammend the existing one", null);
         }
-        return createResponse.createValidationResponse(validationSuccessCode, discountName + " is available", "The search for existing names is case sensetive");
+        return createResponse.createValidationResponse(validationSuccessCode, discountName + " is available", "The search for existing names is case sensetive", null);
     }
 }

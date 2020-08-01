@@ -31,11 +31,11 @@ public class OrdersCustomerController {
 
 
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
+    @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> save(@RequestBody CustomerOrders customerOrders, HttpServletRequest request) {
+    public ResponseEntity<Object> createCustomerOrder(HttpServletRequest request, @RequestBody CustomerOrders customerOrders) {
 
-        return customerOrderServices.createOrder(customerOrders, request);
+        return customerOrderServices.createCustomerOrder(request, customerOrders);
     }
 
 }
