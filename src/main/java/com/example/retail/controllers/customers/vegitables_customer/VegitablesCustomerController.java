@@ -17,8 +17,13 @@ public class VegitablesCustomerController {
     VegitablesService vegitablesService;
 
     @RequestMapping(value = "/findall", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getAllVegitables() {
+    public ResponseEntity<Object> getAllVegitables() {
         Iterable<Vegitables> result = vegitablesService.getAllVegitables();
         return new ResponseEntity(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/findall/available", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> findAllAvailableVegitables() {
+        return vegitablesService.findAllAvailableVegitables();
     }
 }

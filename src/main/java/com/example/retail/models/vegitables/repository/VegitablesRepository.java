@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface VegitablesRepository extends JpaRepository<Vegitables, Long> {
@@ -24,4 +25,7 @@ public interface VegitablesRepository extends JpaRepository<Vegitables, Long> {
 
     @Query(value = "SELECT * FROM vegitables WHERE vegitable_subid = :vegSubId", nativeQuery = true)
     public Optional<Vegitables> findBySubId(@Param("vegSubId") String vegSubId);
+
+    @Query(value = "SELECT * FROM vegitables WHERE vegitable_available=true")
+    public List<Vegitables> findAllAvailableVegitables();
 }

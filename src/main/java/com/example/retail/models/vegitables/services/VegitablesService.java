@@ -193,4 +193,23 @@ public class VegitablesService {
     public Integer updateVegitableQty(Long tableId, Float increamentCount) {
         return vegitablesRepository.updateVegitableQty(tableId, increamentCount);
     }
+
+    public ResponseEntity<Object> findAllAvailableVegitables() {
+        try{
+            List<Vegitables> vegitablesList = vegitablesRepository.findAllAvailableVegitables();
+            int count = vegitablesList.size();
+            List<Object> finalRes = new ArrayList<>();
+            if(count > 0) {
+                finalRes.addAll(vegitablesList);
+            }
+            return ResponseEntity.status(200).body(
+                    createResponse.createSuccessResponse(200, count +" item(s) found", finalRes)
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(
+                    createResponse.createErrorResponse(500, e.getMessage(), "NA")
+            );
+        }
+
+    }
 }

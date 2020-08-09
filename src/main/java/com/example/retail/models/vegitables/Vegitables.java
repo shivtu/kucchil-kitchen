@@ -68,6 +68,7 @@ public class Vegitables {
     private Float vegitableQuantity;
 
     @NotNull(message = "Is this item available")
+    @Column(name = "vegitable_available")
     private boolean vegitableAvailable;
 
     @NotNull
