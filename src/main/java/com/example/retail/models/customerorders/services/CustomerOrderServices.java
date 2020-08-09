@@ -94,7 +94,7 @@ public class CustomerOrderServices {
 
             Float deliveryCharges = 0F;
 
-            Float paybleAmountAfterTax = customerOrdersHelper.totalPaybleAfterTax(totalAmountAfterSpecialDiscount);
+            Float paybleAmountAfterTax = totalAmountBeforeDiscountAndTax.get() - customerOrdersHelper.calcTax(totalAmountAfterSpecialDiscount, customerOrders.getTaxCategory());
 
             customerOrders.setUserTableId(userDetails.get().getUserProfile_TableId());
             customerOrders.setUserName(userDetails.get().getUserName());

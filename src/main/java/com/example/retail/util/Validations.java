@@ -5,9 +5,12 @@ import com.example.retail.controllers.retailer.vegitables_retailer.UpdateVegitab
 import com.example.retail.models.customerorders.CustomerOrders;
 import com.example.retail.models.customerorders.CustomerOrdersItemsList;
 import com.example.retail.models.customerorders.repository.CustomerOrdersRepository;
+import com.example.retail.models.deliveryutility.DeliveryCharges;
 import com.example.retail.models.discounts.CustomerOrdersDiscount;
 import com.example.retail.models.discounts.repository.CustomerOrdersDiscountRepository;
 import com.example.retail.models.discounts.services.CustomerOrdersDiscountServices;
+import com.example.retail.models.taxutility.Taxes;
+import com.example.retail.models.taxutility.repository.TaxRepository;
 import com.example.retail.models.vegitables.Vegitables;
 import com.example.retail.models.vegitables.VegitablesInventory;
 import com.example.retail.models.vegitables.services.VegitableInventoryService;
@@ -41,6 +44,9 @@ public class Validations {
 
     @Autowired
     CustomerOrdersDiscountRepository customerOrdersDiscountRepository;
+
+    @Autowired
+    TaxRepository taxRepository;
 
     public int validationSuccessCode = 1;
     public int uprocessableRequestCode = 422;
@@ -175,5 +181,29 @@ public class Validations {
                     "Try creating a discount with another name or ammend the existing one", null);
         }
         return createResponse.createValidationResponse(validationSuccessCode, discountName + " is available", "The search for existing names is case sensetive", null);
+    }
+
+    public ValidationResponse validateDeliveryChargeConstraint(DeliveryCharges deliveryCharges) {
+        Float amountGreaterThan = deliveryCharges.getSalesAmountGreaterThan();
+        Float amountLessThan = deliveryCharges.getSalesAmountLessThan();
+        if(amountGreaterThan >= amountLessThan) {
+            return createResponse.createValidationResponse(400, "Incorrect range",
+                    "Range must be from a smaller number to greater number", null);
+        }
+
+        if (amountGreaterThan < 0 || amountLessThan < 0) {
+            return createResponse.createValidationResponse(400, "Incorrect range",
+                    "Range cannot have values less than 0", null);
+        }
+
+        return createResponse.createValidationResponse(validationSuccessCode, "validation success", "NA", null);
+    }
+
+    public ValidationResponse validateNewTax(Taxes taxes) {
+//        if (taxes.getItemCategories().length > 0) {
+//            return createResponse.createValidationResponse(422, "Tax needs to be created first before adding list of categories",
+//                    "Please create the type of tax first and then add categories", null);
+//        }
+        return createResponse.createValidationResponse(validationSuccessCode, "validation success", "NA", null);
     }
 }

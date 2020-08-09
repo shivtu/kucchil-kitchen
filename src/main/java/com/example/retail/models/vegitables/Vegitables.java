@@ -23,9 +23,6 @@ public class Vegitables {
     @Column(name="vegitable_tableid")
     private Long vegitableTableId;
 
-    @Column(name = "category")
-    private String itemCategory = "vaegitableAndFruits";
-
     @NotNull
     @NotEmpty
     @Column(name="vagitable_name")
@@ -44,22 +41,26 @@ public class Vegitables {
     private List<VegitableRecipes> vegitableRecepie;
 
     @NotNull
-    @Column(name="vegitable_sellingprice")
+    @Column(name="vegitable_selling_price")
     @Min(value = 1, message = "Selling price cannot be less than 1")
     private Float vegitableSellingPrice;
 
-    @NotNull
-    @Column(name = "vagitable_discountedprice")
-    private Float vegitableDiscountedPrice;
-
     @Min(value = 0, message = "discounts are expressed in %, valid range 0-100")
-    @Column(name = "vegitable_offereddiscount")
+    @Column(name = "vegitable_offered_discount")
     @Min(value = 0)
     private Float vegitableOfferedDiscount;
 
-    @NotNull(message = "Should discount be available for this item")
-    @Column(name = "vegitable_showdiscount")
-    private Boolean vegitableShowDiscount;
+    @NotNull
+    @Column(name = "vagitable_discounted_price")
+    private Float vegitableDiscountedPrice;
+
+    @NotNull
+    @Column(name = "vegitable_applicable_taxes")
+    private String[] vegitableApplicableTaxes;
+
+    @NotNull
+    @Column(name = "vagitable_taxed_price")
+    private Float vegitableTaxedPrice;
 
     @NotNull
     @Min(value = 1, message = "Quantity cannot be less than 0")
@@ -84,22 +85,16 @@ public class Vegitables {
     public Vegitables(){
     }
 
-    public Vegitables(@NotNull @NotEmpty String vegitableName, String vegitableDescp, String vegitableVariant,
-                      List<VegitableRecipes> vegitableRecepie, @NotNull @Min(value = 1, message = "Selling price cannot be less than 1") Float vegitableSellingPrice,
-                      Float vegitableDiscountedPrice, @Min(value = 0, message = "discounts are expressed in %, valid range 0-100") Float vegitableOfferedDiscount,
-                      @NotNull(message = "Should discount be available for this item") Boolean vegitableShowDiscount,
-                      @NotNull @Min(value = 1, message = "Quantity cannot be less than 0") Float vegitableQuantity,
-                      @NotNull(message = "Is this item available") boolean vegitableAvailable, @NotNull @NotEmpty String vegitableMeasureMentUnit,
-                      String vegitableSubId, @NotNull ArrayList<String> vegitableImagesLocation) {
-
+    public Vegitables(@NotNull @NotEmpty String vegitableName, String vegitableDescp, String vegitableVariant, List<VegitableRecipes> vegitableRecepie, @NotNull @Min(value = 1, message = "Selling price cannot be less than 1") Float vegitableSellingPrice, @Min(value = 0, message = "discounts are expressed in %, valid range 0-100") @Min(value = 0) Float vegitableOfferedDiscount, @NotNull Float vegitableDiscountedPrice, @NotNull String[] vegitableApplicableTaxes, @NotNull Float vegitableTaxedPrice, @NotNull @Min(value = 1, message = "Quantity cannot be less than 0") Float vegitableQuantity, @NotNull(message = "Is this item available") boolean vegitableAvailable, @NotNull @NotEmpty String vegitableMeasureMentUnit, String vegitableSubId, @NotNull ArrayList<String> vegitableImagesLocation) {
         this.vegitableName = vegitableName;
         this.vegitableDescp = vegitableDescp;
         this.vegitableVariant = vegitableVariant;
         this.vegitableRecepie = vegitableRecepie;
         this.vegitableSellingPrice = vegitableSellingPrice;
-        this.vegitableDiscountedPrice = vegitableDiscountedPrice;
         this.vegitableOfferedDiscount = vegitableOfferedDiscount;
-        this.vegitableShowDiscount = vegitableShowDiscount;
+        this.vegitableDiscountedPrice = vegitableDiscountedPrice;
+        this.vegitableApplicableTaxes = vegitableApplicableTaxes;
+        this.vegitableTaxedPrice = vegitableTaxedPrice;
         this.vegitableQuantity = vegitableQuantity;
         this.vegitableAvailable = vegitableAvailable;
         this.vegitableMeasureMentUnit = vegitableMeasureMentUnit;
@@ -155,14 +150,6 @@ public class Vegitables {
         this.vegitableSellingPrice = vegitableSellingPrice;
     }
 
-    public Float getVegitableDiscountedPrice() {
-        return vegitableDiscountedPrice;
-    }
-
-    public void setVegitableDiscountedPrice(Float vegitableDiscountedPrice) {
-        this.vegitableDiscountedPrice = vegitableDiscountedPrice;
-    }
-
     public Float getVegitableOfferedDiscount() {
         return vegitableOfferedDiscount;
     }
@@ -171,12 +158,28 @@ public class Vegitables {
         this.vegitableOfferedDiscount = vegitableOfferedDiscount;
     }
 
-    public Boolean getVegitableShowDiscount() {
-        return vegitableShowDiscount;
+    public Float getVegitableDiscountedPrice() {
+        return vegitableDiscountedPrice;
     }
 
-    public void setVegitableShowDiscount(Boolean vegitableShowDiscount) {
-        this.vegitableShowDiscount = vegitableShowDiscount;
+    public void setVegitableDiscountedPrice(Float vegitableDiscountedPrice) {
+        this.vegitableDiscountedPrice = vegitableDiscountedPrice;
+    }
+
+    public String[] getVegitableApplicableTaxes() {
+        return vegitableApplicableTaxes;
+    }
+
+    public void setVegitableApplicableTaxes(String[] vegitableApplicableTaxes) {
+        this.vegitableApplicableTaxes = vegitableApplicableTaxes;
+    }
+
+    public Float getVegitableTaxedPrice() {
+        return vegitableTaxedPrice;
+    }
+
+    public void setVegitableTaxedPrice(Float vegitableTaxedPrice) {
+        this.vegitableTaxedPrice = vegitableTaxedPrice;
     }
 
     public Float getVegitableQuantity() {

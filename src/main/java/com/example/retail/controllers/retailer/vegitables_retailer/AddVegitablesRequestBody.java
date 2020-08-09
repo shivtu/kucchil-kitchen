@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class AddVegitablesRequestBody {
 
+    private String[] vegitableApplicableTaxes;
+
     private String vegitableName;
 
     private String vegitableDescp;
@@ -22,7 +24,7 @@ public class AddVegitablesRequestBody {
 
     private Float vegitableQuantity;
 
-    private boolean vegitableAvailable;
+    private Boolean vegitableAvailable;
 
     private String vegitableMeasureMentUnit;
 
@@ -36,20 +38,13 @@ public class AddVegitablesRequestBody {
 
     public AddVegitablesRequestBody(){}
 
-    public AddVegitablesRequestBody(String vegitableName,
-                                    String vegitableDescp,
-                                    String vegitableVariant,
+    public AddVegitablesRequestBody(String[] vegitableApplicableTaxes, String vegitableName, String vegitableDescp, String vegitableVariant,
                                     VegitableRecipes vegitableRecepie,
-                                    Float vegitableSellingPrice,
-                                    Float vegitableOfferedDiscount,
-                                    Boolean vegitableShowDiscount,
-                                    Float vegitableQuantity,
-                                    boolean vegitableAvailable,
-                                    String vegitableMeasureMentUnit,
-                                    Float vegitableInventoryCostPrice,
-                                    String vegitableInventoryExpiry,
-                                    Float vegitableInventoryMaxDiscount,
-                                    Float vegitableInventoryFixedCost) {
+                                    Float vegitableSellingPrice, Float vegitableOfferedDiscount, Boolean vegitableShowDiscount, Float vegitableQuantity,
+                                    Boolean vegitableAvailable, String vegitableMeasureMentUnit, Float vegitableInventoryCostPrice,
+                                    String vegitableInventoryExpiry, Float vegitableInventoryMaxDiscount, Float vegitableInventoryFixedCost) {
+
+        this.vegitableApplicableTaxes = vegitableApplicableTaxes;
         this.vegitableName = vegitableName;
         this.vegitableDescp = vegitableDescp;
         this.vegitableVariant = vegitableVariant;
@@ -64,6 +59,14 @@ public class AddVegitablesRequestBody {
         this.vegitableInventoryExpiry = vegitableInventoryExpiry;
         this.vegitableInventoryMaxDiscount = vegitableInventoryMaxDiscount;
         this.vegitableInventoryFixedCost = vegitableInventoryFixedCost;
+    }
+
+    public String[] getVegitableApplicableTaxes() {
+        return vegitableApplicableTaxes;
+    }
+
+    public void setVegitableApplicableTaxes(String[] vegitableApplicableTaxes) {
+        this.vegitableApplicableTaxes = vegitableApplicableTaxes;
     }
 
     public String getVegitableName() {
@@ -130,11 +133,11 @@ public class AddVegitablesRequestBody {
         this.vegitableQuantity = vegitableQuantity;
     }
 
-    public boolean isVegitableAvailable() {
+    public Boolean getVegitableAvailable() {
         return vegitableAvailable;
     }
 
-    public void setVegitableAvailable(boolean vegitableAvailable) {
+    public void setVegitableAvailable(Boolean vegitableAvailable) {
         this.vegitableAvailable = vegitableAvailable;
     }
 

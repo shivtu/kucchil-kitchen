@@ -2,10 +2,7 @@ package com.example.retail.models.vegitables.services;
 
 import com.example.retail.controllers.retailer.vegitables_retailer.AddVegitablesRequestBody;
 import com.example.retail.models.discounts.DiscountCalculator;
-import com.example.retail.models.vegitables.VegitableAdditionDetails;
-import com.example.retail.models.vegitables.VegitableRecipes;
-import com.example.retail.models.vegitables.Vegitables;
-import com.example.retail.models.vegitables.VegitablesInventory;
+import com.example.retail.models.vegitables.*;
 import com.example.retail.models.vegitables.repository.VegitablesRepository;
 import com.example.retail.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +46,9 @@ public class VegitablesService {
     @Autowired
     DiscountCalculator discountCalculator;
 
+    @Autowired
+    VegitablesHelper vegitablesHelper;
+
     public Iterable<Vegitables> getAllVegitables() {
         return vegitablesRepository.findAll();
     }
@@ -74,14 +74,14 @@ public class VegitablesService {
     public ResponseEntity<Object> addNewVegitable(HttpServletRequest request, AddVegitablesRequestBody newVegitables,
                                                ArrayList<MultipartFile> images) throws Exception {
         try {
-            // Create a unique subID
+            /* Create a unique subID */
             String vegSubId = newVegitables.getVegitableName()
                     +newVegitables.getVegitableVariant()
                     +newVegitables.getVegitableInventoryFixedCost()
                     +newVegitables.getVegitableInventoryCostPrice()
                     .toString().toLowerCase();
 
-            // Validate vegitables
+            /* Validate vegitables */
            ValidationResponse validationStatus = validations.validateNewVegitables(newVegitables, vegSubId);
             if (validationStatus.getStatusCode() != validations.validationSuccessCode) {
                 return ResponseEntity.status(validationStatus.getStatusCode()).body(
@@ -92,9 +92,10 @@ public class VegitablesService {
             String vegitable_AddedBy = JWTDetails.userName(request);
             LocalDate vegitableInventoryExpiry = LocalDate.parse(newVegitables.getVegitableInventoryExpiry());
 
-            // create new vegitable
+            /* create new vegitable */
             Vegitables vegitables = new Vegitables();
 
+            // Add image for the item
             if (!images.isEmpty()) {
                 OpsResponse res = utils.saveFiles(images, "vegitableImages");
                 int errorCheck = res.getStatusCode();
@@ -111,6 +112,7 @@ public class VegitablesService {
                 vegitables.setVegitableImagesLocation(placeholder);
             }
 
+            vegitables.setVegitableApplicableTaxes(newVegitables.getVegitableApplicableTaxes());
             vegitables.setVegitableName(newVegitables.getVegitableName());
             vegitables.setVegitableDescp(newVegitables.getVegitableDescp());
             vegitables.setVegitableVariant(newVegitables.getVegitableVariant());
@@ -124,11 +126,14 @@ public class VegitablesService {
             Float vegitableSellingPrice = newVegitables.getVegitableSellingPrice();
             vegitables.setVegitableSellingPrice(vegitableSellingPrice);
 
-            vegitables.setVegitableDiscountedPrice(discountCalculator.calcVegDiscountedPrice(vegitableSellingPrice, newVegitables.getVegitableOfferedDiscount())); /* Calculate discounted vegitable price */
+            Float vegitableDiscountedPrice = discountCalculator.calcVegDiscountedPrice(vegitableSellingPrice, newVegitables.getVegitableOfferedDiscount());
+
+            vegitables.setVegitableDiscountedPrice(vegitableDiscountedPrice); /* Calculate discounted vegitable price */
             vegitables.setVegitableOfferedDiscount(newVegitables.getVegitableOfferedDiscount());
-            vegitables.setVegitableShowDiscount(newVegitables.getVegitableShowDiscount());
+            vegitables.setVegitableTaxedPrice(vegitablesHelper.calcAmountAfterTax(vegitables.getVegitableApplicableTaxes(), vegitableDiscountedPrice));
+//            vegitables.setVegitableShowDiscount(newVegitables.getVegitableShowDiscount());
             vegitables.setVegitableQuantity(newVegitables.getVegitableQuantity());
-            vegitables.setVegitableAvailable(newVegitables.isVegitableAvailable());
+            vegitables.setVegitableAvailable(newVegitables.getVegitableAvailable());
             vegitables.setVegitableMeasureMentUnit(newVegitables.getVegitableMeasureMentUnit());
 
             vegitables.setVegitableSubId(vegSubId);
@@ -137,7 +142,7 @@ public class VegitablesService {
             VegitablesInventory vegitablesInventory = new VegitablesInventory();
             vegitablesInventory.setVegitableInventoryCostPrice(newVegitables.getVegitableInventoryCostPrice());
             vegitablesInventory.setVegitableInventoryFixedCost(newVegitables.getVegitableInventoryFixedCost());
-            vegitablesInventory.setVegitableInventorySellingPrice(newVegitables.getVegitableSellingPrice());
+            vegitablesInventory.setVegitableInventorySellingPrice(vegitableDiscountedPrice);
             vegitablesInventory.setVegitableInventoryExpiry(vegitableInventoryExpiry);
             vegitablesInventory.setVegitableInventoryMaxDiscount(newVegitables.getVegitableInventoryMaxDiscount());
 

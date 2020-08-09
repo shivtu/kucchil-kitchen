@@ -71,6 +71,9 @@ public class CustomerOrders {
     @Column(name = "orders_amountbeforetax")
     private Float amountBeforeTax;
 
+    @Column(name = "orders_taxcategory")
+    private String taxCategory;
+
     @NotNull
     @Column(name = "orders_paybleamount")
     private Float ordersPaybleamount;
@@ -102,7 +105,7 @@ public class CustomerOrders {
 
     public CustomerOrders() {}
 
-    public CustomerOrders(@NotNull Long userTableId, @NotNull @NotEmpty String userName, @NotNull @NotEmpty String userGivenName, @NotNull Long userPhoneNumber, @NotNull String userAddress, String deliveryAddress, @NotNull @Min(value = 0) Float deliveryCharges, @Min(value = 0) Float speacialDiscountValue, String speacialDiscountName, Float amountBeforeDiscount, Float amountAfterDiscount, Float amountBeforeTax, @NotNull @Min(value = 1) Float ordersPaybleamount, String ordersPaymentMode, LocalDateTime paymentDateTime, String paidBy, @NotNull Boolean isOrderDelivered, @NotNull LocalDate purchaseDate, @NotNull LocalTime purchaseTime, @NotEmpty @NotNull List<CustomerOrdersItemsList> customerOrdersItemsList) {
+    public CustomerOrders(@NotNull Long userTableId, @NotNull @NotEmpty String userName, @NotNull @NotEmpty String userGivenName, @NotNull Long userPhoneNumber, @NotNull String userAddress, String deliveryAddress, @NotNull @Min(value = 0) Float deliveryCharges, @Min(value = 0) Float speacialDiscountValue, String speacialDiscountName, Float amountBeforeDiscount, Float amountAfterDiscount, Float amountBeforeTax, String taxCategory, @NotNull Float ordersPaybleamount, String ordersPaymentMode, LocalDateTime paymentDateTime, String paidBy, @NotNull Boolean isOrderDelivered, @NotNull LocalDate purchaseDate, @NotNull LocalTime purchaseTime, @NotEmpty @NotNull List<CustomerOrdersItemsList> customerOrdersItemsList) {
         this.userTableId = userTableId;
         this.userName = userName;
         this.userGivenName = userGivenName;
@@ -115,6 +118,7 @@ public class CustomerOrders {
         this.amountBeforeDiscount = amountBeforeDiscount;
         this.amountAfterDiscount = amountAfterDiscount;
         this.amountBeforeTax = amountBeforeTax;
+        this.taxCategory = taxCategory;
         this.ordersPaybleamount = ordersPaybleamount;
         this.ordersPaymentMode = ordersPaymentMode;
         this.paymentDateTime = paymentDateTime;
@@ -227,6 +231,14 @@ public class CustomerOrders {
 
     public void setAmountBeforeTax(Float amountBeforeTax) {
         this.amountBeforeTax = amountBeforeTax;
+    }
+
+    public String getTaxCategory() {
+        return taxCategory;
+    }
+
+    public void setTaxCategory(String taxCategory) {
+        this.taxCategory = taxCategory;
     }
 
     public Float getOrdersPaybleamount() {
