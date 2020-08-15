@@ -89,6 +89,14 @@ public class VegitablesService {
                 );
             }
 
+            /* Return error if item category does not exist */
+            ValidationResponse itemCategoryValidationStatus = validations.validateItemCategory(newVegitables.getItemCategory());
+            if(itemCategoryValidationStatus.getStatusCode() != validations.validationSuccessCode) {
+                return ResponseEntity.status(itemCategoryValidationStatus.getStatusCode()).body(
+                        itemCategoryValidationStatus
+                );
+            }
+
             String vegitable_AddedBy = JWTDetails.userName(request);
             LocalDate vegitableInventoryExpiry = LocalDate.parse(newVegitables.getVegitableInventoryExpiry());
 
@@ -116,6 +124,7 @@ public class VegitablesService {
             vegitables.setVegitableName(newVegitables.getVegitableName());
             vegitables.setVegitableDescp(newVegitables.getVegitableDescp());
             vegitables.setVegitableVariant(newVegitables.getVegitableVariant());
+            vegitables.setItemCategory(newVegitables.getItemCategory());
 
             /** Create new List and add recepie to the List **/
             ArrayList<VegitableRecipes> vegitableRecepieList = new ArrayList<>();
@@ -125,6 +134,8 @@ public class VegitablesService {
 
             Float vegitableSellingPrice = newVegitables.getVegitableSellingPrice();
             vegitables.setVegitableSellingPrice(vegitableSellingPrice);
+
+            vegitables.setVegitableOfferedDiscountName(newVegitables.getVegitableOfferedDiscountName());
 
             Float vegitableDiscountedPrice = discountCalculator.calcVegDiscountedPrice(vegitableSellingPrice, newVegitables.getVegitableOfferedDiscount());
 

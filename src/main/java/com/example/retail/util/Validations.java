@@ -9,6 +9,8 @@ import com.example.retail.models.deliveryutility.DeliveryCharges;
 import com.example.retail.models.discounts.CustomerOrdersDiscount;
 import com.example.retail.models.discounts.repository.CustomerOrdersDiscountRepository;
 import com.example.retail.models.discounts.services.CustomerOrdersDiscountServices;
+import com.example.retail.models.itemcategories.ItemCategories;
+import com.example.retail.models.itemcategories.repository.ItemCategoriesRepository;
 import com.example.retail.models.taxutility.Taxes;
 import com.example.retail.models.taxutility.repository.TaxRepository;
 import com.example.retail.models.vegitables.Vegitables;
@@ -47,6 +49,9 @@ public class Validations {
 
     @Autowired
     TaxRepository taxRepository;
+
+    @Autowired
+    ItemCategoriesRepository itemCategoriesRepository;
 
     public int validationSuccessCode = 1;
     public int uprocessableRequestCode = 422;
@@ -205,5 +210,13 @@ public class Validations {
 //                    "Please create the type of tax first and then add categories", null);
 //        }
         return createResponse.createValidationResponse(validationSuccessCode, "validation success", "NA", null);
+    }
+
+    public ValidationResponse validateItemCategory(String itemClassification) {
+        Optional<ItemCategories> itemCategories = itemCategoriesRepository.findItemCategoryByClassification(itemClassification);
+        if(itemCategories.isEmpty()) {
+            return createResponse.createValidationResponse(422, "Item category/classification not found", "Provide a valid classification name or create a classification and then add to the product", null);
+        }
+        return createResponse.createValidationResponse(validationSuccessCode, "Classification can be applied", "NA", null);
     }
 }

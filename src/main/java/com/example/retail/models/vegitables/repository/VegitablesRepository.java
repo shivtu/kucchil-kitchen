@@ -26,6 +26,6 @@ public interface VegitablesRepository extends JpaRepository<Vegitables, Long> {
     @Query(value = "SELECT * FROM vegitables WHERE vegitable_subid = :vegSubId", nativeQuery = true)
     public Optional<Vegitables> findBySubId(@Param("vegSubId") String vegSubId);
 
-    @Query(value = "SELECT * FROM vegitables WHERE vegitable_available=true")
+    @Query(value = "SELECT * FROM vegitables WHERE vegitable_available=true", nativeQuery = true)
     public List<Vegitables> findAllAvailableVegitables();
 }
