@@ -1,6 +1,7 @@
 package com.example.retail.users.profiles;
 
 import com.example.retail.util.JwtUtil;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class UsersProfileController {
     JwtUtil jwtUtil;
 
     @PostMapping(value = "/update")
-    public ResponseEntity updateUsersProfile(@RequestBody UsersProfile usersProfile, HttpServletRequest httpServletRequest) throws Exception {
+    public ResponseEntity<?> updateUsersProfile(@RequestBody UsersProfile usersProfile, HttpServletRequest httpServletRequest) throws Exception {
 
         final String authorizationHeader = httpServletRequest.getHeader("Authorization");
         final String jwt = authorizationHeader.substring(7);

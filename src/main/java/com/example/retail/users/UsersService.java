@@ -27,4 +27,8 @@ public class UsersService {
     public Users enableUser(String userName) {
        return usersRepository.enableUser(userName);
     }
+
+    public Integer updatePassword(String newPassword, String userName) {
+        return usersRepository.updatePassword(newPassword, userName);
+    }
 }
