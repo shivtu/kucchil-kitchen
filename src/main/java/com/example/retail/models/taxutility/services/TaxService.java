@@ -54,4 +54,8 @@ public class TaxService {
             );
         }
     }
+
+    public List<Taxes> forHelperFunctionFindAll() {
+        return taxRepository.findAll();
+    }
 }

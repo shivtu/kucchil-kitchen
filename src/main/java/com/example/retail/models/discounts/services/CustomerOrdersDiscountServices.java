@@ -96,4 +96,8 @@ public class CustomerOrdersDiscountServices {
         return customerOrdersDiscountRepository.getAllActiveDiscounts();
     }
 
+    public List<CustomerOrdersDiscount> forHelperFunctionFindAll() {
+        return customerOrdersDiscountRepository.findAll();
+    }
+
 }
