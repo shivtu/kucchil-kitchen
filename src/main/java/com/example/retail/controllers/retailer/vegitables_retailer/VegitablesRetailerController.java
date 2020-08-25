@@ -19,37 +19,17 @@ import java.util.*;
 public class VegitablesRetailerController {
 
     @Autowired
+    CreateResponse createResponse;
+
+    @Autowired
     VegitablesService vegitablesService;
 
     @Autowired
     VegitableInventoryService vegitableInventoryService;
 
-    @Autowired
-    CreateResponse createResponse;
-
     @RequestMapping(value = "/findall", method = RequestMethod.GET)
-    public ResponseEntity<Object> getAllVegitables() {
-        List<Vegitables> vegitables = vegitablesService.findAllVegitables();
-        List<VegitablesInventory> vegitablesInventories = vegitableInventoryService.findAllVegitableInventory();
-
-        Map<String, Object> resObject = new HashMap<>();
-
-        List<Object> finalRes = new ArrayList();
-
-        vegitables.forEach(vegitable->{
-            vegitablesInventories.forEach(vegitablesInventory -> {
-                if(vegitable.getVegitableSubId().equals(vegitablesInventory.getVegitableSubId())){
-                    resObject.put("vegitable", vegitable);
-                    resObject.put("vegitableInventory", vegitablesInventory);
-                    finalRes.add(resObject);
-                    // resObject.clear();
-                    // vegitablesInventories.remove(vegitablesInventory);
-                }
-            });
-        });
-        return ResponseEntity.status(200).body(
-                createResponse.createSuccessResponse(200, "Vegitables found", finalRes)
-        );
+    public ResponseEntity<Object> findAllVegitablesWithInventory() {
+        return vegitablesService.findAllVegitablesWithInventory();
     }
 
 

@@ -14,10 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class VegitablesService {
@@ -30,9 +27,6 @@ public class VegitablesService {
 
     @Autowired
     Utils utils;
-
-    @Autowired
-    ValidationResponse validationResponse;
 
     @Autowired
     Validations validations;
@@ -241,5 +235,33 @@ public class VegitablesService {
             );
         }
 
+    }
+
+    public ResponseEntity<Object> findAllVegitablesWithInventory() {
+        try{
+            List<Vegitables> vegitables = vegitablesRepository.findAll();
+            List<VegitablesInventory> vegitablesInventories = vegitableInventoryService.findAllVegitableInventory();
+
+            Map<String, Object> resObject = new HashMap<>();
+
+            List<Object> finalRes = new ArrayList();
+
+            vegitables.forEach(vegitable->{
+                vegitablesInventories.forEach(vegitablesInventory -> {
+                    if(vegitable.getVegitableSubId().equals(vegitablesInventory.getVegitableSubId())){
+                        resObject.put("vegitable", vegitable);
+                        resObject.put("vegitableInventory", vegitablesInventory);
+                        finalRes.add(resObject);
+                    }
+                });
+            });
+            return ResponseEntity.status(200).body(
+                    createResponse.createSuccessResponse(200, "Vegitables found", finalRes)
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(
+              createResponse.createErrorResponse(500, e.getMessage(), "NA")
+            );
+        }
     }
 }
