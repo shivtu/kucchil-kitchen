@@ -86,4 +86,14 @@ public class VegitablesRetailerController {
                                                    HttpServletRequest request) {
         return vegitableInventoryService.addInventory(tableId, updateVegitablesInventoryRequest, request);
     }
+
+    @RequestMapping(value = "/findall/available", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> findAllAvailableVegitables() {
+        return vegitablesService.findAllAvailableVegitables();
+    }
+
+    @RequestMapping(value = "/findall/unavailable", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> findAllUnavailableVegitables() {
+        return vegitablesService.findAllUnavailableVegitables();
+    }
 }

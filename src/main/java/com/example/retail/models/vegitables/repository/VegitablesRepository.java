@@ -28,4 +28,7 @@ public interface VegitablesRepository extends JpaRepository<Vegitables, Long> {
 
     @Query(value = "SELECT * FROM vegitables WHERE vegitable_available=true", nativeQuery = true)
     public List<Vegitables> findAllAvailableVegitables();
+
+    @Query(value = "SELECT * FROM vegitables WHERE vegitable_available=false", nativeQuery = true)
+    public List<Vegitables> findAllUnavailableVegitables();
 }

@@ -223,4 +223,23 @@ public class VegitablesService {
         }
 
     }
+
+    public ResponseEntity<Object> findAllUnavailableVegitables() {
+        try{
+            List<Vegitables> vegitablesList = vegitablesRepository.findAllUnavailableVegitables();
+            int count = vegitablesList.size();
+            List<Object> finalRes = new ArrayList<>();
+            if(count > 0) {
+                finalRes.addAll(vegitablesList);
+            }
+            return ResponseEntity.status(200).body(
+                    createResponse.createSuccessResponse(200, count +" item(s) found", finalRes)
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(
+                    createResponse.createErrorResponse(500, e.getMessage(), "NA")
+            );
+        }
+
+    }
 }
