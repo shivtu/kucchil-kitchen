@@ -1,5 +1,7 @@
-package com.example.retail.models.edibleproducts;
+package com.example.retail.models.edibleproducts.services;
 
+import com.example.retail.models.edibleproducts.EdibleProducts;
+import com.example.retail.models.edibleproducts.repository.EdibleProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

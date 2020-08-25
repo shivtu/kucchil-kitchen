@@ -49,7 +49,7 @@ public class VegitablesService {
     @Autowired
     VegitablesHelper vegitablesHelper;
 
-    public Iterable<Vegitables> getAllVegitables() {
+    public List<Vegitables> findAllVegitables() {
         return vegitablesRepository.findAll();
     }
 

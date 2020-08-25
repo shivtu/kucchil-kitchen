@@ -1,7 +1,7 @@
 package com.example.retail.controllers.retailer.edibleproducts_retailer;
 
 import com.example.retail.models.edibleproducts.EdibleProducts;
-import com.example.retail.models.edibleproducts.EdibleProductsService;
+import com.example.retail.models.edibleproducts.services.EdibleProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

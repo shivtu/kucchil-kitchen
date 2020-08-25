@@ -18,7 +18,7 @@ public class VegitablesCustomerController {
 
     @RequestMapping(value = "/findall", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> getAllVegitables() {
-        Iterable<Vegitables> result = vegitablesService.getAllVegitables();
+        Iterable<Vegitables> result = vegitablesService.findAllVegitables();
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
