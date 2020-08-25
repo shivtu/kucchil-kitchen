@@ -8,15 +8,15 @@ public class ValidationResponse {
     private int statusCode;
     private String statusMessage;
     private String additionalInfo;
-    private Object additionalObjectsToReturned;
+    private Object additionalObjectsReturned;
 
     public ValidationResponse() {}
 
-    public ValidationResponse(int statusCode, String statusMessage, String additionalInfo, Object additionalObjectsToReturned) {
+    public ValidationResponse(int statusCode, String statusMessage, String additionalInfo, Object additionalObjectsReturned) {
         this.statusCode = statusCode;
         this.statusMessage = statusMessage;
         this.additionalInfo = additionalInfo;
-        this.additionalObjectsToReturned = additionalObjectsToReturned;
+        this.additionalObjectsReturned = additionalObjectsReturned;
     }
 
     public int getStatusCode() {
@@ -43,11 +43,11 @@ public class ValidationResponse {
         this.additionalInfo = additionalInfo;
     }
 
-    public Object getAdditionalObjectsToReturned() {
-        return additionalObjectsToReturned;
+    public Object getAdditionalObjectsReturned() {
+        return additionalObjectsReturned;
     }
 
-    public void setAdditionalObjectsToReturned(Object additionalObjectsToReturned) {
-        this.additionalObjectsToReturned = additionalObjectsToReturned;
+    public void setAdditionalObjectsReturned(Object additionalObjectsReturned) {
+        this.additionalObjectsReturned = additionalObjectsReturned;
     }
 }

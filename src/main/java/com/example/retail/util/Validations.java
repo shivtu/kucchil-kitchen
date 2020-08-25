@@ -27,28 +27,16 @@ import java.util.stream.Collectors;
 public class Validations {
 
     @Autowired
-    ErrorResponse errorResponse;
-
-    @Autowired
-    Utils utils;
-
-    @Autowired
     CreateResponse createResponse;
 
     @Autowired
     VegitablesService vegitablesService;
 
     @Autowired
-    ValidationResponse validationResponse;
-
-    @Autowired
     VegitableInventoryService vegitableInventoryService;
 
     @Autowired
     CustomerOrdersDiscountRepository customerOrdersDiscountRepository;
-
-    @Autowired
-    TaxRepository taxRepository;
 
     @Autowired
     ItemCategoriesRepository itemCategoriesRepository;

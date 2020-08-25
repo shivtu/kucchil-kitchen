@@ -41,7 +41,7 @@ public class CreateResponse {
         validationResponse.setStatusCode(statusCode);
         validationResponse.setStatusMessage(statusMessage);
         validationResponse.setAdditionalInfo(additionalInfo);
-        validationResponse.setAdditionalObjectsToReturned(additionalObjectsReturned);
+        validationResponse.setAdditionalObjectsReturned(additionalObjectsReturned);
         return validationResponse;
     }
 

@@ -49,6 +49,7 @@ public class UsersSignUpController {
     public ResponseEntity<Object> addUser(HttpEntity<SignUpRequestBody> signUpRequestBody) {
 
         try {
+
             Users users = new Users();
             users.setUserName(Objects.requireNonNull(signUpRequestBody.getBody()).getUserName());
             users.setPassword(signUpRequestBody.getBody().getPassword());

@@ -70,8 +70,8 @@ public class CustomerOrderServices {
             Optional<CustomerOrdersDiscount> customerOrdersDiscount = Optional.empty();
 
             /* If returned Object from validation is not null cast returned object to CustomerOrdersDiscount */
-            if (!validationRes.getAdditionalObjectsToReturned().equals(Optional.empty())) {
-                customerOrdersDiscount = (Optional<CustomerOrdersDiscount>) validationRes.getAdditionalObjectsToReturned();
+            if (!validationRes.getAdditionalObjectsReturned().equals(Optional.empty())) {
+                customerOrdersDiscount = (Optional<CustomerOrdersDiscount>) validationRes.getAdditionalObjectsReturned();
             }
 
             customerOrders.getCustomerOrdersItemsList().forEach(eachItem -> {

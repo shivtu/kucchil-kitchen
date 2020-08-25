@@ -56,4 +56,10 @@ public class UsersPasswordManager {
             );
         }
     }
+
+    @PostMapping(value = "/forgotPassword")
+    public ResponseEntity<?> forgotPassword(@RequestBody String userName) {
+        // Send email with newly generated password
+        return null;
+    }
 }
