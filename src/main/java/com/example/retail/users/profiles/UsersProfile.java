@@ -32,13 +32,15 @@ public class UsersProfile implements Serializable {
     @NotNull
     @NotEmpty
     @Size(min = 3)
+    @Column(name = "user_profile_given_name")
     private String userProfile_GivenName;
 
     @Min(value = 18, message = "You must be 18 years or older")
     @Max(100)
+    @Column(name="user_profile_age")
     private Integer userProfile_Age;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "user_profile_phone_number", nullable = false, unique = true)
     private Long userProfile_PhoneNumber;
 
     @Column(name = "user_profile_address")

@@ -10,4 +10,7 @@ public interface UsersProfileRepository extends JpaRepository<UsersProfile, Long
 
     @Query(value = "SELECT * FROM users_profile WHERE user_name= :userName", nativeQuery = true)
     Optional<UsersProfile> findByUserName(@Param("userName") String userName);
+
+    @Query(value = "SELECT * FROM users_profile WHERE user_profile_phone_number= :userProfilePhoneNumber", nativeQuery = true)
+    Optional<UsersProfile> findByUserProfilePhoneNumber(@Param("userProfilePhoneNumber") Long userProfilePhoneNumber);
 }

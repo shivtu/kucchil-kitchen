@@ -20,6 +20,10 @@ public class UsersProfileService {
         return usersProfileRepository.findByUserName(userName);
     }
 
+    public Optional<UsersProfile> findByUserProfilePhoneNumber(Long userProfilePhoneNumber) {
+        return usersProfileRepository.findByUserProfilePhoneNumber(userProfilePhoneNumber);
+    }
+
     public Optional<UsersProfile> findById (Long tableId) {
         return usersProfileRepository.findById(tableId);
     }

@@ -2,6 +2,8 @@ package com.example.retail.users;
 
 import com.example.retail.users.profiles.UsersProfile;
 import com.example.retail.util.CreateResponse;
+import com.example.retail.util.ValidationResponse;
+import com.example.retail.util.Validations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,9 @@ public class UsersSignUpController {
 
     @Autowired
     UsersService usersService;
+
+    @Autowired
+    Validations validations;
 
     @Autowired
     CreateResponse createResponse;
@@ -49,6 +54,13 @@ public class UsersSignUpController {
     public ResponseEntity<Object> addUser(HttpEntity<SignUpRequestBody> signUpRequestBody) {
 
         try {
+            ValidationResponse validationResponse = validations.validateNewUser(Objects.requireNonNull(signUpRequestBody.getBody()).getUserName(),
+                    signUpRequestBody.getBody().getUserProfile_PhoneNumber());
+            if(validationResponse.getStatusCode() != validations.validationSuccessCode){
+                return ResponseEntity.status(validationResponse.getStatusCode()).body(
+                        validationResponse
+                );
+            }
 
             Users users = new Users();
             users.setUserName(Objects.requireNonNull(signUpRequestBody.getBody()).getUserName());
@@ -82,6 +94,13 @@ public class UsersSignUpController {
     public ResponseEntity<Object> addRetailer (HttpEntity<SignUpRequestBody> signUpRequestBody) {
 
         try {
+            ValidationResponse validationResponse = validations.validateNewUser(Objects.requireNonNull(signUpRequestBody.getBody()).getUserName(),
+                    signUpRequestBody.getBody().getUserProfile_PhoneNumber());
+            if(validationResponse.getStatusCode() != validations.validationSuccessCode){
+                return ResponseEntity.status(validationResponse.getStatusCode()).body(
+                        validationResponse
+                );
+            }
             Users users = new Users();
             users.setUserName(Objects.requireNonNull(signUpRequestBody.getBody()).getUserName());
             users.setPassword(signUpRequestBody.getBody().getPassword());

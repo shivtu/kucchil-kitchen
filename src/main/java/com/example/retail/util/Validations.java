@@ -17,6 +17,8 @@ import com.example.retail.models.vegitables.Vegitables;
 import com.example.retail.models.vegitables.VegitablesInventory;
 import com.example.retail.models.vegitables.services.VegitableInventoryService;
 import com.example.retail.models.vegitables.services.VegitablesService;
+import com.example.retail.users.profiles.UsersProfile;
+import com.example.retail.users.profiles.UsersProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -41,8 +43,11 @@ public class Validations {
     @Autowired
     ItemCategoriesRepository itemCategoriesRepository;
 
+    @Autowired
+    UsersProfileService usersProfileService;
+
     public int validationSuccessCode = 1;
-    public int uprocessableRequestCode = 422;
+    public int unprocessableRequestCode = 422;
     public int badRequestCode = 400;
 
     public ValidationResponse validateNewVegitables(AddVegitablesRequestBody newVegitables, String vegSubId) {
@@ -53,7 +58,7 @@ public class Validations {
         if(!vegitables.isEmpty()) {
 
                 return createResponse.createValidationResponse(
-                        uprocessableRequestCode,
+                        unprocessableRequestCode,
                             "This item already exists",
                             "Try updating this item instead",
                         null
@@ -206,5 +211,21 @@ public class Validations {
             return createResponse.createValidationResponse(422, "Item category/classification not found", "Provide a valid classification name or create a classification and then add to the product", null);
         }
         return createResponse.createValidationResponse(validationSuccessCode, "Classification can be applied", "NA", null);
+    }
+
+    public ValidationResponse validateNewUser(String userName, Long userProfilePhoneNumber) {
+        Optional<UsersProfile> userProfileByUserName = usersProfileService.findByUserName(userName);
+        Optional<UsersProfile> userProfileByPhoneNumber = usersProfileService.findByUserProfilePhoneNumber(userProfilePhoneNumber);
+        if(userProfileByUserName.isPresent()) {
+            return createResponse.createValidationResponse(422, "User profile already exists with user ID: " +userName,
+                    "Duplicate email Ids are not allowed", userProfileByUserName);
+        }
+
+        if (userProfileByPhoneNumber.isPresent()) {
+            return createResponse.createValidationResponse(422, "User profile already exists with phone number: " +userProfilePhoneNumber,
+                    "Duplicate phone numbers are not allowed", userProfileByPhoneNumber);
+        }
+        return createResponse.createValidationResponse(validationSuccessCode, "User validated",
+                "NA", null);
     }
 }
