@@ -37,6 +37,9 @@ public class VegitableInventoryService {
     VegitablesService vegitablesService;
 
     @Autowired
+    VegitableInventoryService vegitableInventoryService;
+
+    @Autowired
     Validations validations;
 
     public VegitablesInventory addNewInventory(VegitablesInventory newVegitablesInventory) {
@@ -47,7 +50,7 @@ public class VegitableInventoryService {
         return vegitableInventoryRepository.findById(id).toString();
     }
 
-    public List<VegitablesInventory> findAllVegitableInventory() {
+    public List<VegitablesInventory> findAll() {
         return vegitableInventoryRepository.findAll();
     }
 
@@ -64,11 +67,10 @@ public class VegitableInventoryService {
             /** get the vegitable using tableId **/
             Optional<Vegitables> vegitables = vegitablesService.getVegitableByTableId(tableId);
 
-            String vegSubId = vegitables.get().getVegitableName()
+            String vegSubId = (vegitables.get().getVegitableName()
                     +vegitables.get().getVegitableVariant()
                     +updateVegitablesInventoryRequest.getVegitableInventoryFixedCost()
-                    +updateVegitablesInventoryRequest.getVegitableInventoryCostPrice()
-                    .toString().toLowerCase();
+                    +updateVegitablesInventoryRequest.getVegitableInventoryCostPrice()).toLowerCase();
             ValidationResponse validatedRes = validations.validateInventory(vegSubId, updateVegitablesInventoryRequest);
             if(validatedRes.getStatusCode() != 1) {
                 return ResponseEntity.status(validatedRes.getStatusCode()).body(
@@ -140,7 +142,7 @@ public class VegitableInventoryService {
             LocalDateTime dateTimeAdded = LocalDateTime.now();
             Optional<Vegitables> updatedVegitable = vegitablesService.findById(tableId);
 
-            String vegSubId = updatedVegitable.get().getVegitableSubId();
+            String vegSubId = updatedVegitable.get().getVegitableSubId().toLowerCase();
 
             /** Create the vegitable addition details object to update vegitable_inventory **/
             VegitableAdditionDetails vegitableAdditionDetails = new VegitableAdditionDetails();
@@ -153,15 +155,9 @@ public class VegitableInventoryService {
 
             vegitableInventoryRepositoryImpl.updateVegitablesAdditionDetails(vegSubId, vegitableAdditionDetailsList);
 
-            /** Create Object to return as response **/
-            List<Object> arrayList = new ArrayList<>();
-            arrayList.add(updatedVegitable);
-            arrayList.add(vegitableAdditionDetails);
+            /** Return the response by fetching the vegitables and vegitablesInventory **/
+            return vegitablesService.findBySubIdVegitableWithInventory(vegSubId);
 
-            /** Return the response **/
-            return ResponseEntity.status(201).body(
-                    createResponse.createSuccessResponse(201, "Updated", arrayList)
-            );
         } catch (Exception e) {
             return ResponseEntity.status(500).body(
                     createResponse.createErrorResponse(500, e.getMessage(), "NA")

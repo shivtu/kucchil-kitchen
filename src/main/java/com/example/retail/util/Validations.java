@@ -46,6 +46,9 @@ public class Validations {
     @Autowired
     UsersProfileService usersProfileService;
 
+    @Autowired
+    TaxRepository taxRepository;
+
     public int validationSuccessCode = 1;
     public int unprocessableRequestCode = 422;
     public int badRequestCode = 400;
@@ -99,6 +102,25 @@ public class Validations {
                       null
                     );
 
+        }
+
+        // Check if applicable taxes are valid
+        Boolean taxAvailable = true;
+        String[] applicableTaxes = newVegitables.getVegitableApplicableTaxes();
+        int l = applicableTaxes.length;
+        for (int i = 0; i < l; i++) {
+            Optional<Taxes> taxes = taxRepository.findBytaxName(applicableTaxes[i]);
+            if (taxes.isEmpty()) {
+                taxAvailable = false;
+            }
+        }
+        if(!taxAvailable) {
+            return createResponse.createValidationResponse(
+                    badRequestCode,
+                    "Applied taxes not found",
+                    "Create a tax and then apply to the product or apply one of the existing tax",
+                    null
+            );
         }
 
         return createResponse.createValidationResponse(

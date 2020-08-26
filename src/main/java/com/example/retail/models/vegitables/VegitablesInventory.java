@@ -61,15 +61,7 @@ public class VegitablesInventory implements Serializable {
 
     public VegitablesInventory() {}
 
-    public VegitablesInventory(Long vegitableInventoryTableId,
-                               @Min(value = 0, message = "Cost price cannot be 0") @NotNull Float vegitableInventoryCostPrice,
-                               @Min(value = 0, message = "Fixed costs cannot be less than 0") @NotNull Float vegitableInventoryFixedCost,
-                               @Min(value = 0, message = "Selling price cannot be less than 0") @NotNull(message = "Selling price is required") Float vegitableInventorySellingPrice,
-                               @Future @NotNull LocalDate vegitableInventoryExpiry,
-                               @Min(value = 0, message = "discounts are expressed in %, valid range 0-100") @NotNull Float vegitableInventoryMaxDiscount,
-                               List<VegitableAdditionDetails> vegitableInventoryAdditionDetails,
-                               String vegitableSubId) {
-        this.vegitableInventoryTableId = vegitableInventoryTableId;
+    public VegitablesInventory(@Min(value = 0, message = "Cost price cannot be 0") @NotNull Float vegitableInventoryCostPrice, @Min(value = 0, message = "Fixed costs cannot be less than 0") @NotNull Float vegitableInventoryFixedCost, @Min(value = 0, message = "Selling price cannot be less than 0") @NotNull(message = "Selling price is required") Float vegitableInventorySellingPrice, @Future @NotNull LocalDate vegitableInventoryExpiry, @Min(value = 0, message = "discounts are expressed in %, valid range 0-100") @NotNull Float vegitableInventoryMaxDiscount, List<VegitableAdditionDetails> vegitableInventoryAdditionDetails, String vegitableSubId) {
         this.vegitableInventoryCostPrice = vegitableInventoryCostPrice;
         this.vegitableInventoryFixedCost = vegitableInventoryFixedCost;
         this.vegitableInventorySellingPrice = vegitableInventorySellingPrice;
@@ -77,6 +69,14 @@ public class VegitablesInventory implements Serializable {
         this.vegitableInventoryMaxDiscount = vegitableInventoryMaxDiscount;
         this.vegitableInventoryAdditionDetails = vegitableInventoryAdditionDetails;
         this.vegitableSubId = vegitableSubId;
+    }
+
+    public Long getVegitableInventoryTableId() {
+        return vegitableInventoryTableId;
+    }
+
+    public void setVegitableInventoryTableId(Long vegitableInventoryTableId) {
+        this.vegitableInventoryTableId = vegitableInventoryTableId;
     }
 
     public Float getVegitableInventoryCostPrice() {

@@ -1,9 +1,7 @@
 package com.example.retail.models.edibleproducts;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -14,14 +12,25 @@ public class EdibleProducts {
     @GeneratedValue
     private Long edibleProducts_TableId;
 
-    @NotNull
-    // edibleProducts_Name + edibleProducts_productName + edibleProducts_Manufacturer + edibleProducts_Variant
-    // + edibleProducts_Flavor + edibleProducts_Expiry + edibleProducts_Denomination + edibleProducts_CostPrice
-    // + edibleProducts_Mrp
-    private String edibleProducts_Id;
+    // Manufacturer of the product
+    private String edibleProducts_Manufacturer;
 
     // Name given to the product by the manufacturer
     private String edibleProducts_productName;
+
+    // Variant of the product : Usually the base content of the product : Example - fibre, fruits, vitamin etc
+    private String edibleProducts_Variant;
+
+    // Flavour of the product
+    private String edibleProducts_Flavor;
+
+    // How was the product made : Example - manufactured, processed, raw etc
+    private String edibleProducts_Type;
+
+    // General description of the product
+    private String edibleProducts_Desc;
+
+    private String edibleProductsImageLocation;
 
     // Generic item name
     private String edibleProducts_Name;
@@ -32,20 +41,10 @@ public class EdibleProducts {
     // Product category : Example - confectionary, dairy, spices etc
     private String edibleProducts_Category;
 
-    // Manufacturer of the product
-    private String edibleProducts_Manufacturer;
-
-    // Variant of the product : Usually the base content of the product : Example - fibre, fruits, vitamin etc
-    private String edibleProducts_Variant;
-
-    // How was the product made : Example - manufactured, processed, raw etc
-    private String edibleProducts_Type;
-
-    // Flavour of the product
-    private String edibleProducts_Flavor;
-
-    // General description of the product
-    private String edibleProducts_Desc;
+    @NotEmpty
+    @NotNull
+    @Column(name = "item_category")
+    private String itemCategory;
 
     // Can be safely consumed by minors ?
     private Boolean edibleProducts_ForMinors;
@@ -57,45 +56,59 @@ public class EdibleProducts {
     private Float edibleProducts_Denomination;
 
     // Inventory count
-    private Integer edibleProducts_InventoryCount;
+    private Integer edibleProductsQuantity;
+
+    private Boolean edibleProductsAvailable;
 
     // MRP set by govt/manufacturer
     private Float edibleProducts_Mrp;
 
     // Maximum discount allowed
-    private Float edibleProducts_MaxDiscount;
+    private Float edibleProducts_OfferedDiscount;
 
     // Should customer view the discount
     private Float edibleProducts_ShowDiscount;
 
-    // Currently offered discount
-    private Float edibleProducts_OfferedDiscount;
+   private Float edibleProductsDiscountedPrice;
 
-    // Tax on the product
-    private Float edibleProducts_Tax;
+    @NotNull
+    @Column(name = "edible_products_applicable_taxes")
+    private String[] edibleProductsApplicableTaxes;
+
+   private Float edibleProductsTaxedPrice;
+
+    @NotNull
+    // edibleProducts_Name + edibleProducts_productName + edibleProducts_Manufacturer + edibleProducts_Variant
+    // + edibleProducts_Flavor + edibleProducts_Expiry + edibleProducts_Denomination + edibleProducts_CostPrice
+    // + edibleProducts_Mrp
+    private String edibleProductsSubId;
 
     public EdibleProducts(){}
 
-    public EdibleProducts(@NotNull String edibleProducts_Id, String edibleProducts_productName, String edibleProducts_Name, String edibleProducts_AlternaleName, String edibleProducts_Category, String edibleProducts_Manufacturer, String edibleProducts_Variant, String edibleProducts_Type, String edibleProducts_Flavor, String edibleProducts_Desc, Boolean edibleProducts_ForMinors, String edibleProducts_MeasureMentUnit, Float edibleProducts_Denomination, Integer edibleProducts_InventoryCount, Float edibleProducts_Mrp, Float edibleProducts_MaxDiscount, Float edibleProducts_ShowDiscount, Float edibleProducts_OfferedDiscount, Float edibleProducts_Tax) {
-        this.edibleProducts_Id = edibleProducts_Id;
+    public EdibleProducts(String edibleProducts_Manufacturer, String edibleProducts_productName, String edibleProducts_Variant, String edibleProducts_Flavor, String edibleProducts_Type, String edibleProducts_Desc, String edibleProductsImageLocation, String edibleProducts_Name, String edibleProducts_AlternaleName, String edibleProducts_Category, @NotEmpty @NotNull String itemCategory, Boolean edibleProducts_ForMinors, String edibleProducts_MeasureMentUnit, Float edibleProducts_Denomination, Integer edibleProductsQuantity, Boolean edibleProductsAvailable, Float edibleProducts_Mrp, Float edibleProducts_OfferedDiscount, Float edibleProducts_ShowDiscount, Float edibleProductsDiscountedPrice, @NotNull String[] edibleProductsApplicableTaxes, Float edibleProductsTaxedPrice, @NotNull String edibleProductsSubId) {
+        this.edibleProducts_Manufacturer = edibleProducts_Manufacturer;
         this.edibleProducts_productName = edibleProducts_productName;
+        this.edibleProducts_Variant = edibleProducts_Variant;
+        this.edibleProducts_Flavor = edibleProducts_Flavor;
+        this.edibleProducts_Type = edibleProducts_Type;
+        this.edibleProducts_Desc = edibleProducts_Desc;
+        this.edibleProductsImageLocation = edibleProductsImageLocation;
         this.edibleProducts_Name = edibleProducts_Name;
         this.edibleProducts_AlternaleName = edibleProducts_AlternaleName;
         this.edibleProducts_Category = edibleProducts_Category;
-        this.edibleProducts_Manufacturer = edibleProducts_Manufacturer;
-        this.edibleProducts_Variant = edibleProducts_Variant;
-        this.edibleProducts_Type = edibleProducts_Type;
-        this.edibleProducts_Flavor = edibleProducts_Flavor;
-        this.edibleProducts_Desc = edibleProducts_Desc;
+        this.itemCategory = itemCategory;
         this.edibleProducts_ForMinors = edibleProducts_ForMinors;
         this.edibleProducts_MeasureMentUnit = edibleProducts_MeasureMentUnit;
         this.edibleProducts_Denomination = edibleProducts_Denomination;
-        this.edibleProducts_InventoryCount = edibleProducts_InventoryCount;
+        this.edibleProductsQuantity = edibleProductsQuantity;
+        this.edibleProductsAvailable = edibleProductsAvailable;
         this.edibleProducts_Mrp = edibleProducts_Mrp;
-        this.edibleProducts_MaxDiscount = edibleProducts_MaxDiscount;
-        this.edibleProducts_ShowDiscount = edibleProducts_ShowDiscount;
         this.edibleProducts_OfferedDiscount = edibleProducts_OfferedDiscount;
-        this.edibleProducts_Tax = edibleProducts_Tax;
+        this.edibleProducts_ShowDiscount = edibleProducts_ShowDiscount;
+        this.edibleProductsDiscountedPrice = edibleProductsDiscountedPrice;
+        this.edibleProductsApplicableTaxes = edibleProductsApplicableTaxes;
+        this.edibleProductsTaxedPrice = edibleProductsTaxedPrice;
+        this.edibleProductsSubId = edibleProductsSubId;
     }
 
     public Long getEdibleProducts_TableId() {
@@ -106,12 +119,12 @@ public class EdibleProducts {
         this.edibleProducts_TableId = edibleProducts_TableId;
     }
 
-    public String getEdibleProducts_Id() {
-        return edibleProducts_Id;
+    public String getEdibleProducts_Manufacturer() {
+        return edibleProducts_Manufacturer;
     }
 
-    public void setEdibleProducts_Id(String edibleProducts_Id) {
-        this.edibleProducts_Id = edibleProducts_Id;
+    public void setEdibleProducts_Manufacturer(String edibleProducts_Manufacturer) {
+        this.edibleProducts_Manufacturer = edibleProducts_Manufacturer;
     }
 
     public String getEdibleProducts_productName() {
@@ -120,6 +133,46 @@ public class EdibleProducts {
 
     public void setEdibleProducts_productName(String edibleProducts_productName) {
         this.edibleProducts_productName = edibleProducts_productName;
+    }
+
+    public String getEdibleProducts_Variant() {
+        return edibleProducts_Variant;
+    }
+
+    public void setEdibleProducts_Variant(String edibleProducts_Variant) {
+        this.edibleProducts_Variant = edibleProducts_Variant;
+    }
+
+    public String getEdibleProducts_Flavor() {
+        return edibleProducts_Flavor;
+    }
+
+    public void setEdibleProducts_Flavor(String edibleProducts_Flavor) {
+        this.edibleProducts_Flavor = edibleProducts_Flavor;
+    }
+
+    public String getEdibleProducts_Type() {
+        return edibleProducts_Type;
+    }
+
+    public void setEdibleProducts_Type(String edibleProducts_Type) {
+        this.edibleProducts_Type = edibleProducts_Type;
+    }
+
+    public String getEdibleProducts_Desc() {
+        return edibleProducts_Desc;
+    }
+
+    public void setEdibleProducts_Desc(String edibleProducts_Desc) {
+        this.edibleProducts_Desc = edibleProducts_Desc;
+    }
+
+    public String getEdibleProductsImageLocation() {
+        return edibleProductsImageLocation;
+    }
+
+    public void setEdibleProductsImageLocation(String edibleProductsImageLocation) {
+        this.edibleProductsImageLocation = edibleProductsImageLocation;
     }
 
     public String getEdibleProducts_Name() {
@@ -146,44 +199,12 @@ public class EdibleProducts {
         this.edibleProducts_Category = edibleProducts_Category;
     }
 
-    public String getEdibleProducts_Manufacturer() {
-        return edibleProducts_Manufacturer;
+    public String getItemCategory() {
+        return itemCategory;
     }
 
-    public void setEdibleProducts_Manufacturer(String edibleProducts_Manufacturer) {
-        this.edibleProducts_Manufacturer = edibleProducts_Manufacturer;
-    }
-
-    public String getEdibleProducts_Variant() {
-        return edibleProducts_Variant;
-    }
-
-    public void setEdibleProducts_Variant(String edibleProducts_Variant) {
-        this.edibleProducts_Variant = edibleProducts_Variant;
-    }
-
-    public String getEdibleProducts_Type() {
-        return edibleProducts_Type;
-    }
-
-    public void setEdibleProducts_Type(String edibleProducts_Type) {
-        this.edibleProducts_Type = edibleProducts_Type;
-    }
-
-    public String getEdibleProducts_Flavor() {
-        return edibleProducts_Flavor;
-    }
-
-    public void setEdibleProducts_Flavor(String edibleProducts_Flavor) {
-        this.edibleProducts_Flavor = edibleProducts_Flavor;
-    }
-
-    public String getEdibleProducts_Desc() {
-        return edibleProducts_Desc;
-    }
-
-    public void setEdibleProducts_Desc(String edibleProducts_Desc) {
-        this.edibleProducts_Desc = edibleProducts_Desc;
+    public void setItemCategory(String itemCategory) {
+        this.itemCategory = itemCategory;
     }
 
     public Boolean getEdibleProducts_ForMinors() {
@@ -210,12 +231,20 @@ public class EdibleProducts {
         this.edibleProducts_Denomination = edibleProducts_Denomination;
     }
 
-    public Integer getEdibleProducts_InventoryCount() {
-        return edibleProducts_InventoryCount;
+    public Integer getEdibleProductsQuantity() {
+        return edibleProductsQuantity;
     }
 
-    public void setEdibleProducts_InventoryCount(Integer edibleProducts_InventoryCount) {
-        this.edibleProducts_InventoryCount = edibleProducts_InventoryCount;
+    public void setEdibleProductsQuantity(Integer edibleProductsQuantity) {
+        this.edibleProductsQuantity = edibleProductsQuantity;
+    }
+
+    public Boolean getEdibleProductsAvailable() {
+        return edibleProductsAvailable;
+    }
+
+    public void setEdibleProductsAvailable(Boolean edibleProductsAvailable) {
+        this.edibleProductsAvailable = edibleProductsAvailable;
     }
 
     public Float getEdibleProducts_Mrp() {
@@ -226,12 +255,12 @@ public class EdibleProducts {
         this.edibleProducts_Mrp = edibleProducts_Mrp;
     }
 
-    public Float getEdibleProducts_MaxDiscount() {
-        return edibleProducts_MaxDiscount;
+    public Float getEdibleProducts_OfferedDiscount() {
+        return edibleProducts_OfferedDiscount;
     }
 
-    public void setEdibleProducts_MaxDiscount(Float edibleProducts_MaxDiscount) {
-        this.edibleProducts_MaxDiscount = edibleProducts_MaxDiscount;
+    public void setEdibleProducts_OfferedDiscount(Float edibleProducts_OfferedDiscount) {
+        this.edibleProducts_OfferedDiscount = edibleProducts_OfferedDiscount;
     }
 
     public Float getEdibleProducts_ShowDiscount() {
@@ -242,19 +271,35 @@ public class EdibleProducts {
         this.edibleProducts_ShowDiscount = edibleProducts_ShowDiscount;
     }
 
-    public Float getEdibleProducts_OfferedDiscount() {
-        return edibleProducts_OfferedDiscount;
+    public Float getEdibleProductsDiscountedPrice() {
+        return edibleProductsDiscountedPrice;
     }
 
-    public void setEdibleProducts_OfferedDiscount(Float edibleProducts_OfferedDiscount) {
-        this.edibleProducts_OfferedDiscount = edibleProducts_OfferedDiscount;
+    public void setEdibleProductsDiscountedPrice(Float edibleProductsDiscountedPrice) {
+        this.edibleProductsDiscountedPrice = edibleProductsDiscountedPrice;
     }
 
-    public Float getEdibleProducts_Tax() {
-        return edibleProducts_Tax;
+    public String[] getEdibleProductsApplicableTaxes() {
+        return edibleProductsApplicableTaxes;
     }
 
-    public void setEdibleProducts_Tax(Float edibleProducts_Tax) {
-        this.edibleProducts_Tax = edibleProducts_Tax;
+    public void setEdibleProductsApplicableTaxes(String[] edibleProductsApplicableTaxes) {
+        this.edibleProductsApplicableTaxes = edibleProductsApplicableTaxes;
+    }
+
+    public Float getEdibleProductsTaxedPrice() {
+        return edibleProductsTaxedPrice;
+    }
+
+    public void setEdibleProductsTaxedPrice(Float edibleProductsTaxedPrice) {
+        this.edibleProductsTaxedPrice = edibleProductsTaxedPrice;
+    }
+
+    public String getEdibleProductsSubId() {
+        return edibleProductsSubId;
+    }
+
+    public void setEdibleProductsSubId(String edibleProductsSubId) {
+        this.edibleProductsSubId = edibleProductsSubId;
     }
 }

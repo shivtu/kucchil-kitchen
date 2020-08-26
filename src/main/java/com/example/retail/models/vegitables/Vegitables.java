@@ -1,7 +1,5 @@
 package com.example.retail.models.vegitables;
 
-import com.example.retail.models.itemcategories.ItemCategories;
-import com.example.retail.users.profiles.UserProfileGender;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;

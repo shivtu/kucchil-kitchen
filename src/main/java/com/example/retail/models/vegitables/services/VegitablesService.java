@@ -69,11 +69,10 @@ public class VegitablesService {
                                                ArrayList<MultipartFile> images) throws Exception {
         try {
             /* Create a unique subID */
-            String vegSubId = newVegitables.getVegitableName()
+            String vegSubId = (newVegitables.getVegitableName()
                     +newVegitables.getVegitableVariant()
                     +newVegitables.getVegitableInventoryFixedCost()
-                    +newVegitables.getVegitableInventoryCostPrice()
-                    .toString().toLowerCase();
+                    +newVegitables.getVegitableInventoryCostPrice()).toLowerCase();
 
             /* Validate vegitables */
            ValidationResponse validationStatus = validations.validateNewVegitables(newVegitables, vegSubId);
@@ -240,7 +239,7 @@ public class VegitablesService {
     public ResponseEntity<Object> findAllVegitablesWithInventory() {
         try{
             List<Vegitables> vegitables = vegitablesRepository.findAll();
-            List<VegitablesInventory> vegitablesInventories = vegitableInventoryService.findAllVegitableInventory();
+            List<VegitablesInventory> vegitablesInventories = vegitableInventoryService.findAll();
 
             Map<String, Object> resObject = new HashMap<>();
 
@@ -263,5 +262,28 @@ public class VegitablesService {
               createResponse.createErrorResponse(500, e.getMessage(), "NA")
             );
         }
+    }
+
+    public ResponseEntity<Object> findBySubIdVegitableWithInventory(String vegSubId) {
+        try{
+            Optional<Vegitables> v= vegitablesRepository.findBySubId(vegSubId);
+            Optional<VegitablesInventory> vi =vegitableInventoryService.findVegitableInventoryBySubId(vegSubId);
+
+            List<Object> finalRes = new ArrayList<>();
+            Map<String, Object> res = new HashMap<>();
+            res.put("vegitables", v);
+            res.put("vegitablesInventory", vi);
+            finalRes.add(res);
+
+            return ResponseEntity.status(200).body(
+                    createResponse.createSuccessResponse(200, "Vegitable and its inventory", finalRes)
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(
+                    createResponse.createErrorResponse(500, e.getMessage(), "NA")
+            );
+        }
+
+
     }
 }
