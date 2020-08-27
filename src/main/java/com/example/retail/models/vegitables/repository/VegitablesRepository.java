@@ -31,4 +31,7 @@ public interface VegitablesRepository extends JpaRepository<Vegitables, Long> {
 
     @Query(value = "SELECT * FROM vegitables WHERE vegitable_available=false", nativeQuery = true)
     public List<Vegitables> findAllUnavailableVegitables();
+
+    @Query(value = "SELECT * FROM vegitables WHERE item_classification= :itemClassification", nativeQuery = true)
+    public List<Vegitables> findVegitablesByItemCategory(@Param("itemClassification") String itemClassification);
 }

@@ -286,4 +286,8 @@ public class VegitablesService {
 
 
     }
+
+    public List<Vegitables> findVegitablesByItemCategory(String itemClassification) {
+        return vegitablesRepository.findVegitablesByItemCategory(itemClassification);
+    }
 }
