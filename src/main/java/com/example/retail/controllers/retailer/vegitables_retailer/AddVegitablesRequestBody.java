@@ -3,10 +3,13 @@ package com.example.retail.controllers.retailer.vegitables_retailer;
 import com.example.retail.models.vegitables.VegitableRecipes;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Set;
+
 @Component
 public class AddVegitablesRequestBody {
 
-    private String[] vegitableApplicableTaxes;
+    private ArrayList<String> vegitableApplicableTaxes;
 
     private String vegitableName;
 
@@ -42,14 +45,7 @@ public class AddVegitablesRequestBody {
 
     public AddVegitablesRequestBody(){}
 
-    public AddVegitablesRequestBody(String[] vegitableApplicableTaxes, String vegitableName, String vegitableDescp, String vegitableVariant,
-                                    String itemCategory, VegitableRecipes vegitableRecepie,
-                                    Float vegitableSellingPrice, Float vegitableOfferedDiscount, String vegitableOfferedDiscountName,
-                                    Boolean vegitableShowDiscount,
-                                    Float vegitableQuantity,
-                                    Boolean vegitableAvailable, String vegitableMeasureMentUnit, Float vegitableInventoryCostPrice,
-                                    String vegitableInventoryExpiry, Float vegitableInventoryMaxDiscount, Float vegitableInventoryFixedCost) {
-
+    public AddVegitablesRequestBody(ArrayList<String> vegitableApplicableTaxes, String vegitableName, String vegitableDescp, String vegitableVariant, String itemCategory, VegitableRecipes vegitableRecepie, Float vegitableSellingPrice, Float vegitableOfferedDiscount, String vegitableOfferedDiscountName, Boolean vegitableShowDiscount, Float vegitableQuantity, Boolean vegitableAvailable, String vegitableMeasureMentUnit, Float vegitableInventoryCostPrice, String vegitableInventoryExpiry, Float vegitableInventoryMaxDiscount, Float vegitableInventoryFixedCost) {
         this.vegitableApplicableTaxes = vegitableApplicableTaxes;
         this.vegitableName = vegitableName;
         this.vegitableDescp = vegitableDescp;
@@ -69,11 +65,11 @@ public class AddVegitablesRequestBody {
         this.vegitableInventoryFixedCost = vegitableInventoryFixedCost;
     }
 
-    public String[] getVegitableApplicableTaxes() {
+    public ArrayList<String> getVegitableApplicableTaxes() {
         return vegitableApplicableTaxes;
     }
 
-    public void setVegitableApplicableTaxes(String[] vegitableApplicableTaxes) {
+    public void setVegitableApplicableTaxes(ArrayList<String> vegitableApplicableTaxes) {
         this.vegitableApplicableTaxes = vegitableApplicableTaxes;
     }
 
@@ -97,16 +93,16 @@ public class AddVegitablesRequestBody {
         return vegitableVariant;
     }
 
+    public void setVegitableVariant(String vegitableVariant) {
+        this.vegitableVariant = vegitableVariant;
+    }
+
     public String getItemCategory() {
         return itemCategory;
     }
 
     public void setItemCategory(String itemCategory) {
         this.itemCategory = itemCategory;
-    }
-
-    public void setVegitableVariant(String vegitableVariant) {
-        this.vegitableVariant = vegitableVariant;
     }
 
     public VegitableRecipes getVegitableRecepie() {

@@ -3,7 +3,11 @@ package com.example.retail.models.taxutility;
 import com.example.retail.models.taxutility.repository.TaxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
 import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Component
 public class TaxCalculator {
@@ -11,18 +15,18 @@ public class TaxCalculator {
     @Autowired
     TaxRepository taxRepository;
 
-    public Float calcAmountAfterTax(String[] applicableTaxes, Float discountedPrice) {
-        int l = applicableTaxes.length;
-        Float taxAmount = 0F;
-        Float amountAfterTax = 0F;
-        for (int i = 0; i < l; i++) {
-            Optional<Taxes> taxes = taxRepository.findBytaxName(applicableTaxes[i]);
-            if (!taxes.isEmpty()) {
-                taxAmount = taxAmount + ((taxes.get().getTaxPercent() * discountedPrice)/100);
-            }
-        }
+    public Float calcAmountAfterTax(ArrayList<String> applicableTaxes, Float discountedPrice) {
 
-        amountAfterTax = discountedPrice + taxAmount;
+        AtomicReference<Float> taxAmount = new AtomicReference<>(0F);
+        Float amountAfterTax = 0F;
+        applicableTaxes.forEach(applicableTax -> {
+            Optional<Taxes> taxes = taxRepository.findBytaxName(applicableTax);
+            if (!taxes.isEmpty()) {
+                taxAmount.set(taxAmount.get() + ((taxes.get().getTaxPercent() * discountedPrice) / 100));
+            }
+        });
+
+        amountAfterTax = discountedPrice + taxAmount.get();
 
         return amountAfterTax;
     }

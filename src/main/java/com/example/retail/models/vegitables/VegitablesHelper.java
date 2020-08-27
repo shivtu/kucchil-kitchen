@@ -4,13 +4,16 @@ import com.example.retail.models.taxutility.TaxCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Set;
+
 @Component
 public class VegitablesHelper {
 
     @Autowired
     TaxCalculator taxCalculator;
 
-    public Float calcAmountAfterTax(String[] applicableTaxes, Float discountedPrice) {
+    public Float calcAmountAfterTax(ArrayList<String> applicableTaxes, Float discountedPrice) {
 
         return taxCalculator.calcAmountAfterTax(applicableTaxes, discountedPrice);
     }

@@ -4,11 +4,9 @@ import com.example.retail.controllers.retailer.vegitables_retailer.AddVegitables
 import com.example.retail.controllers.retailer.vegitables_retailer.UpdateVegitablesInventoryRequest;
 import com.example.retail.models.customerorders.CustomerOrders;
 import com.example.retail.models.customerorders.CustomerOrdersItemsList;
-import com.example.retail.models.customerorders.repository.CustomerOrdersRepository;
 import com.example.retail.models.deliveryutility.DeliveryCharges;
 import com.example.retail.models.discounts.CustomerOrdersDiscount;
 import com.example.retail.models.discounts.repository.CustomerOrdersDiscountRepository;
-import com.example.retail.models.discounts.services.CustomerOrdersDiscountServices;
 import com.example.retail.models.itemcategories.ItemCategories;
 import com.example.retail.models.itemcategories.repository.ItemCategoriesRepository;
 import com.example.retail.models.taxutility.Taxes;
@@ -23,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Component
 public class Validations {
@@ -105,16 +103,16 @@ public class Validations {
         }
 
         // Check if applicable taxes are valid
-        Boolean taxAvailable = true;
-        String[] applicableTaxes = newVegitables.getVegitableApplicableTaxes();
-        int l = applicableTaxes.length;
-        for (int i = 0; i < l; i++) {
-            Optional<Taxes> taxes = taxRepository.findBytaxName(applicableTaxes[i]);
+        AtomicReference<Boolean> taxAvailable = new AtomicReference<>(true);
+        ArrayList<String> applicableTaxes = newVegitables.getVegitableApplicableTaxes();
+        applicableTaxes.forEach(applicableTax -> {
+            Optional<Taxes> taxes = taxRepository.findBytaxName(applicableTax);
             if (taxes.isEmpty()) {
-                taxAvailable = false;
+                taxAvailable.set(false);
             }
-        }
-        if(!taxAvailable) {
+        });
+
+        if(!taxAvailable.get()) {
             return createResponse.createValidationResponse(
                     badRequestCode,
                     "Applied taxes not found",
