@@ -67,29 +67,6 @@ public class Validations {
 
         }
 
-        // Check if max discount in inventory table is less than offered discount
-        if (newVegitables.getVegitableInventoryMaxDiscount() < newVegitables.getVegitableOfferedDiscount()) {
-
-            return     createResponse.createValidationResponse(
-                    badRequestCode,
-                            "Offered discount is set more than the max discount",
-                            "Offered discount must always be less than the maximum discount set for an item",
-                    null
-                    );
-        }
-
-        // Check if discounts are negative numbers
-        if (newVegitables.getVegitableInventoryMaxDiscount() < 0 || newVegitables.getVegitableOfferedDiscount() < 0) {
-            return
-                    createResponse.createValidationResponse(
-                            badRequestCode,
-                            "Invalid format for discounts",
-                            "Discounts are expressed in %, please provide a positive number",
-                            null
-
-            );
-        }
-
         // Check if selling price is less than cost price
         if (newVegitables.getVegitableSellingPrice() < newVegitables.getVegitableInventoryCostPrice()) {
 

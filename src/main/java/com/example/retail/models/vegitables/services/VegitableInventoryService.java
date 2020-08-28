@@ -98,7 +98,6 @@ public class VegitableInventoryService {
             vegitablesInventory.setVegitableInventoryFixedCost(updateVegitablesInventoryRequest.getVegitableInventoryFixedCost());
             vegitablesInventory.setVegitableInventorySellingPrice(updateVegitablesInventoryRequest.getVegitableSellingPrice());
             vegitablesInventory.setVegitableInventoryExpiry(updateVegitablesInventoryRequest.getVegitableInventoryExpiry());
-            vegitablesInventory.setVegitableInventoryMaxDiscount(updateVegitablesInventoryRequest.getVegitableInventoryMaxDiscount());
             vegitablesInventory.setVegitableSubId(vegSubId);
 
             /*

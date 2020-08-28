@@ -148,7 +148,6 @@ public class VegitablesService {
             vegitablesInventory.setVegitableInventoryFixedCost(newVegitables.getVegitableInventoryFixedCost());
             vegitablesInventory.setVegitableInventorySellingPrice(vegitableDiscountedPrice);
             vegitablesInventory.setVegitableInventoryExpiry(vegitableInventoryExpiry);
-            vegitablesInventory.setVegitableInventoryMaxDiscount(newVegitables.getVegitableInventoryMaxDiscount());
 
             /** Create VegitableAdditionDetails **/
             VegitableAdditionDetails vegitableAdditionDetails = new VegitableAdditionDetails();

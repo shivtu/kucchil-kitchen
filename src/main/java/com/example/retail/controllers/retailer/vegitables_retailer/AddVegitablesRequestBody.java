@@ -39,13 +39,11 @@ public class AddVegitablesRequestBody {
 
     private String vegitableInventoryExpiry;
 
-    private Float vegitableInventoryMaxDiscount;
-
     private Float vegitableInventoryFixedCost;
 
     public AddVegitablesRequestBody(){}
 
-    public AddVegitablesRequestBody(ArrayList<String> vegitableApplicableTaxes, String vegitableName, String vegitableDescp, String vegitableVariant, String itemCategory, VegitableRecipes vegitableRecepie, Float vegitableSellingPrice, Float vegitableOfferedDiscount, String vegitableOfferedDiscountName, Boolean vegitableShowDiscount, Float vegitableQuantity, Boolean vegitableAvailable, String vegitableMeasureMentUnit, Float vegitableInventoryCostPrice, String vegitableInventoryExpiry, Float vegitableInventoryMaxDiscount, Float vegitableInventoryFixedCost) {
+    public AddVegitablesRequestBody(ArrayList<String> vegitableApplicableTaxes, String vegitableName, String vegitableDescp, String vegitableVariant, String itemCategory, VegitableRecipes vegitableRecepie, Float vegitableSellingPrice, Float vegitableOfferedDiscount, String vegitableOfferedDiscountName, Boolean vegitableShowDiscount, Float vegitableQuantity, Boolean vegitableAvailable, String vegitableMeasureMentUnit, Float vegitableInventoryCostPrice, String vegitableInventoryExpiry, Float vegitableInventoryFixedCost) {
         this.vegitableApplicableTaxes = vegitableApplicableTaxes;
         this.vegitableName = vegitableName;
         this.vegitableDescp = vegitableDescp;
@@ -61,7 +59,6 @@ public class AddVegitablesRequestBody {
         this.vegitableMeasureMentUnit = vegitableMeasureMentUnit;
         this.vegitableInventoryCostPrice = vegitableInventoryCostPrice;
         this.vegitableInventoryExpiry = vegitableInventoryExpiry;
-        this.vegitableInventoryMaxDiscount = vegitableInventoryMaxDiscount;
         this.vegitableInventoryFixedCost = vegitableInventoryFixedCost;
     }
 
@@ -183,14 +180,6 @@ public class AddVegitablesRequestBody {
 
     public void setVegitableInventoryExpiry(String vegitableInventoryExpiry) {
         this.vegitableInventoryExpiry = vegitableInventoryExpiry;
-    }
-
-    public Float getVegitableInventoryMaxDiscount() {
-        return vegitableInventoryMaxDiscount;
-    }
-
-    public void setVegitableInventoryMaxDiscount(Float vegitableInventoryMaxDiscount) {
-        this.vegitableInventoryMaxDiscount = vegitableInventoryMaxDiscount;
     }
 
     public Float getVegitableInventoryFixedCost() {
