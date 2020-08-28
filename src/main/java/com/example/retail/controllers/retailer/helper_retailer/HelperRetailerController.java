@@ -32,7 +32,7 @@ public class HelperRetailerController {
     public ResponseEntity<Object> findTaxesDiscountsAndItemCategories () {
 
         HashMap<String, Object> res = new HashMap<String, Object>();
-        res.put("discounts", customerOrdersDiscountServices.forHelperFunctionFindAll());
+        res.put("discounts", customerOrdersDiscountServices.findAllDiscounts());
         res.put("taxes", taxService.forHelperFunctionFindAll());
 
         List<Object> finalRes = new ArrayList<>();

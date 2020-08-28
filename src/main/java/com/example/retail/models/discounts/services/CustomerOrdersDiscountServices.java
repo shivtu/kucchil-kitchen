@@ -71,33 +71,12 @@ public class CustomerOrdersDiscountServices {
 
     }
 
-    public ResponseEntity<Object> findAllDiscounts() {
-        try{
-            List<CustomerOrdersDiscount> res = customerOrdersDiscountRepository.findAll();
-
-            int resuCount = 0;
-
-            if (!res.isEmpty()) {
-                resuCount = res.size();
-            }
-
-            ArrayList<Object> finalRes = new ArrayList<>(res);
-
-            return ResponseEntity.status(200).body(
-                    createResponse.createSuccessResponse(200, resuCount + " item(s) found", finalRes)
-            );
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(
-                    createResponse.createErrorResponse(500, e.getMessage(), "NA")
-            );
-        }
+    public List<CustomerOrdersDiscount> findAllDiscounts() {
+        List<CustomerOrdersDiscount> res = customerOrdersDiscountRepository.findAll();
+        return res;
     }
 
     public List<CustomerOrdersDiscount> getAllActiveDiscounts() {
         return customerOrdersDiscountRepository.getAllActiveDiscounts();
-    }
-
-    public List<CustomerOrdersDiscount> forHelperFunctionFindAll() {
-        return customerOrdersDiscountRepository.findAll();
     }
 }
