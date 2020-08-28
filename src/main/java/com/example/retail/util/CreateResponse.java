@@ -30,7 +30,7 @@ public class CreateResponse {
         return errorResponse;
     }
 
-    public SuccessResponse createSuccessResponse (int successCode, String successMessage, List<Object> result) {
+    public SuccessResponse createSuccessResponse (int successCode, String successMessage, List<?> result) {
         successResponse.setStatusCode(successCode);
         successResponse.setStatusMessage(successMessage);
         successResponse.setResult(result);

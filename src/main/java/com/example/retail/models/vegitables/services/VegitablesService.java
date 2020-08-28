@@ -43,30 +43,28 @@ public class VegitablesService {
     @Autowired
     VegitablesHelper vegitablesHelper;
 
-    public List<Vegitables> findAllVegitables() {
-        return vegitablesRepository.findAll();
-    }
+    public List<Object> findAllVegitablesWithInventory() {
+        List<Vegitables> vegitables = vegitablesRepository.findAll();
+        List<VegitablesInventory> vegitablesInventories = vegitableInventoryService.findAll();
 
-    public Optional<Vegitables> findById(Long id) {
-        return vegitablesRepository.findById(id);
-    }
+        Map<String, Object> resObject = new HashMap<>();
 
-    public Optional<Vegitables> getVegitableByTableId(Long vegitableTableId) {
-        return vegitablesRepository.findById(vegitableTableId);
-    }
+        List<Object> finalRes = new ArrayList<>();
 
-    public Optional<Vegitables> findBySubId(String subId) { return vegitablesRepository.findBySubId(subId); }
-
-    public Iterable<Vegitables> addAllVegitables(List<Vegitables> newVegitables) {
-        return vegitablesRepository.saveAll(newVegitables);
-    }
-
-    public int updateVegitableAsPerInventory(Long tableId, Float increamentCount, String subId, Float newSellingPrice) {
-        return vegitablesRepository.updateVegitableAsPerInventory(tableId, increamentCount, subId, newSellingPrice);
+        vegitables.forEach(vegitable->{
+            vegitablesInventories.forEach(vegitablesInventory -> {
+                if(vegitable.getVegitableSubId().equals(vegitablesInventory.getVegitableSubId())){
+                    resObject.put("vegitable", vegitable);
+                    resObject.put("vegitableInventory", vegitablesInventory);
+                    finalRes.add(resObject);
+                }
+            });
+        });
+        return finalRes;
     }
 
     public ResponseEntity<Object> addNewVegitable(HttpServletRequest request, AddVegitablesRequestBody newVegitables,
-                                               ArrayList<MultipartFile> images) throws Exception {
+                                                  ArrayList<MultipartFile> images) throws Exception {
         try {
             /* Create a unique subID */
             String vegSubId = (newVegitables.getVegitableName()
@@ -75,7 +73,7 @@ public class VegitablesService {
                     +newVegitables.getVegitableInventoryCostPrice()).toLowerCase();
 
             /* Validate vegitables */
-           ValidationResponse validationStatus = validations.validateNewVegitables(newVegitables, vegSubId);
+            ValidationResponse validationStatus = validations.validateNewVegitables(newVegitables, vegSubId);
             if (validationStatus.getStatusCode() != validations.validationSuccessCode) {
                 return ResponseEntity.status(validationStatus.getStatusCode()).body(
                         validationStatus
@@ -172,7 +170,7 @@ public class VegitablesService {
             res.put("vegitable", createdVeg);
             res.put("VegitableInventory", createdVegInventory);
 
-            ArrayList<Object> result = new ArrayList<>();
+            List<Object> result = new ArrayList<>();
             result.add(res);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(
@@ -193,74 +191,41 @@ public class VegitablesService {
         }
     }
 
+    public List<Vegitables> findAllVegitables() {
+        return vegitablesRepository.findAll();
+    }
+
+    public Optional<Vegitables> findById(Long id) {
+        return vegitablesRepository.findById(id);
+    }
+
+    public Optional<Vegitables> getVegitableByTableId(Long vegitableTableId) {
+        return vegitablesRepository.findById(vegitableTableId);
+    }
+
+    public Optional<Vegitables> findBySubId(String subId) { return vegitablesRepository.findBySubId(subId); }
+
+    public Iterable<Vegitables> addAllVegitables(List<Vegitables> newVegitables) {
+        return vegitablesRepository.saveAll(newVegitables);
+    }
+
+    public int updateVegitableAsPerInventory(Long tableId, Float increamentCount, String subId, Float newSellingPrice) {
+        return vegitablesRepository.updateVegitableAsPerInventory(tableId, increamentCount, subId, newSellingPrice);
+    }
+
     public Integer updateVegitableQty(Long tableId, Float increamentCount) {
         return vegitablesRepository.updateVegitableQty(tableId, increamentCount);
     }
 
-    public ResponseEntity<Object> findAllAvailableVegitables() {
-        try{
-            List<Vegitables> vegitablesList = vegitablesRepository.findAllAvailableVegitables();
-            int count = vegitablesList.size();
-            List<Object> finalRes = new ArrayList<>();
-            if(count > 0) {
-                finalRes.addAll(vegitablesList);
-            }
-            return ResponseEntity.status(200).body(
-                    createResponse.createSuccessResponse(200, count +" item(s) found", finalRes)
-            );
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(
-                    createResponse.createErrorResponse(500, e.getMessage(), "NA")
-            );
-        }
-
+    public List<Vegitables> findAllAvailableVegitables() {
+        List<Vegitables> vegitablesList = vegitablesRepository.findAllAvailableVegitables();
+        return vegitablesList;
     }
 
-    public ResponseEntity<Object> findAllUnavailableVegitables() {
-        try{
-            List<Vegitables> vegitablesList = vegitablesRepository.findAllUnavailableVegitables();
-            int count = vegitablesList.size();
-            List<Object> finalRes = new ArrayList<>();
-            if(count > 0) {
-                finalRes.addAll(vegitablesList);
-            }
-            return ResponseEntity.status(200).body(
-                    createResponse.createSuccessResponse(200, count +" item(s) found", finalRes)
-            );
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(
-                    createResponse.createErrorResponse(500, e.getMessage(), "NA")
-            );
-        }
+    public List<Vegitables> findAllUnavailableVegitables() {
+        List<Vegitables> vegitablesList = vegitablesRepository.findAllUnavailableVegitables();
 
-    }
-
-    public ResponseEntity<Object> findAllVegitablesWithInventory() {
-        try{
-            List<Vegitables> vegitables = vegitablesRepository.findAll();
-            List<VegitablesInventory> vegitablesInventories = vegitableInventoryService.findAll();
-
-            Map<String, Object> resObject = new HashMap<>();
-
-            List<Object> finalRes = new ArrayList();
-
-            vegitables.forEach(vegitable->{
-                vegitablesInventories.forEach(vegitablesInventory -> {
-                    if(vegitable.getVegitableSubId().equals(vegitablesInventory.getVegitableSubId())){
-                        resObject.put("vegitable", vegitable);
-                        resObject.put("vegitableInventory", vegitablesInventory);
-                        finalRes.add(resObject);
-                    }
-                });
-            });
-            return ResponseEntity.status(200).body(
-                    createResponse.createSuccessResponse(200, "Vegitables found", finalRes)
-            );
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(
-              createResponse.createErrorResponse(500, e.getMessage(), "NA")
-            );
-        }
+        return vegitablesList;
     }
 
     public ResponseEntity<Object> findBySubIdVegitableWithInventory(String vegSubId) {

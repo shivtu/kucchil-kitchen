@@ -1,5 +1,6 @@
 package com.example.retail.controllers.retailer.vegitables_retailer;
 
+import com.example.retail.models.vegitables.Vegitables;
 import com.example.retail.models.vegitables.services.VegitableInventoryService;
 import com.example.retail.models.vegitables.services.VegitablesService;
 import com.example.retail.util.CreateResponse;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/retailer/vegitables")
@@ -27,7 +29,26 @@ public class VegitablesRetailerController {
 
     @RequestMapping(value = "/findall", method = RequestMethod.GET)
     public ResponseEntity<Object> findAllVegitablesWithInventory() {
-        return vegitablesService.findAllVegitablesWithInventory();
+        try{
+            List<Object> result = vegitablesService.findAllVegitablesWithInventory();
+            int resultCount = result.size();
+            return ResponseEntity.status(200).body(
+                    createResponse.createSuccessResponse(
+                            200,
+                            resultCount + " item(s) found",
+                            result
+                    )
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(
+                    createResponse.createErrorResponse(
+                            500,
+                            e.getMessage(),
+                            "NA"
+                    )
+            );
+        }
+
     }
 
 
@@ -50,14 +71,32 @@ public class VegitablesRetailerController {
     @RequestMapping(value = "/update/{tableId}/increamentQuantity/{quantity}", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> updateVegitableQty (@PathVariable Long tableId, @PathVariable Float quantity,
                                                       HttpServletRequest request){
-        /** Increament quantity of vegitables **/
-        if(vegitablesService.updateVegitableQty(tableId, quantity) == 1){
-            /** Update the vegitable_addition_details in vegitable_inventory **/
-            return vegitableInventoryService.updateVegitableQty(tableId, quantity, request);
-        } else {
-            return ResponseEntity.status(400).body(
-                    createResponse.createErrorResponse(400, "Vegitable not found",
-                            "This item does not exist")
+        try{
+            /** Increament quantity of vegitables **/
+            if(vegitablesService.updateVegitableQty(tableId, quantity) == 1){
+                /** Update the vegitable_addition_details in vegitable_inventory **/
+                List<Object> result = vegitableInventoryService.updateVegitableQty(tableId, quantity, request);
+
+                return ResponseEntity.status(201).body(
+                        createResponse.createSuccessResponse(
+                                201,
+                                "Quantity updated",
+                                result
+                        )
+                );
+            } else {
+                return ResponseEntity.status(400).body(
+                        createResponse.createErrorResponse(400, "Vegitable not found",
+                                "This item does not exist")
+                );
+            }
+        }catch (Exception e) {
+            return ResponseEntity.status(500).body(
+                    createResponse.createErrorResponse(
+                            500,
+                            e.getMessage(),
+                            "NA"
+                    )
             );
         }
     }
@@ -82,11 +121,43 @@ public class VegitablesRetailerController {
 
     @RequestMapping(value = "/findall/available", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> findAllAvailableVegitables() {
-        return vegitablesService.findAllAvailableVegitables();
+        try {
+            List<Vegitables> result = vegitablesService.findAllAvailableVegitables();
+            int resultCount = result.size();
+            return ResponseEntity.status(200).body(
+                    createResponse.createSuccessResponse(
+                            200,
+                            resultCount + " items(s) found",
+                            result
+                    )
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(
+                    createResponse.createErrorResponse(
+                            500,
+                            e.getMessage(),
+                            "NA"
+                    )
+            );
+        }
     }
 
     @RequestMapping(value = "/findall/unavailable", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> findAllUnavailableVegitables() {
-        return vegitablesService.findAllUnavailableVegitables();
+        try {
+            List<Vegitables> result = vegitablesService.findAllUnavailableVegitables();
+            int resultCount = result.size();
+            return ResponseEntity.status(200).body(
+                    createResponse.createSuccessResponse(
+                            200,
+                            resultCount + " item(s) found",
+                            result
+                    )
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(
+                    createResponse.createErrorResponse(500, e.getMessage(), "NA")
+            );
+        }
     }
 }

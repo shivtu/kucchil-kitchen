@@ -51,27 +51,14 @@ public class ItemCategoriesService {
 
     }
 
-    public ResponseEntity<Object> createItemCategory(HttpServletRequest request, ItemCategories newItemCategory) {
-        try{
-            LocalDateTime lastUpdatedOn = LocalDateTime.now();
-            String lastUpdatedBy = jwtDetails.userName(request);
+    public ItemCategories createItemCategory(HttpServletRequest request, ItemCategories newItemCategory) {
 
-            newItemCategory.setItemCategoryLastUpdatedBy(lastUpdatedBy);
-            newItemCategory.setItemCategoryLastUpdatedOn(lastUpdatedOn);
+        LocalDateTime lastUpdatedOn = LocalDateTime.now();
+        String lastUpdatedBy = jwtDetails.userName(request);
 
-            ItemCategories createdItemCategory = itemCategoriesRepository.save(newItemCategory);
+        newItemCategory.setItemCategoryLastUpdatedBy(lastUpdatedBy);
+        newItemCategory.setItemCategoryLastUpdatedOn(lastUpdatedOn);
 
-            List<Object> finalRes = new ArrayList<>();
-            finalRes.add(createdItemCategory);
-
-            return ResponseEntity.status(201).body(
-                    createResponse.createSuccessResponse(201, "Item category created", finalRes)
-            );
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(
-                    createResponse.createErrorResponse(500, e.getMessage(), "NA")
-            );
-        }
-
+        return itemCategoriesRepository.save(newItemCategory);
     }
 }

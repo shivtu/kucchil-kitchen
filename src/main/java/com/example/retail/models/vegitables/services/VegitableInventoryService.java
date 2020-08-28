@@ -135,32 +135,29 @@ public class VegitableInventoryService {
 
     }
 
-    public ResponseEntity<Object> updateVegitableQty (Long tableId, Float quantity, HttpServletRequest request) {
-        try{
-            String addedBy = JWTDetails.userName(request);
-            LocalDateTime dateTimeAdded = LocalDateTime.now();
-            Optional<Vegitables> updatedVegitable = vegitablesService.findById(tableId);
+    public List<Object> updateVegitableQty (Long tableId, Float quantity, HttpServletRequest request) {
 
-            String vegSubId = updatedVegitable.get().getVegitableSubId().toLowerCase();
+        String addedBy = JWTDetails.userName(request);
+        LocalDateTime dateTimeAdded = LocalDateTime.now();
+        Optional<Vegitables> updatedVegitable = vegitablesService.findById(tableId);
 
-            /** Create the vegitable addition details object to update vegitable_inventory **/
-            VegitableAdditionDetails vegitableAdditionDetails = new VegitableAdditionDetails();
-            vegitableAdditionDetails.setAddedBy(addedBy);
-            vegitableAdditionDetails.setAddedDateTime(dateTimeAdded);
-            vegitableAdditionDetails.setIncreamentCount(quantity);
+        String vegSubId = updatedVegitable.get().getVegitableSubId().toLowerCase();
 
-            List<VegitableAdditionDetails> vegitableAdditionDetailsList = new ArrayList<>();
-            vegitableAdditionDetailsList.add(vegitableAdditionDetails);
+        /** Create the vegitable addition details object to update vegitable_inventory **/
+        VegitableAdditionDetails vegitableAdditionDetails = new VegitableAdditionDetails();
+        vegitableAdditionDetails.setAddedBy(addedBy);
+        vegitableAdditionDetails.setAddedDateTime(dateTimeAdded);
+        vegitableAdditionDetails.setIncreamentCount(quantity);
 
-            vegitableInventoryRepositoryImpl.updateVegitablesAdditionDetails(vegSubId, vegitableAdditionDetailsList);
+        List<VegitableAdditionDetails> vegitableAdditionDetailsList = new ArrayList<>();
+        vegitableAdditionDetailsList.add(vegitableAdditionDetails);
 
-            /** Return the response by fetching the vegitables and vegitablesInventory **/
-            return vegitablesService.findBySubIdVegitableWithInventory(vegSubId);
+        vegitableInventoryRepositoryImpl.updateVegitablesAdditionDetails(vegSubId, vegitableAdditionDetailsList);
 
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(
-                    createResponse.createErrorResponse(500, e.getMessage(), "NA")
-            );
-        }
+        /** Return the response by fetching the vegitables and vegitablesInventory **/
+        List<Object> finalRes = new ArrayList<>();
+        finalRes.add(vegitablesService.findBySubIdVegitableWithInventory(vegSubId));
+
+        return finalRes;
     }
 }
