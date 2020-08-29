@@ -72,11 +72,14 @@ public class CustomerOrdersDiscountServices {
     }
 
     public List<CustomerOrdersDiscount> findAllDiscounts() {
-        List<CustomerOrdersDiscount> res = customerOrdersDiscountRepository.findAll();
-        return res;
+        return customerOrdersDiscountRepository.findAll();
     }
 
     public List<CustomerOrdersDiscount> getAllActiveDiscounts() {
         return customerOrdersDiscountRepository.getAllActiveDiscounts();
+    }
+
+    public Optional<CustomerOrdersDiscount> findByDiscountName(String discountName) {
+        return customerOrdersDiscountRepository.findByDiscountName(discountName);
     }
 }

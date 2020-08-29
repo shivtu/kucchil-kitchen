@@ -6,7 +6,7 @@ import com.example.retail.models.customerorders.CustomerOrders;
 import com.example.retail.models.customerorders.CustomerOrdersItemsList;
 import com.example.retail.models.deliveryutility.DeliveryCharges;
 import com.example.retail.models.discounts.CustomerOrdersDiscount;
-import com.example.retail.models.discounts.repository.CustomerOrdersDiscountRepository;
+import com.example.retail.models.discounts.services.CustomerOrdersDiscountServices;
 import com.example.retail.models.itemcategories.ItemCategories;
 import com.example.retail.models.itemcategories.repository.ItemCategoriesRepository;
 import com.example.retail.models.taxutility.Taxes;
@@ -36,7 +36,7 @@ public class Validations {
     VegitableInventoryService vegitableInventoryService;
 
     @Autowired
-    CustomerOrdersDiscountRepository customerOrdersDiscountRepository;
+    CustomerOrdersDiscountServices customerOrdersDiscountServices;
 
     @Autowired
     ItemCategoriesRepository itemCategoriesRepository;
@@ -54,28 +54,24 @@ public class Validations {
     public ValidationResponse validateNewVegitables(AddVegitablesRequestBody newVegitables, String vegSubId) {
 
         Optional<Vegitables> vegitables = vegitablesService.findBySubId(vegSubId);
-
         // If the item already exists
-        if(!vegitables.isEmpty()) {
-
-                return createResponse.createValidationResponse(
-                        unprocessableRequestCode,
-                            "This item already exists",
-                            "Try updating this item instead",
-                        null
-                    );
-
+        if(vegitables.isPresent()) {
+            return createResponse.createValidationResponse(
+                    unprocessableRequestCode,
+                    "This item already exists",
+                    "Try updating this item instead",
+                    vegitables
+            );
         }
 
         // Check if selling price is less than cost price
         if (newVegitables.getVegitableSellingPrice() < newVegitables.getVegitableInventoryCostPrice()) {
-
-              return createResponse.createValidationResponse(
-                      badRequestCode,
-                            "Selling price of the vegitable is less than the cost price",
-                            "Selling price must be more than cost price to make a profit",
-                      null
-                    );
+            return createResponse.createValidationResponse(
+                    badRequestCode,
+                    "Selling price of the vegitable is less than the cost price",
+                    "Selling price must be more than cost price to make a profit",
+                    null
+            );
 
         }
 
@@ -103,21 +99,20 @@ public class Validations {
                 "OK",
                 "NA",
                 null
-
         );
 
     }
 
     public ValidationResponse validateInventory(String vegSubId, UpdateVegitablesInventoryRequest updateVegitablesInventoryRequest) {
         Optional<VegitablesInventory> vegitablesInventory = vegitableInventoryService.findVegitableInventoryBySubId(vegSubId);
-        if (!vegitablesInventory.isEmpty()) {
+        if (vegitablesInventory.isPresent()) {
             return
-                createResponse.createValidationResponse(
-                400,
-            "This item with provided details already exists",
-            "Try updating the quantity only: /api/v1/retailer/vegitables/update/quantity/<id>/<quantity>",
-                        null
-            );
+                    createResponse.createValidationResponse(
+                            400,
+                            "This item with provided details already exists",
+                            "Try updating the quantity only: /api/v1/retailer/vegitables/update/quantity/<id>/<quantity>",
+                            vegitablesInventory
+                    );
         }
 
         if(updateVegitablesInventoryRequest.getVegitableSellingPrice() < updateVegitablesInventoryRequest.getVegitableInventoryCostPrice()) {
@@ -149,7 +144,7 @@ public class Validations {
         /* If user has added a discount */
         if(specialDiscountName != null) {
 
-            customerDiscount = customerOrdersDiscountRepository.findByDiscountName(specialDiscountName);
+            customerDiscount = customerOrdersDiscountServices.findByDiscountName(specialDiscountName);
 
             /* If applied discount is not active */
             if(customerDiscount.isPresent() && !customerDiscount.get().getDiscountActive()) {
@@ -170,8 +165,8 @@ public class Validations {
     public  ValidationResponse validateNewDiscount (CustomerOrdersDiscount customerOrdersDiscount) {
 
         String discountName = customerOrdersDiscount.getDiscountName();
-        Optional<CustomerOrdersDiscount> res = customerOrdersDiscountRepository.findByDiscountName(discountName);
-        if(!res.isEmpty()) {
+        Optional<CustomerOrdersDiscount> res = customerOrdersDiscountServices.findByDiscountName(discountName);
+        if(res.isPresent()) {
             return createResponse.createValidationResponse(422, "The discount with name " + discountName + " already exists",
                     "Try creating a discount with another name or ammend the existing one", null);
         }

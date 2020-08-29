@@ -1,7 +1,9 @@
 package com.example.retail.models.vegitables.services;
 
 import com.example.retail.controllers.retailer.vegitables_retailer.AddVegitablesRequestBody;
+import com.example.retail.models.discounts.CustomerOrdersDiscount;
 import com.example.retail.models.discounts.DiscountCalculator;
+import com.example.retail.models.discounts.services.CustomerOrdersDiscountServices;
 import com.example.retail.models.vegitables.*;
 import com.example.retail.models.vegitables.repository.VegitablesRepository;
 import com.example.retail.util.*;
@@ -20,7 +22,7 @@ import java.util.*;
 public class VegitablesService {
 
     @Autowired
-    private VegitablesRepository vegitablesRepository;
+    VegitablesRepository vegitablesRepository;
 
     @Autowired
     JWTDetails JWTDetails;
@@ -43,6 +45,9 @@ public class VegitablesService {
     @Autowired
     VegitablesHelper vegitablesHelper;
 
+    @Autowired
+    CustomerOrdersDiscountServices customerOrdersDiscountServices;
+
     public List<Object> findAllVegitablesWithInventory() {
         List<Vegitables> vegitables = vegitablesRepository.findAll();
         List<VegitablesInventory> vegitablesInventories = vegitableInventoryService.findAll();
@@ -51,20 +56,18 @@ public class VegitablesService {
 
         List<Object> finalRes = new ArrayList<>();
 
-        vegitables.forEach(vegitable->{
-            vegitablesInventories.forEach(vegitablesInventory -> {
-                if(vegitable.getVegitableSubId().equals(vegitablesInventory.getVegitableSubId())){
-                    resObject.put("vegitable", vegitable);
-                    resObject.put("vegitableInventory", vegitablesInventory);
-                    finalRes.add(resObject);
-                }
-            });
-        });
+        vegitables.forEach(vegitable-> vegitablesInventories.forEach(vegitablesInventory -> {
+            if(vegitable.getVegitableSubId().equals(vegitablesInventory.getVegitableSubId())){
+                resObject.put("vegitable", vegitable);
+                resObject.put("vegitableInventory", vegitablesInventory);
+                finalRes.add(resObject);
+            }
+        }));
         return finalRes;
     }
 
     public ResponseEntity<Object> addNewVegitable(HttpServletRequest request, AddVegitablesRequestBody newVegitables,
-                                                  ArrayList<MultipartFile> images) throws Exception {
+                                                  ArrayList<MultipartFile> images) {
         try {
             /* Create a unique subID */
             String vegSubId = (newVegitables.getVegitableName()
@@ -126,14 +129,23 @@ public class VegitablesService {
             Float vegitableSellingPrice = newVegitables.getVegitableSellingPrice();
             vegitables.setVegitableSellingPrice(vegitableSellingPrice);
 
-            vegitables.setVegitableOfferedDiscountName(newVegitables.getVegitableOfferedDiscountName());
+            // Check if discount is available
+            Optional<CustomerOrdersDiscount> customerOrdersDiscount = customerOrdersDiscountServices.findByDiscountName(newVegitables.getVegitableOfferedDiscountName());
+            Float vegitableDiscountedPrice;
+            if(customerOrdersDiscount.isEmpty()){
+                vegitables.setVegitableOfferedDiscountName(newVegitables.getVegitableOfferedDiscountName());
+                vegitableDiscountedPrice = discountCalculator.calcVegDiscountedPrice(vegitableSellingPrice, newVegitables.getVegitableOfferedDiscount());
+                vegitables.setVegitableDiscountedPrice(vegitableDiscountedPrice); /* Calculate discounted vegitable price */
+                vegitables.setVegitableOfferedDiscount(newVegitables.getVegitableOfferedDiscount());
+                vegitables.setVegitableTaxedPrice(vegitablesHelper.calcAmountAfterTax(newVegitables.getVegitableApplicableTaxes(), vegitableDiscountedPrice));
+            } else {
+                vegitables.setVegitableOfferedDiscountName(customerOrdersDiscount.get().getDiscountName());
+                vegitableDiscountedPrice = discountCalculator.calcVegDiscountedPrice(vegitableSellingPrice, customerOrdersDiscount.get().getDiscountPercentage());
+                vegitables.setVegitableDiscountedPrice(vegitableDiscountedPrice);
+                vegitables.setVegitableOfferedDiscount(customerOrdersDiscount.get().getDiscountPercentage());
+                vegitables.setVegitableTaxedPrice(vegitablesHelper.calcAmountAfterTax(newVegitables.getVegitableApplicableTaxes(), vegitableDiscountedPrice));
+            }
 
-            Float vegitableDiscountedPrice = discountCalculator.calcVegDiscountedPrice(vegitableSellingPrice, newVegitables.getVegitableOfferedDiscount());
-
-            vegitables.setVegitableDiscountedPrice(vegitableDiscountedPrice); /* Calculate discounted vegitable price */
-            vegitables.setVegitableOfferedDiscount(newVegitables.getVegitableOfferedDiscount());
-            vegitables.setVegitableTaxedPrice(vegitablesHelper.calcAmountAfterTax(vegitables.getVegitableApplicableTaxes(), vegitableDiscountedPrice));
-//            vegitables.setVegitableShowDiscount(newVegitables.getVegitableShowDiscount());
             vegitables.setVegitableQuantity(newVegitables.getVegitableQuantity());
             vegitables.setVegitableAvailable(newVegitables.getVegitableAvailable());
             vegitables.setVegitableMeasureMentUnit(newVegitables.getVegitableMeasureMentUnit());
@@ -166,7 +178,7 @@ public class VegitablesService {
             /** Persist the vegitable inventory **/
             VegitablesInventory createdVegInventory = vegitableInventoryService.addNewInventory(vegitablesInventory);
 
-            HashMap<String, Object> res = new HashMap<String, Object>();
+            HashMap<String, Object> res = new HashMap<>();
             res.put("vegitable", createdVeg);
             res.put("VegitableInventory", createdVegInventory);
 
@@ -218,14 +230,11 @@ public class VegitablesService {
     }
 
     public List<Vegitables> findAllAvailableVegitables() {
-        List<Vegitables> vegitablesList = vegitablesRepository.findAllAvailableVegitables();
-        return vegitablesList;
+        return vegitablesRepository.findAllAvailableVegitables();
     }
 
     public List<Vegitables> findAllUnavailableVegitables() {
-        List<Vegitables> vegitablesList = vegitablesRepository.findAllUnavailableVegitables();
-
-        return vegitablesList;
+        return vegitablesRepository.findAllUnavailableVegitables();
     }
 
     public ResponseEntity<Object> findBySubIdVegitableWithInventory(String vegSubId) {

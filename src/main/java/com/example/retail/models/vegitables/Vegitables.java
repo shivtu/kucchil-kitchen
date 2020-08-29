@@ -53,7 +53,6 @@ public class Vegitables {
 
     @Min(value = 0, message = "discounts are expressed in %, valid range 0-100")
     @Column(name = "vegitable_offered_discount")
-    @Min(value = 0)
     private Float vegitableOfferedDiscount;
 
     @NotNull
