@@ -26,31 +26,6 @@ public class ItemCategoriesService {
     @Autowired
     JWTDetails jwtDetails;
 
-    public ResponseEntity<Object> findItemCategoryByClassification(String itemClassification) {
-
-        try{
-            Optional<ItemCategories> res = itemCategoriesRepository.findItemCategoryByClassification(itemClassification);
-            List<Object> finalRes = new ArrayList<>();
-            finalRes.add(res);
-
-            if (res.isPresent()) {
-                return ResponseEntity.status(200).body(
-                        createResponse.createSuccessResponse(200, "Record found", finalRes)
-                );
-            } else {
-                return ResponseEntity.status(404).body(
-                        createResponse.createSuccessResponse(404, "Record not found", finalRes)
-                );
-            }
-
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(
-                    createResponse.createErrorResponse(500, e.getMessage(), "NA")
-            );
-        }
-
-    }
-
     public ItemCategories createItemCategory(HttpServletRequest request, ItemCategories newItemCategory) {
 
         LocalDateTime lastUpdatedOn = LocalDateTime.now();
@@ -60,5 +35,9 @@ public class ItemCategoriesService {
         newItemCategory.setItemCategoryLastUpdatedOn(lastUpdatedOn);
 
         return itemCategoriesRepository.save(newItemCategory);
+    }
+
+    public Optional<ItemCategories> findItemClassificationByCode(String itemClassificationCode) {
+        return itemCategoriesRepository.findItemCategoryByClassificationCode(itemClassificationCode);
     }
 }

@@ -1,7 +1,5 @@
 package com.example.retail.models.itemcategories;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -17,8 +15,13 @@ public class ItemCategories {
 
     @NotNull
     @NotEmpty
-    @Column(name = "item_classification", unique = true,updatable = false)
-    private String itemClassification;
+    @Column(name = "item_classification_code", unique = true,updatable = false)
+    private String itemClassificationCode;
+
+    @NotNull
+    @NotEmpty
+    @Column(name = "item_classification_name")
+    private String itemClassificationName;
 
     @Column(name = "item_classification_info")
     private String itemClassificationInfo;
@@ -34,11 +37,11 @@ public class ItemCategories {
 
     public ItemCategories() {}
 
-    public ItemCategories(@NotEmpty String itemClassification, String itemClassificationInfo,
-                          @NotEmpty @NotNull String itemCategoryLastUpdatedBy,
+    public ItemCategories(@NotNull @NotEmpty String itemClassificationCode, @NotNull @NotEmpty String itemClassificationName,
+                          String itemClassificationInfo, @NotEmpty @NotNull String itemCategoryLastUpdatedBy,
                           @NotNull LocalDateTime itemCategoryLastUpdatedOn) {
-
-        this.itemClassification = itemClassification;
+        this.itemClassificationCode = itemClassificationCode;
+        this.itemClassificationName = itemClassificationName;
         this.itemClassificationInfo = itemClassificationInfo;
         this.itemCategoryLastUpdatedBy = itemCategoryLastUpdatedBy;
         this.itemCategoryLastUpdatedOn = itemCategoryLastUpdatedOn;
@@ -52,12 +55,20 @@ public class ItemCategories {
         this.itemCategoryTableId = itemCategoryTableId;
     }
 
-    public String getItemClassification() {
-        return itemClassification;
+    public String getItemClassificationCode() {
+        return itemClassificationCode;
     }
 
-    public void setItemClassification(String itemClassification) {
-        this.itemClassification = itemClassification;
+    public void setItemClassificationCode(String itemClassificationCode) {
+        this.itemClassificationCode = itemClassificationCode;
+    }
+
+    public String getItemClassificationName() {
+        return itemClassificationName;
+    }
+
+    public void setItemClassificationName(String itemClassificationName) {
+        this.itemClassificationName = itemClassificationName;
     }
 
     public String getItemClassificationInfo() {

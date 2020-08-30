@@ -39,8 +39,13 @@ public class Vegitables {
 
     @NotEmpty
     @NotNull
-    @Column(name = "item_category")
-    private String itemCategory;
+    @Column(name = "item_category_name")
+    private String itemClassificationName;
+
+    @NotEmpty
+    @NotNull
+    @Column(name = "item_category_code")
+    private String itemClassificationCode;
 
     @Column(name = "vegitable_recepie", columnDefinition = "jsonb")
     @Type(type = "psql-jsonb")
@@ -95,11 +100,19 @@ public class Vegitables {
     public Vegitables(){
     }
 
-    public Vegitables(@NotNull @NotEmpty String vegitableName, String vegitableDescp, String vegitableVariant, @NotEmpty @NotNull String itemCategory, List<VegitableRecipes> vegitableRecepie, @NotNull @Min(value = 1, message = "Selling price cannot be less than 1") Float vegitableSellingPrice, @Min(value = 0, message = "discounts are expressed in %, valid range 0-100") @Min(value = 0) Float vegitableOfferedDiscount, @NotNull String vegitableOfferedDiscountName, @NotNull Float vegitableDiscountedPrice, @NotNull ArrayList<String> vegitableApplicableTaxes, @NotNull Float vegitableTaxedPrice, @NotNull @Min(value = 1, message = "Quantity cannot be less than 0") Float vegitableQuantity, @NotNull(message = "Is this item available") Boolean vegitableAvailable, @NotNull @NotEmpty String vegitableMeasureMentUnit, String vegitableSubId, @NotNull ArrayList<String> vegitableImagesLocation) {
+    public Vegitables(@NotNull @NotEmpty String vegitableName, String vegitableDescp, String vegitableVariant,
+                      @NotEmpty @NotNull String itemClassificationName, @NotEmpty @NotNull String itemClassificationCode,
+                      List<VegitableRecipes> vegitableRecepie, @NotNull @Min(value = 1, message = "Selling price cannot be less than 1") Float vegitableSellingPrice,
+                      @Min(value = 0, message = "discounts are expressed in %, valid range 0-100") Float vegitableOfferedDiscount,
+                      @NotNull String vegitableOfferedDiscountName, @NotNull Float vegitableDiscountedPrice, @NotNull ArrayList<String> vegitableApplicableTaxes,
+                      @NotNull Float vegitableTaxedPrice, @NotNull @Min(value = 1, message = "Quantity cannot be less than 0") Float vegitableQuantity,
+                      @NotNull(message = "Is this item available") Boolean vegitableAvailable, @NotNull @NotEmpty String vegitableMeasureMentUnit,
+                      String vegitableSubId, @NotNull ArrayList<String> vegitableImagesLocation) {
         this.vegitableName = vegitableName;
         this.vegitableDescp = vegitableDescp;
         this.vegitableVariant = vegitableVariant;
-        this.itemCategory = itemCategory;
+        this.itemClassificationName = itemClassificationName;
+        this.itemClassificationCode = itemClassificationCode;
         this.vegitableRecepie = vegitableRecepie;
         this.vegitableSellingPrice = vegitableSellingPrice;
         this.vegitableOfferedDiscount = vegitableOfferedDiscount;
@@ -146,12 +159,20 @@ public class Vegitables {
         this.vegitableVariant = vegitableVariant;
     }
 
-    public String getItemCategory() {
-        return itemCategory;
+    public String getItemClassificationName() {
+        return itemClassificationName;
     }
 
-    public void setItemCategory(String itemCategory) {
-        this.itemCategory = itemCategory;
+    public void setItemClassificationName(String itemClassificationName) {
+        this.itemClassificationName = itemClassificationName;
+    }
+
+    public String getItemClassificationCode() {
+        return itemClassificationCode;
+    }
+
+    public void setItemClassificationCode(String itemClassificationCode) {
+        this.itemClassificationCode = itemClassificationCode;
     }
 
     public List<VegitableRecipes> getVegitableRecepie() {

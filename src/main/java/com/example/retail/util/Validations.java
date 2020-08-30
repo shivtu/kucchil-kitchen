@@ -9,6 +9,7 @@ import com.example.retail.models.discounts.CustomerOrdersDiscount;
 import com.example.retail.models.discounts.services.CustomerOrdersDiscountServices;
 import com.example.retail.models.itemcategories.ItemCategories;
 import com.example.retail.models.itemcategories.repository.ItemCategoriesRepository;
+import com.example.retail.models.itemcategories.service.ItemCategoriesService;
 import com.example.retail.models.taxutility.Taxes;
 import com.example.retail.models.taxutility.repository.TaxRepository;
 import com.example.retail.models.vegitables.Vegitables;
@@ -39,7 +40,7 @@ public class Validations {
     CustomerOrdersDiscountServices customerOrdersDiscountServices;
 
     @Autowired
-    ItemCategoriesRepository itemCategoriesRepository;
+    ItemCategoriesService itemCategoriesService;
 
     @Autowired
     UsersProfileService usersProfileService;
@@ -197,8 +198,8 @@ public class Validations {
         return createResponse.createValidationResponse(validationSuccessCode, "validation success", "NA", null);
     }
 
-    public ValidationResponse validateItemCategory(String itemClassification) {
-        Optional<ItemCategories> itemCategories = itemCategoriesRepository.findItemCategoryByClassification(itemClassification);
+    public ValidationResponse validateItemClassification(String itemClassificationCode) {
+        Optional<ItemCategories> itemCategories = itemCategoriesService.findItemClassificationByCode(itemClassificationCode);
         if(itemCategories.isEmpty()) {
             return createResponse.createValidationResponse(422, "Item category/classification not found", "Provide a valid classification name or create a classification and then add to the product", null);
         }

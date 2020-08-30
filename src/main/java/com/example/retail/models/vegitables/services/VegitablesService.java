@@ -84,7 +84,7 @@ public class VegitablesService {
             }
 
             /* Return error if item category does not exist */
-            ValidationResponse itemCategoryValidationStatus = validations.validateItemCategory(newVegitables.getItemCategory());
+            ValidationResponse itemCategoryValidationStatus = validations.validateItemClassification(newVegitables.getItemClassificationCode());
             if(itemCategoryValidationStatus.getStatusCode() != validations.validationSuccessCode) {
                 return ResponseEntity.status(itemCategoryValidationStatus.getStatusCode()).body(
                         itemCategoryValidationStatus
@@ -118,7 +118,8 @@ public class VegitablesService {
             vegitables.setVegitableName(newVegitables.getVegitableName());
             vegitables.setVegitableDescp(newVegitables.getVegitableDescp());
             vegitables.setVegitableVariant(newVegitables.getVegitableVariant());
-            vegitables.setItemCategory(newVegitables.getItemCategory());
+            vegitables.setItemClassificationName(newVegitables.getItemClassificationName());
+            vegitables.setItemClassificationCode(newVegitables.getItemClassificationCode());
 
             /** Create new List and add recepie to the List **/
             ArrayList<VegitableRecipes> vegitableRecepieList = new ArrayList<>();
@@ -260,7 +261,7 @@ public class VegitablesService {
 
     }
 
-    public List<Vegitables> findVegitablesByItemCategory(String itemClassification) {
-        return vegitablesRepository.findVegitablesByItemCategory(itemClassification);
+    public List<Vegitables> findVegitablesByItemCategory(String itemClassificationName) {
+        return vegitablesRepository.findVegitablesByItemCategory(itemClassificationName);
     }
 }

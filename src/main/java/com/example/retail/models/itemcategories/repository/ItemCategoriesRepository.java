@@ -11,6 +11,9 @@ import java.util.Optional;
 @Repository
 public interface ItemCategoriesRepository extends JpaRepository<ItemCategories, Integer> {
 
-    @Query(value = "SELECT * FROM item_categories WHERE item_classification= :itemClassification", nativeQuery = true)
-    Optional<ItemCategories> findItemCategoryByClassification(@Param("itemClassification") String itemClassification);
+    @Query(value = "SELECT * FROM item_categories WHERE item_classification_name= :itemClassificationName", nativeQuery = true)
+    Optional<ItemCategories> findItemCategoryByClassification(@Param("itemClassificationName") String itemClassificationName);
+
+    @Query(value = "SELECT * FROM item_categories WHERE item_classification_code= :itemClassificationCode", nativeQuery = true)
+    Optional<ItemCategories> findItemCategoryByClassificationCode(@Param("itemClassificationCode") String itemClassificationCode);
 }
