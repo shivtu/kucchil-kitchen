@@ -45,4 +45,8 @@ public class DeliveryChargeServices {
             );
         }
     }
+
+    public List<DeliveryCharges> findAll() {
+        return deliveryChargesRepository.findAll();
+    }
 }

@@ -40,4 +40,8 @@ public class ItemCategoriesService {
     public Optional<ItemCategories> findItemClassificationByCode(String itemClassificationCode) {
         return itemCategoriesRepository.findItemCategoryByClassificationCode(itemClassificationCode);
     }
+
+    public List<ItemCategories> findAll() {
+        return itemCategoriesRepository.findAll();
+    }
 }
