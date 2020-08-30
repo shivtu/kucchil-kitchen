@@ -36,7 +36,7 @@ public class UtilityServices {
     CreateResponse createResponse;
 
     public ResponseEntity<?> findAllUtilities () {
-        List<Taxes> taxes = taxService.forHelperFunctionFindAll();
+        List<Taxes> taxes = taxService.findAll();
         List<CustomerOrdersDiscount> customerOrdersDiscounts = customerOrdersDiscountServices.findAllDiscounts();
         List<ItemCategories> itemCategories = itemCategoriesService.findAll();
         List <DeliveryCharges> deliveryCharges = deliveryChargeServices.findAll();

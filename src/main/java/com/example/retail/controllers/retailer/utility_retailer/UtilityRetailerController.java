@@ -1,4 +1,4 @@
-package com.example.retail.controllers.retailer.utility;
+package com.example.retail.controllers.retailer.utility_retailer;
 
 import com.example.retail.util.UtilityServices;
 import org.springframework.beans.factory.annotation.Autowired;

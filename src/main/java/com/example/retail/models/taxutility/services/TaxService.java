@@ -55,7 +55,7 @@ public class TaxService {
         }
     }
 
-    public List<Taxes> forHelperFunctionFindAll() {
+    public List<Taxes> findAll() {
         return taxRepository.findAll();
     }
 }
