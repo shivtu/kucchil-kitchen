@@ -21,38 +21,38 @@ public class EdibleProducts {
 
     // Name given to the product by the manufacturer
     @NotNull
-    @Column(name = "")
+    @Column(name = "edible_product_name")
     private String edibleProductName;
 
     // Variant of the product : Usually the base content of the product : Example - fibre, fruits, vitamin etc
     @NotNull
-    @Column(name = "")
+    @Column(name = "edible_product_variant")
     private String edibleProductVariant;
 
     // Flavour of the product
-    @Column(name = "")
+    @Column(name = "edible_product_flavor")
     private String edibleProductFlavor;
 
     // How was the product made : Example - manufactured, processed, raw etc
-    @Column(name = "")
+    @Column(name = "edible_product_type")
     private String edibleProductType;
 
     // General description of the product
     @NotNull
-    @Column(name = "")
+    @Column(name = "edible_product_description")
     private String edibleProductDescription;
 
     @NotNull
-    @Column(name = "")
+    @Column(name = "edible_product_image_location")
     private String edibleProductImageLocation;
 
     // Generic item name
     @NotNull
-    @Column(name = "")
+    @Column(name = "edible_product_generic_name")
     private String edibleProductGenericName;
 
     // An alternate name to the generic item name
-    @Column(name = "")
+    @Column(name = "edible_product_alternate_name")
     private String edibleProductAlternaleName;
 
     // Product category : Example - confectionary, dairy, spices etc
@@ -66,59 +66,58 @@ public class EdibleProducts {
     private String itemClassificationCode;
 
     // Can be safely consumed by minors ?
-    @Column(name = "")
+    @Column(name = "edible_product_for_minors")
     private Boolean edibleProductForMinors;
 
     @NotNull
-    @Column(name = "")
+    @Column(name = "edible_product_available")
     private Boolean edibleProductAvailable;
 
     // MRP set by govt/manufacturer
     @NotNull
-    @Column(name = "")
+    @Column(name = "edible_product_mrp")
     private Float edibleProductMrp;
 
     // offered discount
     @NotNull
-    @Column(name = "")
+    @Column(name = "edible_product_offered_discount")
     private Float edibleProductOfferedDiscount;
 
     @NotNull
-    @Column(name = "")
+    @Column(name = "edible_product_discount_name")
     private String edibleProductsDiscountName;
 
     @NotNull
-    @Column(name = "")
+    @Column(name = "edible_product_discounted_price")
    private Float edibleProductDiscountedPrice;
 
     @NotNull
-    @Column(name = "edible_products_applicable_taxes")
+    @Column(name = "edible_product_applicable_taxes")
     private ArrayList<String> edibleProductApplicableTaxes;
 
     @NotNull
-    @Column(name = "")
+    @Column(name = "edible_product_taxed_price")
     private Float edibleProductTaxedPrice;
 
     // Inventory count
     @NotNull
-    @Column(name = "")
+    @Column(name = "edible_product_quantity")
     private Integer edibleProductQuantity;
 
     // Measurement unit of the product : weight, volume etc
     @NotNull
-    @Column(name = "")
+    @Column(name = "edible_product_measurement_unit")
     private String edibleProductsMeasureMentUnit;
 
     // Denomination of the product as per measurement unit
     @NotNull
-    @Column(name = "")
+    @Column(name = "edible_product_denomination")
     private Float edibleProductDenomination;
 
     // edibleProducts_Name + edibleProducts_productName + edibleProducts_Manufacturer + edibleProducts_Variant
-    // + edibleProducts_Flavor + edibleProducts_Expiry + edibleProducts_Denomination + edibleProducts_CostPrice
-    // + edibleProducts_Mrp
+    // + edibleProducts_Flavor + edibleProducts_Expiry + edibleProducts_Denomination
     @NotNull
-    @Column(name = "")
+    @Column(name = "edible_product_subid")
     private String edibleProductSubId;
 
     public EdibleProducts(){}

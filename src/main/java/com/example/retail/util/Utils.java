@@ -84,18 +84,4 @@ public class Utils {
          */
         return 0F;
     }
-
-    public String genearteEdibleProductSubId(
-            String edibleProductManufacturer,
-            String edibleProductName,
-            String edibleProductVariant,
-            String edibleProductFlavor,
-            LocalDate edibleProductInventoryExpiry
-    ) {
-        return edibleProductManufacturer.toLowerCase()
-                + edibleProductName.toLowerCase()
-                + edibleProductVariant.toLowerCase()
-                + edibleProductFlavor.toLowerCase()
-                + edibleProductInventoryExpiry.toString().toLowerCase();
-    }
 }

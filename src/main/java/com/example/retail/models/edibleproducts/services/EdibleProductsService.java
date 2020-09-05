@@ -5,6 +5,7 @@ import com.example.retail.models.edibleproducts.repository.EdibleProductsReposit
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +14,22 @@ public class EdibleProductsService {
 
     @Autowired
     EdibleProductsRepository productsRepository;
+
+    public String genearteEdibleProductSubId(
+            String edibleProductManufacturer,
+            String edibleProductName,
+            String edibleProductVariant,
+            String edibleProductFlavor,
+            Float edibleProductDenomination,
+            LocalDate edibleProductInventoryExpiry
+    ) {
+        return edibleProductManufacturer.toLowerCase()
+                + edibleProductName.toLowerCase()
+                + edibleProductVariant.toLowerCase()
+                + edibleProductFlavor.toLowerCase()
+                + edibleProductDenomination.toString().toLowerCase()
+                + edibleProductInventoryExpiry.toString().toLowerCase();
+    }
 
     public List<EdibleProducts> getAllProducts(){
         return  productsRepository.findAll();
