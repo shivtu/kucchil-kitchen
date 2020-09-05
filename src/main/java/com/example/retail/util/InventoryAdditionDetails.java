@@ -1,16 +1,16 @@
-package com.example.retail.models.vegitables;
+package com.example.retail.util;
 
 import java.time.LocalDateTime;
 
-public class VegitableAdditionDetails{
+public class InventoryAdditionDetails {
 
     private String addedBy;
     private LocalDateTime addedDateTime;
     private Float increamentCount;
 
-    public VegitableAdditionDetails(){}
+    public InventoryAdditionDetails(){}
 
-    public VegitableAdditionDetails(String addedBy, LocalDateTime addedDateTime, Float increamentCount) {
+    public InventoryAdditionDetails(String addedBy, LocalDateTime addedDateTime, Float increamentCount) {
         this.addedBy = addedBy;
         this.addedDateTime = addedDateTime;
         this.increamentCount = increamentCount;

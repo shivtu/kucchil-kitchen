@@ -161,13 +161,13 @@ public class VegitablesService {
             vegitablesInventory.setVegitableInventoryExpiry(vegitableInventoryExpiry);
 
             /** Create VegitableAdditionDetails **/
-            VegitableAdditionDetails vegitableAdditionDetails = new VegitableAdditionDetails();
-            vegitableAdditionDetails.setAddedBy(vegitable_AddedBy);
-            vegitableAdditionDetails.setAddedDateTime(LocalDateTime.now());
-            vegitableAdditionDetails.setIncreamentCount(newVegitables.getVegitableQuantity());
+            InventoryAdditionDetails inventoryAdditionDetails = new InventoryAdditionDetails();
+            inventoryAdditionDetails.setAddedBy(vegitable_AddedBy);
+            inventoryAdditionDetails.setAddedDateTime(LocalDateTime.now());
+            inventoryAdditionDetails.setIncreamentCount(newVegitables.getVegitableQuantity());
 
-            List<VegitableAdditionDetails> vegitableDetailsList = new ArrayList<>();
-            vegitableDetailsList.add(vegitableAdditionDetails);
+            List<InventoryAdditionDetails> vegitableDetailsList = new ArrayList<>();
+            vegitableDetailsList.add(inventoryAdditionDetails);
 
             vegitablesInventory.setVegitableInventoryAdditionDetails(vegitableDetailsList);
             vegitablesInventory.setVegitableInventoryFixedCost(newVegitables.getVegitableInventoryFixedCost());

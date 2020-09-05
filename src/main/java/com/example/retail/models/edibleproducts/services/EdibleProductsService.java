@@ -14,7 +14,7 @@ public class EdibleProductsService {
     @Autowired
     EdibleProductsRepository productsRepository;
 
-    public Iterable<EdibleProducts> getAllProducts(){
+    public List<EdibleProducts> getAllProducts(){
         return  productsRepository.findAll();
     }
 

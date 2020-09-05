@@ -1,8 +1,8 @@
 package com.example.retail.models.vegitables.repository;
-import com.example.retail.models.vegitables.VegitableAdditionDetails;
+import com.example.retail.util.InventoryAdditionDetails;
 
 import java.util.List;
 
 public interface VegitableInventoryRepositoryCustom {
-    int updateVegitablesAdditionDetails(String subId, List<VegitableAdditionDetails> updatedAdditionDetails);
+    int updateVegitablesAdditionDetails(String subId, List<InventoryAdditionDetails> updatedAdditionDetails);
 }

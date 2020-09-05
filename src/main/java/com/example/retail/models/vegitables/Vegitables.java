@@ -12,7 +12,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name="vegitables")
@@ -49,7 +48,7 @@ public class Vegitables {
 
     @Column(name = "vegitable_recepie", columnDefinition = "jsonb")
     @Type(type = "psql-jsonb")
-    private List<VegitableRecipes> vegitableRecepie;
+    private ArrayList<VegitableRecipes> vegitableRecepie;
 
     @NotNull
     @Column(name="vegitable_selling_price")
@@ -102,7 +101,7 @@ public class Vegitables {
 
     public Vegitables(@NotNull @NotEmpty String vegitableName, String vegitableDescp, String vegitableVariant,
                       @NotEmpty @NotNull String itemClassificationName, @NotEmpty @NotNull String itemClassificationCode,
-                      List<VegitableRecipes> vegitableRecepie, @NotNull @Min(value = 1, message = "Selling price cannot be less than 1") Float vegitableSellingPrice,
+                      ArrayList<VegitableRecipes> vegitableRecepie, @NotNull @Min(value = 1, message = "Selling price cannot be less than 1") Float vegitableSellingPrice,
                       @Min(value = 0, message = "discounts are expressed in %, valid range 0-100") Float vegitableOfferedDiscount,
                       @NotNull String vegitableOfferedDiscountName, @NotNull Float vegitableDiscountedPrice, @NotNull ArrayList<String> vegitableApplicableTaxes,
                       @NotNull Float vegitableTaxedPrice, @NotNull @Min(value = 1, message = "Quantity cannot be less than 0") Float vegitableQuantity,
@@ -175,11 +174,11 @@ public class Vegitables {
         this.itemClassificationCode = itemClassificationCode;
     }
 
-    public List<VegitableRecipes> getVegitableRecepie() {
+    public ArrayList<VegitableRecipes> getVegitableRecepie() {
         return vegitableRecepie;
     }
 
-    public void setVegitableRecepie(List<VegitableRecipes> vegitableRecepie) {
+    public void setVegitableRecepie(ArrayList<VegitableRecipes> vegitableRecepie) {
         this.vegitableRecepie = vegitableRecepie;
     }
 

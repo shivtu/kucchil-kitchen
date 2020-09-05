@@ -1,5 +1,6 @@
 package com.example.retail.models.vegitables;
 
+import com.example.retail.util.InventoryAdditionDetails;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -37,6 +38,7 @@ public class VegitablesInventory implements Serializable {
     @NotNull
     private Float vegitableInventoryFixedCost;
 
+    // Discounted price is the selling price on which profits will be calculated
     @Column(name = "vegitablesinventory_sellingprice")
     @Min(value = 0, message = "Selling price cannot be less than 0")
     @NotNull(message = "Selling price is required")
@@ -54,14 +56,17 @@ public class VegitablesInventory implements Serializable {
 
     @Column(name = "vegitablesinventory_addtiondetails", columnDefinition = "jsonb")
     @Type(type = "psql-jsonb")
-    private List<VegitableAdditionDetails> vegitableInventoryAdditionDetails;
+    private List<InventoryAdditionDetails> vegitableInventoryAdditionDetails;
 
     @Column(name = "vegitable_subid", updatable = false, unique = true)
     private String vegitableSubId;
 
     public VegitablesInventory() {}
 
-    public VegitablesInventory(@Min(value = 0, message = "Cost price cannot be 0") @NotNull Float vegitableInventoryCostPrice, @Min(value = 0, message = "Fixed costs cannot be less than 0") @NotNull Float vegitableInventoryFixedCost, @Min(value = 0, message = "Selling price cannot be less than 0") @NotNull(message = "Selling price is required") Float vegitableInventorySellingPrice, @Future @NotNull LocalDate vegitableInventoryExpiry, List<VegitableAdditionDetails> vegitableInventoryAdditionDetails, String vegitableSubId) {
+    public VegitablesInventory(@Min(value = 0, message = "Cost price cannot be 0") @NotNull Float vegitableInventoryCostPrice,
+                               @Min(value = 0, message = "Fixed costs cannot be less than 0") @NotNull Float vegitableInventoryFixedCost,
+                               @Min(value = 0, message = "Selling price cannot be less than 0") @NotNull(message = "Selling price is required") Float vegitableInventorySellingPrice,
+                               @Future @NotNull LocalDate vegitableInventoryExpiry, List<InventoryAdditionDetails> vegitableInventoryAdditionDetails, String vegitableSubId) {
         this.vegitableInventoryCostPrice = vegitableInventoryCostPrice;
         this.vegitableInventoryFixedCost = vegitableInventoryFixedCost;
         this.vegitableInventorySellingPrice = vegitableInventorySellingPrice;
@@ -110,11 +115,11 @@ public class VegitablesInventory implements Serializable {
         this.vegitableInventoryExpiry = vegitableInventoryExpiry;
     }
 
-    public List<VegitableAdditionDetails> getVegitableInventoryAdditionDetails() {
+    public List<InventoryAdditionDetails> getVegitableInventoryAdditionDetails() {
         return vegitableInventoryAdditionDetails;
     }
 
-    public void setVegitableInventoryAdditionDetails(List<VegitableAdditionDetails> vegitableInventoryAdditionDetails) {
+    public void setVegitableInventoryAdditionDetails(List<InventoryAdditionDetails> vegitableInventoryAdditionDetails) {
         this.vegitableInventoryAdditionDetails = vegitableInventoryAdditionDetails;
     }
 

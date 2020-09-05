@@ -1,6 +1,6 @@
 package com.example.retail.models.vegitables.repository;
 
-import com.example.retail.models.vegitables.VegitableAdditionDetails;
+import com.example.retail.util.InventoryAdditionDetails;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import org.hibernate.query.NativeQuery;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +17,7 @@ public class VegitableInventoryRepositoryImpl implements VegitableInventoryRepos
     EntityManager entityManager;
 
     @Override
-    public int updateVegitablesAdditionDetails(String subId, List<VegitableAdditionDetails> updatedAdditionDetails) {
+    public int updateVegitablesAdditionDetails(String subId, List<InventoryAdditionDetails> updatedAdditionDetails) {
 
         String psqlQuery = "UPDATE vegitables_inventory  SET vegitablesinventory_addtiondetails = vegitablesinventory_addtiondetails || :updatedAdditionDetails WHERE vegitable_subid=:subId";
 

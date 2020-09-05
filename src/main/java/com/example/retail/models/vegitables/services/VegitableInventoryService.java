@@ -1,7 +1,7 @@
 package com.example.retail.models.vegitables.services;
 
 import com.example.retail.controllers.retailer.vegitables_retailer.UpdateVegitablesInventoryRequest;
-import com.example.retail.models.vegitables.VegitableAdditionDetails;
+import com.example.retail.util.InventoryAdditionDetails;
 import com.example.retail.models.vegitables.Vegitables;
 import com.example.retail.models.vegitables.VegitablesInventory;
 import com.example.retail.models.vegitables.repository.VegitableInventoryRepository;
@@ -10,8 +10,6 @@ import com.example.retail.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -106,17 +104,17 @@ public class VegitableInventoryService {
              * Added date time
              * Quantity added
              */
-            VegitableAdditionDetails vegitableAdditionDetails = new VegitableAdditionDetails();
-            vegitableAdditionDetails.setAddedBy(addedBy);
-            vegitableAdditionDetails.setIncreamentCount(updateVegitablesInventoryRequest.getVegitableQuantity());
-            vegitableAdditionDetails.setAddedDateTime(dateTimeAdded);
+            InventoryAdditionDetails inventoryAdditionDetails = new InventoryAdditionDetails();
+            inventoryAdditionDetails.setAddedBy(addedBy);
+            inventoryAdditionDetails.setIncreamentCount(updateVegitablesInventoryRequest.getVegitableQuantity());
+            inventoryAdditionDetails.setAddedDateTime(dateTimeAdded);
 
             /** Wrap additionDetails in list **/
-            List<VegitableAdditionDetails> vegitableAdditionDetailsList = new ArrayList<>();
-            vegitableAdditionDetailsList.add(vegitableAdditionDetails);
+            List<InventoryAdditionDetails> inventoryAdditionDetailsList = new ArrayList<>();
+            inventoryAdditionDetailsList.add(inventoryAdditionDetails);
 
             /** add additionDetails to vegitables_inventory **/
-            vegitablesInventory.setVegitableInventoryAdditionDetails(vegitableAdditionDetailsList);
+            vegitablesInventory.setVegitableInventoryAdditionDetails(inventoryAdditionDetailsList);
 
             VegitablesInventory res = vegitableInventoryRepository.save(vegitablesInventory);
 
@@ -144,15 +142,15 @@ public class VegitableInventoryService {
         String vegSubId = updatedVegitable.get().getVegitableSubId().toLowerCase();
 
         /** Create the vegitable addition details object to update vegitable_inventory **/
-        VegitableAdditionDetails vegitableAdditionDetails = new VegitableAdditionDetails();
-        vegitableAdditionDetails.setAddedBy(addedBy);
-        vegitableAdditionDetails.setAddedDateTime(dateTimeAdded);
-        vegitableAdditionDetails.setIncreamentCount(quantity);
+        InventoryAdditionDetails inventoryAdditionDetails = new InventoryAdditionDetails();
+        inventoryAdditionDetails.setAddedBy(addedBy);
+        inventoryAdditionDetails.setAddedDateTime(dateTimeAdded);
+        inventoryAdditionDetails.setIncreamentCount(quantity);
 
-        List<VegitableAdditionDetails> vegitableAdditionDetailsList = new ArrayList<>();
-        vegitableAdditionDetailsList.add(vegitableAdditionDetails);
+        List<InventoryAdditionDetails> inventoryAdditionDetailsList = new ArrayList<>();
+        inventoryAdditionDetailsList.add(inventoryAdditionDetails);
 
-        vegitableInventoryRepositoryImpl.updateVegitablesAdditionDetails(vegSubId, vegitableAdditionDetailsList);
+        vegitableInventoryRepositoryImpl.updateVegitablesAdditionDetails(vegSubId, inventoryAdditionDetailsList);
 
         /** Return the response by fetching the vegitables and vegitablesInventory **/
         List<Object> finalRes = new ArrayList<>();

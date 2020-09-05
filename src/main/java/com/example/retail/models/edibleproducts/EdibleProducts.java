@@ -3,6 +3,8 @@ package com.example.retail.models.edibleproducts;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -10,296 +12,342 @@ public class EdibleProducts {
 
     @Id
     @GeneratedValue
-    private Long edibleProducts_TableId;
+    private Long edibleProductsTableId;
 
     // Manufacturer of the product
-    private String edibleProducts_Manufacturer;
+    @NotNull
+    @Column(name = "")
+    private String edibleProductManufacturer;
 
     // Name given to the product by the manufacturer
-    private String edibleProducts_productName;
+    @NotNull
+    @Column(name = "")
+    private String edibleProductName;
 
     // Variant of the product : Usually the base content of the product : Example - fibre, fruits, vitamin etc
-    private String edibleProducts_Variant;
+    @NotNull
+    @Column(name = "")
+    private String edibleProductVariant;
 
     // Flavour of the product
-    private String edibleProducts_Flavor;
+    @Column(name = "")
+    private String edibleProductFlavor;
 
     // How was the product made : Example - manufactured, processed, raw etc
-    private String edibleProducts_Type;
+    @Column(name = "")
+    private String edibleProductType;
 
     // General description of the product
-    private String edibleProducts_Desc;
+    @NotNull
+    @Column(name = "")
+    private String edibleProductDescription;
 
-    private String edibleProductsImageLocation;
+    @NotNull
+    @Column(name = "")
+    private String edibleProductImageLocation;
 
     // Generic item name
-    private String edibleProducts_Name;
+    @NotNull
+    @Column(name = "")
+    private String edibleProductGenericName;
 
     // An alternate name to the generic item name
-    private String edibleProducts_AlternaleName;
+    @Column(name = "")
+    private String edibleProductAlternaleName;
 
     // Product category : Example - confectionary, dairy, spices etc
-    private String edibleProducts_Category;
+    @NotNull
+    @Column(name = "")
+    private String itemClassificationName;
 
     @NotEmpty
     @NotNull
     @Column(name = "item_category")
-    private String itemCategory;
+    private String itemClassificationCode;
 
     // Can be safely consumed by minors ?
-    private Boolean edibleProducts_ForMinors;
+    @Column(name = "")
+    private Boolean edibleProductForMinors;
 
-    // Measurement unit of the product : weight, volume etc
-    private String edibleProducts_MeasureMentUnit;
-
-    // Denomination of the product as per measurement unit
-    private Float edibleProducts_Denomination;
-
-    // Inventory count
-    private Integer edibleProductsQuantity;
-
-    private Boolean edibleProductsAvailable;
+    @NotNull
+    @Column(name = "")
+    private Boolean edibleProductAvailable;
 
     // MRP set by govt/manufacturer
-    private Float edibleProducts_Mrp;
+    @NotNull
+    @Column(name = "")
+    private Float edibleProductMrp;
 
-    // Maximum discount allowed
-    private Float edibleProducts_OfferedDiscount;
+    // offered discount
+    @NotNull
+    @Column(name = "")
+    private Float edibleProductOfferedDiscount;
 
-    // Should customer view the discount
-    private Float edibleProducts_ShowDiscount;
+    @NotNull
+    @Column(name = "")
+    private String edibleProductsDiscountName;
 
-   private Float edibleProductsDiscountedPrice;
+    @NotNull
+    @Column(name = "")
+   private Float edibleProductDiscountedPrice;
 
     @NotNull
     @Column(name = "edible_products_applicable_taxes")
-    private String[] edibleProductsApplicableTaxes;
-
-   private Float edibleProductsTaxedPrice;
+    private ArrayList<String> edibleProductApplicableTaxes;
 
     @NotNull
+    @Column(name = "")
+    private Float edibleProductTaxedPrice;
+
+    // Inventory count
+    @NotNull
+    @Column(name = "")
+    private Integer edibleProductQuantity;
+
+    // Measurement unit of the product : weight, volume etc
+    @NotNull
+    @Column(name = "")
+    private String edibleProductsMeasureMentUnit;
+
+    // Denomination of the product as per measurement unit
+    @NotNull
+    @Column(name = "")
+    private Float edibleProductDenomination;
+
     // edibleProducts_Name + edibleProducts_productName + edibleProducts_Manufacturer + edibleProducts_Variant
     // + edibleProducts_Flavor + edibleProducts_Expiry + edibleProducts_Denomination + edibleProducts_CostPrice
     // + edibleProducts_Mrp
-    private String edibleProductsSubId;
+    @NotNull
+    @Column(name = "")
+    private String edibleProductSubId;
 
     public EdibleProducts(){}
 
-    public EdibleProducts(String edibleProducts_Manufacturer, String edibleProducts_productName, String edibleProducts_Variant, String edibleProducts_Flavor, String edibleProducts_Type, String edibleProducts_Desc, String edibleProductsImageLocation, String edibleProducts_Name, String edibleProducts_AlternaleName, String edibleProducts_Category, @NotEmpty @NotNull String itemCategory, Boolean edibleProducts_ForMinors, String edibleProducts_MeasureMentUnit, Float edibleProducts_Denomination, Integer edibleProductsQuantity, Boolean edibleProductsAvailable, Float edibleProducts_Mrp, Float edibleProducts_OfferedDiscount, Float edibleProducts_ShowDiscount, Float edibleProductsDiscountedPrice, @NotNull String[] edibleProductsApplicableTaxes, Float edibleProductsTaxedPrice, @NotNull String edibleProductsSubId) {
-        this.edibleProducts_Manufacturer = edibleProducts_Manufacturer;
-        this.edibleProducts_productName = edibleProducts_productName;
-        this.edibleProducts_Variant = edibleProducts_Variant;
-        this.edibleProducts_Flavor = edibleProducts_Flavor;
-        this.edibleProducts_Type = edibleProducts_Type;
-        this.edibleProducts_Desc = edibleProducts_Desc;
-        this.edibleProductsImageLocation = edibleProductsImageLocation;
-        this.edibleProducts_Name = edibleProducts_Name;
-        this.edibleProducts_AlternaleName = edibleProducts_AlternaleName;
-        this.edibleProducts_Category = edibleProducts_Category;
-        this.itemCategory = itemCategory;
-        this.edibleProducts_ForMinors = edibleProducts_ForMinors;
-        this.edibleProducts_MeasureMentUnit = edibleProducts_MeasureMentUnit;
-        this.edibleProducts_Denomination = edibleProducts_Denomination;
-        this.edibleProductsQuantity = edibleProductsQuantity;
-        this.edibleProductsAvailable = edibleProductsAvailable;
-        this.edibleProducts_Mrp = edibleProducts_Mrp;
-        this.edibleProducts_OfferedDiscount = edibleProducts_OfferedDiscount;
-        this.edibleProducts_ShowDiscount = edibleProducts_ShowDiscount;
-        this.edibleProductsDiscountedPrice = edibleProductsDiscountedPrice;
-        this.edibleProductsApplicableTaxes = edibleProductsApplicableTaxes;
-        this.edibleProductsTaxedPrice = edibleProductsTaxedPrice;
-        this.edibleProductsSubId = edibleProductsSubId;
+    public EdibleProducts(String edibleProductManufacturer, String edibleProductName,
+                          String edibleProductVariant, String edibleProductFlavor,
+                          String edibleProductType, String edibleProductDescription,
+                          String edibleProductImageLocation, String edibleProductGenericName,
+                          String edibleProductAlternaleName, String itemClassificationName,
+                          @NotEmpty @NotNull String itemClassificationCode, Boolean edibleProductForMinors,
+                          Boolean edibleProductAvailable, Float edibleProductMrp, Float edibleProductOfferedDiscount,
+                          String edibleProductsDiscountName, Float edibleProductDiscountedPrice,
+                          @NotNull ArrayList<String> edibleProductApplicableTaxes, Float edibleProductTaxedPrice,
+                          Integer edibleProductQuantity, String edibleProductsMeasureMentUnit, Float edibleProductDenomination,
+                          @NotNull String edibleProductSubId) {
+        this.edibleProductManufacturer = edibleProductManufacturer;
+        this.edibleProductName = edibleProductName;
+        this.edibleProductVariant = edibleProductVariant;
+        this.edibleProductFlavor = edibleProductFlavor;
+        this.edibleProductType = edibleProductType;
+        this.edibleProductDescription = edibleProductDescription;
+        this.edibleProductImageLocation = edibleProductImageLocation;
+        this.edibleProductGenericName = edibleProductGenericName;
+        this.edibleProductAlternaleName = edibleProductAlternaleName;
+        this.itemClassificationName = itemClassificationName;
+        this.itemClassificationCode = itemClassificationCode;
+        this.edibleProductForMinors = edibleProductForMinors;
+        this.edibleProductAvailable = edibleProductAvailable;
+        this.edibleProductMrp = edibleProductMrp;
+        this.edibleProductOfferedDiscount = edibleProductOfferedDiscount;
+        this.edibleProductsDiscountName = edibleProductsDiscountName;
+        this.edibleProductDiscountedPrice = edibleProductDiscountedPrice;
+        this.edibleProductApplicableTaxes = edibleProductApplicableTaxes;
+        this.edibleProductTaxedPrice = edibleProductTaxedPrice;
+        this.edibleProductQuantity = edibleProductQuantity;
+        this.edibleProductsMeasureMentUnit = edibleProductsMeasureMentUnit;
+        this.edibleProductDenomination = edibleProductDenomination;
+        this.edibleProductSubId = edibleProductSubId;
     }
 
-    public Long getEdibleProducts_TableId() {
-        return edibleProducts_TableId;
+    public Long getEdibleProductsTableId() {
+        return edibleProductsTableId;
     }
 
-    public void setEdibleProducts_TableId(Long edibleProducts_TableId) {
-        this.edibleProducts_TableId = edibleProducts_TableId;
+    public void setEdibleProductsTableId(Long edibleProductsTableId) {
+        this.edibleProductsTableId = edibleProductsTableId;
     }
 
-    public String getEdibleProducts_Manufacturer() {
-        return edibleProducts_Manufacturer;
+    public String getEdibleProductManufacturer() {
+        return edibleProductManufacturer;
     }
 
-    public void setEdibleProducts_Manufacturer(String edibleProducts_Manufacturer) {
-        this.edibleProducts_Manufacturer = edibleProducts_Manufacturer;
+    public void setEdibleProductManufacturer(String edibleProductManufacturer) {
+        this.edibleProductManufacturer = edibleProductManufacturer;
     }
 
-    public String getEdibleProducts_productName() {
-        return edibleProducts_productName;
+    public String getEdibleProductName() {
+        return edibleProductName;
     }
 
-    public void setEdibleProducts_productName(String edibleProducts_productName) {
-        this.edibleProducts_productName = edibleProducts_productName;
+    public void setEdibleProductName(String edibleProductName) {
+        this.edibleProductName = edibleProductName;
     }
 
-    public String getEdibleProducts_Variant() {
-        return edibleProducts_Variant;
+    public String getEdibleProductVariant() {
+        return edibleProductVariant;
     }
 
-    public void setEdibleProducts_Variant(String edibleProducts_Variant) {
-        this.edibleProducts_Variant = edibleProducts_Variant;
+    public void setEdibleProductVariant(String edibleProductVariant) {
+        this.edibleProductVariant = edibleProductVariant;
     }
 
-    public String getEdibleProducts_Flavor() {
-        return edibleProducts_Flavor;
+    public String getEdibleProductFlavor() {
+        return edibleProductFlavor;
     }
 
-    public void setEdibleProducts_Flavor(String edibleProducts_Flavor) {
-        this.edibleProducts_Flavor = edibleProducts_Flavor;
+    public void setEdibleProductFlavor(String edibleProductFlavor) {
+        this.edibleProductFlavor = edibleProductFlavor;
     }
 
-    public String getEdibleProducts_Type() {
-        return edibleProducts_Type;
+    public String getEdibleProductType() {
+        return edibleProductType;
     }
 
-    public void setEdibleProducts_Type(String edibleProducts_Type) {
-        this.edibleProducts_Type = edibleProducts_Type;
+    public void setEdibleProductType(String edibleProductType) {
+        this.edibleProductType = edibleProductType;
     }
 
-    public String getEdibleProducts_Desc() {
-        return edibleProducts_Desc;
+    public String getEdibleProductDescription() {
+        return edibleProductDescription;
     }
 
-    public void setEdibleProducts_Desc(String edibleProducts_Desc) {
-        this.edibleProducts_Desc = edibleProducts_Desc;
+    public void setEdibleProductDescription(String edibleProductDescription) {
+        this.edibleProductDescription = edibleProductDescription;
     }
 
-    public String getEdibleProductsImageLocation() {
-        return edibleProductsImageLocation;
+    public String getEdibleProductImageLocation() {
+        return edibleProductImageLocation;
     }
 
-    public void setEdibleProductsImageLocation(String edibleProductsImageLocation) {
-        this.edibleProductsImageLocation = edibleProductsImageLocation;
+    public void setEdibleProductImageLocation(String edibleProductImageLocation) {
+        this.edibleProductImageLocation = edibleProductImageLocation;
     }
 
-    public String getEdibleProducts_Name() {
-        return edibleProducts_Name;
+    public String getEdibleProductGenericName() {
+        return edibleProductGenericName;
     }
 
-    public void setEdibleProducts_Name(String edibleProducts_Name) {
-        this.edibleProducts_Name = edibleProducts_Name;
+    public void setEdibleProductGenericName(String edibleProductGenericName) {
+        this.edibleProductGenericName = edibleProductGenericName;
     }
 
-    public String getEdibleProducts_AlternaleName() {
-        return edibleProducts_AlternaleName;
+    public String getEdibleProductAlternaleName() {
+        return edibleProductAlternaleName;
     }
 
-    public void setEdibleProducts_AlternaleName(String edibleProducts_AlternaleName) {
-        this.edibleProducts_AlternaleName = edibleProducts_AlternaleName;
+    public void setEdibleProductAlternaleName(String edibleProductAlternaleName) {
+        this.edibleProductAlternaleName = edibleProductAlternaleName;
     }
 
-    public String getEdibleProducts_Category() {
-        return edibleProducts_Category;
+    public String getItemClassificationName() {
+        return itemClassificationName;
     }
 
-    public void setEdibleProducts_Category(String edibleProducts_Category) {
-        this.edibleProducts_Category = edibleProducts_Category;
+    public void setItemClassificationName(String itemClassificationName) {
+        this.itemClassificationName = itemClassificationName;
     }
 
-    public String getItemCategory() {
-        return itemCategory;
+    public String getItemClassificationCode() {
+        return itemClassificationCode;
     }
 
-    public void setItemCategory(String itemCategory) {
-        this.itemCategory = itemCategory;
+    public void setItemClassificationCode(String itemClassificationCode) {
+        this.itemClassificationCode = itemClassificationCode;
     }
 
-    public Boolean getEdibleProducts_ForMinors() {
-        return edibleProducts_ForMinors;
+    public Boolean getEdibleProductForMinors() {
+        return edibleProductForMinors;
     }
 
-    public void setEdibleProducts_ForMinors(Boolean edibleProducts_ForMinors) {
-        this.edibleProducts_ForMinors = edibleProducts_ForMinors;
+    public void setEdibleProductForMinors(Boolean edibleProductForMinors) {
+        this.edibleProductForMinors = edibleProductForMinors;
     }
 
-    public String getEdibleProducts_MeasureMentUnit() {
-        return edibleProducts_MeasureMentUnit;
+    public Boolean getEdibleProductAvailable() {
+        return edibleProductAvailable;
     }
 
-    public void setEdibleProducts_MeasureMentUnit(String edibleProducts_MeasureMentUnit) {
-        this.edibleProducts_MeasureMentUnit = edibleProducts_MeasureMentUnit;
+    public void setEdibleProductAvailable(Boolean edibleProductAvailable) {
+        this.edibleProductAvailable = edibleProductAvailable;
     }
 
-    public Float getEdibleProducts_Denomination() {
-        return edibleProducts_Denomination;
+    public Float getEdibleProductMrp() {
+        return edibleProductMrp;
     }
 
-    public void setEdibleProducts_Denomination(Float edibleProducts_Denomination) {
-        this.edibleProducts_Denomination = edibleProducts_Denomination;
+    public void setEdibleProductMrp(Float edibleProductMrp) {
+        this.edibleProductMrp = edibleProductMrp;
     }
 
-    public Integer getEdibleProductsQuantity() {
-        return edibleProductsQuantity;
+    public Float getEdibleProductOfferedDiscount() {
+        return edibleProductOfferedDiscount;
     }
 
-    public void setEdibleProductsQuantity(Integer edibleProductsQuantity) {
-        this.edibleProductsQuantity = edibleProductsQuantity;
+    public void setEdibleProductOfferedDiscount(Float edibleProductOfferedDiscount) {
+        this.edibleProductOfferedDiscount = edibleProductOfferedDiscount;
     }
 
-    public Boolean getEdibleProductsAvailable() {
-        return edibleProductsAvailable;
+    public String getEdibleProductsDiscountName() {
+        return edibleProductsDiscountName;
     }
 
-    public void setEdibleProductsAvailable(Boolean edibleProductsAvailable) {
-        this.edibleProductsAvailable = edibleProductsAvailable;
+    public void setEdibleProductsDiscountName(String edibleProductsDiscountName) {
+        this.edibleProductsDiscountName = edibleProductsDiscountName;
     }
 
-    public Float getEdibleProducts_Mrp() {
-        return edibleProducts_Mrp;
+    public Float getEdibleProductDiscountedPrice() {
+        return edibleProductDiscountedPrice;
     }
 
-    public void setEdibleProducts_Mrp(Float edibleProducts_Mrp) {
-        this.edibleProducts_Mrp = edibleProducts_Mrp;
+    public void setEdibleProductDiscountedPrice(Float edibleProductDiscountedPrice) {
+        this.edibleProductDiscountedPrice = edibleProductDiscountedPrice;
     }
 
-    public Float getEdibleProducts_OfferedDiscount() {
-        return edibleProducts_OfferedDiscount;
+    public ArrayList<String> getEdibleProductApplicableTaxes() {
+        return edibleProductApplicableTaxes;
     }
 
-    public void setEdibleProducts_OfferedDiscount(Float edibleProducts_OfferedDiscount) {
-        this.edibleProducts_OfferedDiscount = edibleProducts_OfferedDiscount;
+    public void setEdibleProductApplicableTaxes(ArrayList<String> edibleProductApplicableTaxes) {
+        this.edibleProductApplicableTaxes = edibleProductApplicableTaxes;
     }
 
-    public Float getEdibleProducts_ShowDiscount() {
-        return edibleProducts_ShowDiscount;
+    public Float getEdibleProductTaxedPrice() {
+        return edibleProductTaxedPrice;
     }
 
-    public void setEdibleProducts_ShowDiscount(Float edibleProducts_ShowDiscount) {
-        this.edibleProducts_ShowDiscount = edibleProducts_ShowDiscount;
+    public void setEdibleProductTaxedPrice(Float edibleProductTaxedPrice) {
+        this.edibleProductTaxedPrice = edibleProductTaxedPrice;
     }
 
-    public Float getEdibleProductsDiscountedPrice() {
-        return edibleProductsDiscountedPrice;
+    public Integer getEdibleProductQuantity() {
+        return edibleProductQuantity;
     }
 
-    public void setEdibleProductsDiscountedPrice(Float edibleProductsDiscountedPrice) {
-        this.edibleProductsDiscountedPrice = edibleProductsDiscountedPrice;
+    public void setEdibleProductQuantity(Integer edibleProductQuantity) {
+        this.edibleProductQuantity = edibleProductQuantity;
     }
 
-    public String[] getEdibleProductsApplicableTaxes() {
-        return edibleProductsApplicableTaxes;
+    public String getEdibleProductsMeasureMentUnit() {
+        return edibleProductsMeasureMentUnit;
     }
 
-    public void setEdibleProductsApplicableTaxes(String[] edibleProductsApplicableTaxes) {
-        this.edibleProductsApplicableTaxes = edibleProductsApplicableTaxes;
+    public void setEdibleProductsMeasureMentUnit(String edibleProductsMeasureMentUnit) {
+        this.edibleProductsMeasureMentUnit = edibleProductsMeasureMentUnit;
     }
 
-    public Float getEdibleProductsTaxedPrice() {
-        return edibleProductsTaxedPrice;
+    public Float getEdibleProductDenomination() {
+        return edibleProductDenomination;
     }
 
-    public void setEdibleProductsTaxedPrice(Float edibleProductsTaxedPrice) {
-        this.edibleProductsTaxedPrice = edibleProductsTaxedPrice;
+    public void setEdibleProductDenomination(Float edibleProductDenomination) {
+        this.edibleProductDenomination = edibleProductDenomination;
     }
 
-    public String getEdibleProductsSubId() {
-        return edibleProductsSubId;
+    public String getEdibleProductSubId() {
+        return edibleProductSubId;
     }
 
-    public void setEdibleProductsSubId(String edibleProductsSubId) {
-        this.edibleProductsSubId = edibleProductsSubId;
+    public void setEdibleProductSubId(String edibleProductSubId) {
+        this.edibleProductSubId = edibleProductSubId;
     }
 }

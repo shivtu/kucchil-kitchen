@@ -1,6 +1,5 @@
 package com.example.retail.util;
 
-import com.example.retail.models.vegitables.VegitableAdditionDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
