@@ -1,12 +1,24 @@
 package com.example.retail.models.edibleproducts.services;
 
 import com.example.retail.controllers.retailer.edibleproducts_retailer.AddEdibleProductsRequestBody;
+import com.example.retail.models.discounts.DiscountCalculator;
 import com.example.retail.models.edibleproducts.EdibleProducts;
+import com.example.retail.models.edibleproducts.EdibleProductsInventory;
+import com.example.retail.models.edibleproducts.repository.EdibleProductsInventoryRepository;
 import com.example.retail.models.edibleproducts.repository.EdibleProductsRepository;
+import com.example.retail.models.taxutility.TaxCalculator;
+import com.example.retail.util.CreateResponse;
+import com.example.retail.util.JWTDetails;
+import com.example.retail.util.ValidationResponse;
+import com.example.retail.util.Validations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +27,24 @@ public class EdibleProductsService {
 
     @Autowired
     EdibleProductsRepository edibleProductsRepository;
+
+    @Autowired
+    EdibleProductsInventoryRepository edibleProductsInventoryRepository;
+
+    @Autowired
+    Validations validations;
+
+    @Autowired
+    CreateResponse createResponse;
+
+    @Autowired
+    DiscountCalculator discountCalculator;
+
+    @Autowired
+    TaxCalculator taxCalculator;
+
+    @Autowired
+    JWTDetails jwtDetails;
 
     public String genearteEdibleProductSubId(
             String edibleProductManufacturer,
@@ -44,8 +74,27 @@ public class EdibleProductsService {
         return edibleProductsRepository.saveAll(newProducts);
     }
 
-    public EdibleProducts addEdibleProduct(AddEdibleProductsRequestBody newEdibleProduct){
+    public ResponseEntity<Object> addEdibleProduct(HttpServletRequest request, AddEdibleProductsRequestBody newEdibleProduct){
+
+        LocalDate expiryDate = LocalDate.parse(newEdibleProduct.getEdibleProductInventoryExpiry());
+        String edibleProductAddedBy = jwtDetails.userName(request);
+
+        // Get the Sub ID
+        String subid = genearteEdibleProductSubId(
+            newEdibleProduct.getEdibleProductManufacturer(),
+            newEdibleProduct.getEdibleProductName(),
+            newEdibleProduct.getEdibleProductVariant(),
+            newEdibleProduct.getEdibleProductFlavor(),
+            newEdibleProduct.getEdibleProductDenomination(),
+            expiryDate
+
+        );
+
+        /**
+         * Create the edible products model
+         * */
         EdibleProducts edibleProducts = new EdibleProducts();
+
         edibleProducts.setEdibleProductManufacturer(newEdibleProduct.getEdibleProductManufacturer());
         edibleProducts.setEdibleProductName(newEdibleProduct.getEdibleProductName());
         edibleProducts.setEdibleProductVariant(newEdibleProduct.getEdibleProductVariant());
@@ -55,18 +104,70 @@ public class EdibleProductsService {
         edibleProducts.setEdibleProductGenericName(newEdibleProduct.getEdibleProductGenericName());
         edibleProducts.setEdibleProductAlternaleName(newEdibleProduct.getEdibleProductAlternaleName());
         edibleProducts.setItemClassificationName(newEdibleProduct.getItemClassificationName());
+
+        /*
+        * Validate the classification code
+        * Return Error response from validation if validation fails
+        * */
+        ValidationResponse itemClassifictionValidation = validations.validateItemClassificationCode(newEdibleProduct.getItemClassificationCode());
+        if(itemClassifictionValidation.getStatusCode() != validations.validationSuccessCode) {
+            return ResponseEntity.status(itemClassifictionValidation.getStatusCode()).body(
+                itemClassifictionValidation
+            );
+        }
         edibleProducts.setItemClassificationCode(newEdibleProduct.getItemClassificationCode());
         edibleProducts.setEdibleProductForMinors(newEdibleProduct.getEdibleProductForMinors());
         edibleProducts.setEdibleProductAvailable(newEdibleProduct.getEdibleProductAvailable());
         edibleProducts.setEdibleProductMrp(newEdibleProduct.getEdibleProductMrp());
         edibleProducts.setEdibleProductOfferedDiscount(newEdibleProduct.getEdibleProductOfferedDiscount());
         edibleProducts.setEdibleProductsDiscountName(newEdibleProduct.getEdibleProductsDiscountName());
+        /**
+         * Calculate the discounted price
+         **/
+        Float discountedPrice = newEdibleProduct.getEdibleProductMrp();
+        if(newEdibleProduct.getEdibleProductOfferedDiscount() > 0 && !newEdibleProduct.getEdibleProductsDiscountName().isEmpty()) {
+            discountedPrice = discountCalculator.calcDiscountedPrice(newEdibleProduct.getEdibleProductMrp(), newEdibleProduct.getEdibleProductOfferedDiscount());
+        }
+        edibleProducts.setEdibleProductDiscountedPrice(discountedPrice);
         edibleProducts.setEdibleProductApplicableTaxes(newEdibleProduct.getEdibleProductApplicableTaxes());
+
+        /**
+         * Calculate taxed price after discount
+         **/
+        edibleProducts.setEdibleProductTaxedPrice(taxCalculator.calcAmountAfterTax(newEdibleProduct.getEdibleProductApplicableTaxes(), discountedPrice));
         edibleProducts.setEdibleProductQuantity(newEdibleProduct.getEdibleProductQuantity());
         edibleProducts.setEdibleProductsMeasureMentUnit(newEdibleProduct.getEdibleProductsMeasureMentUnit());
         edibleProducts.setEdibleProductDenomination(newEdibleProduct.getEdibleProductDenomination());
+        edibleProducts.setEdibleProductSubId(subid);
 
-        return edibleProductsRepository.save(edibleProducts);
+        edibleProductsRepository.save(edibleProducts);
+
+        /**
+         * Create the edible products inventory model
+         * */
+        EdibleProductsInventory edibleProductsInventory = new EdibleProductsInventory();
+
+        edibleProductsInventory.setEdibleProductCostPrice(newEdibleProduct.getEdibleProductCostPrice());
+        edibleProductsInventory.setEdibleProductFixedCost(newEdibleProduct.getEdibleProductFixedCost());
+        edibleProductsInventory.setEdibleProductInventoryExpiry(expiryDate);
+        edibleProductsInventory.setEdibleProductInventoryAddedBy(edibleProductAddedBy);
+        edibleProductsInventory.setEdibleProductInventoryAddedOn(LocalDateTime.now());
+        edibleProductsInventory.setEdibleProductInventoryQtyAdded(newEdibleProduct.getEdibleProductQuantity());
+
+        edibleProductsInventoryRepository.save(edibleProductsInventory);
+
+        List<Object> res = new ArrayList<>();
+
+        res.add(edibleProducts);
+        res.add(edibleProductsInventory);
+
+        return ResponseEntity.status(201).body(
+            createResponse.createSuccessResponse(
+                200,
+                "Product created",
+                res
+                )
+        );
     }
 
 }

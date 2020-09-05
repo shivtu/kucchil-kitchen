@@ -84,7 +84,7 @@ public class VegitablesService {
             }
 
             /* Return error if item category does not exist */
-            ValidationResponse itemCategoryValidationStatus = validations.validateItemClassification(newVegitables.getItemClassificationCode());
+            ValidationResponse itemCategoryValidationStatus = validations.validateItemClassificationCode(newVegitables.getItemClassificationCode());
             if(itemCategoryValidationStatus.getStatusCode() != validations.validationSuccessCode) {
                 return ResponseEntity.status(itemCategoryValidationStatus.getStatusCode()).body(
                         itemCategoryValidationStatus
@@ -135,13 +135,13 @@ public class VegitablesService {
             Float vegitableDiscountedPrice;
             if(customerOrdersDiscount.isEmpty()){
                 vegitables.setVegitableOfferedDiscountName(newVegitables.getVegitableOfferedDiscountName());
-                vegitableDiscountedPrice = discountCalculator.calcVegDiscountedPrice(vegitableSellingPrice, newVegitables.getVegitableOfferedDiscount());
+                vegitableDiscountedPrice = discountCalculator.calcDiscountedPrice(vegitableSellingPrice, newVegitables.getVegitableOfferedDiscount());
                 vegitables.setVegitableDiscountedPrice(vegitableDiscountedPrice); /* Calculate discounted vegitable price */
                 vegitables.setVegitableOfferedDiscount(newVegitables.getVegitableOfferedDiscount());
                 vegitables.setVegitableTaxedPrice(vegitablesHelper.calcAmountAfterTax(newVegitables.getVegitableApplicableTaxes(), vegitableDiscountedPrice));
             } else {
                 vegitables.setVegitableOfferedDiscountName(customerOrdersDiscount.get().getDiscountName());
-                vegitableDiscountedPrice = discountCalculator.calcVegDiscountedPrice(vegitableSellingPrice, customerOrdersDiscount.get().getDiscountPercentage());
+                vegitableDiscountedPrice = discountCalculator.calcDiscountedPrice(vegitableSellingPrice, customerOrdersDiscount.get().getDiscountPercentage());
                 vegitables.setVegitableDiscountedPrice(vegitableDiscountedPrice);
                 vegitables.setVegitableOfferedDiscount(customerOrdersDiscount.get().getDiscountPercentage());
                 vegitables.setVegitableTaxedPrice(vegitablesHelper.calcAmountAfterTax(newVegitables.getVegitableApplicableTaxes(), vegitableDiscountedPrice));

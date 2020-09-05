@@ -22,7 +22,7 @@ public class CustomerOrdersHelper {
     }
 
     public Float calcVegDiscountedPrice(Float sellingPrice, Float discountPercent) {
-        return discountCalculator.calcVegDiscountedPrice(sellingPrice, discountPercent);
+        return discountCalculator.calcDiscountedPrice(sellingPrice, discountPercent);
     }
 
     public Float calcSpecialDiscount (Float totalAmountBeforeDiscountAndTax, Float discountPercent) {

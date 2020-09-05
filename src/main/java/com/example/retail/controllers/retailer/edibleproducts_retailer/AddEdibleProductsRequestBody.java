@@ -2,6 +2,7 @@ package com.example.retail.controllers.retailer.edibleproducts_retailer;
 
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Component
@@ -45,16 +46,22 @@ public class AddEdibleProductsRequestBody {
 
     private Float edibleProductDenomination;
 
+    private Float edibleProductCostPrice;
+
+    private Float edibleProductFixedCost;
+
+    private String edibleProductInventoryExpiry;
+
     public AddEdibleProductsRequestBody() {}
 
     public AddEdibleProductsRequestBody(String edibleProductManufacturer, String edibleProductName, String edibleProductVariant,
                                         String edibleProductFlavor, String edibleProductType, String edibleProductDescription,
-                                        String edibleProductGenericName, String edibleProductAlternaleName,
-                                        String itemClassificationName, String itemClassificationCode, Boolean edibleProductForMinors,
-                                        Boolean edibleProductAvailable, Float edibleProductMrp, Float edibleProductOfferedDiscount,
-                                        String edibleProductsDiscountName, ArrayList<String> edibleProductApplicableTaxes,
-                                        Float edibleProductQuantity, String edibleProductsMeasureMentUnit,
-                                        Float edibleProductDenomination) {
+                                        String edibleProductGenericName, String edibleProductAlternaleName, String itemClassificationName,
+                                        String itemClassificationCode, Boolean edibleProductForMinors, Boolean edibleProductAvailable,
+                                        Float edibleProductMrp, Float edibleProductOfferedDiscount, String edibleProductsDiscountName,
+                                        ArrayList<String> edibleProductApplicableTaxes, Float edibleProductQuantity, String edibleProductsMeasureMentUnit,
+                                        Float edibleProductDenomination, Float edibleProductCostPrice, Float edibleProductFixedCost,
+                                        String edibleProductInventoryExpiry) {
         this.edibleProductManufacturer = edibleProductManufacturer;
         this.edibleProductName = edibleProductName;
         this.edibleProductVariant = edibleProductVariant;
@@ -74,6 +81,9 @@ public class AddEdibleProductsRequestBody {
         this.edibleProductQuantity = edibleProductQuantity;
         this.edibleProductsMeasureMentUnit = edibleProductsMeasureMentUnit;
         this.edibleProductDenomination = edibleProductDenomination;
+        this.edibleProductCostPrice = edibleProductCostPrice;
+        this.edibleProductFixedCost = edibleProductFixedCost;
+        this.edibleProductInventoryExpiry = edibleProductInventoryExpiry;
     }
 
     public String getEdibleProductManufacturer() {
@@ -226,5 +236,29 @@ public class AddEdibleProductsRequestBody {
 
     public void setEdibleProductDenomination(Float edibleProductDenomination) {
         this.edibleProductDenomination = edibleProductDenomination;
+    }
+
+    public Float getEdibleProductCostPrice() {
+        return edibleProductCostPrice;
+    }
+
+    public void setEdibleProductCostPrice(Float edibleProductCostPrice) {
+        this.edibleProductCostPrice = edibleProductCostPrice;
+    }
+
+    public Float getEdibleProductFixedCost() {
+        return edibleProductFixedCost;
+    }
+
+    public void setEdibleProductFixedCost(Float edibleProductFixedCost) {
+        this.edibleProductFixedCost = edibleProductFixedCost;
+    }
+
+    public String getEdibleProductInventoryExpiry() {
+        return edibleProductInventoryExpiry;
+    }
+
+    public void setEdibleProductInventoryExpiry(String edibleProductInventoryExpiry) {
+        this.edibleProductInventoryExpiry = edibleProductInventoryExpiry;
     }
 }
