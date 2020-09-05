@@ -78,16 +78,16 @@ public class VegitablesRetailerController {
                 List<Object> result = vegitableInventoryService.updateVegitableQty(tableId, quantity, request);
 
                 return ResponseEntity.status(201).body(
-                        createResponse.createSuccessResponse(
-                                201,
-                                "Quantity updated",
-                                result
-                        )
+                    createResponse.createSuccessResponse(
+                        201,
+                        "Quantity updated!!",
+                        result
+                    )
                 );
             } else {
                 return ResponseEntity.status(400).body(
                         createResponse.createErrorResponse(400, "Vegitable not found",
-                                "This item does not exist")
+                            "This item does not exist")
                 );
             }
         }catch (Exception e) {

@@ -1,6 +1,5 @@
 package com.example.retail.models.vegitables;
 
-import com.example.retail.util.InventoryAdditionDetails;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;

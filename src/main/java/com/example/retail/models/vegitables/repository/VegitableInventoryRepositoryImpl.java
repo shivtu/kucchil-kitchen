@@ -1,6 +1,6 @@
 package com.example.retail.models.vegitables.repository;
 
-import com.example.retail.util.InventoryAdditionDetails;
+import com.example.retail.models.vegitables.InventoryAdditionDetails;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import org.hibernate.query.NativeQuery;
 import org.springframework.transaction.annotation.Transactional;

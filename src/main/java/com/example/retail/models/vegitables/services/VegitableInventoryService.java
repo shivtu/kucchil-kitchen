@@ -1,7 +1,7 @@
 package com.example.retail.models.vegitables.services;
 
 import com.example.retail.controllers.retailer.vegitables_retailer.UpdateVegitablesInventoryRequest;
-import com.example.retail.util.InventoryAdditionDetails;
+import com.example.retail.models.vegitables.InventoryAdditionDetails;
 import com.example.retail.models.vegitables.Vegitables;
 import com.example.retail.models.vegitables.VegitablesInventory;
 import com.example.retail.models.vegitables.repository.VegitableInventoryRepository;
@@ -152,10 +152,10 @@ public class VegitableInventoryService {
 
         vegitableInventoryRepositoryImpl.updateVegitablesAdditionDetails(vegSubId, inventoryAdditionDetailsList);
 
-        /** Return the response by fetching the vegitables and vegitablesInventory **/
-        List<Object> finalRes = new ArrayList<>();
-        finalRes.add(vegitablesService.findBySubIdVegitableWithInventory(vegSubId));
+//        /** Return the response by fetching the vegitables and vegitablesInventory **/
+//        List<Object> finalRes = new ArrayList<>();
+//        finalRes.add(vegitablesService.findBySubIdVegitableWithInventory(vegSubId));
 
-        return finalRes;
+        return vegitablesService.findBySubIdVegitableWithInventory(vegSubId);
     }
 }

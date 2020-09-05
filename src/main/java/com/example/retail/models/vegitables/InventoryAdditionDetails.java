@@ -1,4 +1,4 @@
-package com.example.retail.util;
+package com.example.retail.models.vegitables;
 
 import java.time.LocalDateTime;
 

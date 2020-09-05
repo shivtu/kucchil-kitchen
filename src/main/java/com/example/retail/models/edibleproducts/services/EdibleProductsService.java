@@ -26,7 +26,7 @@ public class EdibleProductsService {
         return productsRepository.saveAll(newProducts);
     }
 
-    public EdibleProducts addProduct(EdibleProducts newProduct){
+    public EdibleProducts addEdibleProduct(EdibleProducts newProduct){
         return productsRepository.save(newProduct);
     }
 

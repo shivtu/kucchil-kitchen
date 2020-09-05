@@ -238,27 +238,17 @@ public class VegitablesService {
         return vegitablesRepository.findAllUnavailableVegitables();
     }
 
-    public ResponseEntity<Object> findBySubIdVegitableWithInventory(String vegSubId) {
-        try{
-            Optional<Vegitables> v= vegitablesRepository.findBySubId(vegSubId);
-            Optional<VegitablesInventory> vi =vegitableInventoryService.findVegitableInventoryBySubId(vegSubId);
+    public List<Object> findBySubIdVegitableWithInventory(String vegSubId) {
 
-            List<Object> finalRes = new ArrayList<>();
-            Map<String, Object> res = new HashMap<>();
-            res.put("vegitables", v);
-            res.put("vegitablesInventory", vi);
-            finalRes.add(res);
+        Optional<Vegitables> v= vegitablesRepository.findBySubId(vegSubId);
+        Optional<VegitablesInventory> vi =vegitableInventoryService.findVegitableInventoryBySubId(vegSubId);
 
-            return ResponseEntity.status(200).body(
-                    createResponse.createSuccessResponse(200, "Vegitable and its inventory", finalRes)
-            );
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(
-                    createResponse.createErrorResponse(500, e.getMessage(), "NA")
-            );
-        }
-
-
+        List<Object> finalRes = new ArrayList<>();
+        Map<String, Object> res = new HashMap<>();
+        res.put("vegitables", v);
+        res.put("vegitablesInventory", vi);
+        finalRes.add(res);
+        return finalRes;
     }
 
     public List<Vegitables> findVegitablesByItemCategory(String itemClassificationName) {

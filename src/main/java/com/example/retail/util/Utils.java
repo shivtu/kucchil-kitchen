@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import java.io.File;
@@ -82,5 +83,19 @@ public class Utils {
             CONSTRAINTS : atleast 3 orders or 1 order per month in the last 3 months
          */
         return 0F;
+    }
+
+    public String genearteEdibleProductSubId(
+            String edibleProductManufacturer,
+            String edibleProductName,
+            String edibleProductVariant,
+            String edibleProductFlavor,
+            LocalDate edibleProductInventoryExpiry
+    ) {
+        return edibleProductManufacturer.toLowerCase()
+                + edibleProductName.toLowerCase()
+                + edibleProductVariant.toLowerCase()
+                + edibleProductFlavor.toLowerCase()
+                + edibleProductInventoryExpiry.toString().toLowerCase();
     }
 }
