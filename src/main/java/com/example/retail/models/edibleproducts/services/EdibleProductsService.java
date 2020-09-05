@@ -1,5 +1,6 @@
 package com.example.retail.models.edibleproducts.services;
 
+import com.example.retail.controllers.retailer.edibleproducts_retailer.AddEdibleProductsRequestBody;
 import com.example.retail.models.edibleproducts.EdibleProducts;
 import com.example.retail.models.edibleproducts.repository.EdibleProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import java.util.Optional;
 public class EdibleProductsService {
 
     @Autowired
-    EdibleProductsRepository productsRepository;
+    EdibleProductsRepository edibleProductsRepository;
 
     public String genearteEdibleProductSubId(
             String edibleProductManufacturer,
@@ -32,19 +33,40 @@ public class EdibleProductsService {
     }
 
     public List<EdibleProducts> getAllProducts(){
-        return  productsRepository.findAll();
+        return  edibleProductsRepository.findAll();
     }
 
     public Optional<EdibleProducts> getProductById(Long productId) {
-        return productsRepository.findById(productId);
+        return edibleProductsRepository.findById(productId);
     }
 
-    public Iterable<EdibleProducts> addProducts(List<EdibleProducts> newProducts) {
-        return productsRepository.saveAll(newProducts);
+    public Iterable<EdibleProducts> addAllEdibleProducts(List<EdibleProducts> newProducts) {
+        return edibleProductsRepository.saveAll(newProducts);
     }
 
-    public EdibleProducts addEdibleProduct(EdibleProducts newProduct){
-        return productsRepository.save(newProduct);
+    public EdibleProducts addEdibleProduct(AddEdibleProductsRequestBody newEdibleProduct){
+        EdibleProducts edibleProducts = new EdibleProducts();
+        edibleProducts.setEdibleProductManufacturer(newEdibleProduct.getEdibleProductManufacturer());
+        edibleProducts.setEdibleProductName(newEdibleProduct.getEdibleProductName());
+        edibleProducts.setEdibleProductVariant(newEdibleProduct.getEdibleProductVariant());
+        edibleProducts.setEdibleProductFlavor(newEdibleProduct.getEdibleProductFlavor());
+        edibleProducts.setEdibleProductType(newEdibleProduct.getEdibleProductType());
+        edibleProducts.setEdibleProductDescription(newEdibleProduct.getEdibleProductDescription());
+        edibleProducts.setEdibleProductGenericName(newEdibleProduct.getEdibleProductGenericName());
+        edibleProducts.setEdibleProductAlternaleName(newEdibleProduct.getEdibleProductAlternaleName());
+        edibleProducts.setItemClassificationName(newEdibleProduct.getItemClassificationName());
+        edibleProducts.setItemClassificationCode(newEdibleProduct.getItemClassificationCode());
+        edibleProducts.setEdibleProductForMinors(newEdibleProduct.getEdibleProductForMinors());
+        edibleProducts.setEdibleProductAvailable(newEdibleProduct.getEdibleProductAvailable());
+        edibleProducts.setEdibleProductMrp(newEdibleProduct.getEdibleProductMrp());
+        edibleProducts.setEdibleProductOfferedDiscount(newEdibleProduct.getEdibleProductOfferedDiscount());
+        edibleProducts.setEdibleProductsDiscountName(newEdibleProduct.getEdibleProductsDiscountName());
+        edibleProducts.setEdibleProductApplicableTaxes(newEdibleProduct.getEdibleProductApplicableTaxes());
+        edibleProducts.setEdibleProductQuantity(newEdibleProduct.getEdibleProductQuantity());
+        edibleProducts.setEdibleProductsMeasureMentUnit(newEdibleProduct.getEdibleProductsMeasureMentUnit());
+        edibleProducts.setEdibleProductDenomination(newEdibleProduct.getEdibleProductDenomination());
+
+        return edibleProductsRepository.save(edibleProducts);
     }
 
 }

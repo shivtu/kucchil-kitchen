@@ -31,16 +31,11 @@ public class EdibleProductsRetailerController {
         return productsService.getProductById(productId);
     }
 
-    @PostMapping(value = "/addproducts", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Iterable<EdibleProducts> addProducts(@RequestBody List<EdibleProducts> newProducts) {
-        return productsService.addProducts(newProducts);
-    }
-
     @RequestMapping(method=RequestMethod.POST, value = "/addproduct",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public EdibleProducts addProduct(@RequestBody(required = true) EdibleProducts newProduct) {
-        return productsService.addProduct(newProduct);
+    public EdibleProducts addProduct(@RequestBody(required = true) AddEdibleProductsRequestBody newProduct) {
+        return productsService.addEdibleProduct(newProduct);
     }
 
 }
