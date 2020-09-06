@@ -1,13 +1,25 @@
 package com.example.retail.models.edibleproducts;
 
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
+
 import javax.persistence.*;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "edibleproduct_inventory")
+@TypeDefs({
+    @TypeDef(
+        name = "psql-jsonb",
+        typeClass = JsonBinaryType.class
+    )
+})
 public class EdibleProductsInventory {
 
     @Id
@@ -45,6 +57,10 @@ public class EdibleProductsInventory {
     @Column(name = "edibleproductinventory_qtyadded")
     private Float edibleProductInventoryQtyAdded;
 
+    @Column(name = "edibleproductinventory_supplier", columnDefinition = "jsonb")
+    @Type(type = "psql-jsonb")
+    private List<EdibleProductsSupplier> edibleProductsSupplier;
+
     @NotNull
     @Column(name = "edible_product_subid")
     private String edibleProductSubId;
@@ -54,7 +70,8 @@ public class EdibleProductsInventory {
     public EdibleProductsInventory(@NotNull Float edibleProductCostPrice, @NotNull Float edibleProductFixedCost,
                                    @NotNull Float edibleProductSellingPrice, @NotNull @Future LocalDate edibleProductInventoryExpiry,
                                    @NotNull String edibleProductInventoryAddedBy, @NotNull LocalDateTime edibleProductInventoryAddedOn,
-                                   @NotNull Float edibleProductInventoryQtyAdded, @NotNull String edibleProductSubId) {
+                                   @NotNull Float edibleProductInventoryQtyAdded, List<EdibleProductsSupplier> edibleProductsSupplier,
+                                   @NotNull String edibleProductSubId) {
         this.edibleProductCostPrice = edibleProductCostPrice;
         this.edibleProductFixedCost = edibleProductFixedCost;
         this.edibleProductSellingPrice = edibleProductSellingPrice;
@@ -62,6 +79,7 @@ public class EdibleProductsInventory {
         this.edibleProductInventoryAddedBy = edibleProductInventoryAddedBy;
         this.edibleProductInventoryAddedOn = edibleProductInventoryAddedOn;
         this.edibleProductInventoryQtyAdded = edibleProductInventoryQtyAdded;
+        this.edibleProductsSupplier = edibleProductsSupplier;
         this.edibleProductSubId = edibleProductSubId;
     }
 
@@ -127,6 +145,14 @@ public class EdibleProductsInventory {
 
     public void setEdibleProductInventoryQtyAdded(Float edibleProductInventoryQtyAdded) {
         this.edibleProductInventoryQtyAdded = edibleProductInventoryQtyAdded;
+    }
+
+    public List<EdibleProductsSupplier> getEdibleProductsSupplier() {
+        return edibleProductsSupplier;
+    }
+
+    public void setEdibleProductsSupplier(List<EdibleProductsSupplier> edibleProductsSupplier) {
+        this.edibleProductsSupplier = edibleProductsSupplier;
     }
 
     public String getEdibleProductSubId() {

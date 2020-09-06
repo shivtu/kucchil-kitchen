@@ -15,10 +15,10 @@ import java.util.List;
 @Entity
 @Table(name = "vegitables_inventory")
 @TypeDefs({
-        @TypeDef(
-                name = "psql-jsonb",
-                typeClass = JsonBinaryType.class
-        )
+    @TypeDef(
+        name = "psql-jsonb",
+        typeClass = JsonBinaryType.class
+    )
 })
 public class VegitablesInventory implements Serializable {
 
