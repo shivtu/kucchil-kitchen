@@ -1,7 +1,9 @@
 package com.example.retail.models.edibleproducts.services;
 
 import com.example.retail.controllers.retailer.edibleproducts_retailer.AddEdibleProductsRequestBody;
+import com.example.retail.models.discounts.CustomerOrdersDiscount;
 import com.example.retail.models.discounts.DiscountCalculator;
+import com.example.retail.models.discounts.services.CustomerOrdersDiscountServices;
 import com.example.retail.models.edibleproducts.EdibleProducts;
 import com.example.retail.models.edibleproducts.EdibleProductsInventory;
 import com.example.retail.models.edibleproducts.repository.EdibleProductsInventoryRepository;
@@ -45,6 +47,9 @@ public class EdibleProductsService {
 
     @Autowired
     JWTDetails jwtDetails;
+
+    @Autowired
+    CustomerOrdersDiscountServices customerOrdersDiscountServices;
 
     public String genearteEdibleProductSubId(
             String edibleProductManufacturer,
@@ -121,15 +126,49 @@ public class EdibleProductsService {
         edibleProducts.setEdibleProductMrp(newEdibleProduct.getEdibleProductMrp());
         edibleProducts.setEdibleProductOfferedDiscount(newEdibleProduct.getEdibleProductOfferedDiscount());
         edibleProducts.setEdibleProductsDiscountName(newEdibleProduct.getEdibleProductsDiscountName());
+
         /**
-         * Calculate the discounted price
+         * Check if discount exists
          **/
-        Float discountedPrice = newEdibleProduct.getEdibleProductMrp();
-        if(newEdibleProduct.getEdibleProductOfferedDiscount() > 0 && !newEdibleProduct.getEdibleProductsDiscountName().isEmpty()) {
-            discountedPrice = discountCalculator.calcDiscountedPrice(newEdibleProduct.getEdibleProductMrp(), newEdibleProduct.getEdibleProductOfferedDiscount());
+        Optional<CustomerOrdersDiscount> proposedDiscount =
+                customerOrdersDiscountServices.findByDiscountName(newEdibleProduct.getEdibleProductsDiscountName());
+
+        /**
+         * If discount does not exist, set the discount proposed in the payload
+         **/
+        Float discountedPrice = 0F;
+        if(proposedDiscount.isEmpty()) {
+            /**
+             * Calculate the discounted price from the payload
+             **/
+            discountedPrice  = discountCalculator.calcDiscountedPrice(
+                newEdibleProduct.getEdibleProductMrp(), newEdibleProduct.getEdibleProductOfferedDiscount()
+            );
+        }  else {
+            /**
+             * Calculate the discounted price from the DB record
+             **/
+            discountedPrice = discountCalculator.calcDiscountedPrice(
+                newEdibleProduct.getEdibleProductMrp(), proposedDiscount.get().getDiscountPercentage()
+            );
         }
+
+        /**
+         * Finally set the discounted price
+         **/
         edibleProducts.setEdibleProductDiscountedPrice(discountedPrice);
         edibleProducts.setEdibleProductApplicableTaxes(newEdibleProduct.getEdibleProductApplicableTaxes());
+
+        /**
+         * Validate the taxes in request body
+         **/
+        ValidationResponse taxValidation = validations.validateTaxes(newEdibleProduct.getEdibleProductApplicableTaxes());
+
+        if(taxValidation.getStatusCode() != validations.validationSuccessCode) {
+            return ResponseEntity.status(taxValidation.getStatusCode()).body(
+                taxValidation
+            );
+        }
 
         /**
          * Calculate taxed price after discount
@@ -149,10 +188,12 @@ public class EdibleProductsService {
 
         edibleProductsInventory.setEdibleProductCostPrice(newEdibleProduct.getEdibleProductCostPrice());
         edibleProductsInventory.setEdibleProductFixedCost(newEdibleProduct.getEdibleProductFixedCost());
+        edibleProductsInventory.setEdibleProductSellingPrice(discountedPrice);
         edibleProductsInventory.setEdibleProductInventoryExpiry(expiryDate);
         edibleProductsInventory.setEdibleProductInventoryAddedBy(edibleProductAddedBy);
         edibleProductsInventory.setEdibleProductInventoryAddedOn(LocalDateTime.now());
         edibleProductsInventory.setEdibleProductInventoryQtyAdded(newEdibleProduct.getEdibleProductQuantity());
+        edibleProductsInventory.setEdibleProductSubId(subid);
 
         edibleProductsInventoryRepository.save(edibleProductsInventory);
 

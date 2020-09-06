@@ -7,16 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "products")
+@Table(name = "edible_products")
 public class EdibleProducts {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="edible_product_tableid")
     private Long edibleProductsTableId;
 
     // Manufacturer of the product
     @NotNull
-    @Column(name = "")
+    @Column(name = "edible_product_manufacturer")
     private String edibleProductManufacturer;
 
     // Name given to the product by the manufacturer
@@ -42,9 +43,8 @@ public class EdibleProducts {
     @Column(name = "edible_product_description")
     private String edibleProductDescription;
 
-    @NotNull
     @Column(name = "edible_product_image_location")
-    private String edibleProductImageLocation;
+    private ArrayList<String> edibleProductImageLocation;
 
     // Generic item name
     @NotNull
@@ -122,17 +122,7 @@ public class EdibleProducts {
 
     public EdibleProducts(){}
 
-    public EdibleProducts(String edibleProductManufacturer, String edibleProductName,
-                          String edibleProductVariant, String edibleProductFlavor,
-                          String edibleProductType, String edibleProductDescription,
-                          String edibleProductImageLocation, String edibleProductGenericName,
-                          String edibleProductAlternaleName, String itemClassificationName,
-                          @NotEmpty @NotNull String itemClassificationCode, Boolean edibleProductForMinors,
-                          Boolean edibleProductAvailable, Float edibleProductMrp, Float edibleProductOfferedDiscount,
-                          String edibleProductsDiscountName, Float edibleProductDiscountedPrice,
-                          @NotNull ArrayList<String> edibleProductApplicableTaxes, Float edibleProductTaxedPrice,
-                          Float edibleProductQuantity, String edibleProductsMeasureMentUnit, Float edibleProductDenomination,
-                          @NotNull String edibleProductSubId) {
+    public EdibleProducts(@NotNull String edibleProductManufacturer, @NotNull String edibleProductName, @NotNull String edibleProductVariant, String edibleProductFlavor, String edibleProductType, @NotNull String edibleProductDescription, ArrayList<String> edibleProductImageLocation, @NotNull String edibleProductGenericName, String edibleProductAlternaleName, @NotNull String itemClassificationName, @NotEmpty @NotNull String itemClassificationCode, Boolean edibleProductForMinors, @NotNull Boolean edibleProductAvailable, @NotNull Float edibleProductMrp, @NotNull Float edibleProductOfferedDiscount, @NotNull String edibleProductsDiscountName, @NotNull Float edibleProductDiscountedPrice, @NotNull ArrayList<String> edibleProductApplicableTaxes, @NotNull Float edibleProductTaxedPrice, @NotNull Float edibleProductQuantity, @NotNull String edibleProductsMeasureMentUnit, @NotNull Float edibleProductDenomination, @NotNull String edibleProductSubId) {
         this.edibleProductManufacturer = edibleProductManufacturer;
         this.edibleProductName = edibleProductName;
         this.edibleProductVariant = edibleProductVariant;
@@ -214,11 +204,11 @@ public class EdibleProducts {
         this.edibleProductDescription = edibleProductDescription;
     }
 
-    public String getEdibleProductImageLocation() {
+    public ArrayList<String> getEdibleProductImageLocation() {
         return edibleProductImageLocation;
     }
 
-    public void setEdibleProductImageLocation(String edibleProductImageLocation) {
+    public void setEdibleProductImageLocation(ArrayList<String> edibleProductImageLocation) {
         this.edibleProductImageLocation = edibleProductImageLocation;
     }
 

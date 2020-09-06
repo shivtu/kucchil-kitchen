@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class EdibleProductsInventory {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "edibleproductinventory_tableid")
     private Long edibleProductInventoryTableId;
 

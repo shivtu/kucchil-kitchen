@@ -12,6 +12,7 @@ import com.example.retail.models.itemcategories.repository.ItemCategoriesReposit
 import com.example.retail.models.itemcategories.service.ItemCategoriesService;
 import com.example.retail.models.taxutility.Taxes;
 import com.example.retail.models.taxutility.repository.TaxRepository;
+import com.example.retail.models.taxutility.services.TaxService;
 import com.example.retail.models.vegitables.Vegitables;
 import com.example.retail.models.vegitables.VegitablesInventory;
 import com.example.retail.models.vegitables.services.VegitableInventoryService;
@@ -46,7 +47,7 @@ public class Validations {
     UsersProfileService usersProfileService;
 
     @Autowired
-    TaxRepository taxRepository;
+    TaxService taxService;
 
     public int validationSuccessCode = 1;
     public int unprocessableRequestCode = 422;
@@ -80,7 +81,7 @@ public class Validations {
         AtomicReference<Boolean> taxAvailable = new AtomicReference<>(true);
         ArrayList<String> applicableTaxes = newVegitables.getVegitableApplicableTaxes();
         applicableTaxes.forEach(applicableTax -> {
-            Optional<Taxes> taxes = taxRepository.findBytaxName(applicableTax);
+            Optional<Taxes> taxes = taxService.findByName(applicableTax);
             if (taxes.isEmpty()) {
                 taxAvailable.set(false);
             }
@@ -220,5 +221,30 @@ public class Validations {
         }
         return createResponse.createValidationResponse(validationSuccessCode, "User validated",
                 "NA", null);
+    }
+
+    public ValidationResponse validateTaxes(ArrayList<String> taxNameList) {
+        AtomicReference<Boolean> taxAvailable = new AtomicReference<>(true);
+        taxNameList.forEach(taxName -> {
+            Optional<Taxes> taxes = taxService.findByName(taxName);
+            if (taxes.isEmpty()) {
+                taxAvailable.set(false);
+            }
+        });
+        if(!taxAvailable.get()) {
+            return createResponse.createValidationResponse(
+                badRequestCode,
+                "Applied taxes not found",
+                "Create a tax and then apply to the product or apply one of the existing tax",
+                null
+            );
+        }
+
+        return createResponse.createValidationResponse(
+            validationSuccessCode,
+            "OK",
+            "NA",
+            null
+        );
     }
 }

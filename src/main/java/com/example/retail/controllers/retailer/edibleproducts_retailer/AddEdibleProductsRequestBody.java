@@ -46,6 +46,8 @@ public class AddEdibleProductsRequestBody {
 
     private Float edibleProductDenomination;
 
+    private ArrayList<String> edibleProductImageLocation;
+
     private Float edibleProductCostPrice;
 
     private Float edibleProductFixedCost;
@@ -54,14 +56,7 @@ public class AddEdibleProductsRequestBody {
 
     public AddEdibleProductsRequestBody() {}
 
-    public AddEdibleProductsRequestBody(String edibleProductManufacturer, String edibleProductName, String edibleProductVariant,
-                                        String edibleProductFlavor, String edibleProductType, String edibleProductDescription,
-                                        String edibleProductGenericName, String edibleProductAlternaleName, String itemClassificationName,
-                                        String itemClassificationCode, Boolean edibleProductForMinors, Boolean edibleProductAvailable,
-                                        Float edibleProductMrp, Float edibleProductOfferedDiscount, String edibleProductsDiscountName,
-                                        ArrayList<String> edibleProductApplicableTaxes, Float edibleProductQuantity, String edibleProductsMeasureMentUnit,
-                                        Float edibleProductDenomination, Float edibleProductCostPrice, Float edibleProductFixedCost,
-                                        String edibleProductInventoryExpiry) {
+    public AddEdibleProductsRequestBody(String edibleProductManufacturer, String edibleProductName, String edibleProductVariant, String edibleProductFlavor, String edibleProductType, String edibleProductDescription, String edibleProductGenericName, String edibleProductAlternaleName, String itemClassificationName, String itemClassificationCode, Boolean edibleProductForMinors, Boolean edibleProductAvailable, Float edibleProductMrp, Float edibleProductOfferedDiscount, String edibleProductsDiscountName, ArrayList<String> edibleProductApplicableTaxes, Float edibleProductQuantity, String edibleProductsMeasureMentUnit, Float edibleProductDenomination, ArrayList<String> edibleProductImageLocation, Float edibleProductCostPrice, Float edibleProductFixedCost, String edibleProductInventoryExpiry) {
         this.edibleProductManufacturer = edibleProductManufacturer;
         this.edibleProductName = edibleProductName;
         this.edibleProductVariant = edibleProductVariant;
@@ -81,6 +76,7 @@ public class AddEdibleProductsRequestBody {
         this.edibleProductQuantity = edibleProductQuantity;
         this.edibleProductsMeasureMentUnit = edibleProductsMeasureMentUnit;
         this.edibleProductDenomination = edibleProductDenomination;
+        this.edibleProductImageLocation = edibleProductImageLocation;
         this.edibleProductCostPrice = edibleProductCostPrice;
         this.edibleProductFixedCost = edibleProductFixedCost;
         this.edibleProductInventoryExpiry = edibleProductInventoryExpiry;
@@ -236,6 +232,14 @@ public class AddEdibleProductsRequestBody {
 
     public void setEdibleProductDenomination(Float edibleProductDenomination) {
         this.edibleProductDenomination = edibleProductDenomination;
+    }
+
+    public ArrayList<String> getEdibleProductImageLocation() {
+        return edibleProductImageLocation;
+    }
+
+    public void setEdibleProductImageLocation(ArrayList<String> edibleProductImageLocation) {
+        this.edibleProductImageLocation = edibleProductImageLocation;
     }
 
     public Float getEdibleProductCostPrice() {

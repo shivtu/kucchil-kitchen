@@ -46,7 +46,8 @@ public class EdibleProductsRetailerController {
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Object> addEdibleProduct(
             HttpServletRequest request,
-            @ModelAttribute AddEdibleProductsRequestBody newProduct) {
+            @ModelAttribute AddEdibleProductsRequestBody newProduct,
+            @RequestParam("images") ArrayList<MultipartFile> images) {
 
         try {
             return edibleProductsService.addEdibleProduct(request,newProduct);
@@ -55,7 +56,7 @@ public class EdibleProductsRetailerController {
                 createResponse.createErrorResponse(
                     500,
                     e.getMessage(),
-                    "NA"
+                    e.toString()
                 )
             );
         }

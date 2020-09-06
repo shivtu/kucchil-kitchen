@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaxService {
@@ -57,5 +58,9 @@ public class TaxService {
 
     public List<Taxes> findAll() {
         return taxRepository.findAll();
+    }
+
+    public Optional findByName(String taxName) {
+        return  taxRepository.findBytaxName(taxName);
     }
 }
