@@ -26,20 +26,14 @@ public class EdibleProductsRetailerController {
     @Autowired
     CreateResponse createResponse;
 
-
     @GetMapping("/welcome")
     public String welcome() {
         return "Welcome!";
     }
 
     @GetMapping(value = "/allproducts")
-    public Iterable<EdibleProducts> getAllProducts(){
-        return edibleProductsService.getAllProducts();
-    }
-
-    @GetMapping("/productbyid/{productId}")
-    public Optional<EdibleProducts> getProductById(@PathVariable Long productId){
-        return edibleProductsService.getProductById(productId);
+    public List<EdibleProducts> findAll(){
+        return edibleProductsService.findAll();
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,

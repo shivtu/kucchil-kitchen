@@ -7,6 +7,9 @@ import com.example.retail.models.customerorders.CustomerOrdersItemsList;
 import com.example.retail.models.deliveryutility.DeliveryCharges;
 import com.example.retail.models.discounts.CustomerOrdersDiscount;
 import com.example.retail.models.discounts.services.CustomerOrdersDiscountServices;
+import com.example.retail.models.edibleproducts.EdibleProducts;
+import com.example.retail.models.edibleproducts.repository.EdibleProductsRepository;
+import com.example.retail.models.edibleproducts.services.EdibleProductsService;
 import com.example.retail.models.itemcategories.ItemCategories;
 import com.example.retail.models.itemcategories.repository.ItemCategoriesRepository;
 import com.example.retail.models.itemcategories.service.ItemCategoriesService;
@@ -15,6 +18,7 @@ import com.example.retail.models.taxutility.repository.TaxRepository;
 import com.example.retail.models.taxutility.services.TaxService;
 import com.example.retail.models.vegitables.Vegitables;
 import com.example.retail.models.vegitables.VegitablesInventory;
+import com.example.retail.models.vegitables.repository.VegitablesRepository;
 import com.example.retail.models.vegitables.services.VegitableInventoryService;
 import com.example.retail.models.vegitables.services.VegitablesService;
 import com.example.retail.users.profiles.UsersProfile;
@@ -32,7 +36,7 @@ public class Validations {
     CreateResponse createResponse;
 
     @Autowired
-    VegitablesService vegitablesService;
+    VegitablesRepository vegitablesRepository;
 
     @Autowired
     VegitableInventoryService vegitableInventoryService;
@@ -49,13 +53,16 @@ public class Validations {
     @Autowired
     TaxService taxService;
 
+    @Autowired
+    EdibleProductsRepository edibleProductsRepository;
+
     public int validationSuccessCode = 1;
     public int unprocessableRequestCode = 422;
     public int badRequestCode = 400;
 
     public ValidationResponse validateNewVegitables(AddVegitablesRequestBody newVegitables, String vegSubId) {
 
-        Optional<Vegitables> vegitables = vegitablesService.findBySubId(vegSubId);
+        Optional<Vegitables> vegitables = vegitablesRepository.findBySubId(vegSubId);
         // If the item already exists
         if(vegitables.isPresent()) {
             return createResponse.createValidationResponse(
@@ -246,5 +253,27 @@ public class Validations {
             "NA",
             null
         );
+    }
+
+    public ValidationResponse validateNewEdibleProductExits (String subId) {
+
+        Optional<EdibleProducts> edibleProductBySubId = edibleProductsRepository.findEdibleProductBySubId(subId);
+
+        if(edibleProductBySubId.isPresent()) {
+            return createResponse.createValidationResponse(
+                unprocessableRequestCode,
+                "This product already exists",
+                "Try updating the quantity only or create new inventory",
+                edibleProductBySubId
+            );
+        }
+
+        return createResponse.createValidationResponse(
+            validationSuccessCode,
+            "Product can be created",
+            "NA",
+            null
+        );
+
     }
 }

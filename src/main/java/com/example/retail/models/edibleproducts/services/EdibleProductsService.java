@@ -20,9 +20,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class EdibleProductsService {
@@ -60,19 +58,15 @@ public class EdibleProductsService {
             LocalDate edibleProductInventoryExpiry
     ) {
         return edibleProductManufacturer.toLowerCase()
-                + edibleProductName.toLowerCase()
-                + edibleProductVariant.toLowerCase()
-                + edibleProductFlavor.toLowerCase()
-                + edibleProductDenomination.toString().toLowerCase()
-                + edibleProductInventoryExpiry.toString().toLowerCase();
+            + edibleProductName.toLowerCase()
+            + edibleProductVariant.toLowerCase()
+            + edibleProductFlavor.toLowerCase()
+            + edibleProductDenomination.toString().toLowerCase()
+            + edibleProductInventoryExpiry.toString().toLowerCase();
     }
 
-    public List<EdibleProducts> getAllProducts(){
+    public List<EdibleProducts> findAll(){
         return  edibleProductsRepository.findAll();
-    }
-
-    public Optional<EdibleProducts> getProductById(Long productId) {
-        return edibleProductsRepository.findById(productId);
     }
 
     public Iterable<EdibleProducts> addAllEdibleProducts(List<EdibleProducts> newProducts) {
@@ -92,8 +86,19 @@ public class EdibleProductsService {
             newEdibleProduct.getEdibleProductFlavor(),
             newEdibleProduct.getEdibleProductDenomination(),
             expiryDate
-
         );
+
+        /**
+         * Validate if product already exists
+         * Return Error response from validation if validation fails
+         * */
+        ValidationResponse validateIfProductExists = validations.validateNewEdibleProductExits(subid);
+
+        if(validateIfProductExists.getStatusCode() != validations.validationSuccessCode) {
+            return ResponseEntity.status(validateIfProductExists.getStatusCode()).body(
+               validateIfProductExists
+            );
+        }
 
         /**
          * Create the edible products model
@@ -197,16 +202,20 @@ public class EdibleProductsService {
 
         edibleProductsInventoryRepository.save(edibleProductsInventory);
 
-        List<Object> res = new ArrayList<>();
+        Map<String, Object> res = new HashMap<String, Object>();
 
-        res.add(edibleProducts);
-        res.add(edibleProductsInventory);
+        res.put("edibleProduct", edibleProducts);
+        res.put("edibleProductInventory", edibleProductsInventory);
+
+        List<Object> finalRes = new ArrayList<>();
+
+        finalRes.add(res);
 
         return ResponseEntity.status(201).body(
             createResponse.createSuccessResponse(
                 200,
                 "Product created",
-                res
+                finalRes
                 )
         );
     }
