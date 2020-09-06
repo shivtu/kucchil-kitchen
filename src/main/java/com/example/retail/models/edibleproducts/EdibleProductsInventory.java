@@ -1,5 +1,6 @@
 package com.example.retail.models.edibleproducts;
 
+import com.example.retail.models.jsonmodels.Suppliers;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -59,7 +60,7 @@ public class EdibleProductsInventory {
 
     @Column(name = "edibleproductinventory_supplier", columnDefinition = "jsonb")
     @Type(type = "psql-jsonb")
-    private List<EdibleProductsSupplier> edibleProductsSupplier;
+    private List<Suppliers> suppliers;
 
     @NotNull
     @Column(name = "edible_product_subid")
@@ -70,7 +71,7 @@ public class EdibleProductsInventory {
     public EdibleProductsInventory(@NotNull Float edibleProductCostPrice, @NotNull Float edibleProductFixedCost,
                                    @NotNull Float edibleProductSellingPrice, @NotNull @Future LocalDate edibleProductInventoryExpiry,
                                    @NotNull String edibleProductInventoryAddedBy, @NotNull LocalDateTime edibleProductInventoryAddedOn,
-                                   @NotNull Float edibleProductInventoryQtyAdded, List<EdibleProductsSupplier> edibleProductsSupplier,
+                                   @NotNull Float edibleProductInventoryQtyAdded, List<Suppliers> suppliers,
                                    @NotNull String edibleProductSubId) {
         this.edibleProductCostPrice = edibleProductCostPrice;
         this.edibleProductFixedCost = edibleProductFixedCost;
@@ -79,7 +80,7 @@ public class EdibleProductsInventory {
         this.edibleProductInventoryAddedBy = edibleProductInventoryAddedBy;
         this.edibleProductInventoryAddedOn = edibleProductInventoryAddedOn;
         this.edibleProductInventoryQtyAdded = edibleProductInventoryQtyAdded;
-        this.edibleProductsSupplier = edibleProductsSupplier;
+        this.suppliers = suppliers;
         this.edibleProductSubId = edibleProductSubId;
     }
 
@@ -147,12 +148,12 @@ public class EdibleProductsInventory {
         this.edibleProductInventoryQtyAdded = edibleProductInventoryQtyAdded;
     }
 
-    public List<EdibleProductsSupplier> getEdibleProductsSupplier() {
-        return edibleProductsSupplier;
+    public List<Suppliers> getEdibleProductsSupplier() {
+        return suppliers;
     }
 
-    public void setEdibleProductsSupplier(List<EdibleProductsSupplier> edibleProductsSupplier) {
-        this.edibleProductsSupplier = edibleProductsSupplier;
+    public void setEdibleProductsSupplier(List<Suppliers> suppliers) {
+        this.suppliers = suppliers;
     }
 
     public String getEdibleProductSubId() {

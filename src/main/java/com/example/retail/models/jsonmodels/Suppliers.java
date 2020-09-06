@@ -1,14 +1,14 @@
-package com.example.retail.models.edibleproducts;
+package com.example.retail.models.jsonmodels;
 
-public class EdibleProductsSupplier {
+public class Suppliers {
 
     private String supplierName;
     private String supplierAddress;
     private String supplierContact;
 
-    public EdibleProductsSupplier () {}
+    public Suppliers() {}
 
-    public EdibleProductsSupplier(String supplierName, String supplierAddress, String supplierContact) {
+    public Suppliers(String supplierName, String supplierAddress, String supplierContact) {
         this.supplierName = supplierName;
         this.supplierAddress = supplierAddress;
         this.supplierContact = supplierContact;

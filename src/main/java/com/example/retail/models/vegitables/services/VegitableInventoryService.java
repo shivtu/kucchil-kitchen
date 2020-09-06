@@ -1,7 +1,7 @@
 package com.example.retail.models.vegitables.services;
 
 import com.example.retail.controllers.retailer.vegitables_retailer.UpdateVegitablesInventoryRequest;
-import com.example.retail.models.vegitables.InventoryAdditionDetails;
+import com.example.retail.models.jsonmodels.InventoryAdditionDetails;
 import com.example.retail.models.vegitables.Vegitables;
 import com.example.retail.models.vegitables.VegitablesInventory;
 import com.example.retail.models.vegitables.repository.VegitableInventoryRepository;

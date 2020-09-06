@@ -1,5 +1,5 @@
 package com.example.retail.models.vegitables.repository;
-import com.example.retail.models.vegitables.InventoryAdditionDetails;
+import com.example.retail.models.jsonmodels.InventoryAdditionDetails;
 
 import java.util.List;
 

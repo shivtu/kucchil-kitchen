@@ -1,9 +1,11 @@
 package com.example.retail.controllers.retailer.vegitables_retailer;
 
+import com.example.retail.models.jsonmodels.Suppliers;
 import com.example.retail.models.vegitables.VegitableRecipes;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Component
@@ -43,13 +45,11 @@ public class AddVegitablesRequestBody {
 
     private Float vegitableInventoryFixedCost;
 
+    private ArrayList<Suppliers> suppliers;
+
     public AddVegitablesRequestBody(){}
 
-    public AddVegitablesRequestBody(ArrayList<String> vegitableApplicableTaxes, String vegitableName, String vegitableDescp, String vegitableVariant,
-                                    String itemClassificationName, String itemClassificationCode, VegitableRecipes vegitableRecepie,
-                                    Float vegitableSellingPrice, Float vegitableOfferedDiscount, String vegitableOfferedDiscountName,
-                                    Boolean vegitableShowDiscount, Float vegitableQuantity, Boolean vegitableAvailable, String vegitableMeasureMentUnit,
-                                    Float vegitableInventoryCostPrice, String vegitableInventoryExpiry, Float vegitableInventoryFixedCost) {
+    public AddVegitablesRequestBody(ArrayList<String> vegitableApplicableTaxes, String vegitableName, String vegitableDescp, String vegitableVariant, String itemClassificationName, String itemClassificationCode, VegitableRecipes vegitableRecepie, Float vegitableSellingPrice, Float vegitableOfferedDiscount, String vegitableOfferedDiscountName, Boolean vegitableShowDiscount, Float vegitableQuantity, Boolean vegitableAvailable, String vegitableMeasureMentUnit, Float vegitableInventoryCostPrice, String vegitableInventoryExpiry, Float vegitableInventoryFixedCost, ArrayList<Suppliers> suppliers) {
         this.vegitableApplicableTaxes = vegitableApplicableTaxes;
         this.vegitableName = vegitableName;
         this.vegitableDescp = vegitableDescp;
@@ -67,6 +67,7 @@ public class AddVegitablesRequestBody {
         this.vegitableInventoryCostPrice = vegitableInventoryCostPrice;
         this.vegitableInventoryExpiry = vegitableInventoryExpiry;
         this.vegitableInventoryFixedCost = vegitableInventoryFixedCost;
+        this.suppliers = suppliers;
     }
 
     public ArrayList<String> getVegitableApplicableTaxes() {
@@ -203,5 +204,13 @@ public class AddVegitablesRequestBody {
 
     public void setVegitableInventoryFixedCost(Float vegitableInventoryFixedCost) {
         this.vegitableInventoryFixedCost = vegitableInventoryFixedCost;
+    }
+
+    public ArrayList<Suppliers> getSuppliers() {
+        return suppliers;
+    }
+
+    public void setSuppliers(ArrayList<Suppliers> suppliers) {
+        this.suppliers = suppliers;
     }
 }

@@ -1,5 +1,7 @@
 package com.example.retail.models.vegitables;
 
+import com.example.retail.models.jsonmodels.InventoryAdditionDetails;
+import com.example.retail.models.jsonmodels.Suppliers;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -10,6 +12,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -57,6 +60,10 @@ public class VegitablesInventory implements Serializable {
     @Type(type = "psql-jsonb")
     private List<InventoryAdditionDetails> vegitableInventoryAdditionDetails;
 
+    @Column(name = "vegitablesinventory__supplier", columnDefinition = "jsonb")
+    @Type(type = "psql-jsonb")
+    private ArrayList<Suppliers> suppliers;
+
     @Column(name = "vegitable_subid", updatable = false, unique = true)
     private String vegitableSubId;
 
@@ -65,12 +72,14 @@ public class VegitablesInventory implements Serializable {
     public VegitablesInventory(@Min(value = 0, message = "Cost price cannot be 0") @NotNull Float vegitableInventoryCostPrice,
                                @Min(value = 0, message = "Fixed costs cannot be less than 0") @NotNull Float vegitableInventoryFixedCost,
                                @Min(value = 0, message = "Selling price cannot be less than 0") @NotNull(message = "Selling price is required") Float vegitableInventorySellingPrice,
-                               @Future @NotNull LocalDate vegitableInventoryExpiry, List<InventoryAdditionDetails> vegitableInventoryAdditionDetails, String vegitableSubId) {
+                               @Future @NotNull LocalDate vegitableInventoryExpiry, List<InventoryAdditionDetails> vegitableInventoryAdditionDetails,
+                               ArrayList<Suppliers> suppliers, String vegitableSubId) {
         this.vegitableInventoryCostPrice = vegitableInventoryCostPrice;
         this.vegitableInventoryFixedCost = vegitableInventoryFixedCost;
         this.vegitableInventorySellingPrice = vegitableInventorySellingPrice;
         this.vegitableInventoryExpiry = vegitableInventoryExpiry;
         this.vegitableInventoryAdditionDetails = vegitableInventoryAdditionDetails;
+        this.suppliers = suppliers;
         this.vegitableSubId = vegitableSubId;
     }
 
@@ -120,6 +129,14 @@ public class VegitablesInventory implements Serializable {
 
     public void setVegitableInventoryAdditionDetails(List<InventoryAdditionDetails> vegitableInventoryAdditionDetails) {
         this.vegitableInventoryAdditionDetails = vegitableInventoryAdditionDetails;
+    }
+
+    public ArrayList<Suppliers> getSuppliers() {
+        return suppliers;
+    }
+
+    public void setSuppliers(ArrayList<Suppliers> suppliers) {
+        this.suppliers = suppliers;
     }
 
     public String getVegitableSubId() {

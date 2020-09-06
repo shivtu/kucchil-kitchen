@@ -230,6 +230,7 @@ public class Validations {
                 "NA", null);
     }
 
+    // TODO: Also validate the tax name
     public ValidationResponse validateTaxes(ArrayList<String> taxNameList) {
         AtomicReference<Boolean> taxAvailable = new AtomicReference<>(true);
         taxNameList.forEach(taxName -> {

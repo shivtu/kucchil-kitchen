@@ -4,6 +4,8 @@ import com.example.retail.controllers.retailer.vegitables_retailer.AddVegitables
 import com.example.retail.models.discounts.CustomerOrdersDiscount;
 import com.example.retail.models.discounts.DiscountCalculator;
 import com.example.retail.models.discounts.services.CustomerOrdersDiscountServices;
+import com.example.retail.models.jsonmodels.InventoryAdditionDetails;
+import com.example.retail.models.jsonmodels.Suppliers;
 import com.example.retail.models.vegitables.*;
 import com.example.retail.models.vegitables.repository.VegitablesRepository;
 import com.example.retail.util.*;
@@ -159,6 +161,7 @@ public class VegitablesService {
             vegitablesInventory.setVegitableInventoryFixedCost(newVegitables.getVegitableInventoryFixedCost());
             vegitablesInventory.setVegitableInventorySellingPrice(vegitableDiscountedPrice);
             vegitablesInventory.setVegitableInventoryExpiry(vegitableInventoryExpiry);
+            vegitablesInventory.setSuppliers(newVegitables.getSuppliers());
 
             /** Create VegitableAdditionDetails **/
             InventoryAdditionDetails inventoryAdditionDetails = new InventoryAdditionDetails();
