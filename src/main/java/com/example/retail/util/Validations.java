@@ -231,7 +231,7 @@ public class Validations {
     }
 
     // TODO: Also validate the tax name
-    public ValidationResponse validateTaxes(ArrayList<String> taxNameList) {
+    public ValidationResponse validateIfTaxesAvailable(ArrayList<String> taxNameList) {
         AtomicReference<Boolean> taxAvailable = new AtomicReference<>(true);
         taxNameList.forEach(taxName -> {
             Optional<Taxes> taxes = taxService.findByName(taxName);

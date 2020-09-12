@@ -15,8 +15,8 @@ public class DiscountCalculator {
     @Autowired
     CustomerOrdersRepository customerOrdersRepository;
 
-    public Float calcDiscountedPrice(Float sellingPrice, Float vegitableOfferedDiscount) {
-        Float discount = (vegitableOfferedDiscount * sellingPrice) / 100;
+    public Float calcDiscountedPrice(Float sellingPrice, Float offeredDiscount) {
+        Float discount = (offeredDiscount * sellingPrice) / 100;
         return sellingPrice - discount;
     }
 

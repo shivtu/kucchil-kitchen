@@ -167,7 +167,7 @@ public class EdibleProductsService {
         /**
          * Validate the taxes in request body
          **/
-        ValidationResponse taxValidation = validations.validateTaxes(newEdibleProduct.getEdibleProductApplicableTaxes());
+        ValidationResponse taxValidation = validations.validateIfTaxesAvailable(newEdibleProduct.getEdibleProductApplicableTaxes());
 
         if(taxValidation.getStatusCode() != validations.validationSuccessCode) {
             return ResponseEntity.status(taxValidation.getStatusCode()).body(

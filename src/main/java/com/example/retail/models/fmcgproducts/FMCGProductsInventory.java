@@ -7,6 +7,7 @@ import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -27,26 +28,42 @@ public class FMCGProductsInventory {
     @Column(name = "fmcgproductinventory_tableid")
     private Long fmcgProductTableId;
 
+    @NotNull
+    @Column(name = "fmcgproductinventory_costprice")
     private Float fmcgProductInventoryCostPrice;
 
+    @Column(name = "fmcgproductinventory_fixedcost")
     private Float fmcgProductInventoryFixedCost;
 
+    @NotNull
+    @Column(name = "fmcgproductinventory_sellingprice")
+    // This is excluding the taxes including discounts
     private Float fmcgProductInventorySellingPrice;
 
+    @Future
+    @NotNull
+    @Column(name = "fmcgproductinventory_expiry")
     private LocalDate fmcgProductInventoryExpiry;
 
+    @NotNull
+    @Column(name = "fmcgproductinventory_addedby")
     private String fmcgProductInventoryAddedBy;
 
+    @NotNull
+    @Column(name = "fmcgproductinventory_addedon")
     private LocalDateTime fmcgProductInventoryAddedOn;
 
+    @NotNull
+    @Column(name = "fmcgproductinventory_addedqty")
     private Float fmcgProductInventoryAddedQty;
 
     @Type(type = "psql-jsonb")
+    @Column(name = "fmcgproductinventory_suppliers")
     private List<Suppliers> suppliers;
 
     @NotNull
-    @Column(name = "fmcg_product_subid")
-    private Float fmcgProductSubId;
+    @Column(name = "fmcg_product_subid", unique = true)
+    private String fmcgProductSubId;
 
 
     public FMCGProductsInventory() {}
@@ -54,7 +71,7 @@ public class FMCGProductsInventory {
     public FMCGProductsInventory(Float fmcgProductInventoryCostPrice, Float fmcgProductInventoryFixedCost,
                                  Float fmcgProductInventorySellingPrice, LocalDate fmcgProductInventoryExpiry,
                                  String fmcgProductInventoryAddedBy, LocalDateTime fmcgProductInventoryAddedOn,
-                                 Float fmcgProductInventoryAddedQty, List<Suppliers> suppliers, @NotNull Float fmcgProductSubId) {
+                                 Float fmcgProductInventoryAddedQty, List<Suppliers> suppliers, @NotNull String fmcgProductSubId) {
         this.fmcgProductInventoryCostPrice = fmcgProductInventoryCostPrice;
         this.fmcgProductInventoryFixedCost = fmcgProductInventoryFixedCost;
         this.fmcgProductInventorySellingPrice = fmcgProductInventorySellingPrice;
@@ -138,11 +155,11 @@ public class FMCGProductsInventory {
         this.suppliers = suppliers;
     }
 
-    public Float getFmcgProductSubId() {
+    public String getFmcgProductSubId() {
         return fmcgProductSubId;
     }
 
-    public void setFmcgProductSubId(Float fmcgProductSubId) {
+    public void setFmcgProductSubId(String fmcgProductSubId) {
         this.fmcgProductSubId = fmcgProductSubId;
     }
 }
