@@ -14,6 +14,6 @@ public interface ItemCategoriesRepository extends JpaRepository<ItemCategories, 
     @Query(value = "SELECT * FROM item_categories WHERE item_classification_name= :itemClassificationName", nativeQuery = true)
     Optional<ItemCategories> findItemCategoryByClassification(@Param("itemClassificationName") String itemClassificationName);
 
-    @Query(value = "SELECT * FROM item_categories WHERE item_classification_code= :itemClassificationCode", nativeQuery = true)
-    Optional<ItemCategories> findItemCategoryByClassificationCode(@Param("itemClassificationCode") String itemClassificationCode);
+    @Query(value = "SELECT * FROM item_categories WHERE item_category_sub_id= :itemCategorySubId", nativeQuery = true)
+    Optional<ItemCategories> findByItemCategorySubId(@Param("itemCategorySubId") String itemCategorySubId);
 }

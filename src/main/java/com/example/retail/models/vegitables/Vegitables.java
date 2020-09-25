@@ -38,17 +38,17 @@ public class Vegitables {
 
     @NotEmpty
     @NotNull
-    @Column(name = "item_category_name")
-    private String itemClassificationName;
+    @Column(name = "item_category")
+    private String itemCategory;
 
     @NotEmpty
     @NotNull
-    @Column(name = "item_category_code")
-    private String itemClassificationCode;
+    @Column(name = "item_sub_category")
+    private String itemSubCategory;
 
     @Column(name = "vegitable_recepie", columnDefinition = "jsonb")
     @Type(type = "psql-jsonb")
-    private ArrayList<VegitableRecipes> vegitableRecepie;
+    private List<VegitableRecipes> vegitableRecepie = new ArrayList<>();
 
     @NotNull
     @Column(name="vegitable_selling_price")
@@ -69,7 +69,8 @@ public class Vegitables {
 
     @NotNull
     @Column(name = "vegitable_applicable_taxes")
-    private ArrayList<String> vegitableApplicableTaxes;
+    @ElementCollection
+    private List<String> vegitableApplicableTaxes = new ArrayList<>();
 
     @NotNull
     @Column(name = "vagitable_taxed_price")
@@ -94,24 +95,28 @@ public class Vegitables {
 
     @NotNull
     @Column(name = "vegitable_images_location")
-    private ArrayList<String> vegitableImagesLocation;
+    @ElementCollection
+    private List<String> vegitableImagesLocation = new ArrayList<>();
 
     public Vegitables(){
     }
 
     public Vegitables(@NotNull @NotEmpty String vegitableName, String vegitableDescp, String vegitableVariant,
-                      @NotEmpty @NotNull String itemClassificationName, @NotEmpty @NotNull String itemClassificationCode,
-                      ArrayList<VegitableRecipes> vegitableRecepie, @NotNull @Min(value = 1, message = "Selling price cannot be less than 1") Float vegitableSellingPrice,
+                      @NotEmpty @NotNull String itemCategory, @NotEmpty @NotNull String itemSubCategory,
+                      List<VegitableRecipes> vegitableRecepie,
+                      @NotNull @Min(value = 1, message = "Selling price cannot be less than 1") Float vegitableSellingPrice,
                       @Min(value = 0, message = "discounts are expressed in %, valid range 0-100") Float vegitableOfferedDiscount,
-                      @NotNull String vegitableOfferedDiscountName, @NotNull Float vegitableDiscountedPrice, @NotNull ArrayList<String> vegitableApplicableTaxes,
-                      @NotNull Float vegitableTaxedPrice, @NotNull @Min(value = 1, message = "Quantity cannot be less than 0") Float vegitableQuantity,
-                      @NotNull(message = "Is this item available") Boolean vegitableAvailable, @NotNull @NotEmpty String vegitableMeasureMentUnit,
-                      String vegitableSubId, @NotNull ArrayList<String> vegitableImagesLocation) {
+                      @NotNull String vegitableOfferedDiscountName, @NotNull Float vegitableDiscountedPrice,
+                      @NotNull List<String> vegitableApplicableTaxes, @NotNull Float vegitableTaxedPrice,
+                      @NotNull @Min(value = 1, message = "Quantity cannot be less than 0") Float vegitableQuantity,
+                      @NotNull(message = "Is this item available") Boolean vegitableAvailable,
+                      @NotNull @NotEmpty String vegitableMeasureMentUnit, String vegitableSubId,
+                      @NotNull List<String> vegitableImagesLocation) {
         this.vegitableName = vegitableName;
         this.vegitableDescp = vegitableDescp;
         this.vegitableVariant = vegitableVariant;
-        this.itemClassificationName = itemClassificationName;
-        this.itemClassificationCode = itemClassificationCode;
+        this.itemCategory = itemCategory;
+        this.itemSubCategory = itemSubCategory;
         this.vegitableRecepie = vegitableRecepie;
         this.vegitableSellingPrice = vegitableSellingPrice;
         this.vegitableOfferedDiscount = vegitableOfferedDiscount;
@@ -158,27 +163,27 @@ public class Vegitables {
         this.vegitableVariant = vegitableVariant;
     }
 
-    public String getItemClassificationName() {
-        return itemClassificationName;
+    public String getItemCategory() {
+        return itemCategory;
     }
 
-    public void setItemClassificationName(String itemClassificationName) {
-        this.itemClassificationName = itemClassificationName;
+    public void setItemCategory(String itemCategory) {
+        this.itemCategory = itemCategory;
     }
 
-    public String getItemClassificationCode() {
-        return itemClassificationCode;
+    public String getItemSubCategory() {
+        return itemSubCategory;
     }
 
-    public void setItemClassificationCode(String itemClassificationCode) {
-        this.itemClassificationCode = itemClassificationCode;
+    public void setItemSubCategory(String itemSubCategory) {
+        this.itemSubCategory = itemSubCategory;
     }
 
-    public ArrayList<VegitableRecipes> getVegitableRecepie() {
+    public List<VegitableRecipes> getVegitableRecepie() {
         return vegitableRecepie;
     }
 
-    public void setVegitableRecepie(ArrayList<VegitableRecipes> vegitableRecepie) {
+    public void setVegitableRecepie(List<VegitableRecipes> vegitableRecepie) {
         this.vegitableRecepie = vegitableRecepie;
     }
 
@@ -214,11 +219,11 @@ public class Vegitables {
         this.vegitableDiscountedPrice = vegitableDiscountedPrice;
     }
 
-    public ArrayList<String> getVegitableApplicableTaxes() {
+    public List<String> getVegitableApplicableTaxes() {
         return vegitableApplicableTaxes;
     }
 
-    public void setVegitableApplicableTaxes(ArrayList<String> vegitableApplicableTaxes) {
+    public void setVegitableApplicableTaxes(List<String> vegitableApplicableTaxes) {
         this.vegitableApplicableTaxes = vegitableApplicableTaxes;
     }
 
@@ -262,11 +267,11 @@ public class Vegitables {
         this.vegitableSubId = vegitableSubId;
     }
 
-    public ArrayList<String> getVegitableImagesLocation() {
+    public List<String> getVegitableImagesLocation() {
         return vegitableImagesLocation;
     }
 
-    public void setVegitableImagesLocation(ArrayList<String> vegitableImagesLocation) {
+    public void setVegitableImagesLocation(List<String> vegitableImagesLocation) {
         this.vegitableImagesLocation = vegitableImagesLocation;
     }
 }

@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "fmcg_products")
@@ -66,7 +67,8 @@ public class FMCGProducts {
 
     @NotNull
     @Column(name = "fmcg_product_applicable_taxes")
-    private ArrayList<String> fmcgProductApplicableTaxes;
+    @ElementCollection
+    private List<String> fmcgProductApplicableTaxes = new ArrayList<>();
 
     @NotNull
     @Column(name = "fmcg_product_taxed_price")
@@ -92,7 +94,8 @@ public class FMCGProducts {
     private String fmcgProductSubId;
 
     @Column(name = "fmcg_product_image_location")
-    private ArrayList<String> fmcgProductImageLocation;
+    @ElementCollection
+    private List<String> fmcgProductImageLocation = new ArrayList<>();
 
 
     public FMCGProducts() {}
@@ -100,10 +103,11 @@ public class FMCGProducts {
     public FMCGProducts(@NotNull String fmcgProductManufacturer, @NotNull String fmcgProductName, String fmcgProductVariant,
                         @NotNull String fmcgProductDescription, @NotNull String fmcgProductGenericName, String fmcgProductAlternateName,
                         @NotNull String itemClassificationName, @NotEmpty @NotNull String itemClassificationCode,
-                        @NotNull Boolean fmcgProductAvailable, Float fmcgProductOfferedDiscount, Float fmcgProductSellingPrice,
-                        String fmcgProductDiscountName, Float fmcgProductDiscountedPrice, @NotNull ArrayList<String> fmcgProductApplicableTaxes,
-                        @NotNull Float fmcgProductTaxedPrice, @NotNull Float fmcgProductQuantity, @NotNull Float fmcgProductMeasurementUnit,
-                        @NotNull Float fmcgProductDenomination, @NotNull String fmcgProductSubId, ArrayList<String> fmcgProductImageLocation) {
+                        @NotNull Boolean fmcgProductAvailable, Float fmcgProductSellingPrice,
+                        Float fmcgProductOfferedDiscount, String fmcgProductDiscountName, Float fmcgProductDiscountedPrice,
+                        @NotNull List<String> fmcgProductApplicableTaxes, @NotNull Float fmcgProductTaxedPrice, @NotNull Float fmcgProductQuantity,
+                        @NotNull Float fmcgProductMeasurementUnit, @NotNull Float fmcgProductDenomination, @NotNull String fmcgProductSubId,
+                        List<String> fmcgProductImageLocation) {
         this.fmcgProductManufacturer = fmcgProductManufacturer;
         this.fmcgProductName = fmcgProductName;
         this.fmcgProductVariant = fmcgProductVariant;
@@ -113,8 +117,8 @@ public class FMCGProducts {
         this.itemClassificationName = itemClassificationName;
         this.itemClassificationCode = itemClassificationCode;
         this.fmcgProductAvailable = fmcgProductAvailable;
-        this.fmcgProductOfferedDiscount = fmcgProductOfferedDiscount;
         this.fmcgProductSellingPrice = fmcgProductSellingPrice;
+        this.fmcgProductOfferedDiscount = fmcgProductOfferedDiscount;
         this.fmcgProductDiscountName = fmcgProductDiscountName;
         this.fmcgProductDiscountedPrice = fmcgProductDiscountedPrice;
         this.fmcgProductApplicableTaxes = fmcgProductApplicableTaxes;
@@ -206,20 +210,20 @@ public class FMCGProducts {
         this.fmcgProductAvailable = fmcgProductAvailable;
     }
 
-    public Float getFmcgProductOfferedDiscount() {
-        return fmcgProductOfferedDiscount;
-    }
-
-    public void setFmcgProductOfferedDiscount(Float fmcgProductOfferedDiscount) {
-        this.fmcgProductOfferedDiscount = fmcgProductOfferedDiscount;
-    }
-
     public Float getFmcgProductSellingPrice() {
         return fmcgProductSellingPrice;
     }
 
     public void setFmcgProductSellingPrice(Float fmcgProductSellingPrice) {
         this.fmcgProductSellingPrice = fmcgProductSellingPrice;
+    }
+
+    public Float getFmcgProductOfferedDiscount() {
+        return fmcgProductOfferedDiscount;
+    }
+
+    public void setFmcgProductOfferedDiscount(Float fmcgProductOfferedDiscount) {
+        this.fmcgProductOfferedDiscount = fmcgProductOfferedDiscount;
     }
 
     public String getFmcgProductDiscountName() {
@@ -238,11 +242,11 @@ public class FMCGProducts {
         this.fmcgProductDiscountedPrice = fmcgProductDiscountedPrice;
     }
 
-    public ArrayList<String> getFmcgProductApplicableTaxes() {
+    public List<String> getFmcgProductApplicableTaxes() {
         return fmcgProductApplicableTaxes;
     }
 
-    public void setFmcgProductApplicableTaxes(ArrayList<String> fmcgProductApplicableTaxes) {
+    public void setFmcgProductApplicableTaxes(List<String> fmcgProductApplicableTaxes) {
         this.fmcgProductApplicableTaxes = fmcgProductApplicableTaxes;
     }
 
@@ -286,11 +290,11 @@ public class FMCGProducts {
         this.fmcgProductSubId = fmcgProductSubId;
     }
 
-    public ArrayList<String> getFmcgProductImageLocation() {
+    public List<String> getFmcgProductImageLocation() {
         return fmcgProductImageLocation;
     }
 
-    public void setFmcgProductImageLocation(ArrayList<String> fmcgProductImageLocation) {
+    public void setFmcgProductImageLocation(List<String> fmcgProductImageLocation) {
         this.fmcgProductImageLocation = fmcgProductImageLocation;
     }
 }

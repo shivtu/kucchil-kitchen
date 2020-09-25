@@ -4,6 +4,7 @@ import com.example.retail.models.itemcategories.ItemCategories;
 import com.example.retail.models.itemcategories.repository.ItemCategoriesRepository;
 import com.example.retail.util.CreateResponse;
 import com.example.retail.util.JWTDetails;
+import com.example.retail.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -26,19 +27,26 @@ public class ItemCategoriesService {
     @Autowired
     JWTDetails jwtDetails;
 
+    @Autowired
+    Utils utils;
+
     public ItemCategories createItemCategory(HttpServletRequest request, ItemCategories newItemCategory) {
 
         LocalDateTime lastUpdatedOn = LocalDateTime.now();
         String lastUpdatedBy = jwtDetails.userName(request);
+        String itemCategorySubId = utils.getItemCategorySubId(newItemCategory.getItemCategory(), newItemCategory.getItemSubCategory());
 
         newItemCategory.setItemCategoryLastUpdatedBy(lastUpdatedBy);
         newItemCategory.setItemCategoryLastUpdatedOn(lastUpdatedOn);
+        newItemCategory.setItemCategory(newItemCategory.getItemCategory());
+        newItemCategory.setItemSubCategory(newItemCategory.getItemSubCategory());
+        newItemCategory.setItemCategorySubId(itemCategorySubId);
 
         return itemCategoriesRepository.save(newItemCategory);
     }
 
-    public Optional<ItemCategories> findItemClassificationByCode(String itemClassificationCode) {
-        return itemCategoriesRepository.findItemCategoryByClassificationCode(itemClassificationCode);
+    public Optional<ItemCategories> findByItemCategorySubId(String itemCategorySubId) {
+        return itemCategoriesRepository.findByItemCategorySubId(itemCategorySubId);
     }
 
     public List<ItemCategories> findAll() {

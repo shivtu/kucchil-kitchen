@@ -1,5 +1,7 @@
 package com.example.retail.util;
 
+import com.example.retail.models.itemcategories.ItemCategories;
+import com.example.retail.models.variantandcategory.VariantAndCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +17,6 @@ import java.util.*;
 
 @Component
 public class Utils {
-
-//    private static Utils utilInstance = new Utils();
-//
-//    private Utils (){}
-//
-//    public static Utils getUtilInstance() {
-//        return utilInstance;
-//    }
 
     @Autowired
    CreateResponse createResponse;
@@ -83,5 +77,13 @@ public class Utils {
             CONSTRAINTS : atleast 3 orders or 1 order per month in the last 3 months
          */
         return 0F;
+    }
+
+    public String getItemCategorySubId (String itemCategory, String itemSubCategory) {
+        return itemCategory.toLowerCase() +"-" + itemSubCategory.toLowerCase();
+    }
+
+    public String getVegitableSubId (String vegitableName, String vegitableVariant, Float vegitableInventoryFixedCost, Float vegitableInventoryCostPrice) {
+        return vegitableName.toLowerCase() + "-" + vegitableVariant.toLowerCase() + "-" + vegitableInventoryFixedCost.toString() + "-" + vegitableInventoryCostPrice.toString();
     }
 }

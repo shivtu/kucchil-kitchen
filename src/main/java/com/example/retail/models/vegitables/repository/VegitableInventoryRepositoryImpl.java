@@ -22,10 +22,9 @@ public class VegitableInventoryRepositoryImpl implements VegitableInventoryRepos
         String psqlQuery = "UPDATE vegitables_inventory  SET vegitablesinventory_addtiondetails = vegitablesinventory_addtiondetails || :updatedAdditionDetails WHERE vegitable_subid=:subId";
 
         return entityManager.createNativeQuery(psqlQuery)
-                .unwrap(NativeQuery.class)
-                .setParameter("updatedAdditionDetails", updatedAdditionDetails, JsonBinaryType.INSTANCE)
-                .setParameter("subId", subId)
-                .executeUpdate();
-
+            .unwrap(NativeQuery.class)
+            .setParameter("updatedAdditionDetails", updatedAdditionDetails, JsonBinaryType.INSTANCE)
+            .setParameter("subId", subId)
+            .executeUpdate();
     }
 }

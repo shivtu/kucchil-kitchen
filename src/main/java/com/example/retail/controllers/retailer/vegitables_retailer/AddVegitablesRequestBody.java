@@ -19,9 +19,9 @@ public class AddVegitablesRequestBody {
 
     private String vegitableVariant;
 
-    private String itemClassificationName;
+    private String itemCategory;
 
-    private String itemClassificationCode;
+    private String itemSubCategory;
 
     private VegitableRecipes vegitableRecepie;
 
@@ -49,13 +49,13 @@ public class AddVegitablesRequestBody {
 
     public AddVegitablesRequestBody(){}
 
-    public AddVegitablesRequestBody(ArrayList<String> vegitableApplicableTaxes, String vegitableName, String vegitableDescp, String vegitableVariant, String itemClassificationName, String itemClassificationCode, VegitableRecipes vegitableRecepie, Float vegitableSellingPrice, Float vegitableOfferedDiscount, String vegitableOfferedDiscountName, Boolean vegitableShowDiscount, Float vegitableQuantity, Boolean vegitableAvailable, String vegitableMeasureMentUnit, Float vegitableInventoryCostPrice, String vegitableInventoryExpiry, Float vegitableInventoryFixedCost, ArrayList<Suppliers> suppliers) {
+    public AddVegitablesRequestBody(ArrayList<String> vegitableApplicableTaxes, String vegitableName, String vegitableDescp, String vegitableVariant, String itemCategory, String itemSubCategory, VegitableRecipes vegitableRecepie, Float vegitableSellingPrice, Float vegitableOfferedDiscount, String vegitableOfferedDiscountName, Boolean vegitableShowDiscount, Float vegitableQuantity, Boolean vegitableAvailable, String vegitableMeasureMentUnit, Float vegitableInventoryCostPrice, String vegitableInventoryExpiry, Float vegitableInventoryFixedCost, ArrayList<Suppliers> suppliers) {
         this.vegitableApplicableTaxes = vegitableApplicableTaxes;
         this.vegitableName = vegitableName;
         this.vegitableDescp = vegitableDescp;
         this.vegitableVariant = vegitableVariant;
-        this.itemClassificationName = itemClassificationName;
-        this.itemClassificationCode = itemClassificationCode;
+        this.itemCategory = itemCategory;
+        this.itemSubCategory = itemSubCategory;
         this.vegitableRecepie = vegitableRecepie;
         this.vegitableSellingPrice = vegitableSellingPrice;
         this.vegitableOfferedDiscount = vegitableOfferedDiscount;
@@ -102,20 +102,20 @@ public class AddVegitablesRequestBody {
         this.vegitableVariant = vegitableVariant;
     }
 
-    public String getItemClassificationName() {
-        return itemClassificationName;
+    public String getItemCategory() {
+        return itemCategory;
     }
 
-    public void setItemClassificationName(String itemClassificationName) {
-        this.itemClassificationName = itemClassificationName;
+    public void setItemCategory(String itemCategory) {
+        this.itemCategory = itemCategory;
     }
 
-    public String getItemClassificationCode() {
-        return itemClassificationCode;
+    public String getItemSubCategory() {
+        return itemSubCategory;
     }
 
-    public void setItemClassificationCode(String itemClassificationCode) {
-        this.itemClassificationCode = itemClassificationCode;
+    public void setItemSubCategory(String itemSubCategory) {
+        this.itemSubCategory = itemSubCategory;
     }
 
     public VegitableRecipes getVegitableRecepie() {

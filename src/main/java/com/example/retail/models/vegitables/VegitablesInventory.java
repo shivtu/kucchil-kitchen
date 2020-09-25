@@ -58,11 +58,11 @@ public class VegitablesInventory implements Serializable {
 
     @Column(name = "vegitablesinventory_addtiondetails", columnDefinition = "jsonb")
     @Type(type = "psql-jsonb")
-    private List<InventoryAdditionDetails> vegitableInventoryAdditionDetails;
+    private List<InventoryAdditionDetails> vegitableInventoryAdditionDetails = new ArrayList<>();
 
     @Column(name = "vegitablesinventory__supplier", columnDefinition = "jsonb")
     @Type(type = "psql-jsonb")
-    private ArrayList<Suppliers> suppliers;
+    private List<Suppliers> suppliers = new ArrayList<>();
 
     @Column(name = "vegitable_subid", updatable = false, unique = true)
     private String vegitableSubId;
@@ -73,7 +73,7 @@ public class VegitablesInventory implements Serializable {
                                @Min(value = 0, message = "Fixed costs cannot be less than 0") @NotNull Float vegitableInventoryFixedCost,
                                @Min(value = 0, message = "Selling price cannot be less than 0") @NotNull(message = "Selling price is required") Float vegitableInventorySellingPrice,
                                @Future @NotNull LocalDate vegitableInventoryExpiry, List<InventoryAdditionDetails> vegitableInventoryAdditionDetails,
-                               ArrayList<Suppliers> suppliers, String vegitableSubId) {
+                               List<Suppliers> suppliers, String vegitableSubId) {
         this.vegitableInventoryCostPrice = vegitableInventoryCostPrice;
         this.vegitableInventoryFixedCost = vegitableInventoryFixedCost;
         this.vegitableInventorySellingPrice = vegitableInventorySellingPrice;
@@ -131,11 +131,11 @@ public class VegitablesInventory implements Serializable {
         this.vegitableInventoryAdditionDetails = vegitableInventoryAdditionDetails;
     }
 
-    public ArrayList<Suppliers> getSuppliers() {
+    public List<Suppliers> getSuppliers() {
         return suppliers;
     }
 
-    public void setSuppliers(ArrayList<Suppliers> suppliers) {
+    public void setSuppliers(List<Suppliers> suppliers) {
         this.suppliers = suppliers;
     }
 

@@ -8,14 +8,13 @@ import com.example.retail.models.itemcategories.ItemCategories;
 import com.example.retail.models.itemcategories.service.ItemCategoriesService;
 import com.example.retail.models.taxutility.Taxes;
 import com.example.retail.models.taxutility.services.TaxService;
+import com.example.retail.models.variantandcategory.VariantAndCategory;
+import com.example.retail.models.variantandcategory.services.VariantAndCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class UtilityServices {
@@ -34,6 +33,9 @@ public class UtilityServices {
 
     @Autowired
     CreateResponse createResponse;
+
+    @Autowired
+    VariantAndCategoryService variantAndCategoryService;
 
     public ResponseEntity<?> findAllUtilities () {
         List<Taxes> taxes = taxService.findAll();
@@ -54,11 +56,24 @@ public class UtilityServices {
         finalRes.add(res);
 
         return ResponseEntity.status(200).body(
-                createResponse.createSuccessResponse(
-                        200,
-                        count + " utilities found",
-                        finalRes
-                )
+            createResponse.createSuccessResponse(
+                200,
+                count + " utilities found",
+                    finalRes
+            )
+        );
+    }
+
+    public ResponseEntity<?> findAllVariantsBySubId (String itemCategorySubId) {
+        Optional<VariantAndCategory> variantAndCategory = variantAndCategoryService.findBySubId(itemCategorySubId);
+        int resSize = variantAndCategory.get().getVariantsList().size();
+        List<String> res = new ArrayList<>(variantAndCategory.get().getVariantsList());
+        return ResponseEntity.status(200).body(
+            createResponse.createSuccessResponse(
+                200,
+                "Found " + resSize + " results",
+                res
+            )
         );
     }
 }

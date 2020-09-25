@@ -206,8 +206,8 @@ public class Validations {
         return createResponse.createValidationResponse(validationSuccessCode, "validation success", "NA", null);
     }
 
-    public ValidationResponse validateItemClassificationCode(String itemClassificationCode) {
-        Optional<ItemCategories> itemCategories = itemCategoriesService.findItemClassificationByCode(itemClassificationCode);
+    public ValidationResponse validateItemCategory(String itemCategorySubId) {
+        Optional<ItemCategories> itemCategories = itemCategoriesService.findByItemCategorySubId(itemCategorySubId);
         if(itemCategories.isEmpty()) {
             return createResponse.createValidationResponse(422, "Item category/classification not found", "Provide a valid classification name or create a classification and then add to the product", null);
         }

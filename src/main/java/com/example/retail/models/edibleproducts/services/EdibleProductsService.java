@@ -113,19 +113,20 @@ public class EdibleProductsService {
         edibleProducts.setEdibleProductDescription(newEdibleProduct.getEdibleProductDescription());
         edibleProducts.setEdibleProductGenericName(newEdibleProduct.getEdibleProductGenericName());
         edibleProducts.setEdibleProductAlternaleName(newEdibleProduct.getEdibleProductAlternaleName());
-        edibleProducts.setItemClassificationName(newEdibleProduct.getItemClassificationName());
+        edibleProducts.setItemCategory(newEdibleProduct.getItemCategory());
 
         /*
         * Validate the classification code
         * Return Error response from validation if validation fails
         * */
-        ValidationResponse itemClassifictionValidation = validations.validateItemClassificationCode(newEdibleProduct.getItemClassificationCode());
+        String itemCategorySubId = newEdibleProduct.getItemCategory().toLowerCase() + newEdibleProduct.getItemSubCategory().toLowerCase();
+        ValidationResponse itemClassifictionValidation = validations.validateItemCategory(itemCategorySubId);
         if(itemClassifictionValidation.getStatusCode() != validations.validationSuccessCode) {
             return ResponseEntity.status(itemClassifictionValidation.getStatusCode()).body(
                 itemClassifictionValidation
             );
         }
-        edibleProducts.setItemClassificationCode(newEdibleProduct.getItemClassificationCode());
+        edibleProducts.setItemCategory(newEdibleProduct.getItemCategory());
         edibleProducts.setEdibleProductForMinors(newEdibleProduct.getEdibleProductForMinors());
         edibleProducts.setEdibleProductAvailable(newEdibleProduct.getEdibleProductAvailable());
         edibleProducts.setEdibleProductMrp(newEdibleProduct.getEdibleProductMrp());

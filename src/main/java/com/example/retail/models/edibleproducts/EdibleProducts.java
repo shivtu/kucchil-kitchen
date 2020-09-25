@@ -4,7 +4,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "edible_products")
@@ -44,7 +46,8 @@ public class EdibleProducts {
     private String edibleProductDescription;
 
     @Column(name = "edible_product_image_location")
-    private ArrayList<String> edibleProductImageLocation;
+    @ElementCollection
+    private List<String> edibleProductImageLocation = new ArrayList<>();
 
     // Generic item name
     @NotNull
@@ -57,13 +60,13 @@ public class EdibleProducts {
 
     // Product category : Example - confectionary, dairy, spices etc
     @NotNull
-    @Column(name = "item_category_name")
-    private String itemClassificationName;
+    @Column(name = "item_category")
+    private String itemCategory;
 
     @NotEmpty
     @NotNull
-    @Column(name = "item_category_code")
-    private String itemClassificationCode;
+    @Column(name = "item_sub_category")
+    private String itemSubCategory;
 
     // Can be safely consumed by minors ?
     @Column(name = "edible_product_for_minors")
@@ -93,7 +96,8 @@ public class EdibleProducts {
 
     @NotNull
     @Column(name = "edible_product_applicable_taxes")
-    private ArrayList<String> edibleProductApplicableTaxes;
+    @ElementCollection
+    private List<String> edibleProductApplicableTaxes = new ArrayList<>();
 
     @NotNull
     @Column(name = "edible_product_taxed_price")
@@ -122,7 +126,15 @@ public class EdibleProducts {
 
     public EdibleProducts(){}
 
-    public EdibleProducts(@NotNull String edibleProductManufacturer, @NotNull String edibleProductName, @NotNull String edibleProductVariant, String edibleProductFlavor, String edibleProductType, @NotNull String edibleProductDescription, ArrayList<String> edibleProductImageLocation, @NotNull String edibleProductGenericName, String edibleProductAlternaleName, @NotNull String itemClassificationName, @NotEmpty @NotNull String itemClassificationCode, Boolean edibleProductForMinors, @NotNull Boolean edibleProductAvailable, @NotNull Float edibleProductMrp, @NotNull Float edibleProductOfferedDiscount, @NotNull String edibleProductsDiscountName, @NotNull Float edibleProductDiscountedPrice, @NotNull ArrayList<String> edibleProductApplicableTaxes, @NotNull Float edibleProductTaxedPrice, @NotNull Float edibleProductQuantity, @NotNull String edibleProductsMeasureMentUnit, @NotNull Float edibleProductDenomination, @NotNull String edibleProductSubId) {
+    public EdibleProducts(@NotNull String edibleProductManufacturer, @NotNull String edibleProductName,
+                          @NotNull String edibleProductVariant, String edibleProductFlavor, String edibleProductType,
+                          @NotNull String edibleProductDescription, List<String> edibleProductImageLocation, @NotNull String edibleProductGenericName,
+                          String edibleProductAlternaleName, @NotNull String itemCategory, @NotEmpty @NotNull String itemSubCategory,
+                          Boolean edibleProductForMinors, @NotNull Boolean edibleProductAvailable, @NotNull Float edibleProductMrp,
+                          @NotNull Float edibleProductOfferedDiscount, @NotNull String edibleProductsDiscountName,
+                          @NotNull Float edibleProductDiscountedPrice, @NotNull List<String> edibleProductApplicableTaxes,
+                          @NotNull Float edibleProductTaxedPrice, @NotNull Float edibleProductQuantity, @NotNull String edibleProductsMeasureMentUnit,
+                          @NotNull Float edibleProductDenomination, @NotNull String edibleProductSubId) {
         this.edibleProductManufacturer = edibleProductManufacturer;
         this.edibleProductName = edibleProductName;
         this.edibleProductVariant = edibleProductVariant;
@@ -132,8 +144,8 @@ public class EdibleProducts {
         this.edibleProductImageLocation = edibleProductImageLocation;
         this.edibleProductGenericName = edibleProductGenericName;
         this.edibleProductAlternaleName = edibleProductAlternaleName;
-        this.itemClassificationName = itemClassificationName;
-        this.itemClassificationCode = itemClassificationCode;
+        this.itemCategory = itemCategory;
+        this.itemSubCategory = itemSubCategory;
         this.edibleProductForMinors = edibleProductForMinors;
         this.edibleProductAvailable = edibleProductAvailable;
         this.edibleProductMrp = edibleProductMrp;
@@ -204,11 +216,11 @@ public class EdibleProducts {
         this.edibleProductDescription = edibleProductDescription;
     }
 
-    public ArrayList<String> getEdibleProductImageLocation() {
+    public List<String> getEdibleProductImageLocation() {
         return edibleProductImageLocation;
     }
 
-    public void setEdibleProductImageLocation(ArrayList<String> edibleProductImageLocation) {
+    public void setEdibleProductImageLocation(List<String> edibleProductImageLocation) {
         this.edibleProductImageLocation = edibleProductImageLocation;
     }
 
@@ -228,20 +240,20 @@ public class EdibleProducts {
         this.edibleProductAlternaleName = edibleProductAlternaleName;
     }
 
-    public String getItemClassificationName() {
-        return itemClassificationName;
+    public String getItemCategory() {
+        return itemCategory;
     }
 
-    public void setItemClassificationName(String itemClassificationName) {
-        this.itemClassificationName = itemClassificationName;
+    public void setItemCategory(String itemCategory) {
+        this.itemCategory = itemCategory;
     }
 
-    public String getItemClassificationCode() {
-        return itemClassificationCode;
+    public String getItemSubCategory() {
+        return itemSubCategory;
     }
 
-    public void setItemClassificationCode(String itemClassificationCode) {
-        this.itemClassificationCode = itemClassificationCode;
+    public void setItemSubCategory(String itemSubCategory) {
+        this.itemSubCategory = itemSubCategory;
     }
 
     public Boolean getEdibleProductForMinors() {
@@ -292,11 +304,11 @@ public class EdibleProducts {
         this.edibleProductDiscountedPrice = edibleProductDiscountedPrice;
     }
 
-    public ArrayList<String> getEdibleProductApplicableTaxes() {
+    public List<String> getEdibleProductApplicableTaxes() {
         return edibleProductApplicableTaxes;
     }
 
-    public void setEdibleProductApplicableTaxes(ArrayList<String> edibleProductApplicableTaxes) {
+    public void setEdibleProductApplicableTaxes(List<String> edibleProductApplicableTaxes) {
         this.edibleProductApplicableTaxes = edibleProductApplicableTaxes;
     }
 

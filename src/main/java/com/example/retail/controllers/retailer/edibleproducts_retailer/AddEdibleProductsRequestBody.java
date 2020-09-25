@@ -24,9 +24,9 @@ public class AddEdibleProductsRequestBody {
 
     private String edibleProductAlternaleName;
 
-    private String itemClassificationName;
+    private String itemCategory;
 
-    private String itemClassificationCode;
+    private String itemSubCategory;
 
     private Boolean edibleProductForMinors;
 
@@ -56,7 +56,7 @@ public class AddEdibleProductsRequestBody {
 
     public AddEdibleProductsRequestBody() {}
 
-    public AddEdibleProductsRequestBody(String edibleProductManufacturer, String edibleProductName, String edibleProductVariant, String edibleProductFlavor, String edibleProductType, String edibleProductDescription, String edibleProductGenericName, String edibleProductAlternaleName, String itemClassificationName, String itemClassificationCode, Boolean edibleProductForMinors, Boolean edibleProductAvailable, Float edibleProductMrp, Float edibleProductOfferedDiscount, String edibleProductsDiscountName, ArrayList<String> edibleProductApplicableTaxes, Float edibleProductQuantity, String edibleProductsMeasureMentUnit, Float edibleProductDenomination, ArrayList<String> edibleProductImageLocation, Float edibleProductCostPrice, Float edibleProductFixedCost, String edibleProductInventoryExpiry) {
+    public AddEdibleProductsRequestBody(String edibleProductManufacturer, String edibleProductName, String edibleProductVariant, String edibleProductFlavor, String edibleProductType, String edibleProductDescription, String edibleProductGenericName, String edibleProductAlternaleName, String itemCategory, String itemSubCategory, Boolean edibleProductForMinors, Boolean edibleProductAvailable, Float edibleProductMrp, Float edibleProductOfferedDiscount, String edibleProductsDiscountName, ArrayList<String> edibleProductApplicableTaxes, Float edibleProductQuantity, String edibleProductsMeasureMentUnit, Float edibleProductDenomination, ArrayList<String> edibleProductImageLocation, Float edibleProductCostPrice, Float edibleProductFixedCost, String edibleProductInventoryExpiry) {
         this.edibleProductManufacturer = edibleProductManufacturer;
         this.edibleProductName = edibleProductName;
         this.edibleProductVariant = edibleProductVariant;
@@ -65,8 +65,8 @@ public class AddEdibleProductsRequestBody {
         this.edibleProductDescription = edibleProductDescription;
         this.edibleProductGenericName = edibleProductGenericName;
         this.edibleProductAlternaleName = edibleProductAlternaleName;
-        this.itemClassificationName = itemClassificationName;
-        this.itemClassificationCode = itemClassificationCode;
+        this.itemCategory = itemCategory;
+        this.itemSubCategory = itemSubCategory;
         this.edibleProductForMinors = edibleProductForMinors;
         this.edibleProductAvailable = edibleProductAvailable;
         this.edibleProductMrp = edibleProductMrp;
@@ -146,20 +146,20 @@ public class AddEdibleProductsRequestBody {
         this.edibleProductAlternaleName = edibleProductAlternaleName;
     }
 
-    public String getItemClassificationName() {
-        return itemClassificationName;
+    public String getItemCategory() {
+        return itemCategory;
     }
 
-    public void setItemClassificationName(String itemClassificationName) {
-        this.itemClassificationName = itemClassificationName;
+    public void setItemCategory(String itemCategory) {
+        this.itemCategory = itemCategory;
     }
 
-    public String getItemClassificationCode() {
-        return itemClassificationCode;
+    public String getItemSubCategory() {
+        return itemSubCategory;
     }
 
-    public void setItemClassificationCode(String itemClassificationCode) {
-        this.itemClassificationCode = itemClassificationCode;
+    public void setItemSubCategory(String itemSubCategory) {
+        this.itemSubCategory = itemSubCategory;
     }
 
     public Boolean getEdibleProductForMinors() {
