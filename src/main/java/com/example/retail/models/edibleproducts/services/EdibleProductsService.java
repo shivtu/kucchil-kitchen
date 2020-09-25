@@ -9,10 +9,7 @@ import com.example.retail.models.edibleproducts.EdibleProductsInventory;
 import com.example.retail.models.edibleproducts.repository.EdibleProductsInventoryRepository;
 import com.example.retail.models.edibleproducts.repository.EdibleProductsRepository;
 import com.example.retail.models.taxutility.TaxCalculator;
-import com.example.retail.util.CreateResponse;
-import com.example.retail.util.JWTDetails;
-import com.example.retail.util.ValidationResponse;
-import com.example.retail.util.Validations;
+import com.example.retail.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -49,21 +46,8 @@ public class EdibleProductsService {
     @Autowired
     CustomerOrdersDiscountServices customerOrdersDiscountServices;
 
-    public String genearteEdibleProductSubId(
-            String edibleProductManufacturer,
-            String edibleProductName,
-            String edibleProductVariant,
-            String edibleProductFlavor,
-            Float edibleProductDenomination,
-            LocalDate edibleProductInventoryExpiry
-    ) {
-        return edibleProductManufacturer.toLowerCase()
-            + edibleProductName.toLowerCase()
-            + edibleProductVariant.toLowerCase()
-            + edibleProductFlavor.toLowerCase()
-            + edibleProductDenomination.toString().toLowerCase()
-            + edibleProductInventoryExpiry.toString().toLowerCase();
-    }
+    @Autowired
+    Utils utils;
 
     public List<EdibleProducts> findAll(){
         return  edibleProductsRepository.findAll();
@@ -79,7 +63,7 @@ public class EdibleProductsService {
         String edibleProductAddedBy = jwtDetails.userName(request);
 
         // Get the Sub ID
-        String subid = genearteEdibleProductSubId(
+        String subid = utils.getEdibleProductSubId(
             newEdibleProduct.getEdibleProductManufacturer(),
             newEdibleProduct.getEdibleProductName(),
             newEdibleProduct.getEdibleProductVariant(),
@@ -114,12 +98,13 @@ public class EdibleProductsService {
         edibleProducts.setEdibleProductGenericName(newEdibleProduct.getEdibleProductGenericName());
         edibleProducts.setEdibleProductAlternaleName(newEdibleProduct.getEdibleProductAlternaleName());
         edibleProducts.setItemCategory(newEdibleProduct.getItemCategory());
+        edibleProducts.setItemSubCategory(newEdibleProduct.getItemSubCategory());
 
         /*
         * Validate the classification code
         * Return Error response from validation if validation fails
         * */
-        String itemCategorySubId = newEdibleProduct.getItemCategory().toLowerCase() + newEdibleProduct.getItemSubCategory().toLowerCase();
+        String itemCategorySubId = utils.getItemCategorySubId(newEdibleProduct.getItemCategory(), newEdibleProduct.getItemSubCategory());
         ValidationResponse itemClassifictionValidation = validations.validateItemCategory(itemCategorySubId);
         if(itemClassifictionValidation.getStatusCode() != validations.validationSuccessCode) {
             return ResponseEntity.status(itemClassifictionValidation.getStatusCode()).body(

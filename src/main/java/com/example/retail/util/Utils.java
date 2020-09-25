@@ -86,4 +86,20 @@ public class Utils {
     public String getVegitableSubId (String vegitableName, String vegitableVariant, Float vegitableInventoryFixedCost, Float vegitableInventoryCostPrice) {
         return vegitableName.toLowerCase() + "-" + vegitableVariant.toLowerCase() + "-" + vegitableInventoryFixedCost.toString() + "-" + vegitableInventoryCostPrice.toString();
     }
+
+    public String getEdibleProductSubId(
+            String edibleProductManufacturer,
+            String edibleProductName,
+            String edibleProductVariant,
+            String edibleProductFlavor,
+            Float edibleProductDenomination,
+            LocalDate edibleProductInventoryExpiry
+    ) {
+        return edibleProductManufacturer.toLowerCase()
+                + edibleProductName.toLowerCase()
+                + edibleProductVariant.toLowerCase()
+                + edibleProductFlavor.toLowerCase()
+                + edibleProductDenomination.toString().toLowerCase()
+                + edibleProductInventoryExpiry.toString().toLowerCase();
+    }
 }

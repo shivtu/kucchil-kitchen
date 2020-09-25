@@ -83,7 +83,7 @@ public class VegitablesService {
                     ,newVegitables.getVegitableInventoryFixedCost()
                     ,newVegitables.getVegitableInventoryCostPrice());
 
-            /* Validate vegitables */
+            /* aate vegitables */
             ValidationResponse validationStatus = validations.validateNewVegitables(newVegitables, vegSubId);
             if (validationStatus.getStatusCode() != validations.validationSuccessCode) {
                 return ResponseEntity.status(validationStatus.getStatusCode()).body(
