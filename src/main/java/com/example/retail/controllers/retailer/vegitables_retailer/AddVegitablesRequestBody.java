@@ -6,12 +6,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Component
 public class AddVegitablesRequestBody {
 
-    private ArrayList<String> vegitableApplicableTaxes;
+    private List<String> vegitableApplicableTaxes = new ArrayList<>();
 
     private String vegitableName;
 
@@ -45,11 +44,11 @@ public class AddVegitablesRequestBody {
 
     private Float vegitableInventoryFixedCost;
 
-    private ArrayList<Suppliers> suppliers;
+    private List<Suppliers> suppliers = new ArrayList<>();
 
     public AddVegitablesRequestBody(){}
 
-    public AddVegitablesRequestBody(ArrayList<String> vegitableApplicableTaxes, String vegitableName, String vegitableDescp, String vegitableVariant, String itemCategory, String itemSubCategory, VegitableRecipes vegitableRecepie, Float vegitableSellingPrice, Float vegitableOfferedDiscount, String vegitableOfferedDiscountName, Boolean vegitableShowDiscount, Float vegitableQuantity, Boolean vegitableAvailable, String vegitableMeasureMentUnit, Float vegitableInventoryCostPrice, String vegitableInventoryExpiry, Float vegitableInventoryFixedCost, ArrayList<Suppliers> suppliers) {
+    public AddVegitablesRequestBody(List<String> vegitableApplicableTaxes, String vegitableName, String vegitableDescp, String vegitableVariant, String itemCategory, String itemSubCategory, VegitableRecipes vegitableRecepie, Float vegitableSellingPrice, Float vegitableOfferedDiscount, String vegitableOfferedDiscountName, Boolean vegitableShowDiscount, Float vegitableQuantity, Boolean vegitableAvailable, String vegitableMeasureMentUnit, Float vegitableInventoryCostPrice, String vegitableInventoryExpiry, Float vegitableInventoryFixedCost, List<Suppliers> suppliers) {
         this.vegitableApplicableTaxes = vegitableApplicableTaxes;
         this.vegitableName = vegitableName;
         this.vegitableDescp = vegitableDescp;
@@ -70,11 +69,11 @@ public class AddVegitablesRequestBody {
         this.suppliers = suppliers;
     }
 
-    public ArrayList<String> getVegitableApplicableTaxes() {
+    public List<String> getVegitableApplicableTaxes() {
         return vegitableApplicableTaxes;
     }
 
-    public void setVegitableApplicableTaxes(ArrayList<String> vegitableApplicableTaxes) {
+    public void setVegitableApplicableTaxes(List<String> vegitableApplicableTaxes) {
         this.vegitableApplicableTaxes = vegitableApplicableTaxes;
     }
 
@@ -206,11 +205,11 @@ public class AddVegitablesRequestBody {
         this.vegitableInventoryFixedCost = vegitableInventoryFixedCost;
     }
 
-    public ArrayList<Suppliers> getSuppliers() {
+    public List<Suppliers> getSuppliers() {
         return suppliers;
     }
 
-    public void setSuppliers(ArrayList<Suppliers> suppliers) {
+    public void setSuppliers(List<Suppliers> suppliers) {
         this.suppliers = suppliers;
     }
 }

@@ -5,7 +5,7 @@ import com.example.retail.models.variantandcategory.repository.VariantAndCategor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -23,7 +23,7 @@ public class VariantAndCategoryService {
         return variantAndCategoryRepository.findBySubId(itemCategorySubId);
     }
 
-    public Integer updateVariantList(Set<String> variantList, String itemCategorySubId) {
+    public Integer addVariants(String itemCategorySubId, List<String> variantList) {
         return variantAndCategoryRepository.updateVariantList(variantList, itemCategorySubId);
     }
 }

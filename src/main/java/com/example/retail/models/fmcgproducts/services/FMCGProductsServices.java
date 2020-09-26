@@ -95,8 +95,8 @@ public class FMCGProductsServices {
         fmcgProducts.setFmcgProductDescription(fmcgProductsRequestBody.getFmcgProductDescription());
         fmcgProducts.setFmcgProductGenericName(fmcgProductsRequestBody.getFmcgProductGenericName());
         fmcgProducts.setFmcgProductAlternateName(fmcgProductsRequestBody.getFmcgProductAlternateName());
-        fmcgProducts.setItemClassificationName(fmcgProductsRequestBody.getItemClassificationName());
-        fmcgProducts.setItemClassificationCode(fmcgProductsRequestBody.getItemClassificationCode());
+        fmcgProducts.setItemCategory(fmcgProductsRequestBody.getItemCategory());
+        fmcgProducts.setItemSubCategory(fmcgProductsRequestBody.getItemSubCategory());
         fmcgProducts.setFmcgProductAvailable(fmcgProductsRequestBody.getFmcgProductAvailable());
         fmcgProducts.setFmcgProductSellingPrice(fmcgProductsRequestBody.getFmcgProductSellingPrice());
         fmcgProducts.setFmcgProductOfferedDiscount(fmcgProductsRequestBody.getFmcgProductOfferedDiscount());

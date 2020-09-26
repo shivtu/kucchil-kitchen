@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -21,5 +22,5 @@ public interface VariantAndCategoryRepository extends JpaRepository<VariantAndCa
     @Transactional
     @Modifying
     @Query(value = "UPDATE VariantAndCategory v set v.variantsList= :variantList WHERE v.itemCategorySubId= :itemCategorySubId")
-    public Integer updateVariantList(@Param("variantList") Set<String> variantList, @Param("itemCategorySubId") String itemCategorySubId);
+    public Integer updateVariantList(@Param("variantList") List<String> variantList, @Param("itemCategorySubId") String itemCategorySubId);
 }

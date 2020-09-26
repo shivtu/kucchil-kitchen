@@ -1,11 +1,20 @@
 package com.example.retail.models.variantandcategory;
 
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Maintain a record of all variants for a given category and sub category
+ * */
 @Entity
 @Table(name = "variant_and_category")
+@TypeDefs({@TypeDef(name = "psql-jsonb", typeClass = JsonBinaryType.class)})
 public class VariantAndCategory {
 
     @Id
@@ -22,12 +31,12 @@ public class VariantAndCategory {
     private String itemCategorySubId;
 
     @Column(name = "variants")
-    @ElementCollection
-    private Set<String> variantsList = new HashSet<>();
+    @Type(type = "psql-jsonb")
+    private List<String> variantsList = new ArrayList<>();
 
     public VariantAndCategory() {}
 
-    public VariantAndCategory(String itemCategory, String itemSubCategory, String itemCategorySubId, Set<String> variantsList) {
+    public VariantAndCategory(String itemCategory, String itemSubCategory, String itemCategorySubId, List<String> variantsList) {
         this.itemCategory = itemCategory;
         this.itemSubCategory = itemSubCategory;
         this.itemCategorySubId = itemCategorySubId;
@@ -66,11 +75,11 @@ public class VariantAndCategory {
         this.itemCategorySubId = itemCategorySubId;
     }
 
-    public Set<String> getVariantsList() {
+    public List<String> getVariantsList() {
         return variantsList;
     }
 
-    public void setVariantsList(Set<String> variantsList) {
+    public void setVariantsList(List<String> variantsList) {
         this.variantsList = variantsList;
     }
 }

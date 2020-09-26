@@ -3,7 +3,6 @@ package com.example.retail.controllers.retailer.fmcg_retailer;
 import com.example.retail.models.jsonmodels.Suppliers;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,9 +21,9 @@ public class FMCGProductsRequestBody {
 
     private String fmcgProductAlternateName;
 
-    private String itemClassificationName;
+    private String itemCategory;
 
-    private String itemClassificationCode;
+    private String itemSubCategory;
 
     private Boolean fmcgProductAvailable;
 
@@ -58,22 +57,21 @@ public class FMCGProductsRequestBody {
 
     public FMCGProductsRequestBody() {}
 
-    public FMCGProductsRequestBody(String fmcgProductManufacturer, String fmcgProductName, String fmcgProductVariant,
-                                   String fmcgProductDescription, String fmcgProductGenericName, String fmcgProductAlternateName,
-                                   String itemClassificationName, String itemClassificationCode, Boolean fmcgProductAvailable,
-                                   Float fmcgProductSellingPrice, Float fmcgProductOfferedDiscount, String fmcgProductDiscountName,
-                                   ArrayList<String> fmcgProductApplicableTaxes, Float fmcgProductQuantity, Float fmcgProductMeasurementUnit,
-                                   Float fmcgProductDenomination, ArrayList<String> fmcgProductImageLocation, Float fmcgProductInventoryCostPrice,
-                                   Float fmcgProductInventoryFixedCost, String fmcgProductInventoryExpiry, Float fmcgProductInventoryAddedQty,
-                                   List<Suppliers> suppliers) {
+    public FMCGProductsRequestBody(String fmcgProductManufacturer, String fmcgProductName, String fmcgProductVariant, String fmcgProductDescription,
+                                   String fmcgProductGenericName, String fmcgProductAlternateName, String itemCategory, String itemSubCategory,
+                                   Boolean fmcgProductAvailable, Float fmcgProductSellingPrice, Float fmcgProductOfferedDiscount,
+                                   String fmcgProductDiscountName, ArrayList<String> fmcgProductApplicableTaxes, Float fmcgProductQuantity,
+                                   Float fmcgProductMeasurementUnit, Float fmcgProductDenomination, ArrayList<String> fmcgProductImageLocation,
+                                   Float fmcgProductInventoryCostPrice, Float fmcgProductInventoryFixedCost, String fmcgProductInventoryExpiry,
+                                   Float fmcgProductInventoryAddedQty, List<Suppliers> suppliers) {
         this.fmcgProductManufacturer = fmcgProductManufacturer;
         this.fmcgProductName = fmcgProductName;
         this.fmcgProductVariant = fmcgProductVariant;
         this.fmcgProductDescription = fmcgProductDescription;
         this.fmcgProductGenericName = fmcgProductGenericName;
         this.fmcgProductAlternateName = fmcgProductAlternateName;
-        this.itemClassificationName = itemClassificationName;
-        this.itemClassificationCode = itemClassificationCode;
+        this.itemCategory = itemCategory;
+        this.itemSubCategory = itemSubCategory;
         this.fmcgProductAvailable = fmcgProductAvailable;
         this.fmcgProductSellingPrice = fmcgProductSellingPrice;
         this.fmcgProductOfferedDiscount = fmcgProductOfferedDiscount;
@@ -138,20 +136,20 @@ public class FMCGProductsRequestBody {
         this.fmcgProductAlternateName = fmcgProductAlternateName;
     }
 
-    public String getItemClassificationName() {
-        return itemClassificationName;
+    public String getItemCategory() {
+        return itemCategory;
     }
 
-    public void setItemClassificationName(String itemClassificationName) {
-        this.itemClassificationName = itemClassificationName;
+    public void setItemCategory(String itemCategory) {
+        this.itemCategory = itemCategory;
     }
 
-    public String getItemClassificationCode() {
-        return itemClassificationCode;
+    public String getItemSubCategory() {
+        return itemSubCategory;
     }
 
-    public void setItemClassificationCode(String itemClassificationCode) {
-        this.itemClassificationCode = itemClassificationCode;
+    public void setItemSubCategory(String itemSubCategory) {
+        this.itemSubCategory = itemSubCategory;
     }
 
     public Boolean getFmcgProductAvailable() {

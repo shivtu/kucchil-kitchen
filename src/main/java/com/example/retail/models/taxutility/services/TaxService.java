@@ -60,7 +60,7 @@ public class TaxService {
         return taxRepository.findAll();
     }
 
-    public Optional findByName(String taxName) {
+    public Optional<Taxes> findByName(String taxName) {
         return  taxRepository.findBytaxName(taxName);
     }
 }

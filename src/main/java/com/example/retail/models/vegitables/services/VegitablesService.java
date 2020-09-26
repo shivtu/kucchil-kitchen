@@ -199,14 +199,14 @@ public class VegitablesService {
             if(optionalVariantAndCategory.isPresent()) {
                 System.out.println(">>>>>>>>>> " + "if" );
                 // If itemCategory and itemSubCategory (itemCategorySubId) is present add variant to existing variant list
-                Set<String> variantList =  optionalVariantAndCategory.get().getVariantsList();
+                List<String> variantList =  optionalVariantAndCategory.get().getVariantsList();
                 variantList.add(newVegitables.getVegitableVariant());
 
                 System.out.println(">>>>>>>>>> " + variantList );
-                Integer res = variantAndCategoryService.updateVariantList(variantList, itemCategorySubId);
+                Integer res = variantAndCategoryService.addVariants(itemCategorySubId, variantList);
 
             } else {
-                Set<String> variantList = new HashSet<>();
+                List<String> variantList = new ArrayList<>();
                 System.out.println("............" + "else" );
                 /**Persist new variant and category**/
                 variantList.add(newVegitables.getVegitableVariant());

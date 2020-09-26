@@ -86,7 +86,7 @@ public class Validations {
 
         // Check if applicable taxes are valid
         AtomicReference<Boolean> taxAvailable = new AtomicReference<>(true);
-        ArrayList<String> applicableTaxes = newVegitables.getVegitableApplicableTaxes();
+        List<String> applicableTaxes = newVegitables.getVegitableApplicableTaxes();
         applicableTaxes.forEach(applicableTax -> {
             Optional<Taxes> taxes = taxService.findByName(applicableTax);
             if (taxes.isEmpty()) {

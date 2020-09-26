@@ -38,14 +38,15 @@ public class FMCGProducts {
     private String fmcgProductAlternateName;
 
     // Product category : Example - confectionary, dairy, spices etc
+    @NotEmpty
     @NotNull
-    @Column(name = "item_category_name")
-    private String itemClassificationName;
+    @Column(name = "item_category")
+    private String itemCategory;
 
     @NotEmpty
     @NotNull
-    @Column(name = "item_category_code")
-    private String itemClassificationCode;
+    @Column(name = "item_sub_category")
+    private String itemSubCategory;
 
     @NotNull
     @Column(name = "fmcg_product_available")
@@ -102,20 +103,19 @@ public class FMCGProducts {
 
     public FMCGProducts(@NotNull String fmcgProductManufacturer, @NotNull String fmcgProductName, String fmcgProductVariant,
                         @NotNull String fmcgProductDescription, @NotNull String fmcgProductGenericName, String fmcgProductAlternateName,
-                        @NotNull String itemClassificationName, @NotEmpty @NotNull String itemClassificationCode,
-                        @NotNull Boolean fmcgProductAvailable, Float fmcgProductSellingPrice,
-                        Float fmcgProductOfferedDiscount, String fmcgProductDiscountName, Float fmcgProductDiscountedPrice,
-                        @NotNull List<String> fmcgProductApplicableTaxes, @NotNull Float fmcgProductTaxedPrice, @NotNull Float fmcgProductQuantity,
-                        @NotNull Float fmcgProductMeasurementUnit, @NotNull Float fmcgProductDenomination, @NotNull String fmcgProductSubId,
-                        List<String> fmcgProductImageLocation) {
+                        @NotEmpty @NotNull String itemCategory, @NotEmpty @NotNull String itemSubCategory,
+                        @NotNull Boolean fmcgProductAvailable, Float fmcgProductSellingPrice, Float fmcgProductOfferedDiscount,
+                        String fmcgProductDiscountName, Float fmcgProductDiscountedPrice, @NotNull List<String> fmcgProductApplicableTaxes,
+                        @NotNull Float fmcgProductTaxedPrice, @NotNull Float fmcgProductQuantity, @NotNull Float fmcgProductMeasurementUnit,
+                        @NotNull Float fmcgProductDenomination, @NotNull String fmcgProductSubId, List<String> fmcgProductImageLocation) {
         this.fmcgProductManufacturer = fmcgProductManufacturer;
         this.fmcgProductName = fmcgProductName;
         this.fmcgProductVariant = fmcgProductVariant;
         this.fmcgProductDescription = fmcgProductDescription;
         this.fmcgProductGenericName = fmcgProductGenericName;
         this.fmcgProductAlternateName = fmcgProductAlternateName;
-        this.itemClassificationName = itemClassificationName;
-        this.itemClassificationCode = itemClassificationCode;
+        this.itemCategory = itemCategory;
+        this.itemSubCategory = itemSubCategory;
         this.fmcgProductAvailable = fmcgProductAvailable;
         this.fmcgProductSellingPrice = fmcgProductSellingPrice;
         this.fmcgProductOfferedDiscount = fmcgProductOfferedDiscount;
@@ -186,20 +186,20 @@ public class FMCGProducts {
         this.fmcgProductAlternateName = fmcgProductAlternateName;
     }
 
-    public String getItemClassificationName() {
-        return itemClassificationName;
+    public String getItemCategory() {
+        return itemCategory;
     }
 
-    public void setItemClassificationName(String itemClassificationName) {
-        this.itemClassificationName = itemClassificationName;
+    public void setItemCategory(String itemCategory) {
+        this.itemCategory = itemCategory;
     }
 
-    public String getItemClassificationCode() {
-        return itemClassificationCode;
+    public String getItemSubCategory() {
+        return itemSubCategory;
     }
 
-    public void setItemClassificationCode(String itemClassificationCode) {
-        this.itemClassificationCode = itemClassificationCode;
+    public void setItemSubCategory(String itemSubCategory) {
+        this.itemSubCategory = itemSubCategory;
     }
 
     public Boolean getFmcgProductAvailable() {
