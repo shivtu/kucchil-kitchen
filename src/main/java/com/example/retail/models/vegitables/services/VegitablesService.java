@@ -5,7 +5,6 @@ import com.example.retail.models.discounts.CustomerOrdersDiscount;
 import com.example.retail.models.discounts.DiscountCalculator;
 import com.example.retail.models.discounts.services.CustomerOrdersDiscountServices;
 import com.example.retail.models.jsonmodels.InventoryAdditionDetails;
-import com.example.retail.models.jsonmodels.Suppliers;
 import com.example.retail.models.variantandcategory.VariantAndCategory;
 import com.example.retail.models.variantandcategory.services.VariantAndCategoryService;
 import com.example.retail.models.vegitables.*;
@@ -75,7 +74,7 @@ public class VegitablesService {
     }
 
     public ResponseEntity<Object> addNewVegitable(HttpServletRequest request, AddVegitablesRequestBody newVegitables,
-                                                  ArrayList<MultipartFile> images) {
+                                                  List<MultipartFile> vegitableImages) {
         try {
             /* Create a unique subID */
             String vegSubId = utils.getVegitableSubId(newVegitables.getVegitableName()
@@ -106,21 +105,22 @@ public class VegitablesService {
             /* create new vegitable */
             Vegitables vegitables = new Vegitables();
 
+            System.out.println(">>>>>>>>>>>" + vegitableImages.size());
             // Add image for the item
-            if (!images.isEmpty()) {
-                OpsResponse res = utils.saveFiles(images, "vegitableImages");
+            if (!vegitableImages.isEmpty()) {
+                OpsResponse res = utils.saveFiles(vegitableImages, "vegitableImages");
                 int errorCheck = res.getStatusCode();
 
                 if(errorCheck != utils.opsSuccess){
                     return ResponseEntity.status(errorCheck).body(res);
                 } else {
-                    vegitables.setVegitableImagesLocation((ArrayList<String>) res.getStatusArray());
+                    vegitables.setVegitableImages((ArrayList<String>) res.getStatusArray());
                 }
             } else {
-                ArrayList<String> placeholder = new ArrayList<>();
+                ArrayList<String> imagePlaceHolder = new ArrayList<>();
                 // TODO : give correct path to image placeholder
-                placeholder.add("src/main/resources/assets/veg-images/veg-image-placeholder.png");
-                vegitables.setVegitableImagesLocation(placeholder);
+                imagePlaceHolder.add("src/main/resources/assets/veg-images/veg-image-placeholder.png");
+                vegitables.setVegitableImages(imagePlaceHolder);
             }
 
             vegitables.setVegitableApplicableTaxes(newVegitables.getVegitableApplicableTaxes());
@@ -195,24 +195,24 @@ public class VegitablesService {
             variantAndCategory.setItemCategorySubId(itemCategorySubId);
 
 
-            Optional<VariantAndCategory> optionalVariantAndCategory = variantAndCategoryService.findBySubId(itemCategorySubId);
-            if(optionalVariantAndCategory.isPresent()) {
-                System.out.println(">>>>>>>>>> " + "if" );
-                // If itemCategory and itemSubCategory (itemCategorySubId) is present add variant to existing variant list
-                List<String> variantList =  optionalVariantAndCategory.get().getVariantsList();
-                variantList.add(newVegitables.getVegitableVariant());
-
-                System.out.println(">>>>>>>>>> " + variantList );
-                Integer res = variantAndCategoryService.addVariants(itemCategorySubId, variantList);
-
-            } else {
-                List<String> variantList = new ArrayList<>();
-                System.out.println("............" + "else" );
-                /**Persist new variant and category**/
-                variantList.add(newVegitables.getVegitableVariant());
-                variantAndCategory.setVariantsList(variantList);
-               variantAndCategoryService.save(variantAndCategory);
-            }
+//            Optional<VariantAndCategory> optionalVariantAndCategory = variantAndCategoryService.findBySubId(itemCategorySubId);
+//            if(optionalVariantAndCategory.isPresent()) {
+//                System.out.println(">>>>>>>>>> " + "if" );
+//                // If itemCategory and itemSubCategory (itemCategorySubId) is present add variant to existing variant list
+//                List<String> variantList =  optionalVariantAndCategory.get().getVariantsList();
+//                variantList.add(newVegitables.getVegitableVariant());
+//
+//                System.out.println(">>>>>>>>>> " + variantList );
+//                Integer res = variantAndCategoryService.addVariants(itemCategorySubId, variantList);
+//
+//            } else {
+//                List<String> variantList = new ArrayList<>();
+//                System.out.println("............" + "else" );
+//                /**Persist new variant and category**/
+//                variantList.add(newVegitables.getVegitableVariant());
+//                variantAndCategory.setVariantsList(variantList);
+//               variantAndCategoryService.save(variantAndCategory);
+//            }
 
             /** Persist the vegitable **/
             Vegitables createdVeg = vegitablesRepository.save(vegitables);

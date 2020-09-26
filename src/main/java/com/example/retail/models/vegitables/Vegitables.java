@@ -69,7 +69,7 @@ public class Vegitables {
 
     @NotNull
     @Column(name = "vegitable_applicable_taxes")
-    @ElementCollection
+    @ElementCollection // corrosponding table - vegitables_vegitable_applicable_taxes
     private List<String> vegitableApplicableTaxes = new ArrayList<>();
 
     @NotNull
@@ -95,23 +95,21 @@ public class Vegitables {
 
     @NotNull
     @Column(name = "vegitable_images_location")
-    @ElementCollection
-    private List<String> vegitableImagesLocation = new ArrayList<>();
+    @ElementCollection // corrosponding table - vegitables_vegitable_images
+    private List<String> vegitableImages = new ArrayList<>();
 
     public Vegitables(){
     }
 
-    public Vegitables(@NotNull @NotEmpty String vegitableName, String vegitableDescp, String vegitableVariant,
-                      @NotEmpty @NotNull String itemCategory, @NotEmpty @NotNull String itemSubCategory,
-                      List<VegitableRecipes> vegitableRecepie,
+    public Vegitables(@NotNull @NotEmpty String vegitableName, String vegitableDescp, String vegitableVariant, @NotEmpty @NotNull String itemCategory,
+                      @NotEmpty @NotNull String itemSubCategory, List<VegitableRecipes> vegitableRecepie,
                       @NotNull @Min(value = 1, message = "Selling price cannot be less than 1") Float vegitableSellingPrice,
                       @Min(value = 0, message = "discounts are expressed in %, valid range 0-100") Float vegitableOfferedDiscount,
                       @NotNull String vegitableOfferedDiscountName, @NotNull Float vegitableDiscountedPrice,
                       @NotNull List<String> vegitableApplicableTaxes, @NotNull Float vegitableTaxedPrice,
                       @NotNull @Min(value = 1, message = "Quantity cannot be less than 0") Float vegitableQuantity,
-                      @NotNull(message = "Is this item available") Boolean vegitableAvailable,
-                      @NotNull @NotEmpty String vegitableMeasureMentUnit, String vegitableSubId,
-                      @NotNull List<String> vegitableImagesLocation) {
+                      @NotNull(message = "Is this item available") Boolean vegitableAvailable, @NotNull @NotEmpty String vegitableMeasureMentUnit,
+                      String vegitableSubId, @NotNull List<String> vegitableImages) {
         this.vegitableName = vegitableName;
         this.vegitableDescp = vegitableDescp;
         this.vegitableVariant = vegitableVariant;
@@ -128,7 +126,7 @@ public class Vegitables {
         this.vegitableAvailable = vegitableAvailable;
         this.vegitableMeasureMentUnit = vegitableMeasureMentUnit;
         this.vegitableSubId = vegitableSubId;
-        this.vegitableImagesLocation = vegitableImagesLocation;
+        this.vegitableImages = vegitableImages;
     }
 
     public Long getVegitableTableId() {
@@ -267,11 +265,11 @@ public class Vegitables {
         this.vegitableSubId = vegitableSubId;
     }
 
-    public List<String> getVegitableImagesLocation() {
-        return vegitableImagesLocation;
+    public List<String> getVegitableImages() {
+        return vegitableImages;
     }
 
-    public void setVegitableImagesLocation(List<String> vegitableImagesLocation) {
-        this.vegitableImagesLocation = vegitableImagesLocation;
+    public void setVegitableImages(List<String> vegitableImages) {
+        this.vegitableImages = vegitableImages;
     }
 }

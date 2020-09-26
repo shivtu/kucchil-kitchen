@@ -29,12 +29,12 @@ public class Utils {
     private String savedImagePath = "src/main/resources/assets/veg-images";
     final public String defaultSwitchCase = "This operation is not provisioned";
 
-    public OpsResponse saveFiles(ArrayList<MultipartFile> images, String caseType) {
+    public OpsResponse saveFiles(List<MultipartFile> vegitableImages, String caseType) {
         switch(caseType) {
             case "vegitableImages":
                 try {
                     final List<String> savedFileResArray = new ArrayList<>();
-                    for (MultipartFile mf : images) {
+                    for (MultipartFile mf : vegitableImages) {
                         if (Objects.equals(mf.getContentType(), "image/jpeg") || Objects.equals(mf.getContentType(), "image/png")) {
                             if (mf.getSize() > vegImageMaxSizeBytes) {
                                 return createResponse.createOpsResponse(400, vegImageSizeError, "Allowed size is less than " + vegImageMaxSizeBytes,

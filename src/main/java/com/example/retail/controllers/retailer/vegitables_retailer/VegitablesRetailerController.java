@@ -62,8 +62,8 @@ public class VegitablesRetailerController {
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public Object addNewVegitable(HttpServletRequest request,
                                            @ModelAttribute AddVegitablesRequestBody newVegitables,
-                                           @RequestParam("images") ArrayList<MultipartFile> images) throws Exception {
-        return vegitablesService.addNewVegitable(request, newVegitables, images);
+                                           @RequestParam("vegitableImages") ArrayList<MultipartFile> vegitableImages) throws Exception {
+        return vegitablesService.addNewVegitable(request, newVegitables, vegitableImages);
     }
 
 

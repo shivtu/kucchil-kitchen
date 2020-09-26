@@ -32,9 +32,9 @@ public class ItemCategoryRetailerController {
             ItemCategories result = itemCategoriesService.createItemCategory(request, newItemCategory);
             List<ItemCategories> itemCategoriesList = new ArrayList<ItemCategories>();
             itemCategoriesList.add(result);
-            return ResponseEntity.status(200).body(
+            return ResponseEntity.status(201).body(
                     createResponse.createSuccessResponse(
-                            200,
+                            201,
                             "Created",
                             itemCategoriesList
                     )
