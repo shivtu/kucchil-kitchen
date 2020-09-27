@@ -150,6 +150,8 @@ public class VegitableInventoryService {
         List<InventoryAdditionDetails> inventoryAdditionDetailsList = new ArrayList<>();
         inventoryAdditionDetailsList.add(inventoryAdditionDetails);
 
+        /** update the vegitableinventory_additiondetails column in vegitables_inventory table
+         to record who increented quanted and when **/
         vegitableInventoryRepositoryImpl.updateVegitablesAdditionDetails(vegSubId, inventoryAdditionDetailsList);
 
 //        /** Return the response by fetching the vegitables and vegitablesInventory **/

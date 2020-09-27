@@ -20,8 +20,8 @@ public class UtilityRetailerController {
         return utilityServices.findAllUtilities();
     }
 
-    @RequestMapping(value = "/findVariantsBySubId/{subId}")
-    public ResponseEntity<?> findAllVariantsBySubId(@PathVariable String subId) {
-        return utilityServices.findAllVariantsBySubId(subId);
-    }
+//    @RequestMapping(value = "/findVariantsBySubId/{subId}")
+//    public ResponseEntity<?> findAllVariantsBySubId(@PathVariable String subId) {
+//        return utilityServices.findAllVariantsBySubId(subId);
+//    }
 }

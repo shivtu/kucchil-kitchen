@@ -6,8 +6,10 @@ import com.example.retail.models.discounts.DiscountCalculator;
 import com.example.retail.models.discounts.services.CustomerOrdersDiscountServices;
 import com.example.retail.models.jsonmodels.InventoryAdditionDetails;
 import com.example.retail.models.variantandcategory.VariantAndCategory;
+import com.example.retail.models.variantandcategory.repository.VariantAndCategoryRepositoryImpl;
 import com.example.retail.models.variantandcategory.services.VariantAndCategoryService;
 import com.example.retail.models.vegitables.*;
+import com.example.retail.models.vegitables.repository.VegitableInventoryRepositoryImpl;
 import com.example.retail.models.vegitables.repository.VegitablesRepository;
 import com.example.retail.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -27,6 +28,9 @@ public class VegitablesService {
 
     @Autowired
     VegitablesRepository vegitablesRepository;
+
+    @Autowired
+    CreateResponse createResponse;
 
     @Autowired
     JWTDetails JWTDetails;
@@ -41,9 +45,6 @@ public class VegitablesService {
     VegitableInventoryService vegitableInventoryService;
 
     @Autowired
-    CreateResponse createResponse;
-
-    @Autowired
     DiscountCalculator discountCalculator;
 
     @Autowired
@@ -54,6 +55,10 @@ public class VegitablesService {
 
     @Autowired
     VariantAndCategoryService variantAndCategoryService;
+
+    @Autowired
+    VariantAndCategoryRepositoryImpl variantAndCategoryRepositoryImpl;
+
 
     public List<Object> findAllVegitablesWithInventory() {
         List<Vegitables> vegitables = vegitablesRepository.findAll();
@@ -105,7 +110,6 @@ public class VegitablesService {
             /* create new vegitable */
             Vegitables vegitables = new Vegitables();
 
-            System.out.println(">>>>>>>>>>>" + vegitableImages.size());
             // Add image for the item
             if (!vegitableImages.isEmpty()) {
                 OpsResponse res = utils.saveFiles(vegitableImages, "vegitableImages");
@@ -194,25 +198,19 @@ public class VegitablesService {
             variantAndCategory.setItemSubCategory(newVegitables.getItemSubCategory());
             variantAndCategory.setItemCategorySubId(itemCategorySubId);
 
-
-//            Optional<VariantAndCategory> optionalVariantAndCategory = variantAndCategoryService.findBySubId(itemCategorySubId);
-//            if(optionalVariantAndCategory.isPresent()) {
-//                System.out.println(">>>>>>>>>> " + "if" );
-//                // If itemCategory and itemSubCategory (itemCategorySubId) is present add variant to existing variant list
-//                List<String> variantList =  optionalVariantAndCategory.get().getVariantsList();
-//                variantList.add(newVegitables.getVegitableVariant());
-//
-//                System.out.println(">>>>>>>>>> " + variantList );
-//                Integer res = variantAndCategoryService.addVariants(itemCategorySubId, variantList);
-//
-//            } else {
-//                List<String> variantList = new ArrayList<>();
-//                System.out.println("............" + "else" );
-//                /**Persist new variant and category**/
-//                variantList.add(newVegitables.getVegitableVariant());
-//                variantAndCategory.setVariantsList(variantList);
-//               variantAndCategoryService.save(variantAndCategory);
-//            }
+            Optional<VariantAndCategory> optionalVariantAndCategory = variantAndCategoryService.findBySubId(itemCategorySubId);
+            if(optionalVariantAndCategory.isPresent()) {
+                /** If itemCategory and itemSubCategory (itemCategorySubId) is present add variant to existing variant list **/
+                List<String> variantList =  new ArrayList<>();
+                variantList.add(newVegitables.getVegitableVariant());
+                variantAndCategoryRepositoryImpl.addVariants(itemCategorySubId, variantList);
+            } else {
+                List<String> variantList = new ArrayList<>();
+                /**Persist new variant and category**/
+                variantList.add(newVegitables.getVegitableVariant());
+                variantAndCategory.setVariantsList(variantList);
+                variantAndCategoryService.save(variantAndCategory);
+            }
 
             /** Persist the vegitable **/
             Vegitables createdVeg = vegitablesRepository.save(vegitables);
@@ -237,11 +235,11 @@ public class VegitablesService {
 
         }catch (Exception e) {
             return ResponseEntity.status(500).body(
-                    createResponse.createErrorResponse(
-                            500,
-                            e.getLocalizedMessage(),
-                            "NA"
-                    )
+                createResponse.createErrorResponse(
+                    500,
+                    e.getLocalizedMessage(),
+                    "NA"
+                )
             );
         }
     }

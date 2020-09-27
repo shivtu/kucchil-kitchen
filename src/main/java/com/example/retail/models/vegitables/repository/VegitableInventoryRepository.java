@@ -18,10 +18,10 @@ public interface VegitableInventoryRepository extends JpaRepository<VegitablesIn
 //    @Query(value = "UPDATE VegitablesInventory vi  SET vi.vegitablesInventoryAdditionDetails = to_jsonb(:updatedAdditionDetails) WHERE vegitableSubId = :subId")
 //    Integer updateVegitablesAdditionDetails(@Param("subId") String subId, @Param("updatedAdditionDetails") List<VegitableAdditionDetails> updatedAdditionDetails);
 
-    @Transactional
-    @Modifying
-    @Query(value = "UPDATE vegitables_inventory  SET vegitablesinventory_addtion_details=to_jsonb(:updatedAdditionDetails)", nativeQuery = true)
-    int updateVegitablesAdditionDetails(@Param("updatedAdditionDetails") String updatedAdditionDetails);
+//    @Transactional
+//    @Modifying
+//    @Query(value = "UPDATE vegitables_inventory  SET vegitablesinventory_addtion_details=to_jsonb(:updatedAdditionDetails)", nativeQuery = true)
+//    int updateVegitablesAdditionDetails(@Param("updatedAdditionDetails") String updatedAdditionDetails);
 
     @Query(value = "SELECT * FROM vegitables_inventory WHERE vegitable_subid= :subId", nativeQuery = true)
     Optional<VegitablesInventory> findVegitableInventoryBySubId(@Param("subId") String subId);

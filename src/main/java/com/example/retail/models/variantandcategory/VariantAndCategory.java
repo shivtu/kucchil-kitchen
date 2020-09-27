@@ -18,10 +18,11 @@ import java.util.List;
 public class VariantAndCategory {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "variant_and_category_table_id")
     private Long variantAndCategoryTableId;
 
+    @Column(name = "item_category")
     private String itemCategory;
 
     @Column(name = "item_sub_category", unique = true)
@@ -30,13 +31,14 @@ public class VariantAndCategory {
     @Column(name = "item_category_sub_id")
     private String itemCategorySubId;
 
-    @Column(name = "variants")
+    @Column(name = "variants", columnDefinition = "jsonb")
     @Type(type = "psql-jsonb")
-    private List<String> variantsList = new ArrayList<>();
+    private List<String> variantsList;
 
     public VariantAndCategory() {}
 
-    public VariantAndCategory(String itemCategory, String itemSubCategory, String itemCategorySubId, List<String> variantsList) {
+    public VariantAndCategory(Long variantAndCategoryTableId, String itemCategory, String itemSubCategory, String itemCategorySubId, List<String> variantsList) {
+        this.variantAndCategoryTableId = variantAndCategoryTableId;
         this.itemCategory = itemCategory;
         this.itemSubCategory = itemSubCategory;
         this.itemCategorySubId = itemCategorySubId;

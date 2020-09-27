@@ -90,6 +90,7 @@ public class Vegitables {
     @Column(name="vegitable_measurement_unit")
     private String vegitableMeasureMentUnit;
 
+    @NotNull
     @Column(name = "vegitable_subid", updatable = false)
     private String vegitableSubId;
 

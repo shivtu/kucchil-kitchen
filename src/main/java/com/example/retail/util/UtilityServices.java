@@ -64,16 +64,16 @@ public class UtilityServices {
         );
     }
 
-    public ResponseEntity<?> findAllVariantsBySubId (String itemCategorySubId) {
-        Optional<VariantAndCategory> variantAndCategory = variantAndCategoryService.findBySubId(itemCategorySubId);
-        int resSize = variantAndCategory.get().getVariantsList().size();
-        List<String> res = new ArrayList<>(variantAndCategory.get().getVariantsList());
-        return ResponseEntity.status(200).body(
-            createResponse.createSuccessResponse(
-                200,
-                "Found " + resSize + " results",
-                res
-            )
-        );
-    }
+//    public ResponseEntity<?> findAllVariantsBySubId (String itemCategorySubId) {
+//        Optional<VariantAndCategory> variantAndCategory = variantAndCategoryService.findBySubId(itemCategorySubId);
+//        int resSize = variantAndCategory.get().getVariantsList().size();
+//        List<String> res = new ArrayList<>(variantAndCategory.get().getVariantsList());
+//        return ResponseEntity.status(200).body(
+//            createResponse.createSuccessResponse(
+//                200,
+//                "Found " + resSize + " results",
+//                res
+//            )
+//        );
+//    }
 }

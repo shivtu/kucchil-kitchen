@@ -19,7 +19,7 @@ public class VegitableInventoryRepositoryImpl implements VegitableInventoryRepos
     @Override
     public int updateVegitablesAdditionDetails(String subId, List<InventoryAdditionDetails> updatedAdditionDetails) {
 
-        String psqlQuery = "UPDATE vegitables_inventory  SET vegitablesinventory_addtiondetails = vegitablesinventory_addtiondetails || :updatedAdditionDetails WHERE vegitable_subid=:subId";
+        String psqlQuery = "UPDATE vegitables_inventory SET vegitablesinventory_addtiondetails = vegitablesinventory_addtiondetails || :updatedAdditionDetails WHERE vegitable_subid=:subId";
 
         return entityManager.createNativeQuery(psqlQuery)
             .unwrap(NativeQuery.class)
