@@ -1,8 +1,11 @@
 package com.example.retail.models.nonvegproducts;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "non_veg_products")
@@ -53,6 +56,30 @@ public class NonVegProducts {
     @Column(name = "non_veg_product_qty")
     private Float nonVegProductQty;
 
+    @Column(name = "non_veg_product_measurement_unit")
+    private Float nonVegProductMeasurementUnit;
+
+    @Min(value = 0, message = "discounts are expressed in %, valid range 0-100")
+    @Column(name = "non_veg_product_offered_discount")
+    private Float nonVegProductOfferedDiscount;
+
+    @NotNull
+    @Column(name = "non_veg_product_offered_discount_name")
+    private String nonVegProductOfferedDiscountName;
+
+    @NotNull
+    @Column(name = "vagitable_discounted_price")
+    private Float nonVegProductDiscountedPrice;
+
+    @NotNull
+    @Column(name = "non_veg_product_applicable_taxes")
+    @ElementCollection
+    private List<String> nonVegProductApplicableTaxes = new ArrayList<>();
+
+    @NotNull
+    @Column(name = "non_veg_product_taxed_price")
+    private Float nonVegProductTaxedPrice;
+
     @Column(name = "non_veg_product_cut_type")
     private String nonVegProductCutType;
 
@@ -63,8 +90,12 @@ public class NonVegProducts {
 
     public NonVegProducts(@NotNull String nonVegProductName, String getNonVegProductAlternateName, String getNonVegProductVariant,
                           @NotEmpty @NotNull String itemCategory, @NotEmpty @NotNull String itemSubCategory, Boolean isFrozen,
-                          Boolean isTinned, NonVegProductTypeEnum nonVegProductType, String nonVegProductPackagedBy, String nonVegProductExpiry,
-                          Float nonVegProductQty, String nonVegProductCutType, Boolean isAvailable) {
+                          Boolean isTinned, NonVegProductTypeEnum nonVegProductType, String nonVegProductPackagedBy,
+                          String nonVegProductExpiry, Float nonVegProductQty, Float nonVegProductMeasurementUnit,
+                          @Min(value = 0, message = "discounts are expressed in %, valid range 0-100") Float nonVegProductOfferedDiscount,
+                          @NotNull String nonVegProductOfferedDiscountName, @NotNull Float nonVegProductDiscountedPrice,
+                          @NotNull List<String> nonVegProductApplicableTaxes, @NotNull Float nonVegProductTaxedPrice,
+                          String nonVegProductCutType, Boolean isAvailable) {
         this.nonVegProductName = nonVegProductName;
         this.getNonVegProductAlternateName = getNonVegProductAlternateName;
         this.getNonVegProductVariant = getNonVegProductVariant;
@@ -76,6 +107,12 @@ public class NonVegProducts {
         this.nonVegProductPackagedBy = nonVegProductPackagedBy;
         this.nonVegProductExpiry = nonVegProductExpiry;
         this.nonVegProductQty = nonVegProductQty;
+        this.nonVegProductMeasurementUnit = nonVegProductMeasurementUnit;
+        this.nonVegProductOfferedDiscount = nonVegProductOfferedDiscount;
+        this.nonVegProductOfferedDiscountName = nonVegProductOfferedDiscountName;
+        this.nonVegProductDiscountedPrice = nonVegProductDiscountedPrice;
+        this.nonVegProductApplicableTaxes = nonVegProductApplicableTaxes;
+        this.nonVegProductTaxedPrice = nonVegProductTaxedPrice;
         this.nonVegProductCutType = nonVegProductCutType;
         this.isAvailable = isAvailable;
     }
@@ -174,6 +211,54 @@ public class NonVegProducts {
 
     public void setNonVegProductQty(Float nonVegProductQty) {
         this.nonVegProductQty = nonVegProductQty;
+    }
+
+    public Float getNonVegProductMeasurementUnit() {
+        return nonVegProductMeasurementUnit;
+    }
+
+    public void setNonVegProductMeasurementUnit(Float nonVegProductMeasurementUnit) {
+        this.nonVegProductMeasurementUnit = nonVegProductMeasurementUnit;
+    }
+
+    public Float getNonVegProductOfferedDiscount() {
+        return nonVegProductOfferedDiscount;
+    }
+
+    public void setNonVegProductOfferedDiscount(Float nonVegProductOfferedDiscount) {
+        this.nonVegProductOfferedDiscount = nonVegProductOfferedDiscount;
+    }
+
+    public String getNonVegProductOfferedDiscountName() {
+        return nonVegProductOfferedDiscountName;
+    }
+
+    public void setNonVegProductOfferedDiscountName(String nonVegProductOfferedDiscountName) {
+        this.nonVegProductOfferedDiscountName = nonVegProductOfferedDiscountName;
+    }
+
+    public Float getNonVegProductDiscountedPrice() {
+        return nonVegProductDiscountedPrice;
+    }
+
+    public void setNonVegProductDiscountedPrice(Float nonVegProductDiscountedPrice) {
+        this.nonVegProductDiscountedPrice = nonVegProductDiscountedPrice;
+    }
+
+    public List<String> getNonVegProductApplicableTaxes() {
+        return nonVegProductApplicableTaxes;
+    }
+
+    public void setNonVegProductApplicableTaxes(List<String> nonVegProductApplicableTaxes) {
+        this.nonVegProductApplicableTaxes = nonVegProductApplicableTaxes;
+    }
+
+    public Float getNonVegProductTaxedPrice() {
+        return nonVegProductTaxedPrice;
+    }
+
+    public void setNonVegProductTaxedPrice(Float nonVegProductTaxedPrice) {
+        this.nonVegProductTaxedPrice = nonVegProductTaxedPrice;
     }
 
     public String getNonVegProductCutType() {
