@@ -5,6 +5,7 @@ import com.example.retail.models.jsonmodels.InventoryAdditionDetails;
 import com.example.retail.models.vegitables.Vegitables;
 import com.example.retail.models.vegitables.VegitablesInventory;
 import com.example.retail.models.vegitables.repository.VegitableInventoryRepository;
+import com.example.retail.models.vegitables.repository.VegitableInventoryRepositoryCustom;
 import com.example.retail.models.vegitables.repository.VegitableInventoryRepositoryImpl;
 import com.example.retail.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,6 @@ public class VegitableInventoryService {
 
     @Autowired
     VegitablesService vegitablesService;
-
-    @Autowired
-    VegitableInventoryService vegitableInventoryService;
 
     @Autowired
     Validations validations;
@@ -130,7 +128,6 @@ public class VegitableInventoryService {
                     createResponse.createErrorResponse(500, e.getMessage(), "NA")
             );
         }
-
     }
 
     public List<Object> updateVegitableQty (Long tableId, Float quantity, HttpServletRequest request) {

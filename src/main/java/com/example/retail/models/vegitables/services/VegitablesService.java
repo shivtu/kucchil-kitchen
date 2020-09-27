@@ -6,10 +6,8 @@ import com.example.retail.models.discounts.DiscountCalculator;
 import com.example.retail.models.discounts.services.CustomerOrdersDiscountServices;
 import com.example.retail.models.jsonmodels.InventoryAdditionDetails;
 import com.example.retail.models.variantandcategory.VariantAndCategory;
-import com.example.retail.models.variantandcategory.repository.VariantAndCategoryRepositoryImpl;
 import com.example.retail.models.variantandcategory.services.VariantAndCategoryService;
 import com.example.retail.models.vegitables.*;
-import com.example.retail.models.vegitables.repository.VegitableInventoryRepositoryImpl;
 import com.example.retail.models.vegitables.repository.VegitablesRepository;
 import com.example.retail.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,9 +53,6 @@ public class VegitablesService {
 
     @Autowired
     VariantAndCategoryService variantAndCategoryService;
-
-    @Autowired
-    VariantAndCategoryRepositoryImpl variantAndCategoryRepositoryImpl;
 
 
     public List<Object> findAllVegitablesWithInventory() {
@@ -203,7 +198,7 @@ public class VegitablesService {
                 /** If itemCategory and itemSubCategory (itemCategorySubId) is present add variant to existing variant list **/
                 List<String> variantList =  new ArrayList<>();
                 variantList.add(newVegitables.getVegitableVariant());
-                variantAndCategoryRepositoryImpl.addVariants(itemCategorySubId, variantList);
+                variantAndCategoryService.addVariants(itemCategorySubId, variantList);
             } else {
                 List<String> variantList = new ArrayList<>();
                 /**Persist new variant and category**/
