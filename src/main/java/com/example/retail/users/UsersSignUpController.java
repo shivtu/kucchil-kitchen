@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -117,12 +116,51 @@ public class UsersSignUpController {
 
             res.add(createdUser.getConnectedUsersProfile());
             return ResponseEntity.status(201).body(
-                    createResponse.createSuccessResponse(201, "Signup success", res)
+                createResponse.createSuccessResponse(201, "Signup success", res)
             );
 
         } catch (Exception e) {
             return ResponseEntity.status(500).body(
-                    createResponse.createErrorResponse(500, e.getMessage(), "NA")
+                createResponse.createErrorResponse(500, e.getMessage(), "NA")
+            );
+        }
+    }
+
+    @PostMapping(value = "/admin", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public ResponseEntity<Object> addAdmin(HttpEntity<SignUpRequestBody> signUpRequestBody) {
+        try {
+            ValidationResponse validationResponse = validations.validateNewUser(Objects.requireNonNull(signUpRequestBody.getBody()).getUserName(),
+                    signUpRequestBody.getBody().getUserProfile_PhoneNumber());
+            if(validationResponse.getStatusCode() != validations.validationSuccessCode){
+                return ResponseEntity.status(validationResponse.getStatusCode()).body(
+                        validationResponse
+                );
+            }
+            Users users = new Users();
+
+            users.setUserName(Objects.requireNonNull(signUpRequestBody.getBody()).getUserName());
+            users.setPassword(signUpRequestBody.getBody().getPassword());
+            users.setAccountNonExpired(true);
+            users.setAccountNonLocked(true);
+            users.setCredentialsNonExpired(true);
+            users.setEnabled(false);
+            users.setRoles("ROLE_ADMIN");
+            users.setConnectedUsersProfile(createUserProfile(signUpRequestBody));
+
+            Users createdUser = usersService.addUser(users);
+
+            List<Object> res = new ArrayList<>();
+
+            res.add(createdUser.getConnectedUsersProfile());
+
+            return ResponseEntity.status(201).body(
+                createResponse.createSuccessResponse(201, "Signup success", res)
+            );
+
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(
+                createResponse.createErrorResponse(500, e.getMessage(), "NA")
             );
         }
     }

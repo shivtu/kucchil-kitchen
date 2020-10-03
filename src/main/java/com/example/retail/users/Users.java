@@ -22,16 +22,19 @@ public class Users {
     private String userName;
 
     @NotEmpty
-    @NotNull
     @NotBlank
     private String password;
 
+    @NotNull
     private boolean accountNonExpired;
 
+    @NotNull
     private boolean accountNonLocked;
 
+    @NotNull
     private boolean credentialsNonExpired;
 
+    @NotNull
     private boolean enabled;
 
     private String roles;

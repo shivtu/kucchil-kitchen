@@ -25,55 +25,52 @@ public class UsersProfile implements Serializable {
     @Column(name = "users_profile_table_id", updatable = false)
     private Long userProfile_TableId;
 
-    @Column(name = "user_name", unique = true)
+    @NotEmpty
     @Email
+    @Column(name = "user_name", unique = true)
     private String userName;
 
-    @NotNull
     @NotEmpty
     @Size(min = 3)
     @Column(name = "user_profile_given_name")
     private String userProfile_GivenName;
 
-    @Min(value = 18, message = "You must be 18 years or older")
+    @Min(value = 18)
     @Max(100)
     @Column(name="user_profile_age")
     private Integer userProfile_Age;
 
+    @NotNull
     @Column(name = "user_profile_phone_number", nullable = false, unique = true)
     private Long userProfile_PhoneNumber;
 
-    @Column(name = "user_profile_address")
-    @NotNull
     @NotEmpty
     @Size(min = 6, max = 200)
+    @Column(name = "user_profile_address")
     private String userProfile_Address;
 
-    @Column(name = "user_profile_gender")
     @NotNull
+    @Column(name = "user_profile_gender")
     private UserProfileGender userProfile_Gender;
 
     @Type(type = "string-array")
     @Column(columnDefinition = "text[]", name = "user_profile_social_media")
     private String[] userProfile_SocialMedia;
 
-    @Column(name = "user_profile_added_on_date")
-    @NotNull
     @NotEmpty
+    @Column(name = "user_profile_added_on_date")
     private String userProfile_AddedOnDate;
 
-    @Column(name = "user_profile_added_on_time")
-    @NotNull
     @NotEmpty
+    @Column(name = "user_profile_added_on_time")
     private String userProfile_AddedOnTime;
 
-    @Column(name = "user_profile_kyc")
-    @NotNull
     @NotEmpty
+    @Column(name = "user_profile_kyc")
     private String userProfile_Kyc;
 
-    @Column(name = "user_profile_image")
     @NotNull
+    @Column(name = "user_profile_image")
     private String userProfile_Image;
 
     @Column(name = "user_profile_wish_list")
