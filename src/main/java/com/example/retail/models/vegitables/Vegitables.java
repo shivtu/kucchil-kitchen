@@ -1,5 +1,6 @@
 package com.example.retail.models.vegitables;
 
+import com.example.retail.models.jsonmodels.DenominationList;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -23,7 +24,6 @@ public class Vegitables {
     @Column(name="vegitable_tableid")
     private Long vegitableTableId;
 
-    @NotNull
     @NotEmpty
     @Column(name="vagitable_name")
     private String vegitableName;
@@ -37,7 +37,6 @@ public class Vegitables {
     private String vegitableVariant;
 
     @NotEmpty
-    @NotNull
     @Column(name = "item_category")
     private String itemCategory;
 
@@ -67,7 +66,7 @@ public class Vegitables {
     @Column(name = "vagitable_discounted_price")
     private Float vegitableDiscountedPrice;
 
-    @NotNull
+    @NotEmpty
     @Column(name = "vegitable_applicable_taxes")
     @ElementCollection // corrosponding table - vegitables_vegitable_applicable_taxes
     private List<String> vegitableApplicableTaxes = new ArrayList<>();
@@ -76,19 +75,21 @@ public class Vegitables {
     @Column(name = "vagitable_taxed_price")
     private Float vegitableTaxedPrice;
 
-    @NotNull
-    @Min(value = 1, message = "Quantity cannot be less than 0")
+    @Min(value = 1)
     @Column(name="vegitable_quantity")
     private Float vegitableQuantity;
 
-    @NotNull(message = "Is this item available")
+    @NotNull
     @Column(name = "vegitable_available")
     private Boolean vegitableAvailable;
 
-    @NotNull
     @NotEmpty
     @Column(name="vegitable_measurement_unit")
     private String vegitableMeasureMentUnit;
+
+    @Column(name = "vegitable_denomination_list",columnDefinition = "jsonb")
+    @Type(type = "psql-jsonb")
+    private List<DenominationList> denominationList = new ArrayList<>();
 
     @NotNull
     @Column(name = "vegitable_subid", updatable = false)
@@ -102,15 +103,7 @@ public class Vegitables {
     public Vegitables(){
     }
 
-    public Vegitables(@NotNull @NotEmpty String vegitableName, String vegitableDescp, String vegitableVariant, @NotEmpty @NotNull String itemCategory,
-                      @NotEmpty @NotNull String itemSubCategory, List<VegitableRecipes> vegitableRecepie,
-                      @NotNull @Min(value = 1, message = "Selling price cannot be less than 1") Float vegitableSellingPrice,
-                      @Min(value = 0, message = "discounts are expressed in %, valid range 0-100") Float vegitableOfferedDiscount,
-                      @NotNull String vegitableOfferedDiscountName, @NotNull Float vegitableDiscountedPrice,
-                      @NotNull List<String> vegitableApplicableTaxes, @NotNull Float vegitableTaxedPrice,
-                      @NotNull @Min(value = 1, message = "Quantity cannot be less than 0") Float vegitableQuantity,
-                      @NotNull(message = "Is this item available") Boolean vegitableAvailable, @NotNull @NotEmpty String vegitableMeasureMentUnit,
-                      String vegitableSubId, @NotNull List<String> vegitableImages) {
+    public Vegitables(@NotEmpty String vegitableName, String vegitableDescp, String vegitableVariant, @NotEmpty String itemCategory, @NotEmpty @NotNull String itemSubCategory, List<VegitableRecipes> vegitableRecepie, @NotNull @Min(value = 1, message = "Selling price cannot be less than 1") Float vegitableSellingPrice, @Min(value = 0, message = "discounts are expressed in %, valid range 0-100") Float vegitableOfferedDiscount, @NotNull String vegitableOfferedDiscountName, @NotNull Float vegitableDiscountedPrice, @NotEmpty List<String> vegitableApplicableTaxes, @NotNull Float vegitableTaxedPrice, @Min(value = 1) Float vegitableQuantity, @NotNull Boolean vegitableAvailable, @NotEmpty String vegitableMeasureMentUnit, @NotEmpty List<DenominationList> denominationList, @NotNull String vegitableSubId, @NotNull List<String> vegitableImages) {
         this.vegitableName = vegitableName;
         this.vegitableDescp = vegitableDescp;
         this.vegitableVariant = vegitableVariant;
@@ -126,6 +119,7 @@ public class Vegitables {
         this.vegitableQuantity = vegitableQuantity;
         this.vegitableAvailable = vegitableAvailable;
         this.vegitableMeasureMentUnit = vegitableMeasureMentUnit;
+        this.denominationList = denominationList;
         this.vegitableSubId = vegitableSubId;
         this.vegitableImages = vegitableImages;
     }
@@ -256,6 +250,14 @@ public class Vegitables {
 
     public void setVegitableMeasureMentUnit(String vegitableMeasureMentUnit) {
         this.vegitableMeasureMentUnit = vegitableMeasureMentUnit;
+    }
+
+    public List<DenominationList> getDenominationList() {
+        return denominationList;
+    }
+
+    public void setDenominationList(List<DenominationList> denominationList) {
+        this.denominationList = denominationList;
     }
 
     public String getVegitableSubId() {

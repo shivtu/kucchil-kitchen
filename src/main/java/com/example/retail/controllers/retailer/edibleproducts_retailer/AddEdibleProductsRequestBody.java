@@ -2,7 +2,6 @@ package com.example.retail.controllers.retailer.edibleproducts_retailer;
 
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Component

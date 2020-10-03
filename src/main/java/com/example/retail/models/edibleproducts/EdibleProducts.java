@@ -1,5 +1,11 @@
 package com.example.retail.models.edibleproducts;
 
+import com.example.retail.models.jsonmodels.DenominationList;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -10,6 +16,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "edible_products")
+@TypeDefs({@TypeDef(name = "psql-jsonb", typeClass = JsonBinaryType.class)})
 public class EdibleProducts {
 
     @Id
@@ -128,13 +135,15 @@ public class EdibleProducts {
 
     public EdibleProducts(@NotNull String edibleProductManufacturer, @NotNull String edibleProductName,
                           @NotNull String edibleProductVariant, String edibleProductFlavor, String edibleProductType,
-                          @NotNull String edibleProductDescription, List<String> edibleProductImageLocation, @NotNull String edibleProductGenericName,
-                          String edibleProductAlternaleName, @NotNull String itemCategory, @NotEmpty @NotNull String itemSubCategory,
-                          Boolean edibleProductForMinors, @NotNull Boolean edibleProductAvailable, @NotNull Float edibleProductMrp,
+                          @NotNull String edibleProductDescription, List<String> edibleProductImageLocation,
+                          @NotNull String edibleProductGenericName, String edibleProductAlternaleName, @NotNull String itemCategory,
+                          @NotEmpty @NotNull String itemSubCategory, Boolean edibleProductForMinors,
+                          @NotNull Boolean edibleProductAvailable, @NotNull Float edibleProductMrp,
                           @NotNull Float edibleProductOfferedDiscount, @NotNull String edibleProductsDiscountName,
                           @NotNull Float edibleProductDiscountedPrice, @NotNull List<String> edibleProductApplicableTaxes,
-                          @NotNull Float edibleProductTaxedPrice, @NotNull Float edibleProductQuantity, @NotNull String edibleProductsMeasureMentUnit,
-                          @NotNull Float edibleProductDenomination, @NotNull String edibleProductSubId) {
+                          @NotNull Float edibleProductTaxedPrice, @NotNull Float edibleProductQuantity,
+                          @NotNull String edibleProductsMeasureMentUnit, @NotNull Float edibleProductDenomination,
+                          @NotNull String edibleProductSubId) {
         this.edibleProductManufacturer = edibleProductManufacturer;
         this.edibleProductName = edibleProductName;
         this.edibleProductVariant = edibleProductVariant;

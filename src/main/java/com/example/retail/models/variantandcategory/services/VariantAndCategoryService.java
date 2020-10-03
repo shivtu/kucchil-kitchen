@@ -29,6 +29,4 @@ public class VariantAndCategoryService {
     public Integer addVariants(String itemCategorySubId, List<String> variantList) {
         return variantAndCategoryRepositoryCustom.addVariants(itemCategorySubId, variantList);
     }
-
-
 }

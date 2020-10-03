@@ -1,5 +1,6 @@
 package com.example.retail.controllers.retailer.vegitables_retailer;
 
+import com.example.retail.models.jsonmodels.DenominationList;
 import com.example.retail.models.jsonmodels.Suppliers;
 import com.example.retail.models.vegitables.VegitableRecipes;
 import org.springframework.stereotype.Component;
@@ -38,6 +39,8 @@ public class AddVegitablesRequestBody {
 
     private String vegitableMeasureMentUnit;
 
+    private List<DenominationList> denominationList;
+
     private Float vegitableInventoryCostPrice;
 
     private String vegitableInventoryExpiry;
@@ -48,7 +51,7 @@ public class AddVegitablesRequestBody {
 
     public AddVegitablesRequestBody(){}
 
-    public AddVegitablesRequestBody(List<String> vegitableApplicableTaxes, String vegitableName, String vegitableDescp, String vegitableVariant, String itemCategory, String itemSubCategory, VegitableRecipes vegitableRecepie, Float vegitableSellingPrice, Float vegitableOfferedDiscount, String vegitableOfferedDiscountName, Boolean vegitableShowDiscount, Float vegitableQuantity, Boolean vegitableAvailable, String vegitableMeasureMentUnit, Float vegitableInventoryCostPrice, String vegitableInventoryExpiry, Float vegitableInventoryFixedCost, List<Suppliers> suppliers) {
+    public AddVegitablesRequestBody(List<String> vegitableApplicableTaxes, String vegitableName, String vegitableDescp, String vegitableVariant, String itemCategory, String itemSubCategory, VegitableRecipes vegitableRecepie, Float vegitableSellingPrice, Float vegitableOfferedDiscount, String vegitableOfferedDiscountName, Boolean vegitableShowDiscount, Float vegitableQuantity, Boolean vegitableAvailable, String vegitableMeasureMentUnit, List<DenominationList> denominationList, Float vegitableInventoryCostPrice, String vegitableInventoryExpiry, Float vegitableInventoryFixedCost, List<Suppliers> suppliers) {
         this.vegitableApplicableTaxes = vegitableApplicableTaxes;
         this.vegitableName = vegitableName;
         this.vegitableDescp = vegitableDescp;
@@ -63,6 +66,7 @@ public class AddVegitablesRequestBody {
         this.vegitableQuantity = vegitableQuantity;
         this.vegitableAvailable = vegitableAvailable;
         this.vegitableMeasureMentUnit = vegitableMeasureMentUnit;
+        this.denominationList = denominationList;
         this.vegitableInventoryCostPrice = vegitableInventoryCostPrice;
         this.vegitableInventoryExpiry = vegitableInventoryExpiry;
         this.vegitableInventoryFixedCost = vegitableInventoryFixedCost;
@@ -179,6 +183,14 @@ public class AddVegitablesRequestBody {
 
     public void setVegitableMeasureMentUnit(String vegitableMeasureMentUnit) {
         this.vegitableMeasureMentUnit = vegitableMeasureMentUnit;
+    }
+
+    public List<DenominationList> getDenominationList() {
+        return denominationList;
+    }
+
+    public void setDenominationList(List<DenominationList> denominationList) {
+        this.denominationList = denominationList;
     }
 
     public Float getVegitableInventoryCostPrice() {

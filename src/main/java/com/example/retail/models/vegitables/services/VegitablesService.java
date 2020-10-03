@@ -4,6 +4,7 @@ import com.example.retail.controllers.retailer.vegitables_retailer.AddVegitables
 import com.example.retail.models.discounts.CustomerOrdersDiscount;
 import com.example.retail.models.discounts.DiscountCalculator;
 import com.example.retail.models.discounts.services.CustomerOrdersDiscountServices;
+import com.example.retail.models.jsonmodels.DenominationList;
 import com.example.retail.models.jsonmodels.InventoryAdditionDetails;
 import com.example.retail.models.variantandcategory.VariantAndCategory;
 import com.example.retail.models.variantandcategory.services.VariantAndCategoryService;
@@ -206,6 +207,8 @@ public class VegitablesService {
                 variantAndCategory.setVariantsList(variantList);
                 variantAndCategoryService.save(variantAndCategory);
             }
+
+            vegitables.setDenominationList(newVegitables.getDenominationList());
 
             /** Persist the vegitable **/
             Vegitables createdVeg = vegitablesRepository.save(vegitables);

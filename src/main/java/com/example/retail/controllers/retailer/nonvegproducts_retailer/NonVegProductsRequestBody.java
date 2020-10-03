@@ -1,102 +1,66 @@
-package com.example.retail.models.nonvegproducts;
+package com.example.retail.controllers.retailer.nonvegproducts_retailer;
 
-import com.example.retail.models.jsonmodels.DenominationList;
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
-import org.hibernate.annotations.TypeDefs;
+import com.example.retail.models.jsonmodels.Suppliers;
+import com.example.retail.models.nonvegproducts.NonVegProductTypeEnum;
+import org.springframework.stereotype.Component;
 
-import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "non_veg_products")
-@TypeDefs({@TypeDef(name = "psql-jsonb", typeClass = JsonBinaryType.class)})
-public class NonVegProducts {
+@Component
+public class NonVegProductsRequestBody {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "non_veg_products_table_id")
-    private Long NonVegProductTableId;
-
-    @NotNull
-    @Column(name = "non_veg_product_name")
     private String nonVegProductName;
 
-    @Column(name = "non_veg_product_alternate_name")
     private String getNonVegProductAlternateName;
 
-    // with skin or without skin salt water or fresh water... etc
-    @Column(name = "non_veg_product_variant")
     private String getNonVegProductVariant;
 
-    @NotEmpty
-    @NotNull
-    @Column(name = "item_category")
     private String itemCategory;
 
-    @NotEmpty
-    @NotNull
-    @Column(name = "item_sub_category")
     private String itemSubCategory;
 
-    @Column(name = "non_veg_product_is_frozen")
     private Boolean isFrozen;
 
-    @Column(name = "non_veg_product_is_tinned")
     private Boolean isTinned;
 
-    // raw or processed
-    @Column(name = "non_veg_product_type")
     private NonVegProductTypeEnum nonVegProductType;
 
-    @Column(name = "non_veg_product_packaged_by")
     private String nonVegProductPackagedBy;
 
-    @Column(name = "non_veg_product_qty")
     private Float nonVegProductQty;
 
-    @Column(name = "non_veg_product_measurement_unit")
     private Float nonVegProductMeasurementUnit;
 
-    @Column(name = "non_veg_product_denomination_list",columnDefinition = "jsonb")
-    @Type(type = "psql-jsonb")
-    private List<DenominationList> denominationList = new ArrayList<>();
-
-    @Min(value = 0, message = "discounts are expressed in %, valid range 0-100")
-    @Column(name = "non_veg_product_offered_discount")
     private Float nonVegProductOfferedDiscount;
 
-    @NotNull
-    @Column(name = "non_veg_product_offered_discount_name")
     private String nonVegProductOfferedDiscountName;
 
-    @NotNull
-    @Column(name = "vagitable_discounted_price")
-    private Float nonVegProductDiscountedPrice;
+    private List<String> nonVegProductApplicableTaxes;
 
-    @NotNull
-    @Column(name = "non_veg_product_applicable_taxes")
-    @ElementCollection
-    private List<String> nonVegProductApplicableTaxes = new ArrayList<>();
-
-    @NotNull
-    @Column(name = "non_veg_product_taxed_price")
-    private Float nonVegProductTaxedPrice;
-
-    @Column(name = "non_veg_product_cut_type")
     private String nonVegProductCutType;
 
-    @Column(name = "non_veg_product_is_available")
     private Boolean isAvailable;
 
-    public NonVegProducts() {}
+    private Float nonVegProductCostPrice;
 
-    public NonVegProducts(@NotNull String nonVegProductName, String getNonVegProductAlternateName, String getNonVegProductVariant, @NotEmpty @NotNull String itemCategory, @NotEmpty @NotNull String itemSubCategory, Boolean isFrozen, Boolean isTinned, NonVegProductTypeEnum nonVegProductType, String nonVegProductPackagedBy, Float nonVegProductQty, Float nonVegProductMeasurementUnit, List<DenominationList> denominationList, @Min(value = 0, message = "discounts are expressed in %, valid range 0-100") Float nonVegProductOfferedDiscount, @NotNull String nonVegProductOfferedDiscountName, @NotNull Float nonVegProductDiscountedPrice, @NotNull List<String> nonVegProductApplicableTaxes, @NotNull Float nonVegProductTaxedPrice, String nonVegProductCutType, Boolean isAvailable) {
+    private Float nonVegProductFixedCost;
+
+    private String nonVegProductInventoryExpiry;
+
+    private List<Suppliers> suppliers;
+
+    private String edibleProductSubId;
+
+    public NonVegProductsRequestBody() {}
+
+    public NonVegProductsRequestBody(String nonVegProductName, String getNonVegProductAlternateName, String getNonVegProductVariant,
+                                     String itemCategory, String itemSubCategory, Boolean isFrozen, Boolean isTinned,
+                                     NonVegProductTypeEnum nonVegProductType, String nonVegProductPackagedBy, Float nonVegProductQty,
+                                     Float nonVegProductMeasurementUnit, Float nonVegProductOfferedDiscount,
+                                     String nonVegProductOfferedDiscountName, List<String> nonVegProductApplicableTaxes,
+                                     String nonVegProductCutType, Boolean isAvailable, Float nonVegProductCostPrice,
+                                     Float nonVegProductFixedCost, String nonVegProductInventoryExpiry, List<Suppliers> suppliers,
+                                     String edibleProductSubId) {
         this.nonVegProductName = nonVegProductName;
         this.getNonVegProductAlternateName = getNonVegProductAlternateName;
         this.getNonVegProductVariant = getNonVegProductVariant;
@@ -108,22 +72,16 @@ public class NonVegProducts {
         this.nonVegProductPackagedBy = nonVegProductPackagedBy;
         this.nonVegProductQty = nonVegProductQty;
         this.nonVegProductMeasurementUnit = nonVegProductMeasurementUnit;
-        this.denominationList = denominationList;
         this.nonVegProductOfferedDiscount = nonVegProductOfferedDiscount;
         this.nonVegProductOfferedDiscountName = nonVegProductOfferedDiscountName;
-        this.nonVegProductDiscountedPrice = nonVegProductDiscountedPrice;
         this.nonVegProductApplicableTaxes = nonVegProductApplicableTaxes;
-        this.nonVegProductTaxedPrice = nonVegProductTaxedPrice;
         this.nonVegProductCutType = nonVegProductCutType;
         this.isAvailable = isAvailable;
-    }
-
-    public Long getNonVegProductTableId() {
-        return NonVegProductTableId;
-    }
-
-    public void setNonVegProductTableId(Long nonVegProductTableId) {
-        NonVegProductTableId = nonVegProductTableId;
+        this.nonVegProductCostPrice = nonVegProductCostPrice;
+        this.nonVegProductFixedCost = nonVegProductFixedCost;
+        this.nonVegProductInventoryExpiry = nonVegProductInventoryExpiry;
+        this.suppliers = suppliers;
+        this.edibleProductSubId = edibleProductSubId;
     }
 
     public String getNonVegProductName() {
@@ -214,14 +172,6 @@ public class NonVegProducts {
         this.nonVegProductMeasurementUnit = nonVegProductMeasurementUnit;
     }
 
-    public List<DenominationList> getDenominationList() {
-        return denominationList;
-    }
-
-    public void setDenominationList(List<DenominationList> denominationList) {
-        this.denominationList = denominationList;
-    }
-
     public Float getNonVegProductOfferedDiscount() {
         return nonVegProductOfferedDiscount;
     }
@@ -238,28 +188,12 @@ public class NonVegProducts {
         this.nonVegProductOfferedDiscountName = nonVegProductOfferedDiscountName;
     }
 
-    public Float getNonVegProductDiscountedPrice() {
-        return nonVegProductDiscountedPrice;
-    }
-
-    public void setNonVegProductDiscountedPrice(Float nonVegProductDiscountedPrice) {
-        this.nonVegProductDiscountedPrice = nonVegProductDiscountedPrice;
-    }
-
     public List<String> getNonVegProductApplicableTaxes() {
         return nonVegProductApplicableTaxes;
     }
 
     public void setNonVegProductApplicableTaxes(List<String> nonVegProductApplicableTaxes) {
         this.nonVegProductApplicableTaxes = nonVegProductApplicableTaxes;
-    }
-
-    public Float getNonVegProductTaxedPrice() {
-        return nonVegProductTaxedPrice;
-    }
-
-    public void setNonVegProductTaxedPrice(Float nonVegProductTaxedPrice) {
-        this.nonVegProductTaxedPrice = nonVegProductTaxedPrice;
     }
 
     public String getNonVegProductCutType() {
@@ -277,4 +211,46 @@ public class NonVegProducts {
     public void setAvailable(Boolean available) {
         isAvailable = available;
     }
+
+    public Float getNonVegProductCostPrice() {
+        return nonVegProductCostPrice;
+    }
+
+    public void setNonVegProductCostPrice(Float nonVegProductCostPrice) {
+        this.nonVegProductCostPrice = nonVegProductCostPrice;
+    }
+
+    public Float getNonVegProductFixedCost() {
+        return nonVegProductFixedCost;
+    }
+
+    public void setNonVegProductFixedCost(Float nonVegProductFixedCost) {
+        this.nonVegProductFixedCost = nonVegProductFixedCost;
+    }
+
+    public String getNonVegProductInventoryExpiry() {
+        return nonVegProductInventoryExpiry;
+    }
+
+    public void setNonVegProductInventoryExpiry(String nonVegProductInventoryExpiry) {
+        this.nonVegProductInventoryExpiry = nonVegProductInventoryExpiry;
+    }
+
+    public List<Suppliers> getSuppliers() {
+        return suppliers;
+    }
+
+    public void setSuppliers(List<Suppliers> suppliers) {
+        this.suppliers = suppliers;
+    }
+
+    public String getEdibleProductSubId() {
+        return edibleProductSubId;
+    }
+
+    public void setEdibleProductSubId(String edibleProductSubId) {
+        this.edibleProductSubId = edibleProductSubId;
+    }
 }
+
+
