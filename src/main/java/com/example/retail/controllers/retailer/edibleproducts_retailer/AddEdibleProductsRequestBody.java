@@ -3,6 +3,7 @@ package com.example.retail.controllers.retailer.edibleproducts_retailer;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class AddEdibleProductsRequestBody {
@@ -37,7 +38,7 @@ public class AddEdibleProductsRequestBody {
 
     private String edibleProductsDiscountName;
 
-    private ArrayList<String> edibleProductApplicableTaxes;
+    private List<String> edibleProductApplicableTaxes = new ArrayList<>();
 
     private Float edibleProductQuantity;
 
@@ -45,7 +46,7 @@ public class AddEdibleProductsRequestBody {
 
     private Float edibleProductDenomination;
 
-    private ArrayList<String> edibleProductImageLocation;
+    private List<String> edibleProductImageLocation = new ArrayList<>();
 
     private Float edibleProductCostPrice;
 
@@ -55,7 +56,7 @@ public class AddEdibleProductsRequestBody {
 
     public AddEdibleProductsRequestBody() {}
 
-    public AddEdibleProductsRequestBody(String edibleProductManufacturer, String edibleProductName, String edibleProductVariant, String edibleProductFlavor, String edibleProductType, String edibleProductDescription, String edibleProductGenericName, String edibleProductAlternaleName, String itemCategory, String itemSubCategory, Boolean edibleProductForMinors, Boolean edibleProductAvailable, Float edibleProductMrp, Float edibleProductOfferedDiscount, String edibleProductsDiscountName, ArrayList<String> edibleProductApplicableTaxes, Float edibleProductQuantity, String edibleProductsMeasureMentUnit, Float edibleProductDenomination, ArrayList<String> edibleProductImageLocation, Float edibleProductCostPrice, Float edibleProductFixedCost, String edibleProductInventoryExpiry) {
+    public AddEdibleProductsRequestBody(String edibleProductManufacturer, String edibleProductName, String edibleProductVariant, String edibleProductFlavor, String edibleProductType, String edibleProductDescription, String edibleProductGenericName, String edibleProductAlternaleName, String itemCategory, String itemSubCategory, Boolean edibleProductForMinors, Boolean edibleProductAvailable, Float edibleProductMrp, Float edibleProductOfferedDiscount, String edibleProductsDiscountName, List<String> edibleProductApplicableTaxes, Float edibleProductQuantity, String edibleProductsMeasureMentUnit, Float edibleProductDenomination, List<String> edibleProductImageLocation, Float edibleProductCostPrice, Float edibleProductFixedCost, String edibleProductInventoryExpiry) {
         this.edibleProductManufacturer = edibleProductManufacturer;
         this.edibleProductName = edibleProductName;
         this.edibleProductVariant = edibleProductVariant;
@@ -201,11 +202,11 @@ public class AddEdibleProductsRequestBody {
         this.edibleProductsDiscountName = edibleProductsDiscountName;
     }
 
-    public ArrayList<String> getEdibleProductApplicableTaxes() {
+    public List<String> getEdibleProductApplicableTaxes() {
         return edibleProductApplicableTaxes;
     }
 
-    public void setEdibleProductApplicableTaxes(ArrayList<String> edibleProductApplicableTaxes) {
+    public void setEdibleProductApplicableTaxes(List<String> edibleProductApplicableTaxes) {
         this.edibleProductApplicableTaxes = edibleProductApplicableTaxes;
     }
 
@@ -233,11 +234,11 @@ public class AddEdibleProductsRequestBody {
         this.edibleProductDenomination = edibleProductDenomination;
     }
 
-    public ArrayList<String> getEdibleProductImageLocation() {
+    public List<String> getEdibleProductImageLocation() {
         return edibleProductImageLocation;
     }
 
-    public void setEdibleProductImageLocation(ArrayList<String> edibleProductImageLocation) {
+    public void setEdibleProductImageLocation(List<String> edibleProductImageLocation) {
         this.edibleProductImageLocation = edibleProductImageLocation;
     }
 

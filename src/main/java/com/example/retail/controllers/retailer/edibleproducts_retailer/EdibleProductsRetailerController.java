@@ -41,10 +41,10 @@ public class EdibleProductsRetailerController {
     public ResponseEntity<Object> addEdibleProduct(
             HttpServletRequest request,
             @ModelAttribute AddEdibleProductsRequestBody newProduct,
-            @RequestParam("images") ArrayList<MultipartFile> images) {
+            @RequestParam("edibleProductImages") ArrayList<MultipartFile> edibleProductImages) {
 
         try {
-            return edibleProductsService.addEdibleProduct(request,newProduct);
+            return edibleProductsService.addEdibleProduct(request, edibleProductImages, newProduct);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(
                 createResponse.createErrorResponse(

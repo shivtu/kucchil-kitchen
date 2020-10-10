@@ -57,9 +57,9 @@ public class UtilityRetailerController {
             List<?> finalRes = utilityServices.findAllProducts();
             return ResponseEntity.status(200).body(
                 createResponse.createSuccessResponse(
-                        200,
-                        "Products found",
-                        finalRes
+                    200,
+                    "Products found",
+                    finalRes
                 )
             );
         } catch (Exception e) {

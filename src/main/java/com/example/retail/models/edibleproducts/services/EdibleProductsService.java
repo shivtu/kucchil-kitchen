@@ -13,8 +13,10 @@ import com.example.retail.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -57,7 +59,7 @@ public class EdibleProductsService {
         return edibleProductsRepository.saveAll(newProducts);
     }
 
-    public ResponseEntity<Object> addEdibleProduct(HttpServletRequest request, AddEdibleProductsRequestBody newEdibleProduct){
+    public ResponseEntity<Object> addEdibleProduct(HttpServletRequest request, ArrayList<MultipartFile> edibleProductImages, AddEdibleProductsRequestBody newEdibleProduct) throws IOException {
 
         LocalDate expiryDate = LocalDate.parse(newEdibleProduct.getEdibleProductInventoryExpiry());
         String edibleProductAddedBy = jwtDetails.userName(request);
@@ -170,6 +172,25 @@ public class EdibleProductsService {
         edibleProducts.setEdibleProductDenomination(newEdibleProduct.getEdibleProductDenomination());
         edibleProducts.setEdibleProductSubId(subid);
 
+        /**
+         * Save the product image
+         * */
+        if (!edibleProductImages.isEmpty()) {
+            OpsResponse res = utils.saveFiles(edibleProductImages, "edibleProductImages");
+            int errorCheck = res.getStatusCode();
+
+            if(errorCheck != utils.opsSuccess){
+                return ResponseEntity.status(errorCheck).body(res);
+            } else {
+                edibleProducts.setEdibleProductImageLocation((ArrayList<String>) res.getStatusArray());
+            }
+        } else {
+            ArrayList<String> imagePlaceHolder = new ArrayList<>();
+            // TODO : give correct path to image placeholder
+            imagePlaceHolder.add("src/main/resources/assets/veg-images/veg-image-placeholder.png");
+            edibleProducts.setEdibleProductImageLocation(imagePlaceHolder);
+        }
+
         edibleProductsRepository.save(edibleProducts);
 
         /**
@@ -199,7 +220,7 @@ public class EdibleProductsService {
 
         return ResponseEntity.status(201).body(
             createResponse.createSuccessResponse(
-                200,
+                201,
                 "Product created",
                 finalRes
                 )

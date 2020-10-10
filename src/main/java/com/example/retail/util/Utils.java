@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -21,50 +23,52 @@ public class Utils {
     @Autowired
    CreateResponse createResponse;
 
-    final public String vegSaveImageError = "Unable to save file";
-    final public String vegSaveImageTypeError = "File type not allowed";
-    final public String vegImageSizeError = "File size not allowed";
-    final public Long vegImageMaxSizeBytes = 30000L;
     final public int opsSuccess = 1;
-    private String savedImagePath = "src/main/resources/assets/veg-images";
     final public String defaultSwitchCase = "This operation is not provisioned";
 
-    public OpsResponse saveFiles(List<MultipartFile> vegitableImages, String caseType) {
+    private OpsResponse saveProductImage (List<MultipartFile> images, String folderName) throws IOException{
+
+            final List<String> savedFileResArray = new ArrayList<>();
+            for (MultipartFile mf : images) {
+                long productImageMaxSizeBytes = 30000L;
+                if (mf.getSize() > productImageMaxSizeBytes) {
+                    String productImageSizeError = "File size not allowed";
+                    return createResponse.createOpsResponse(400, productImageSizeError, "Allowed size is less than " + productImageSizeError,
+                            null, null);
+                } else {
+                    String imageNamePrefix = LocalDateTime.now().toString();
+                    String savedImagePath = "src/main/resources/assets/"+folderName;
+                    String imageLocation = new File(savedImagePath).getAbsolutePath() + "/" + imageNamePrefix + mf.getOriginalFilename();
+                    FileOutputStream fout = new FileOutputStream(imageLocation);
+                    fout.write(mf.getBytes());
+                    fout.close();
+                    savedFileResArray.add(imageLocation);
+                    return createResponse.createOpsResponse(opsSuccess, "File saved", "NA",
+                            savedFileResArray, null);
+                }
+            }
+        String saveImageError = "Unable to save file";
+        return createResponse.createOpsResponse(500, "Unable to save image", saveImageError, null, null);
+    }
+
+    public OpsResponse saveFiles(List<MultipartFile> images, String caseType) throws IOException {
+        String FMCGProductImages = "fmcg-product-images";
+        String edibleProductImages = "edible-product-images";
+        String vegImages = "veg-images";
         switch(caseType) {
             case "vegitableImages":
-                try {
-                    final List<String> savedFileResArray = new ArrayList<>();
-                    for (MultipartFile mf : vegitableImages) {
-                        if (Objects.equals(mf.getContentType(), "image/jpeg") || Objects.equals(mf.getContentType(), "image/png")) {
-                            if (mf.getSize() > vegImageMaxSizeBytes) {
-                                return createResponse.createOpsResponse(400, vegImageSizeError, "Allowed size is less than " + vegImageMaxSizeBytes,
-                                        null, null);
-                            } else {
-                                String imageNamePrefix = LocalDateTime.now().toString();
-                                String imageLocation = new File(savedImagePath).getAbsolutePath() + "/" + imageNamePrefix + mf.getOriginalFilename();
-                                FileOutputStream fout = new FileOutputStream(imageLocation);
-                                fout.write(mf.getBytes());
-                                fout.close();
-                                savedFileResArray.add(imageLocation);
-                                return createResponse.createOpsResponse(opsSuccess, "File saved", "NA",
-                                        savedFileResArray, null);
-                            }
-                        } else {
-                            return createResponse.createOpsResponse(400, vegSaveImageTypeError,
-                                    "Allowed types are jpeg and png", null, null
-                            );
-                        }
-                    }
-                } catch (Exception e) {
-                    return createResponse.createOpsResponse(500, e.getMessage(), vegSaveImageError, null, null);
-                }
+                return saveProductImage(images, vegImages);
+            case "edibleProductImages":
+                return saveProductImage(images, edibleProductImages);
+            case "FMCGProductImages":
+                return saveProductImage(images, FMCGProductImages);
             default:
                 return createResponse.createOpsResponse(
-                        422,
-                        defaultSwitchCase,
-                        "NA",
-                        null,
-                        null
+                    422,
+                    defaultSwitchCase,
+                    "NA",
+                    null,
+                    null
                 );
         }
     }
