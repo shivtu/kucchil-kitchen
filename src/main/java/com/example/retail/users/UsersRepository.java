@@ -11,11 +11,13 @@ import java.util.Optional;
 public interface UsersRepository extends JpaRepository<Users, String> {
     Optional<Users> findByUserName(String userName);
 
-    @Query(value = "UPDATE users SET enabled=true WHERE userName=?", nativeQuery = true)
-    Users enableUser(String userName);
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE users SET enabled=true WHERE user_name= :userName", nativeQuery = true)
+    Integer enableUser(@Param("userName") String userName);
 
     @Transactional
     @Modifying
     @Query(value = "UPDATE Users u set u.password= :newPassword WHERE u.userName= :userName")
-    public Integer updatePassword(@Param("newPassword") String newPassword, @Param("userName") String userName);
+    Integer updatePassword(@Param("newPassword") String newPassword, @Param("userName") String userName);
 }

@@ -17,26 +17,31 @@ public class Users {
     @Column(name = "users_table_id", updatable = false, nullable = false)
     private Long users_TableId;
 
-    @Column(name = "user_name", unique = true, nullable = false)
+    @NotEmpty
     @Email
+    @Column(name = "user_name", unique = true, nullable = false)
     private String userName;
 
     @NotEmpty
-    @NotBlank
     private String password;
 
     @NotNull
+    @Column(name = "account_non_expired")
     private boolean accountNonExpired;
 
     @NotNull
+    @Column(name = "account_non_locked")
     private boolean accountNonLocked;
 
     @NotNull
+    @Column(name = "credentials_non_expired")
     private boolean credentialsNonExpired;
 
     @NotNull
+    @Column(name = "enabled")
     private boolean enabled;
 
+    @Column(name = "roles")
     private String roles;
 
     @OneToOne(cascade = CascadeType.ALL)

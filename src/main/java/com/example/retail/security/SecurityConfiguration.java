@@ -41,7 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/api/v1/userprofile/**", "/api/v1/passwordManager/forgotPassword").permitAll()
                 .antMatchers(HttpMethod.GET,"/api/v1/retailer/**").hasAnyRole("ADMIN", "RETAILER")
                 .antMatchers("/api/v1/customer/**", "/api/v1/passwordManager/updatePassword").hasAnyRole("ADMIN", "RETAILER", "CUSTOMER")
-                .antMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/api/v1/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated().and().
                 exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

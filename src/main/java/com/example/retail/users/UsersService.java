@@ -24,7 +24,7 @@ public class UsersService {
         return usersRepository.findByUserName(userName);
     }
 
-    public Users enableUser(String userName) {
+    public Integer enableUser(String userName) {
        return usersRepository.enableUser(userName);
     }
 
