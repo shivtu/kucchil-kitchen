@@ -13,8 +13,10 @@ import com.example.retail.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -52,49 +54,20 @@ public class FMCGProductsServices {
     @Autowired
     Constants constants;
 
-    private String generateSubId (FMCGProductsRequestBody fmcgProductsRequestBody) {
-        String subId = fmcgProductsRequestBody.getFmcgProductManufacturer().toLowerCase()
-                + fmcgProductsRequestBody.getFmcgProductName().toLowerCase()
-                + fmcgProductsRequestBody.getFmcgProductVariant().toLowerCase()
-                + fmcgProductsRequestBody.getFmcgProductDenomination().toString().toLowerCase()
-                + fmcgProductsRequestBody.getFmcgProductInventoryCostPrice().toString().toLowerCase()
-                + fmcgProductsRequestBody.getFmcgProductInventoryFixedCost().toString().toLowerCase();
-        return subId;
-    }
-
-    public List<?> findAllFMCGProductsWithInventory() {
-        List<FMCGProducts> FMCGProducts = fmcgProductsRepository.findAll();
-        List<FMCGProductsInventory> FMCGProductsInventories = fmcgProductsInventoryRepository.findAll();
-
-        Map<String, Object> resObject = new HashMap<>();
-        List<Map<String, ?>> finalRes = new ArrayList<>();
-
-        FMCGProducts.forEach((FMCGProduct) -> {
-            FMCGProductsInventories.forEach((FMCGProductsInventory) -> {
-                if(FMCGProduct.getFmcgProductSubId().equals(FMCGProductsInventory.getFmcgProductSubId())) {
-                    resObject.put(constants.FMCGProduct, FMCGProduct);
-                    resObject.put(constants.FMCGProductInventory, FMCGProductsInventory);
-                    finalRes.add(resObject);
-                }
-            });
-        });
-
-        return finalRes;
-    }
-
-    public List<FMCGProducts> findAll () {
-        return fmcgProductsRepository.findAll();
-    }
-
-    private FMCGProducts save (FMCGProducts fmcgProducts) {
-        return fmcgProductsRepository.save(fmcgProducts);
-    }
-
-    public ResponseEntity<Object> addFmcgProduct(HttpServletRequest request, FMCGProductsRequestBody fmcgProductsRequestBody) {
+    public ResponseEntity<Object> addFmcgProduct(HttpServletRequest request,
+                                                 FMCGProductsRequestBody fmcgProductsRequestBody,
+                                                 List<MultipartFile> FMCGProductImages) throws IOException {
         /**
          * Create the FMCG product sub-id
          **/
-        String subId = generateSubId(fmcgProductsRequestBody);
+        String subId = utils.getFMCGProductSubId(
+            fmcgProductsRequestBody.getFmcgProductManufacturer(),
+            fmcgProductsRequestBody.getFmcgProductName(),
+            fmcgProductsRequestBody.getFmcgProductVariant(),
+            fmcgProductsRequestBody.getFmcgProductDenomination(),
+            fmcgProductsRequestBody.getFmcgProductInventoryCostPrice(),
+            fmcgProductsRequestBody.getFmcgProductInventoryFixedCost()
+        );
 
         /**
          * Perform validations
@@ -113,6 +86,24 @@ public class FMCGProductsServices {
          * Create FMCGProducts object
          */
         FMCGProducts fmcgProducts = new FMCGProducts();
+
+        // Add image for the item before saving to DB
+        if (!FMCGProductImages.isEmpty()) {
+            OpsResponse res = utils.saveFiles(FMCGProductImages, constants.saveImageSwitchCaseFMCGProducts);
+            int errorCheck = res.getStatusCode();
+
+            if(errorCheck != utils.opsSuccess){
+                return ResponseEntity.status(errorCheck).body(res);
+            } else {
+                fmcgProducts.setFMCGProductImages(res.getStatusArray());
+            }
+        } else {
+            List<String> imagePlaceHolder = new ArrayList<>();
+            // TODO : give correct path to image placeholder
+            imagePlaceHolder.add("src/main/resources/assets/veg-images/veg-image-placeholder.png");
+            fmcgProducts.setFMCGProductImages(imagePlaceHolder);
+        }
+
         fmcgProducts.setFmcgProductManufacturer(fmcgProductsRequestBody.getFmcgProductManufacturer());
         fmcgProducts.setFmcgProductName(fmcgProductsRequestBody.getFmcgProductName());
         fmcgProducts.setFmcgProductVariant(fmcgProductsRequestBody.getFmcgProductVariant());
@@ -173,12 +164,16 @@ public class FMCGProductsServices {
         fmcgProductsInventory.setFmcgProductInventoryAddedQty(fmcgProductsRequestBody.getFmcgProductInventoryAddedQty());
         fmcgProductsInventory.setSuppliers(fmcgProductsRequestBody.getSuppliers());
         fmcgProductsInventory.setFmcgProductSubId(subId);
+        fmcgProductsInventory.setFmcgProductInventoryAddedQty(fmcgProductsRequestBody.getFmcgProductQuantity());
+
+        fmcgProductsRepository.save(fmcgProducts);
+        fmcgProductsInventoryRepository.save(fmcgProductsInventory);
 
         Map<String, Object> res = new HashMap<>();
         res.put("FMCGProduct", fmcgProducts);
         res.put("FMCGProductInventory", fmcgProductsInventory);
 
-        List<Object> finalRes = new ArrayList<>();
+        List< Map<String, ?>> finalRes = new ArrayList<>();
         finalRes.add(res);
 
         return ResponseEntity.status(201).body(
@@ -188,5 +183,29 @@ public class FMCGProductsServices {
                 finalRes
             )
         );
+    }
+
+    public List<?> findAllFMCGProductsWithInventory() {
+        List<FMCGProducts> FMCGProducts = fmcgProductsRepository.findAll();
+        List<FMCGProductsInventory> FMCGProductsInventories = fmcgProductsInventoryRepository.findAll();
+
+        Map<String, Object> resObject = new HashMap<>();
+        List<Map<String, ?>> finalRes = new ArrayList<>();
+
+        FMCGProducts.forEach((FMCGProduct) -> {
+            FMCGProductsInventories.forEach((FMCGProductsInventory) -> {
+                if(FMCGProduct.getFmcgProductSubId().equals(FMCGProductsInventory.getFmcgProductSubId())) {
+                    resObject.put(constants.FMCGProduct, FMCGProduct);
+                    resObject.put(constants.FMCGProductInventory, FMCGProductsInventory);
+                    finalRes.add(resObject);
+                }
+            });
+        });
+
+        return finalRes;
+    }
+
+    public List<FMCGProducts> findAll () {
+        return fmcgProductsRepository.findAll();
     }
 }

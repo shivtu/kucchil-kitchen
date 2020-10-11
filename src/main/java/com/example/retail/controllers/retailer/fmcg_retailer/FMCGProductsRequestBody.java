@@ -33,15 +33,13 @@ public class FMCGProductsRequestBody {
 
     private String fmcgProductDiscountName;
 
-    private ArrayList<String> fmcgProductApplicableTaxes;
+    private List<String> fmcgProductApplicableTaxes = new ArrayList<>();
 
     private Float fmcgProductQuantity;
 
     private Float fmcgProductMeasurementUnit;
 
     private Float fmcgProductDenomination;
-
-    private ArrayList<String> fmcgProductImageLocation;
 
     /** Inventory details **/
 
@@ -57,13 +55,7 @@ public class FMCGProductsRequestBody {
 
     public FMCGProductsRequestBody() {}
 
-    public FMCGProductsRequestBody(String fmcgProductManufacturer, String fmcgProductName, String fmcgProductVariant, String fmcgProductDescription,
-                                   String fmcgProductGenericName, String fmcgProductAlternateName, String itemCategory, String itemSubCategory,
-                                   Boolean fmcgProductAvailable, Float fmcgProductSellingPrice, Float fmcgProductOfferedDiscount,
-                                   String fmcgProductDiscountName, ArrayList<String> fmcgProductApplicableTaxes, Float fmcgProductQuantity,
-                                   Float fmcgProductMeasurementUnit, Float fmcgProductDenomination, ArrayList<String> fmcgProductImageLocation,
-                                   Float fmcgProductInventoryCostPrice, Float fmcgProductInventoryFixedCost, String fmcgProductInventoryExpiry,
-                                   Float fmcgProductInventoryAddedQty, List<Suppliers> suppliers) {
+    public FMCGProductsRequestBody(String fmcgProductManufacturer, String fmcgProductName, String fmcgProductVariant, String fmcgProductDescription, String fmcgProductGenericName, String fmcgProductAlternateName, String itemCategory, String itemSubCategory, Boolean fmcgProductAvailable, Float fmcgProductSellingPrice, Float fmcgProductOfferedDiscount, String fmcgProductDiscountName, List<String> fmcgProductApplicableTaxes, Float fmcgProductQuantity, Float fmcgProductMeasurementUnit, Float fmcgProductDenomination, Float fmcgProductInventoryCostPrice, Float fmcgProductInventoryFixedCost, String fmcgProductInventoryExpiry, Float fmcgProductInventoryAddedQty, List<Suppliers> suppliers) {
         this.fmcgProductManufacturer = fmcgProductManufacturer;
         this.fmcgProductName = fmcgProductName;
         this.fmcgProductVariant = fmcgProductVariant;
@@ -80,7 +72,6 @@ public class FMCGProductsRequestBody {
         this.fmcgProductQuantity = fmcgProductQuantity;
         this.fmcgProductMeasurementUnit = fmcgProductMeasurementUnit;
         this.fmcgProductDenomination = fmcgProductDenomination;
-        this.fmcgProductImageLocation = fmcgProductImageLocation;
         this.fmcgProductInventoryCostPrice = fmcgProductInventoryCostPrice;
         this.fmcgProductInventoryFixedCost = fmcgProductInventoryFixedCost;
         this.fmcgProductInventoryExpiry = fmcgProductInventoryExpiry;
@@ -184,11 +175,11 @@ public class FMCGProductsRequestBody {
         this.fmcgProductDiscountName = fmcgProductDiscountName;
     }
 
-    public ArrayList<String> getFmcgProductApplicableTaxes() {
+    public List<String> getFmcgProductApplicableTaxes() {
         return fmcgProductApplicableTaxes;
     }
 
-    public void setFmcgProductApplicableTaxes(ArrayList<String> fmcgProductApplicableTaxes) {
+    public void setFmcgProductApplicableTaxes(List<String> fmcgProductApplicableTaxes) {
         this.fmcgProductApplicableTaxes = fmcgProductApplicableTaxes;
     }
 
@@ -214,14 +205,6 @@ public class FMCGProductsRequestBody {
 
     public void setFmcgProductDenomination(Float fmcgProductDenomination) {
         this.fmcgProductDenomination = fmcgProductDenomination;
-    }
-
-    public ArrayList<String> getFmcgProductImageLocation() {
-        return fmcgProductImageLocation;
-    }
-
-    public void setFmcgProductImageLocation(ArrayList<String> fmcgProductImageLocation) {
-        this.fmcgProductImageLocation = fmcgProductImageLocation;
     }
 
     public Float getFmcgProductInventoryCostPrice() {

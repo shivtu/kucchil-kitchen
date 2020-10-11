@@ -111,16 +111,16 @@ public class VegitablesService {
 
             // Add image for the item
             if (!vegitableImages.isEmpty()) {
-                OpsResponse res = utils.saveFiles(vegitableImages, "vegitableImages");
+                OpsResponse res = utils.saveFiles(vegitableImages, constants.saveImageSwitchCaseVegitables);
                 int errorCheck = res.getStatusCode();
 
                 if(errorCheck != utils.opsSuccess){
                     return ResponseEntity.status(errorCheck).body(res);
                 } else {
-                    vegitables.setVegitableImages((ArrayList<String>) res.getStatusArray());
+                    vegitables.setVegitableImages(res.getStatusArray());
                 }
             } else {
-                ArrayList<String> imagePlaceHolder = new ArrayList<>();
+                List<String> imagePlaceHolder = new ArrayList<>();
                 // TODO : give correct path to image placeholder
                 imagePlaceHolder.add("src/main/resources/assets/veg-images/veg-image-placeholder.png");
                 vegitables.setVegitableImages(imagePlaceHolder);

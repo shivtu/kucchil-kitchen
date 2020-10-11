@@ -7,9 +7,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -24,8 +28,10 @@ public class FMCGProductsRetailerController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Object> saveFmcgProduct(HttpServletRequest request, FMCGProductsRequestBody fmcgProductsRequestBody) {
-        return fmcgProductsServices.addFmcgProduct(request, fmcgProductsRequestBody);
+    public ResponseEntity<Object> saveFmcgProduct(HttpServletRequest request,
+                                                  FMCGProductsRequestBody fmcgProductsRequestBody,
+                                                  @RequestParam("FMCGProductImages") List<MultipartFile> FMCGProductImages) throws IOException {
+        return fmcgProductsServices.addFmcgProduct(request, fmcgProductsRequestBody, FMCGProductImages);
     }
 
     @RequestMapping(value = "/findAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

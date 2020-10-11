@@ -33,19 +33,19 @@ public class VegitablesRetailerController {
             List<?> result = vegitablesService.findAllVegitablesWithInventory();
             int resultCount = result.size();
             return ResponseEntity.status(200).body(
-                    createResponse.createSuccessResponse(
-                            200,
-                            resultCount + " item(s) found",
-                            result
-                    )
+                createResponse.createSuccessResponse(
+                    200,
+                    resultCount + " item(s) found",
+                    result
+                )
             );
         } catch (Exception e) {
             return ResponseEntity.status(500).body(
-                    createResponse.createErrorResponse(
-                            500,
-                            e.getMessage(),
-                            "NA"
-                    )
+                createResponse.createErrorResponse(
+                    500,
+                    e.getMessage(),
+                    "NA"
+                )
             );
         }
 

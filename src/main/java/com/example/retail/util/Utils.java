@@ -1,5 +1,6 @@
 package com.example.retail.util;
 
+import com.example.retail.controllers.retailer.fmcg_retailer.FMCGProductsRequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +18,9 @@ public class Utils {
 
     @Autowired
    CreateResponse createResponse;
+
+    @Autowired
+    Constants constants;
 
     final public int opsSuccess = 1;
     final public String defaultSwitchCase = "This operation is not provisioned";
@@ -47,16 +51,13 @@ public class Utils {
     }
 
     public OpsResponse saveFiles(List<MultipartFile> images, String caseType) throws IOException {
-        String FMCGProductImages = "fmcg-product-images";
-        String edibleProductImages = "edible-product-images";
-        String vegImages = "veg-images";
         switch(caseType) {
             case "vegitableImages":
-                return saveProductImage(images, vegImages);
+                return saveProductImage(images, constants.vegitableImageLocationFolderName);
             case "edibleProductImages":
-                return saveProductImage(images, edibleProductImages);
+                return saveProductImage(images, constants.edibleProductImageLocationFolderName);
             case "FMCGProductImages":
-                return saveProductImage(images, FMCGProductImages);
+                return saveProductImage(images, constants.FMCGProductImageLocationFolderName);
             default:
                 return createResponse.createOpsResponse(
                     422,
@@ -100,6 +101,14 @@ public class Utils {
                 + edibleProductFlavor.toLowerCase()
                 + edibleProductDenomination.toString().toLowerCase()
                 + edibleProductInventoryExpiry.toString().toLowerCase();
+    }
+
+    public String getFMCGProductSubId (
+            String manufacturerName, String productName, String variant, Float denomination, Float costPrice,
+            Float fixedCost) {
+
+        return manufacturerName.toLowerCase() + productName.toLowerCase() + variant.toLowerCase() + denomination.toString()
+            + costPrice.toString() + fixedCost.toString();
     }
 
     public Map<String, Object> buildStringListMap (String key, Object value) {

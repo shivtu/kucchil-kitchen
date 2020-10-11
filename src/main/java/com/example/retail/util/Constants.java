@@ -29,4 +29,14 @@ public class Constants {
     public final String deliveryCharges = "deliveryCharges";
     public final String allProducts = "allProducts";
     public final String utilities = "utilities";
+
+    // Image locatoin strings
+    public final String FMCGProductImageLocationFolderName = "fmcg-product-images";
+    public final String vegitableImageLocationFolderName = "edible-product-images";
+    public final String edibleProductImageLocationFolderName = "edible-product-images";
+
+    // Save image switch case type
+    public final String saveImageSwitchCaseVegitables = "vegitableImages";
+    public final String saveImageSwitchCaseFMCGProducts = "FMCGProductImages";
+    public final String saveImageSwitchCaseEdibleProducts = "edibleProductImages";
 }

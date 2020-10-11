@@ -96,18 +96,12 @@ public class FMCGProducts {
 
     @Column(name = "fmcg_product_image_location")
     @ElementCollection
-    private List<String> fmcgProductImageLocation = new ArrayList<>();
+    private List<String> FMCGProductImages = new ArrayList<>();
 
 
     public FMCGProducts() {}
 
-    public FMCGProducts(@NotNull String fmcgProductManufacturer, @NotNull String fmcgProductName, String fmcgProductVariant,
-                        @NotNull String fmcgProductDescription, @NotNull String fmcgProductGenericName, String fmcgProductAlternateName,
-                        @NotEmpty @NotNull String itemCategory, @NotEmpty @NotNull String itemSubCategory,
-                        @NotNull Boolean fmcgProductAvailable, Float fmcgProductSellingPrice, Float fmcgProductOfferedDiscount,
-                        String fmcgProductDiscountName, Float fmcgProductDiscountedPrice, @NotNull List<String> fmcgProductApplicableTaxes,
-                        @NotNull Float fmcgProductTaxedPrice, @NotNull Float fmcgProductQuantity, @NotNull Float fmcgProductMeasurementUnit,
-                        @NotNull Float fmcgProductDenomination, @NotNull String fmcgProductSubId, List<String> fmcgProductImageLocation) {
+    public FMCGProducts(@NotNull String fmcgProductManufacturer, @NotNull String fmcgProductName, String fmcgProductVariant, @NotNull String fmcgProductDescription, @NotNull String fmcgProductGenericName, String fmcgProductAlternateName, @NotEmpty @NotNull String itemCategory, @NotEmpty @NotNull String itemSubCategory, @NotNull Boolean fmcgProductAvailable, Float fmcgProductSellingPrice, Float fmcgProductOfferedDiscount, String fmcgProductDiscountName, Float fmcgProductDiscountedPrice, @NotNull List<String> fmcgProductApplicableTaxes, @NotNull Float fmcgProductTaxedPrice, @NotNull Float fmcgProductQuantity, @NotNull Float fmcgProductMeasurementUnit, @NotNull Float fmcgProductDenomination, @NotNull String fmcgProductSubId, List<String> FMCGProductImages) {
         this.fmcgProductManufacturer = fmcgProductManufacturer;
         this.fmcgProductName = fmcgProductName;
         this.fmcgProductVariant = fmcgProductVariant;
@@ -127,7 +121,7 @@ public class FMCGProducts {
         this.fmcgProductMeasurementUnit = fmcgProductMeasurementUnit;
         this.fmcgProductDenomination = fmcgProductDenomination;
         this.fmcgProductSubId = fmcgProductSubId;
-        this.fmcgProductImageLocation = fmcgProductImageLocation;
+        this.FMCGProductImages = FMCGProductImages;
     }
 
     public Long getFmcgProductTableId() {
@@ -290,11 +284,11 @@ public class FMCGProducts {
         this.fmcgProductSubId = fmcgProductSubId;
     }
 
-    public List<String> getFmcgProductImageLocation() {
-        return fmcgProductImageLocation;
+    public List<String> getFMCGProductImages() {
+        return FMCGProductImages;
     }
 
-    public void setFmcgProductImageLocation(List<String> fmcgProductImageLocation) {
-        this.fmcgProductImageLocation = fmcgProductImageLocation;
+    public void setFMCGProductImages(List<String> FMCGProductImages) {
+        this.FMCGProductImages = FMCGProductImages;
     }
 }

@@ -114,6 +114,25 @@ public class EdibleProductsService {
          * */
         EdibleProducts edibleProducts = new EdibleProducts();
 
+        /**
+         * Save the product image
+         * */
+        if (!edibleProductImages.isEmpty()) {
+            OpsResponse res = utils.saveFiles(edibleProductImages, constants.saveImageSwitchCaseEdibleProducts);
+            int errorCheck = res.getStatusCode();
+
+            if(errorCheck != utils.opsSuccess){
+                return ResponseEntity.status(errorCheck).body(res);
+            } else {
+                edibleProducts.setEdibleProductImageLocation((ArrayList<String>) res.getStatusArray());
+            }
+        } else {
+            ArrayList<String> imagePlaceHolder = new ArrayList<>();
+            // TODO : give correct path to image placeholder
+            imagePlaceHolder.add("src/main/resources/assets/veg-images/veg-image-placeholder.png");
+            edibleProducts.setEdibleProductImageLocation(imagePlaceHolder);
+        }
+
         edibleProducts.setEdibleProductManufacturer(newEdibleProduct.getEdibleProductManufacturer());
         edibleProducts.setEdibleProductName(newEdibleProduct.getEdibleProductName());
         edibleProducts.setEdibleProductVariant(newEdibleProduct.getEdibleProductVariant());
@@ -194,25 +213,6 @@ public class EdibleProductsService {
         edibleProducts.setEdibleProductsMeasureMentUnit(newEdibleProduct.getEdibleProductsMeasureMentUnit());
         edibleProducts.setEdibleProductDenomination(newEdibleProduct.getEdibleProductDenomination());
         edibleProducts.setEdibleProductSubId(subid);
-
-        /**
-         * Save the product image
-         * */
-        if (!edibleProductImages.isEmpty()) {
-            OpsResponse res = utils.saveFiles(edibleProductImages, "edibleProductImages");
-            int errorCheck = res.getStatusCode();
-
-            if(errorCheck != utils.opsSuccess){
-                return ResponseEntity.status(errorCheck).body(res);
-            } else {
-                edibleProducts.setEdibleProductImageLocation((ArrayList<String>) res.getStatusArray());
-            }
-        } else {
-            ArrayList<String> imagePlaceHolder = new ArrayList<>();
-            // TODO : give correct path to image placeholder
-            imagePlaceHolder.add("src/main/resources/assets/veg-images/veg-image-placeholder.png");
-            edibleProducts.setEdibleProductImageLocation(imagePlaceHolder);
-        }
 
         edibleProductsRepository.save(edibleProducts);
 
