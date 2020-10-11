@@ -57,23 +57,24 @@ public class UtilityServices {
     @Autowired
     NonVegProductsService nonVegProductsService;
 
+    @Autowired
+    Constants constants;
+
+    @Autowired
+    Utils utils;
+
     public List<?> findAllUtilities () {
         List<Taxes> taxes = taxService.findAll();
         List<CustomerOrdersDiscount> customerOrdersDiscounts = customerOrdersDiscountServices.findAllDiscounts();
         List<ItemCategories> itemCategories = itemCategoriesService.findAll();
         List <DeliveryCharges> deliveryCharges = deliveryChargeServices.findAll();
 
-        int count = taxes.size() + customerOrdersDiscounts.size() + itemCategories.size() + deliveryCharges.size();
-
-        Map<String, Object> res = new HashMap<>();
-
-        res.put("taxes", taxes);
-        res.put("customerOrdersDiscounts", customerOrdersDiscounts);
-        res.put("itemCategories", itemCategories);
-        res.put("deliveryCharges", deliveryCharges);
-
         List<Map<String, Object>> finalRes = new ArrayList<>();
-        finalRes.add(res);
+
+        finalRes.add(utils.buildStringListMap(constants.taxes, taxes));
+        finalRes.add(utils.buildStringListMap(constants.customerOrderDiscount, customerOrdersDiscounts));
+        finalRes.add(utils.buildStringListMap(constants.itemCategories, itemCategories));
+        finalRes.add(utils.buildStringListMap(constants.deliveryCharges, deliveryCharges));
 
         return finalRes;
     }
@@ -86,13 +87,10 @@ public class UtilityServices {
             // TODO: write method to find all nonVeg products
             List<NonVegProducts> nonVegProducts = null;
 
-            Map<String, Object>  res = new HashMap<>();
-            res.put("vegitables", vegitables);
-            res.put("FMCGProducts", fmcgProducts);
-            res.put("edibleProducts", edibleProducts);
-
             List<Object> finalRes = new ArrayList<>();
-            finalRes.add(res);
+            finalRes.add(utils.buildStringListMap(constants.vegitableList, vegitables));
+            finalRes.add(utils.buildStringListMap(constants.FMCGProduct, fmcgProducts));
+            finalRes.add(utils.buildStringListMap(constants.edibleProductList, edibleProducts));
 
             return finalRes;
     }

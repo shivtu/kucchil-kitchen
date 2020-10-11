@@ -1,7 +1,9 @@
 package com.example.retail.controllers.retailer.utility_retailer;
 
+import com.example.retail.util.Constants;
 import com.example.retail.util.CreateResponse;
 import com.example.retail.util.UtilityServices;
+import com.example.retail.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +25,12 @@ public class UtilityRetailerController {
 
     @Autowired
     CreateResponse createResponse;
+
+    @Autowired
+    Utils utils;
+
+    @Autowired
+    Constants constants;
 
     @RequestMapping(value = "/find/allUtilities", method = RequestMethod.GET)
     public ResponseEntity<?> findAllUtilties() {
@@ -79,12 +87,11 @@ public class UtilityRetailerController {
             List<?> utilities = utilityServices.findAllUtilities();
             List<?> allProducts = utilityServices.findAllProducts();
 
-            Map<String, List<?>> res = new HashMap<>();
-            res.put("allProducts", allProducts);
-            res.put("utilities", utilities);
             int count = utilities.size() + allProducts.size();
-            List<Map<String, List<?>>> finalRes = new ArrayList<>();
-            finalRes.add(res);
+
+            List<Map<String, ?>> finalRes = new ArrayList<>();
+            finalRes.add(utils.buildStringListMap(constants.allProducts, allProducts));
+            finalRes.add(utils.buildStringListMap(constants.utilities, utilities));
 
             return ResponseEntity.status(200).body(
                 createResponse.createSuccessResponse(

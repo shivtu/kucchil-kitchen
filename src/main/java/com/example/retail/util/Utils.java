@@ -1,14 +1,9 @@
 package com.example.retail.util;
 
-import com.example.retail.models.itemcategories.ItemCategories;
-import com.example.retail.models.variantandcategory.VariantAndCategory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -105,5 +100,11 @@ public class Utils {
                 + edibleProductFlavor.toLowerCase()
                 + edibleProductDenomination.toString().toLowerCase()
                 + edibleProductInventoryExpiry.toString().toLowerCase();
+    }
+
+    public Map<String, Object> buildStringListMap (String key, Object value) {
+        Map<String, Object> res = new HashMap<>();
+        res.put(key, value);
+        return res;
     }
 }
