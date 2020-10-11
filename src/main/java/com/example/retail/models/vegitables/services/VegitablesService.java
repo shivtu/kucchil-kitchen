@@ -55,8 +55,11 @@ public class VegitablesService {
     @Autowired
     VariantAndCategoryService variantAndCategoryService;
 
+    @Autowired
+    Constants constants;
 
-    public List<Object> findAllVegitablesWithInventory() {
+
+    public List<?> findAllVegitablesWithInventory() {
         List<Vegitables> vegitables = vegitablesRepository.findAll();
         List<VegitablesInventory> vegitablesInventories = vegitableInventoryService.findAll();
 
@@ -66,8 +69,8 @@ public class VegitablesService {
 
         vegitables.forEach(vegitable-> vegitablesInventories.forEach(vegitablesInventory -> {
             if(vegitable.getVegitableSubId().equals(vegitablesInventory.getVegitableSubId())){
-                resObject.put("vegitable", vegitable);
-                resObject.put("vegitableInventory", vegitablesInventory);
+                resObject.put(constants.vegitable, vegitable);
+                resObject.put(constants.vegitableInventory, vegitablesInventory);
                 finalRes.add(resObject);
             }
         }));

@@ -6,12 +6,10 @@ import com.example.retail.models.discounts.DiscountCalculator;
 import com.example.retail.models.discounts.services.CustomerOrdersDiscountServices;
 import com.example.retail.models.fmcgproducts.FMCGProducts;
 import com.example.retail.models.fmcgproducts.FMCGProductsInventory;
+import com.example.retail.models.fmcgproducts.repository.FMCGProductsInventoryRepository;
 import com.example.retail.models.fmcgproducts.repository.FMCGProductsRepository;
 import com.example.retail.models.taxutility.TaxCalculator;
-import com.example.retail.util.CreateResponse;
-import com.example.retail.util.JWTDetails;
-import com.example.retail.util.ValidationResponse;
-import com.example.retail.util.Validations;
+import com.example.retail.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -27,8 +25,8 @@ public class FMCGProductsServices {
     @Autowired
     FMCGProductsRepository fmcgProductsRepository;
 
-    @Autowired
-    FMCGProductsInventoryServices fmcgProductsInventoryServices;
+   @Autowired
+    FMCGProductsInventoryRepository fmcgProductsInventoryRepository;
 
     @Autowired
     DiscountCalculator discountCalculator;
@@ -48,6 +46,12 @@ public class FMCGProductsServices {
     @Autowired
     CreateResponse createResponse;
 
+    @Autowired
+    Utils utils;
+
+    @Autowired
+    Constants constants;
+
     private String generateSubId (FMCGProductsRequestBody fmcgProductsRequestBody) {
         String subId = fmcgProductsRequestBody.getFmcgProductManufacturer().toLowerCase()
                 + fmcgProductsRequestBody.getFmcgProductName().toLowerCase()
@@ -58,7 +62,27 @@ public class FMCGProductsServices {
         return subId;
     }
 
-    public List<FMCGProducts> findAll() {
+    public List<?> findAllFMCGProductsWithInventory() {
+        List<FMCGProducts> FMCGProducts = fmcgProductsRepository.findAll();
+        List<FMCGProductsInventory> FMCGProductsInventories = fmcgProductsInventoryRepository.findAll();
+
+        Map<String, Object> resObject = new HashMap<>();
+        List<Map<String, ?>> finalRes = new ArrayList<>();
+
+        FMCGProducts.forEach((FMCGProduct) -> {
+            FMCGProductsInventories.forEach((FMCGProductsInventory) -> {
+                if(FMCGProduct.getFmcgProductSubId().equals(FMCGProductsInventory.getFmcgProductSubId())) {
+                    resObject.put(constants.FMCGProduct, FMCGProduct);
+                    resObject.put(constants.FMCGProductInventory, FMCGProductsInventory);
+                    finalRes.add(resObject);
+                }
+            });
+        });
+
+        return finalRes;
+    }
+
+    public List<FMCGProducts> findAll () {
         return fmcgProductsRepository.findAll();
     }
 

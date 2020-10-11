@@ -51,8 +51,31 @@ public class EdibleProductsService {
     @Autowired
     Utils utils;
 
-    public List<EdibleProducts> findAll(){
-        return  edibleProductsRepository.findAll();
+    @Autowired
+    Constants constants;
+
+    public List<?> findAllEdibleProductsWithInventory(){
+        List<EdibleProducts> edibleProducts = edibleProductsRepository.findAll();
+        List<EdibleProductsInventory> edibleProductsInventories = edibleProductsInventoryRepository.findAll();
+
+        Map<String, Object> resObject = new HashMap<>();
+        List<Map<String, ?>> finalRes = new ArrayList<>();
+
+        edibleProducts.forEach((edibleProduct) -> {
+            edibleProductsInventories.forEach((edibleProductInventory) -> {
+                if(edibleProduct.getEdibleProductSubId().equals(edibleProductInventory.getEdibleProductSubId())) {
+                    resObject.put(constants.edibleProduct, edibleProduct);
+                    resObject.put(constants.edibleProductInventory, edibleProductInventory);
+                    finalRes.add(resObject);
+                }
+            });
+        });
+
+        return finalRes;
+    }
+
+    public List<EdibleProducts> findAll() {
+        return edibleProductsRepository.findAll();
     }
 
     public Iterable<EdibleProducts> addAllEdibleProducts(List<EdibleProducts> newProducts) {

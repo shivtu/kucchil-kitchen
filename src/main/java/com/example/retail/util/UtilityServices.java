@@ -81,16 +81,16 @@ public class UtilityServices {
 
     public List<?> findAllProducts() {
 
-            List<Vegitables> vegitables = vegitablesService.findAllVegitables();
-            List<FMCGProducts> fmcgProducts = fmcgProductsServices.findAll();
-            List<EdibleProducts> edibleProducts = edibleProductsService.findAll();
+            List<?> vegitablesAndInventory = vegitablesService.findAllVegitablesWithInventory();
+            List<?> fmcgProducts = fmcgProductsServices.findAllFMCGProductsWithInventory();
+            List<?> edibleProducts = edibleProductsService.findAllEdibleProductsWithInventory();
             // TODO: write method to find all nonVeg products
             List<NonVegProducts> nonVegProducts = null;
 
             List<Object> finalRes = new ArrayList<>();
-            finalRes.add(utils.buildStringListMap(constants.vegitableList, vegitables));
-            finalRes.add(utils.buildStringListMap(constants.FMCGProduct, fmcgProducts));
-            finalRes.add(utils.buildStringListMap(constants.edibleProductList, edibleProducts));
+            finalRes.add(utils.buildStringListMap(constants.vegitableAndInventoryList, vegitablesAndInventory));
+            finalRes.add(utils.buildStringListMap(constants.FMCGProductAndInventoryList, fmcgProducts));
+            finalRes.add(utils.buildStringListMap(constants.edibleProductAndInventoryList, edibleProducts));
 
             return finalRes;
     }

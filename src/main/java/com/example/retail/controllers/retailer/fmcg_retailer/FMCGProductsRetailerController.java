@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/retailer/fmcg")
@@ -25,6 +26,26 @@ public class FMCGProductsRetailerController {
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Object> saveFmcgProduct(HttpServletRequest request, FMCGProductsRequestBody fmcgProductsRequestBody) {
         return fmcgProductsServices.addFmcgProduct(request, fmcgProductsRequestBody);
+    }
+
+    @RequestMapping(value = "/findAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> findAllFMCGProductsWithInventory () {
+        try {
+            List<?> res = fmcgProductsServices.findAllFMCGProductsWithInventory();
+            return ResponseEntity.status(200).body(createResponse.createSuccessResponse(
+                200, res.size() + " items found",
+                res
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(
+                createResponse.createErrorResponse(
+                    500,
+                    e.getLocalizedMessage(),
+                        "NA"
+                    )
+            );
+        }
+
     }
 
 }

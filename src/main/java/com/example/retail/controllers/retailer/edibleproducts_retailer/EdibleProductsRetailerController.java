@@ -31,9 +31,24 @@ public class EdibleProductsRetailerController {
         return "Welcome!";
     }
 
-    @GetMapping(value = "/allproducts")
-    public List<EdibleProducts> findAll(){
-        return edibleProductsService.findAll();
+    @GetMapping(value = "/findAll")
+    public ResponseEntity<?> findAll(){
+        try {
+            List<?> finalRes = edibleProductsService.findAllEdibleProductsWithInventory();
+            return ResponseEntity.status(200).body(createResponse.createSuccessResponse(
+                200,
+                finalRes.size() + " items found",
+                finalRes
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(
+                createResponse.createErrorResponse(
+                    500,
+                    e.getLocalizedMessage(),
+                    "NA"
+                )
+            );
+        }
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,

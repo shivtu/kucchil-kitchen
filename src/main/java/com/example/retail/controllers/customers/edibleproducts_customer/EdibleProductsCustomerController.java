@@ -21,7 +21,7 @@ public class EdibleProductsCustomerController {
     EdibleProductsService edibleProductsService;
 
     @RequestMapping(value = "/allEdibleProducts", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<EdibleProducts> finadAll(){
+    public List<?> finadAll(){
         return edibleProductsService.findAll();
     }
 }
