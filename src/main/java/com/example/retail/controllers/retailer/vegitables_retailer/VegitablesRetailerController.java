@@ -28,7 +28,7 @@ public class VegitablesRetailerController {
     VegitableInventoryService vegitableInventoryService;
 
     @RequestMapping(value = "/findall", method = RequestMethod.GET)
-    public ResponseEntity<Object> findAllVegitablesWithInventory() {
+    public ResponseEntity<?> findAllVegitablesWithInventory() {
         try{
             List<?> result = vegitablesService.findAllVegitablesWithInventory();
             int resultCount = result.size();
@@ -43,7 +43,7 @@ public class VegitablesRetailerController {
             return ResponseEntity.status(500).body(
                 createResponse.createErrorResponse(
                     500,
-                    e.getMessage(),
+                    e.toString(),
                     "NA"
                 )
             );

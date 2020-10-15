@@ -89,9 +89,11 @@ public class FMCGProducts {
 
     /**
      * fmcgProductManufacturer + fmcgProductName + fmcgProductVariant + fmcgProductDenomination + fmcgProductInventoryCostPrice + fmcgProductInventoryFixedCost
+     * This sub id is also used as a sub id in the FMCG inventory entity as a link between the two
+     * The sub id in the product inventory identifies the current inventory column linked to it
      */
     @NotNull
-    @Column(name = "fmcg_product_subid")
+    @Column(name = "fmcg_product_subid", unique = true)
     private String fmcgProductSubId;
 
     @Column(name = "fmcg_product_image_location")

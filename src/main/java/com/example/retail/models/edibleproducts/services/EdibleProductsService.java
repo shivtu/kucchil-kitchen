@@ -58,12 +58,12 @@ public class EdibleProductsService {
         List<EdibleProducts> edibleProducts = edibleProductsRepository.findAll();
         List<EdibleProductsInventory> edibleProductsInventories = edibleProductsInventoryRepository.findAll();
 
-        Map<String, Object> resObject = new HashMap<>();
         List<Map<String, ?>> finalRes = new ArrayList<>();
 
         edibleProducts.forEach((edibleProduct) -> {
             edibleProductsInventories.forEach((edibleProductInventory) -> {
                 if(edibleProduct.getEdibleProductSubId().equals(edibleProductInventory.getEdibleProductSubId())) {
+                    Map<String, Object> resObject = new HashMap<>();
                     resObject.put(constants.edibleProduct, edibleProduct);
                     resObject.put(constants.edibleProductInventory, edibleProductInventory);
                     finalRes.add(resObject);

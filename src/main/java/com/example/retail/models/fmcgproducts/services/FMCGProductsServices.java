@@ -54,6 +54,14 @@ public class FMCGProductsServices {
     @Autowired
     Constants constants;
 
+    /**
+     * Create a new FMCG product
+     * @param request
+     * @param fmcgProductsRequestBody
+     * @param FMCGProductImages
+     * @return FMCGProduct
+     * @throws IOException
+     */
     public ResponseEntity<Object> addFmcgProduct(HttpServletRequest request,
                                                  FMCGProductsRequestBody fmcgProductsRequestBody,
                                                  List<MultipartFile> FMCGProductImages) throws IOException {
@@ -189,12 +197,13 @@ public class FMCGProductsServices {
         List<FMCGProducts> FMCGProducts = fmcgProductsRepository.findAll();
         List<FMCGProductsInventory> FMCGProductsInventories = fmcgProductsInventoryRepository.findAll();
 
-        Map<String, Object> resObject = new HashMap<>();
+
         List<Map<String, ?>> finalRes = new ArrayList<>();
 
         FMCGProducts.forEach((FMCGProduct) -> {
             FMCGProductsInventories.forEach((FMCGProductsInventory) -> {
                 if(FMCGProduct.getFmcgProductSubId().equals(FMCGProductsInventory.getFmcgProductSubId())) {
+                    Map<String, Object> resObject = new HashMap<>();
                     resObject.put(constants.FMCGProduct, FMCGProduct);
                     resObject.put(constants.FMCGProductInventory, FMCGProductsInventory);
                     finalRes.add(resObject);

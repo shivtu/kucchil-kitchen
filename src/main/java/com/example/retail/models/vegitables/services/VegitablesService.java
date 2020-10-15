@@ -4,7 +4,6 @@ import com.example.retail.controllers.retailer.vegitables_retailer.AddVegitables
 import com.example.retail.models.discounts.CustomerOrdersDiscount;
 import com.example.retail.models.discounts.DiscountCalculator;
 import com.example.retail.models.discounts.services.CustomerOrdersDiscountServices;
-import com.example.retail.models.jsonmodels.DenominationList;
 import com.example.retail.models.jsonmodels.InventoryAdditionDetails;
 import com.example.retail.models.variantandcategory.VariantAndCategory;
 import com.example.retail.models.variantandcategory.services.VariantAndCategoryService;
@@ -63,17 +62,20 @@ public class VegitablesService {
         List<Vegitables> vegitables = vegitablesRepository.findAll();
         List<VegitablesInventory> vegitablesInventories = vegitableInventoryService.findAll();
 
-        Map<String, Object> resObject = new HashMap<>();
 
-        List<Object> finalRes = new ArrayList<>();
 
-        vegitables.forEach(vegitable-> vegitablesInventories.forEach(vegitablesInventory -> {
-            if(vegitable.getVegitableSubId().equals(vegitablesInventory.getVegitableSubId())){
-                resObject.put(constants.vegitable, vegitable);
-                resObject.put(constants.vegitableInventory, vegitablesInventory);
-                finalRes.add(resObject);
+        List<Map<String, ?>> finalRes = new ArrayList<>();
+
+        vegitables.forEach(vegitable->
+            vegitablesInventories.forEach(vegitablesInventory -> {
+                if(vegitable.getVegitableSubId().equals(vegitablesInventory.getVegitableSubId())){
+                    Map<String, Object> resObject = new HashMap<>();
+                    resObject.put(constants.vegitable, vegitable);
+                    resObject.put(constants.vegitableInventory, vegitablesInventory);
+                    finalRes.add(resObject);
+                }
             }
-        }));
+        ));
         return finalRes;
     }
 

@@ -23,6 +23,7 @@ public interface VegitablesRepository extends JpaRepository<Vegitables, Long> {
     public Integer updateVegitableAsPerInventory(@Param("tableId") Long tableId, @Param("vegitableQuantity") Float vegitableQuantity,
                                               @Param("subId") String subId, @Param("newSellingPrice") Float newSellingPrice);
 
+
     @Query(value = "SELECT * FROM vegitables WHERE vegitable_subid = :vegSubId", nativeQuery = true)
     public Optional<Vegitables> findBySubId(@Param("vegSubId") String vegSubId);
 
