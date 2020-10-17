@@ -89,9 +89,10 @@ public class UtilityRetailerController {
 
             int count = utilities.size() + allProducts.size();
 
-            List<Map<String, ?>> finalRes = new ArrayList<>();
-            finalRes.add(utils.buildStringListMap(constants.allProducts, allProducts));
-            finalRes.add(utils.buildStringListMap(constants.utilities, utilities));
+            Map<String, List<?>> finalRes = new HashMap<>();
+
+            finalRes.put("utilities", utilities);
+            finalRes.put("allProducts", allProducts);
 
             return ResponseEntity.status(200).body(
                 createResponse.createSuccessResponse(
@@ -100,6 +101,7 @@ public class UtilityRetailerController {
                     finalRes
                 )
             );
+
         } catch (Exception e) {
             return ResponseEntity.status(500).body(
                 createResponse.createErrorResponse(

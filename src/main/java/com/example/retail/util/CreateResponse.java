@@ -29,7 +29,7 @@ public class CreateResponse {
         return errorResponse;
     }
 
-    public SuccessResponse createSuccessResponse (int successCode, String successMessage, List<?> result) {
+    public SuccessResponse createSuccessResponse (int successCode, String successMessage, Object result) {
         successResponse.setStatusCode(successCode);
         successResponse.setStatusMessage(successMessage);
         successResponse.setResult(result);

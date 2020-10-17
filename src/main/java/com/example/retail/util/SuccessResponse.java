@@ -8,11 +8,11 @@ import java.util.List;
 public class SuccessResponse {
     private int statusCode;
     private String statusMessage;
-    private List<?> result;
+    private Object result;
 
     public SuccessResponse() {}
 
-    public SuccessResponse(int statusCode, String statusMessage, List<?> result) {
+    public SuccessResponse(int statusCode, String statusMessage, Object result) {
         this.statusCode = statusCode;
         this.statusMessage = statusMessage;
         this.result = result;
@@ -34,11 +34,11 @@ public class SuccessResponse {
         this.statusMessage = statusMessage;
     }
 
-    public List<?> getResult() {
+    public Object getResult() {
         return result;
     }
 
-    public void setResult(List<?> result) {
+    public void setResult(Object result) {
         this.result = result;
     }
 }

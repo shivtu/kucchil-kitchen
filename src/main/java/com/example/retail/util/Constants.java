@@ -39,4 +39,6 @@ public class Constants {
     public final String saveImageSwitchCaseVegitables = "vegitableImages";
     public final String saveImageSwitchCaseFMCGProducts = "FMCGProductImages";
     public final String saveImageSwitchCaseEdibleProducts = "edibleProductImages";
+
+    public final String result = "result";
 }

@@ -128,7 +128,7 @@ public class EdibleProducts {
     // edibleProducts_Name + edibleProducts_productName + edibleProducts_Manufacturer + edibleProducts_Variant
     // + edibleProducts_Flavor + edibleProducts_Expiry + edibleProducts_Denomination
     @NotNull
-    @Column(name = "edible_product_subid")
+    @Column(name = "edible_product_subid", unique = true)
     private String edibleProductSubId;
 
     public EdibleProducts(){}

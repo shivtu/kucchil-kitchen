@@ -259,7 +259,7 @@ public class Validations {
     public ValidationResponse   validateNewEdibleProductExits (String subId) {
 
         Optional<EdibleProducts> edibleProductBySubId = edibleProductsRepository.findEdibleProductBySubId(subId);
-
+        // TODO: add the same method for FMCG products
         if(edibleProductBySubId.isPresent()) {
             return createResponse.createValidationResponse(
                 unprocessableRequestCode,
