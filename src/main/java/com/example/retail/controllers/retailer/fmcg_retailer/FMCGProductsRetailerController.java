@@ -2,13 +2,11 @@ package com.example.retail.controllers.retailer.fmcg_retailer;
 
 import com.example.retail.models.fmcgproducts.services.FMCGProductsServices;
 import com.example.retail.util.CreateResponse;
+import com.example.retail.util.JWTDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +23,9 @@ public class FMCGProductsRetailerController {
 
     @Autowired
     CreateResponse createResponse;
+
+    @Autowired
+    JWTDetails jwtDetails;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
@@ -53,5 +54,15 @@ public class FMCGProductsRetailerController {
         }
 
     }
+
+    /**
+     * Update product qty in both products and inventory table simultaneously
+     * **/
+    @RequestMapping(value = "/update/{subId}/increamentQuantity/{quantity}", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateFMCGProductInventory(@PathVariable Float quantity, @PathVariable String subId, HttpServletRequest request) {
+        String addedBy = jwtDetails.userName(request);
+        return fmcgProductsServices.increamentFMCGProductInventory(quantity, addedBy, subId);
+    }
+
 
 }

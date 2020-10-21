@@ -217,4 +217,39 @@ public class FMCGProductsServices {
     public List<FMCGProducts> findAll () {
         return fmcgProductsRepository.findAll();
     }
+
+    /**
+     * Update qty in FMCGProducts table and FMCGProductsInventory table
+     */
+    public ResponseEntity<?> increamentFMCGProductInventory (Float fmcgProductQuantity, String fmcgProductInventoryAddedBy, String fmcgProductSubId) {
+        try {
+            LocalDateTime localDateTime = LocalDateTime.now();
+            FMCGProducts fmcgProducts = fmcgProductsRepository.increamentFMCGProductQty(fmcgProductQuantity, fmcgProductSubId);
+            FMCGProductsInventory fmcgProductsInventory =
+                    fmcgProductsInventoryRepository.increamentFMCGProductsInventoryQty(
+                        fmcgProductQuantity, fmcgProductInventoryAddedBy, localDateTime, fmcgProductSubId
+                    );
+
+            Map<String, Object> res = new HashMap<>();
+            res.put(constants.FMCGProduct, fmcgProducts);
+            res.put(constants.FMCGProductInventory, fmcgProductsInventory);
+
+            return ResponseEntity.status(201).body(
+                createResponse.createSuccessResponse(
+                    201,
+                    "Inventory increamented by: " + fmcgProductQuantity,
+                    res
+                )
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(
+                createResponse.createErrorResponse(
+                    500,
+                    e.toString(),
+                    "NA"
+                )
+            );
+        }
+
+    }
 }

@@ -21,7 +21,7 @@ public class Vegitables {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="vegitable_tableid")
+    @Column(name="vegitable_tableid", updatable = false, nullable = false)
     private Long vegitableTableId;
 
     @NotEmpty

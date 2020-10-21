@@ -49,6 +49,10 @@ public class FMCGProductsInventory {
     @Column(name = "fmcgproductinventory_addedby")
     private String fmcgProductInventoryAddedBy;
 
+    /*
+    * For MVP we update the id of the user who last updates the inventory and do not maintain each update record with
+    * relation to which user and what time
+     */
     @NotNull
     @Column(name = "fmcgproductinventory_addedon")
     private LocalDateTime fmcgProductInventoryAddedOn;
