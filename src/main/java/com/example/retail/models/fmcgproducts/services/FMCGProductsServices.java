@@ -220,9 +220,20 @@ public class FMCGProductsServices {
 
     /**
      * Update qty in FMCGProducts table and FMCGProductsInventory table
+     * For MVP we update the id of the user who last updates the inventory and do not maintain each update record with
+     * relation to which user and what time
      */
     public ResponseEntity<?> increamentFMCGProductInventory (Float fmcgProductQuantity, String fmcgProductInventoryAddedBy, String fmcgProductSubId) {
         try {
+            if (fmcgProductQuantity <= 0) {
+                return ResponseEntity.status(400).body(
+                    createResponse.createErrorResponse(
+                        400,
+                        "Quantity has to be greater that 0",
+                        "NA"
+                    )
+                );
+            }
             LocalDateTime localDateTime = LocalDateTime.now();
             FMCGProducts fmcgProducts = fmcgProductsRepository.increamentFMCGProductQty(fmcgProductQuantity, fmcgProductSubId);
             FMCGProductsInventory fmcgProductsInventory =
