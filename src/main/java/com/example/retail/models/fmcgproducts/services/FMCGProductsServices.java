@@ -132,7 +132,7 @@ public class FMCGProductsServices {
         ValidationResponse itemCategoryValidationStatus = validations.validateItemCategory(itemCategorySubId);
         if(itemCategoryValidationStatus.getStatusCode() != validations.validationSuccessCode) {
             return ResponseEntity.status(itemCategoryValidationStatus.getStatusCode()).body(
-                    itemCategoryValidationStatus
+                itemCategoryValidationStatus
             );
         }
 

@@ -9,6 +9,8 @@ import com.example.retail.models.edibleproducts.EdibleProductsInventory;
 import com.example.retail.models.edibleproducts.repository.EdibleProductsInventoryRepository;
 import com.example.retail.models.edibleproducts.repository.EdibleProductsRepository;
 import com.example.retail.models.taxutility.TaxCalculator;
+import com.example.retail.models.variantandcategory.VariantAndCategory;
+import com.example.retail.models.variantandcategory.services.VariantAndCategoryService;
 import com.example.retail.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -51,6 +53,9 @@ public class EdibleProductsService {
 
     @Autowired
     Utils utils;
+
+    @Autowired
+    VariantAndCategoryService variantAndCategoryService;
 
     @Autowired
     Constants constants;
@@ -111,6 +116,7 @@ public class EdibleProductsService {
             );
         }
 
+
         /**
          * Create the edible products model
          * */
@@ -135,6 +141,38 @@ public class EdibleProductsService {
             edibleProducts.setEdibleProductImageLocation(imagePlaceHolder);
         }
 
+        /**
+         * Add variants to variant & category list
+         * **/
+        String itemCategorySubId = utils.getItemCategorySubId(newEdibleProduct.getItemCategory(), newEdibleProduct.getItemSubCategory());
+        /* Return error if item category does not exist */
+        ValidationResponse itemCategoryValidationStatus = validations.validateItemCategory(itemCategorySubId);
+        if(itemCategoryValidationStatus.getStatusCode() != validations.validationSuccessCode) {
+            return ResponseEntity.status(itemCategoryValidationStatus.getStatusCode()).body(
+                    itemCategoryValidationStatus
+            );
+        }
+
+        /**Create new VariandAndCategory**/
+        VariantAndCategory variantAndCategory = new VariantAndCategory();
+        variantAndCategory.setItemCategory(newEdibleProduct.getItemCategory());
+        variantAndCategory.setItemSubCategory(newEdibleProduct.getItemSubCategory());
+        variantAndCategory.setItemCategorySubId(itemCategorySubId);
+
+        Optional<VariantAndCategory> optionalVariantAndCategory = variantAndCategoryService.findBySubId(itemCategorySubId);
+        if(optionalVariantAndCategory.isPresent()) {
+            /** If itemCategory and itemSubCategory (itemCategorySubId) is present add variant to existing variant list **/
+            List<String> variantList =  new ArrayList<>();
+            variantList.add(newEdibleProduct.getEdibleProductVariant());
+            variantAndCategoryService.addVariants(itemCategorySubId, variantList);
+        } else {
+            List<String> variantList = new ArrayList<>();
+            /**Persist new variant and category**/
+            variantList.add(newEdibleProduct.getEdibleProductVariant());
+            variantAndCategory.setVariantsList(variantList);
+            variantAndCategoryService.save(variantAndCategory);
+        }
+
         edibleProducts.setEdibleProductManufacturer(newEdibleProduct.getEdibleProductManufacturer());
         edibleProducts.setEdibleProductName(newEdibleProduct.getEdibleProductName());
         edibleProducts.setEdibleProductVariant(newEdibleProduct.getEdibleProductVariant());
@@ -145,19 +183,6 @@ public class EdibleProductsService {
         edibleProducts.setEdibleProductAlternaleName(newEdibleProduct.getEdibleProductAlternaleName());
         edibleProducts.setItemCategory(newEdibleProduct.getItemCategory());
         edibleProducts.setItemSubCategory(newEdibleProduct.getItemSubCategory());
-
-        /*
-        * Validate the classification code
-        * Return Error response from validation if validation fails
-        * */
-        String itemCategorySubId = utils.getItemCategorySubId(newEdibleProduct.getItemCategory(), newEdibleProduct.getItemSubCategory());
-        ValidationResponse itemClassifictionValidation = validations.validateItemCategory(itemCategorySubId);
-        if(itemClassifictionValidation.getStatusCode() != validations.validationSuccessCode) {
-            return ResponseEntity.status(itemClassifictionValidation.getStatusCode()).body(
-                itemClassifictionValidation
-            );
-        }
-        edibleProducts.setItemCategory(newEdibleProduct.getItemCategory());
         edibleProducts.setEdibleProductForMinors(newEdibleProduct.getEdibleProductForMinors());
         edibleProducts.setEdibleProductAvailable(newEdibleProduct.getEdibleProductAvailable());
         edibleProducts.setEdibleProductMrp(newEdibleProduct.getEdibleProductMrp());
