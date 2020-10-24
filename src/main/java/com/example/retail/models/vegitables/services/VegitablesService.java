@@ -81,7 +81,7 @@ public class VegitablesService {
                                                   List<MultipartFile> vegitableImages) {
         try {
             /* Create a unique subID */
-            String vegSubId = utils.getVegitableSubId(newVegitables.getVegitableName()
+            String vegSubId = utils.createVegitableSubId(newVegitables.getVegitableName()
                     ,newVegitables.getVegitableVariant()
                     ,newVegitables.getVegitableInventoryFixedCost()
                     ,newVegitables.getVegitableInventoryCostPrice());

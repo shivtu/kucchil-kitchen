@@ -83,11 +83,11 @@ public class Utils {
         return itemCategory.toLowerCase() +"-" + itemSubCategory.toLowerCase();
     }
 
-    public String getVegitableSubId (String vegitableName, String vegitableVariant, Float vegitableInventoryFixedCost, Float vegitableInventoryCostPrice) {
+    public String createVegitableSubId (String vegitableName, String vegitableVariant, Float vegitableInventoryFixedCost, Float vegitableInventoryCostPrice) {
         return vegitableName.toLowerCase() + "-" + vegitableVariant.toLowerCase() + "-" + vegitableInventoryFixedCost.toString() + "-" + vegitableInventoryCostPrice.toString();
     }
 
-    public String getEdibleProductSubId(
+    public String createEdibleProductSubId(
             String edibleProductManufacturer,
             String edibleProductName,
             String edibleProductVariant,
@@ -103,7 +103,7 @@ public class Utils {
                 + edibleProductInventoryExpiry.toString().toLowerCase();
     }
 
-    public String getFMCGProductSubId (
+    public String createFMCGProductSubId (
             String manufacturerName, String productName, String variant, Float denomination, Float costPrice,
             Float fixedCost) {
 

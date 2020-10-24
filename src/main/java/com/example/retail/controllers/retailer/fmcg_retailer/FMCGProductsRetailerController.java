@@ -33,7 +33,17 @@ public class FMCGProductsRetailerController {
     public ResponseEntity<Object> saveFmcgProduct(HttpServletRequest request,
                                                   FMCGProductsRequestBody fmcgProductsRequestBody,
                                                   @RequestParam("FMCGProductImages") List<MultipartFile> FMCGProductImages) throws IOException {
-        return fmcgProductsServices.addFmcgProduct(request, fmcgProductsRequestBody, FMCGProductImages);
+        try {
+            return fmcgProductsServices.addFmcgProduct(request, fmcgProductsRequestBody, FMCGProductImages);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(
+                createResponse.createErrorResponse(
+                    500,
+                    e.getLocalizedMessage(),
+                    "NA"
+                )
+            );
+        }
     }
 
     @RequestMapping(value = "/findAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

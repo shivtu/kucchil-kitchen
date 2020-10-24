@@ -9,6 +9,8 @@ import com.example.retail.models.fmcgproducts.FMCGProductsInventory;
 import com.example.retail.models.fmcgproducts.repository.FMCGProductsInventoryRepository;
 import com.example.retail.models.fmcgproducts.repository.FMCGProductsRepository;
 import com.example.retail.models.taxutility.TaxCalculator;
+import com.example.retail.models.variantandcategory.VariantAndCategory;
+import com.example.retail.models.variantandcategory.services.VariantAndCategoryService;
 import com.example.retail.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -52,6 +54,9 @@ public class FMCGProductsServices {
     Utils utils;
 
     @Autowired
+    VariantAndCategoryService variantAndCategoryService;
+
+    @Autowired
     Constants constants;
 
     /**
@@ -68,7 +73,7 @@ public class FMCGProductsServices {
         /**
          * Create the FMCG product sub-id
          **/
-        String subId = utils.getFMCGProductSubId(
+        String subId = utils.createFMCGProductSubId(
             fmcgProductsRequestBody.getFmcgProductManufacturer(),
             fmcgProductsRequestBody.getFmcgProductName(),
             fmcgProductsRequestBody.getFmcgProductVariant(),
@@ -84,6 +89,16 @@ public class FMCGProductsServices {
         if(validationResponse.getStatusCode() != validations.validationSuccessCode) {
             return ResponseEntity.status(validationResponse.getStatusCode()).body(
                 validationResponse
+            );
+        }
+
+        /**
+         * If subId already exists return error
+         * **/
+        ValidationResponse productExists = validations.validateNewFMCGProductExists(subId);
+        if(productExists.getStatusCode() != validations.validationSuccessCode) {
+            return ResponseEntity.status(productExists.getStatusCode()).body(
+                productExists
             );
         }
 
@@ -110,6 +125,35 @@ public class FMCGProductsServices {
             // TODO : give correct path to image placeholder
             imagePlaceHolder.add("src/main/resources/assets/veg-images/veg-image-placeholder.png");
             fmcgProducts.setFMCGProductImages(imagePlaceHolder);
+        }
+
+        String itemCategorySubId = utils.getItemCategorySubId(fmcgProductsRequestBody.getItemCategory(), fmcgProductsRequestBody.getItemSubCategory());
+        /* Return error if item category does not exist */
+        ValidationResponse itemCategoryValidationStatus = validations.validateItemCategory(itemCategorySubId);
+        if(itemCategoryValidationStatus.getStatusCode() != validations.validationSuccessCode) {
+            return ResponseEntity.status(itemCategoryValidationStatus.getStatusCode()).body(
+                    itemCategoryValidationStatus
+            );
+        }
+
+        /**Create new VariandAndCategory**/
+        VariantAndCategory variantAndCategory = new VariantAndCategory();
+        variantAndCategory.setItemCategory(fmcgProductsRequestBody.getItemCategory());
+        variantAndCategory.setItemSubCategory(fmcgProductsRequestBody.getItemSubCategory());
+        variantAndCategory.setItemCategorySubId(itemCategorySubId);
+
+        Optional<VariantAndCategory> optionalVariantAndCategory = variantAndCategoryService.findBySubId(itemCategorySubId);
+        if(optionalVariantAndCategory.isPresent()) {
+            /** If itemCategory and itemSubCategory (itemCategorySubId) is present add variant to existing variant list **/
+            List<String> variantList =  new ArrayList<>();
+            variantList.add(fmcgProductsRequestBody.getFmcgProductVariant());
+            variantAndCategoryService.addVariants(itemCategorySubId, variantList);
+        } else {
+            List<String> variantList = new ArrayList<>();
+            /**Persist new variant and category**/
+            variantList.add(fmcgProductsRequestBody.getFmcgProductVariant());
+            variantAndCategory.setVariantsList(variantList);
+            variantAndCategoryService.save(variantAndCategory);
         }
 
         fmcgProducts.setFmcgProductManufacturer(fmcgProductsRequestBody.getFmcgProductManufacturer());
@@ -155,6 +199,8 @@ public class FMCGProductsServices {
         fmcgProducts.setFmcgProductMeasurementUnit(fmcgProductsRequestBody.getFmcgProductMeasurementUnit());
         fmcgProducts.setFmcgProductDenomination(fmcgProductsRequestBody.getFmcgProductDenomination());
         fmcgProducts.setFmcgProductSubId(subId);
+
+
 
         /**
          * Create FMCG products inventory object

@@ -10,6 +10,10 @@ import com.example.retail.models.discounts.services.CustomerOrdersDiscountServic
 import com.example.retail.models.edibleproducts.EdibleProducts;
 import com.example.retail.models.edibleproducts.repository.EdibleProductsRepository;
 import com.example.retail.models.edibleproducts.services.EdibleProductsService;
+import com.example.retail.models.fmcgproducts.FMCGProducts;
+import com.example.retail.models.fmcgproducts.repository.FMCGProductsInventoryRepository;
+import com.example.retail.models.fmcgproducts.repository.FMCGProductsRepository;
+import com.example.retail.models.fmcgproducts.services.FMCGProductsInventoryServices;
 import com.example.retail.models.itemcategories.ItemCategories;
 import com.example.retail.models.itemcategories.repository.ItemCategoriesRepository;
 import com.example.retail.models.itemcategories.service.ItemCategoriesService;
@@ -55,6 +59,9 @@ public class Validations {
 
     @Autowired
     EdibleProductsRepository edibleProductsRepository;
+
+    @Autowired
+    FMCGProductsRepository fmcgProductsRepository;
 
     public int validationSuccessCode = 1;
     public int unprocessableRequestCode = 422;
@@ -256,7 +263,7 @@ public class Validations {
         );
     }
 
-    public ValidationResponse   validateNewEdibleProductExits (String subId) {
+    public ValidationResponse validateNewEdibleProductExits (String subId) {
 
         Optional<EdibleProducts> edibleProductBySubId = edibleProductsRepository.findEdibleProductBySubId(subId);
         // TODO: add the same method for FMCG products
@@ -276,5 +283,23 @@ public class Validations {
             null
         );
 
+    }
+
+    public ValidationResponse validateNewFMCGProductExists (String subId) {
+        Optional<FMCGProducts> fmcgProductsBySubId = fmcgProductsRepository.findOneBySubId(subId);
+        if(fmcgProductsBySubId.isPresent()) {
+            return createResponse.createValidationResponse(
+                unprocessableRequestCode,
+                "This product already exists",
+                "Try updating the quantity only or create new inventory",
+                fmcgProductsBySubId
+            );
+        }
+        return createResponse.createValidationResponse(
+            validationSuccessCode,
+            "Product can be created",
+            "NA",
+            null
+        );
     }
 }

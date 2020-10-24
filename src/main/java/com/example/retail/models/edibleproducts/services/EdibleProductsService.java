@@ -90,7 +90,7 @@ public class EdibleProductsService {
         String edibleProductAddedBy = jwtDetails.userName(request);
 
         // Get the Sub ID
-        String subid = utils.getEdibleProductSubId(
+        String subid = utils.createEdibleProductSubId(
             newEdibleProduct.getEdibleProductManufacturer(),
             newEdibleProduct.getEdibleProductName(),
             newEdibleProduct.getEdibleProductVariant(),

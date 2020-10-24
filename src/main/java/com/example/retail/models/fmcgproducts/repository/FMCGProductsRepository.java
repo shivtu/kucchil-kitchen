@@ -13,13 +13,9 @@ import java.util.Optional;
 @Repository
 public interface FMCGProductsRepository extends JpaRepository<FMCGProducts, Long> {
 
-//    @Transactional
-//    @Modifying
     @Query(value = "UPDATE fmcg_products SET fmcg_product_quantity = fmcg_product_quantity + :fmcgProductQuantity WHERE fmcg_product_subid = :fmcgProductSubId returning *", nativeQuery = true)
     FMCGProducts increamentFMCGProductQty(@Param("fmcgProductQuantity") Float fmcgProductQuantity, @Param("fmcgProductSubId") String fmcgProductSubId);
 
-//    @Transactional
-//    @Modifying
-//    @Query(value = "UPDATE FMCGProducts f SET f.fmcgProductQuantity = f.fmcgProductQuantity + :fmcgProductQuantity WHERE f.fmcgProductSubId = :fmcgProductSubId")
-//    int increamentFMCGProductQty (@Param("fmcgProductQuantity") Float fmcgProductQuantity, @Param("fmcgProductSubId") String fmcgProductSubId);
+    @Query(value = "SELECT * FROM fmcg_products WHERE fmcg_product_subid = :fmcgProductSubId", nativeQuery = true)
+    Optional<FMCGProducts> findOneBySubId(@Param("fmcgProductSubId") String subId);
 }
