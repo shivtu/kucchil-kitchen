@@ -13,6 +13,7 @@ import com.example.retail.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -82,7 +83,8 @@ public class EdibleProductsService {
         return edibleProductsRepository.saveAll(newProducts);
     }
 
-    public ResponseEntity<Object> addEdibleProduct(HttpServletRequest request, ArrayList<MultipartFile> edibleProductImages, AddEdibleProductsRequestBody newEdibleProduct) throws IOException {
+    public ResponseEntity<Object> addEdibleProduct(HttpServletRequest request, ArrayList<MultipartFile> edibleProductImages,
+                                                   AddEdibleProductsRequestBody newEdibleProduct) throws IOException {
 
         LocalDate expiryDate = LocalDate.parse(newEdibleProduct.getEdibleProductInventoryExpiry());
         String edibleProductAddedBy = jwtDetails.userName(request);
@@ -248,6 +250,18 @@ public class EdibleProductsService {
                 finalRes
                 )
         );
+    }
+
+    public Map<String, Object> increamentEdibleProductsQuantity (Float quantity, String subId, String addedBy) {
+        LocalDateTime addedOn = LocalDateTime.now();
+        EdibleProducts edibleProducts = edibleProductsRepository.increamentEdibleProductQty(quantity, subId);
+        EdibleProductsInventory edibleProductsInventory = edibleProductsInventoryRepository.increamentEdibleProductInventoryQuantity(quantity, addedBy, subId, addedOn);
+
+        Map<String, Object> res = new HashMap<>();
+        res.put(constants.edibleProduct, edibleProducts);
+        res.put(constants.edibleProductInventory, edibleProductsInventory);
+
+        return res;
     }
 
 }

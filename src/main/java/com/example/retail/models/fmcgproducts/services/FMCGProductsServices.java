@@ -223,7 +223,7 @@ public class FMCGProductsServices {
      * For MVP we update the id of the user who last updates the inventory and do not maintain each update record with
      * relation to which user and what time
      */
-    public ResponseEntity<?> increamentFMCGProductInventory (Float fmcgProductQuantity, String fmcgProductInventoryAddedBy, String fmcgProductSubId) {
+    public ResponseEntity<?> increamentFMCGProductQuantity (Float fmcgProductQuantity, String fmcgProductInventoryAddedBy, String fmcgProductSubId) {
         try {
             if (fmcgProductQuantity <= 0) {
                 return ResponseEntity.status(400).body(

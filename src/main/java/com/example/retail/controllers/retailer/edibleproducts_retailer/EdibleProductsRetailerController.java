@@ -4,6 +4,8 @@ import com.example.retail.controllers.retailer.vegitables_retailer.AddVegitables
 import com.example.retail.models.edibleproducts.EdibleProducts;
 import com.example.retail.models.edibleproducts.services.EdibleProductsService;
 import com.example.retail.util.CreateResponse;
+import com.example.retail.util.JWTDetails;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -25,6 +28,9 @@ public class EdibleProductsRetailerController {
 
     @Autowired
     CreateResponse createResponse;
+
+    @Autowired
+    JWTDetails jwtDetails;
 
     @GetMapping("/welcome")
     public String welcome() {
@@ -66,6 +72,30 @@ public class EdibleProductsRetailerController {
                     500,
                     e.getMessage(),
                     e.toString()
+                )
+            );
+        }
+    }
+
+    @RequestMapping(value = "/update/{subId}/increamentQuantity/{quantity}",
+            method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> increamentEdibleProductsQuantity(@PathVariable Float quantity, @PathVariable String subId, HttpServletRequest request) {
+        try {
+            String addedBy = jwtDetails.userName(request);
+            Map<String, Object> finalRes = edibleProductsService.increamentEdibleProductsQuantity(quantity, subId, addedBy);
+            return ResponseEntity.status(201).body(
+                createResponse.createSuccessResponse(
+                    201,
+                    "Quantity updated by: " + quantity,
+                    finalRes
+                )
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(
+                createResponse.createErrorResponse(
+                    500,
+                    e.getLocalizedMessage(),
+                    "NA"
                 )
             );
         }

@@ -58,10 +58,11 @@ public class FMCGProductsRetailerController {
     /**
      * Update product qty in both products and inventory table simultaneously
      * **/
-    @RequestMapping(value = "/update/{subId}/increamentQuantity/{quantity}", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateFMCGProductInventory(@PathVariable Float quantity, @PathVariable String subId, HttpServletRequest request) {
+    @RequestMapping(value = "/update/{subId}/increamentQuantity/{quantity}",
+            method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> increamentFMCGProductQuantity(@PathVariable Float quantity, @PathVariable String subId, HttpServletRequest request) {
         String addedBy = jwtDetails.userName(request);
-        return fmcgProductsServices.increamentFMCGProductInventory(quantity, addedBy, subId);
+        return fmcgProductsServices.increamentFMCGProductQuantity(quantity, addedBy, subId);
     }
 
 

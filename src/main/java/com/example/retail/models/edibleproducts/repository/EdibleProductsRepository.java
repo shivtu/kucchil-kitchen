@@ -13,4 +13,7 @@ public interface EdibleProductsRepository extends JpaRepository<EdibleProducts, 
 
     @Query(value = "SELECT * FROM edible_products WHERE edible_product_subid= :edibleProductSubId", nativeQuery = true)
     public Optional<EdibleProducts> findEdibleProductBySubId (@Param("edibleProductSubId") String edibleProductSubId);
+
+    @Query(value = "UPDATE edible_products SET edible_product_quantity = edible_product_quantity + :edibleProductQuantity WHERE edible_product_subid = :edibleProductSubId returning *", nativeQuery = true)
+    EdibleProducts increamentEdibleProductQty(@Param("edibleProductQuantity") Float fmcgProductQuantity, @Param("edibleProductSubId") String fmcgProductSubId);
 }
