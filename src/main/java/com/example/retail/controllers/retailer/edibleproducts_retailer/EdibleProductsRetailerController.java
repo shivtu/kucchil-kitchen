@@ -81,6 +81,15 @@ public class EdibleProductsRetailerController {
             method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> increamentEdibleProductsQuantity(@PathVariable Float quantity, @PathVariable String subId, HttpServletRequest request) {
         try {
+            if(quantity < 0) {
+                return ResponseEntity.status(400).body(
+                    createResponse.createErrorResponse(
+                        400,
+                        "Quantity has to be greater that 0",
+                        "NA"
+                    )
+                );
+            }
             String addedBy = jwtDetails.userName(request);
             Map<String, Object> finalRes = edibleProductsService.increamentEdibleProductsQuantity(quantity, subId, addedBy);
             return ResponseEntity.status(201).body(

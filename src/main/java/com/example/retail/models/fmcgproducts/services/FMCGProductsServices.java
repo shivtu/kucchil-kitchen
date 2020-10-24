@@ -223,44 +223,20 @@ public class FMCGProductsServices {
      * For MVP we update the id of the user who last updates the inventory and do not maintain each update record with
      * relation to which user and what time
      */
-    public ResponseEntity<?> increamentFMCGProductQuantity (Float fmcgProductQuantity, String fmcgProductInventoryAddedBy, String fmcgProductSubId) {
-        try {
-            if (fmcgProductQuantity <= 0) {
-                return ResponseEntity.status(400).body(
-                    createResponse.createErrorResponse(
-                        400,
-                        "Quantity has to be greater that 0",
-                        "NA"
-                    )
-                );
-            }
+    public Map<String, ?> increamentFMCGProductQuantity (Float fmcgProductQuantity, String fmcgProductInventoryAddedBy, String fmcgProductSubId) {
+
             LocalDateTime localDateTime = LocalDateTime.now();
             FMCGProducts fmcgProducts = fmcgProductsRepository.increamentFMCGProductQty(fmcgProductQuantity, fmcgProductSubId);
             FMCGProductsInventory fmcgProductsInventory =
-                    fmcgProductsInventoryRepository.increamentFMCGProductsInventoryQty(
-                        fmcgProductQuantity, fmcgProductInventoryAddedBy, localDateTime, fmcgProductSubId
-                    );
+                fmcgProductsInventoryRepository.increamentFMCGProductsInventoryQty(
+                    fmcgProductQuantity, fmcgProductInventoryAddedBy, localDateTime, fmcgProductSubId
+                );
 
             Map<String, Object> res = new HashMap<>();
             res.put(constants.FMCGProduct, fmcgProducts);
             res.put(constants.FMCGProductInventory, fmcgProductsInventory);
 
-            return ResponseEntity.status(201).body(
-                createResponse.createSuccessResponse(
-                    201,
-                    "Inventory increamented by: " + fmcgProductQuantity,
-                    res
-                )
-            );
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(
-                createResponse.createErrorResponse(
-                    500,
-                    e.toString(),
-                    "NA"
-                )
-            );
-        }
+           return res;
 
     }
 }

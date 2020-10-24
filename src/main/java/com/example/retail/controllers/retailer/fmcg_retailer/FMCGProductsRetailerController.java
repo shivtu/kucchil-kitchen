@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/v1/retailer/fmcg")
@@ -61,8 +62,24 @@ public class FMCGProductsRetailerController {
     @RequestMapping(value = "/update/{subId}/increamentQuantity/{quantity}",
             method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> increamentFMCGProductQuantity(@PathVariable Float quantity, @PathVariable String subId, HttpServletRequest request) {
+        if (quantity <= 0) {
+            return ResponseEntity.status(400).body(
+                createResponse.createErrorResponse(
+                    400,
+                    "Quantity has to be greater that 0",
+                    "NA"
+                )
+            );
+        }
         String addedBy = jwtDetails.userName(request);
-        return fmcgProductsServices.increamentFMCGProductQuantity(quantity, addedBy, subId);
+        Map<String, ?> finalRes = fmcgProductsServices.increamentFMCGProductQuantity(quantity, addedBy, subId);
+        return ResponseEntity.status(201).body(
+            createResponse.createSuccessResponse(
+                201,
+                "Quantity increamented by: " + quantity,
+                finalRes
+            )
+        );
     }
 
 
