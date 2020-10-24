@@ -127,7 +127,7 @@ public class FMCGProductsServices {
             fmcgProducts.setFMCGProductImages(imagePlaceHolder);
         }
 
-        String itemCategorySubId = utils.getItemCategorySubId(fmcgProductsRequestBody.getItemCategory(), fmcgProductsRequestBody.getItemSubCategory());
+        String itemCategorySubId = utils.createItemCategorySubId(fmcgProductsRequestBody.getItemCategory(), fmcgProductsRequestBody.getItemSubCategory());
         /* Return error if item category does not exist */
         ValidationResponse itemCategoryValidationStatus = validations.validateItemCategory(itemCategorySubId);
         if(itemCategoryValidationStatus.getStatusCode() != validations.validationSuccessCode) {

@@ -79,7 +79,7 @@ public class Utils {
         return 0F;
     }
 
-    public String getItemCategorySubId (String itemCategory, String itemSubCategory) {
+    public String createItemCategorySubId (String itemCategory, String itemSubCategory) {
         return itemCategory.toLowerCase() +"-" + itemSubCategory.toLowerCase();
     }
 

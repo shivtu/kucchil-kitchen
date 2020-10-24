@@ -94,7 +94,7 @@ public class VegitablesService {
                 );
             }
 
-            String itemCategorySubId = utils.getItemCategorySubId(newVegitables.getItemCategory(), newVegitables.getItemSubCategory());
+            String itemCategorySubId = utils.createItemCategorySubId(newVegitables.getItemCategory(), newVegitables.getItemSubCategory());
             /* Return error if item category does not exist */
             ValidationResponse itemCategoryValidationStatus = validations.validateItemCategory(itemCategorySubId);
             if(itemCategoryValidationStatus.getStatusCode() != validations.validationSuccessCode) {

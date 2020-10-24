@@ -34,7 +34,7 @@ public class ItemCategoriesService {
 
         LocalDateTime lastUpdatedOn = LocalDateTime.now();
         String lastUpdatedBy = jwtDetails.userName(request);
-        String itemCategorySubId = utils.getItemCategorySubId(newItemCategory.getItemCategory(), newItemCategory.getItemSubCategory());
+        String itemCategorySubId = utils.createItemCategorySubId(newItemCategory.getItemCategory(), newItemCategory.getItemSubCategory());
 
         newItemCategory.setItemCategoryLastUpdatedBy(lastUpdatedBy);
         newItemCategory.setItemCategoryLastUpdatedOn(lastUpdatedOn);

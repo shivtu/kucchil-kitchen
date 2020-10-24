@@ -15,7 +15,6 @@ import com.example.retail.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -144,7 +143,7 @@ public class EdibleProductsService {
         /**
          * Add variants to variant & category list
          * **/
-        String itemCategorySubId = utils.getItemCategorySubId(newEdibleProduct.getItemCategory(), newEdibleProduct.getItemSubCategory());
+        String itemCategorySubId = utils.createItemCategorySubId(newEdibleProduct.getItemCategory(), newEdibleProduct.getItemSubCategory());
         /* Return error if item category does not exist */
         ValidationResponse itemCategoryValidationStatus = validations.validateItemCategory(itemCategorySubId);
         if(itemCategoryValidationStatus.getStatusCode() != validations.validationSuccessCode) {
