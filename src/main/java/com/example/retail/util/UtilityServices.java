@@ -63,36 +63,37 @@ public class UtilityServices {
     @Autowired
     Utils utils;
 
-    public List<?> findAllUtilities () {
+    public Map<String, List<?>> findAllUtilities () {
         List<Taxes> taxes = taxService.findAll();
         List<CustomerOrdersDiscount> customerOrdersDiscounts = customerOrdersDiscountServices.findAllDiscounts();
         List<ItemCategories> itemCategories = itemCategoriesService.findAll();
         List <DeliveryCharges> deliveryCharges = deliveryChargeServices.findAll();
 
-        List<Map<String, Object>> finalRes = new ArrayList<>();
+        Map<String, List<?>> res = new HashMap<>();
+        res.put(constants.taxes, taxes);
+        res.put(constants.customerOrderDiscount, customerOrdersDiscounts);
+        res.put(constants.itemCategories, itemCategories);
+        res.put(constants.deliveryCharges, deliveryCharges);
 
-        finalRes.add(utils.buildStringListMap(constants.taxes, taxes));
-        finalRes.add(utils.buildStringListMap(constants.customerOrderDiscount, customerOrdersDiscounts));
-        finalRes.add(utils.buildStringListMap(constants.itemCategories, itemCategories));
-        finalRes.add(utils.buildStringListMap(constants.deliveryCharges, deliveryCharges));
-
-        return finalRes;
+        return res;
     }
 
-    public List<?> findAllProducts() {
+    public Map<String, List<?>> findAllProducts() {
 
             List<?> vegitablesAndInventory = vegitablesService.findAllVegitablesWithInventory();
             List<?> fmcgProducts = fmcgProductsServices.findAllFMCGProductsWithInventory();
             List<?> edibleProducts = edibleProductsService.findAllEdibleProductsWithInventory();
             // TODO: write method to find all nonVeg products
-            List<NonVegProducts> nonVegProducts = null;
+            List<NonVegProducts> nonVegProducts = new ArrayList<>();
 
-            List<Object> finalRes = new ArrayList<>();
-            finalRes.add(utils.buildStringListMap(constants.vegitableAndInventoryList, vegitablesAndInventory));
-            finalRes.add(utils.buildStringListMap(constants.FMCGProductAndInventoryList, fmcgProducts));
-            finalRes.add(utils.buildStringListMap(constants.edibleProductAndInventoryList, edibleProducts));
+            Map<String, List<?>> res = new HashMap<>();
 
-            return finalRes;
+            res.put(constants.vegitableAndInventoryList, vegitablesAndInventory);
+            res.put(constants.FMCGProductAndInventoryList, fmcgProducts);
+            res.put(constants.edibleProductAndInventoryList,edibleProducts);
+            res.put(constants.nonVegProductInventoryList, nonVegProducts);
+
+            return res;
     }
 
 //    public ResponseEntity<?> findAllVariantsBySubId (String itemCategorySubId) {

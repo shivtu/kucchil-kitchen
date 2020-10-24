@@ -62,8 +62,6 @@ public class VegitablesService {
         List<Vegitables> vegitables = vegitablesRepository.findAll();
         List<VegitablesInventory> vegitablesInventories = vegitableInventoryService.findAll();
 
-
-
         List<Map<String, ?>> finalRes = new ArrayList<>();
 
         vegitables.forEach(vegitable->
@@ -134,9 +132,6 @@ public class VegitablesService {
             vegitables.setVegitableVariant(newVegitables.getVegitableVariant());
             vegitables.setItemCategory(newVegitables.getItemCategory());
             vegitables.setItemSubCategory(newVegitables.getItemSubCategory());
-
-
-            /*Add the category details to variant and category table*/
 
 
             /** Create new List and add recepie to the List **/
@@ -221,9 +216,10 @@ public class VegitablesService {
             VegitablesInventory createdVegInventory = vegitableInventoryService.addNewInventory(vegitablesInventory);
 
 
-            HashMap<String, Object> res = new HashMap<>();
-            res.put("vegitable", createdVeg);
-            res.put("VegitableInventory", createdVegInventory);
+            Map<String, Object> res = new HashMap<>();
+            res.put(constants.vegitable, createdVeg);
+            res.put(constants.vegitableInventory, createdVegInventory);
+
 
             List<Object> result = new ArrayList<>();
             result.add(res);

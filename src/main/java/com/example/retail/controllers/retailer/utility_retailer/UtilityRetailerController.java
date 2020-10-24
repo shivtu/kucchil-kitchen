@@ -35,7 +35,7 @@ public class UtilityRetailerController {
     @RequestMapping(value = "/find/allUtilities", method = RequestMethod.GET)
     public ResponseEntity<?> findAllUtilties() {
         try{
-            List<?> finalRes = utilityServices.findAllUtilities();
+            Map<String, List<?>> finalRes = utilityServices.findAllUtilities();
             int count = finalRes.size();
             return ResponseEntity.status(200).body(
                 createResponse.createSuccessResponse(
@@ -62,7 +62,7 @@ public class UtilityRetailerController {
     @RequestMapping(value = "/find/allProducts", method = RequestMethod.GET)
     public ResponseEntity<?> findAllProducts () {
         try{
-            List<?> finalRes = utilityServices.findAllProducts();
+            Map<String, List<?>> finalRes = utilityServices.findAllProducts();
             return ResponseEntity.status(200).body(
                 createResponse.createSuccessResponse(
                     200,
@@ -84,12 +84,12 @@ public class UtilityRetailerController {
     @RequestMapping(value = "/find/allProducts/allUtilities", method = RequestMethod.GET)
     public ResponseEntity<?> findAllProductsAndUtilities () {
         try {
-            List<?> utilities = utilityServices.findAllUtilities();
-            List<?> allProducts = utilityServices.findAllProducts();
+            Map<String, List<?>> utilities = utilityServices.findAllUtilities();
+            Map<String, List<?>> allProducts = utilityServices.findAllProducts();
 
             int count = utilities.size() + allProducts.size();
 
-            Map<String, List<?>> finalRes = new HashMap<>();
+            Map<String, Map<String, List<?>>> finalRes = new HashMap<>();
 
             finalRes.put("utilities", utilities);
             finalRes.put("allProducts", allProducts);
