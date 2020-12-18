@@ -17,6 +17,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/v1/retailer/fmcg")
+@CrossOrigin(origins = "*")
 public class FMCGProductsRetailerController {
 
     @Autowired

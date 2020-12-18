@@ -21,6 +21,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/retailer/edibleProducts")
+@CrossOrigin(origins = "*")
 public class EdibleProductsRetailerController {
 
     @Autowired
