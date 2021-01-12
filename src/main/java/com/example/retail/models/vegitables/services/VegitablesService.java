@@ -106,6 +106,16 @@ public class VegitablesService {
             String vegitable_AddedBy = JWTDetails.userName(request);
             LocalDate vegitableInventoryExpiry = LocalDate.parse(newVegitables.getVegitableInventoryExpiry());
 
+            if(vegitableInventoryExpiry.isBefore(LocalDate.now())) {
+                return ResponseEntity.status(422).body(
+                        createResponse.createErrorResponse(
+                            422,
+                            "Expiry date needs to be anytime later than today's date",
+                            "Expiry date is earlier than current date"
+                        )
+                );
+            }
+
             /* create new vegitable */
             Vegitables vegitables = new Vegitables();
 
