@@ -11,6 +11,10 @@ import com.example.retail.models.vegitables.*;
 import com.example.retail.models.vegitables.repository.VegitablesRepository;
 import com.example.retail.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -302,5 +306,11 @@ public class VegitablesService {
 
     public List<Vegitables> findVegitablesByItemCategory(String itemCategory) {
         return vegitablesRepository.findVegitablesByItemCategory(itemCategory);
+    }
+
+    public Page<Vegitables> findPaginatedVegitables(VegitablesPage vegitablesPage) {
+        Sort sort = Sort.by(vegitablesPage.getSortDirection(), vegitablesPage.getSortBy());
+        Pageable pageable = PageRequest.of(vegitablesPage.getPageNo(), vegitablesPage.getPageSize(), sort);
+        return vegitablesRepository.findAll(pageable);
     }
 }
