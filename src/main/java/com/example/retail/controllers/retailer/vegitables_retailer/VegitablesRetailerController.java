@@ -28,7 +28,7 @@ public class VegitablesRetailerController {
     @Autowired
     VegitableInventoryService vegitableInventoryService;
 
-    @RequestMapping(value = "/findall", method = RequestMethod.GET)
+    @RequestMapping(value = "/findAll", method = RequestMethod.GET)
     public ResponseEntity<?> findAllVegitablesWithInventory() {
         try{
             List<?> result = vegitablesService.findAllVegitablesWithInventory();
@@ -120,7 +120,7 @@ public class VegitablesRetailerController {
         return vegitableInventoryService.addInventory(tableId, updateVegitablesInventoryRequest, request);
     }
 
-    @RequestMapping(value = "/findall/available", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/findAll/available", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> findAllAvailableVegitables() {
         try {
             List<Vegitables> result = vegitablesService.findAllAvailableVegitables();
@@ -143,7 +143,7 @@ public class VegitablesRetailerController {
         }
     }
 
-    @RequestMapping(value = "/findall/unavailable", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.GET, value = "/findall/unavailable", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> findAllUnavailableVegitables() {
         try {
             List<Vegitables> result = vegitablesService.findAllUnavailableVegitables();
