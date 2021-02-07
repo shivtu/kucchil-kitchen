@@ -28,7 +28,7 @@ public class DiscountsRetailerControler {
         return customerOrdersDiscountServices.createSpecialDiscount(request, customerOrdersDiscount);
     }
 
-    @RequestMapping(value = "/findall", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/findAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> findAllDiscounts() {
         try {
             List<CustomerOrdersDiscount> result = customerOrdersDiscountServices.findAllDiscounts();

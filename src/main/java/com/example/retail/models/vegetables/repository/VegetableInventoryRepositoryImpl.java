@@ -1,4 +1,4 @@
-package com.example.retail.models.vegitables.repository;
+package com.example.retail.models.vegetables.repository;
 
 import com.example.retail.models.jsonmodels.InventoryAdditionDetails;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
@@ -11,15 +11,15 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class VegitableInventoryRepositoryImpl implements VegitableInventoryRepositoryCustom {
+public class VegetableInventoryRepositoryImpl implements VegetableInventoryRepositoryCustom {
 
     @PersistenceContext
     EntityManager entityManager;
 
     @Override
-    public int updateVegitablesAdditionDetails(String subId, List<InventoryAdditionDetails> updatedAdditionDetails) {
+    public int updateVegetablesAdditionDetails(String subId, List<InventoryAdditionDetails> updatedAdditionDetails) {
 
-        String psqlQuery = "UPDATE vegitables_inventory SET vegitablesinventory_addtiondetails = vegitablesinventory_addtiondetails || :updatedAdditionDetails WHERE vegitable_subid=:subId";
+        String psqlQuery = "UPDATE vegetables_inventory SET vegetablesinventory_addtiondetails = vegetablesinventory_addtiondetails || :updatedAdditionDetails WHERE vegetable_subid=:subId";
 
         return entityManager.createNativeQuery(psqlQuery)
             .unwrap(NativeQuery.class)

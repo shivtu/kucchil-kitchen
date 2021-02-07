@@ -1,7 +1,7 @@
 package com.example.retail.util;
 
-import com.example.retail.controllers.retailer.vegitables_retailer.AddVegitablesRequestBody;
-import com.example.retail.controllers.retailer.vegitables_retailer.UpdateVegitablesInventoryRequest;
+import com.example.retail.controllers.retailer.vegetables_retailer.AddVegetablesRequestBody;
+import com.example.retail.controllers.retailer.vegetables_retailer.UpdateVegetablesInventoryRequest;
 import com.example.retail.models.customerorders.CustomerOrders;
 import com.example.retail.models.customerorders.CustomerOrdersItemsList;
 import com.example.retail.models.deliveryutility.DeliveryCharges;
@@ -9,22 +9,16 @@ import com.example.retail.models.discounts.CustomerOrdersDiscount;
 import com.example.retail.models.discounts.services.CustomerOrdersDiscountServices;
 import com.example.retail.models.edibleproducts.EdibleProducts;
 import com.example.retail.models.edibleproducts.repository.EdibleProductsRepository;
-import com.example.retail.models.edibleproducts.services.EdibleProductsService;
 import com.example.retail.models.fmcgproducts.FMCGProducts;
-import com.example.retail.models.fmcgproducts.repository.FMCGProductsInventoryRepository;
 import com.example.retail.models.fmcgproducts.repository.FMCGProductsRepository;
-import com.example.retail.models.fmcgproducts.services.FMCGProductsInventoryServices;
 import com.example.retail.models.itemcategories.ItemCategories;
-import com.example.retail.models.itemcategories.repository.ItemCategoriesRepository;
 import com.example.retail.models.itemcategories.service.ItemCategoriesService;
 import com.example.retail.models.taxutility.Taxes;
-import com.example.retail.models.taxutility.repository.TaxRepository;
 import com.example.retail.models.taxutility.services.TaxService;
-import com.example.retail.models.vegitables.Vegitables;
-import com.example.retail.models.vegitables.VegitablesInventory;
-import com.example.retail.models.vegitables.repository.VegitablesRepository;
-import com.example.retail.models.vegitables.services.VegitableInventoryService;
-import com.example.retail.models.vegitables.services.VegitablesService;
+import com.example.retail.models.vegetables.Vegetables;
+import com.example.retail.models.vegetables.VegetablesInventory;
+import com.example.retail.models.vegetables.repository.VegetablesRepository;
+import com.example.retail.models.vegetables.services.VegetableInventoryService;
 import com.example.retail.users.profiles.UsersProfile;
 import com.example.retail.users.profiles.UsersProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +34,10 @@ public class Validations {
     CreateResponse createResponse;
 
     @Autowired
-    VegitablesRepository vegitablesRepository;
+    VegetablesRepository vegetablesRepository;
 
     @Autowired
-    VegitableInventoryService vegitableInventoryService;
+    VegetableInventoryService vegetableInventoryService;
 
     @Autowired
     CustomerOrdersDiscountServices customerOrdersDiscountServices;
@@ -67,24 +61,24 @@ public class Validations {
     public int unprocessableRequestCode = 422;
     public int badRequestCode = 400;
 
-    public ValidationResponse validateNewVegitables(AddVegitablesRequestBody newVegitables, String vegSubId) {
+    public ValidationResponse validateNewVegetables(AddVegetablesRequestBody newVegetables, String vegSubId) {
 
-        Optional<Vegitables> vegitables = vegitablesRepository.findBySubId(vegSubId);
+        Optional<Vegetables> vegetables = vegetablesRepository.findBySubId(vegSubId);
         // If the item already exists
-        if(vegitables.isPresent()) {
+        if(vegetables.isPresent()) {
             return createResponse.createValidationResponse(
                     unprocessableRequestCode,
                     "This item already exists",
                     "Try updating this item instead",
-                    vegitables
+                    vegetables
             );
         }
 
         // Check if selling price is less than cost price
-        if (newVegitables.getVegitableSellingPrice() < newVegitables.getVegitableInventoryCostPrice()) {
+        if (newVegetables.getVegetableSellingPrice() < newVegetables.getVegetableInventoryCostPrice()) {
             return createResponse.createValidationResponse(
                     badRequestCode,
-                    "Selling price of the vegitable is less than the cost price",
+                    "Selling price of the vegetable is less than the cost price",
                     "Selling price must be more than cost price to make a profit",
                     null
             );
@@ -93,7 +87,7 @@ public class Validations {
 
         // Check if applicable taxes are valid
         AtomicReference<Boolean> taxAvailable = new AtomicReference<>(true);
-        List<String> applicableTaxes = newVegitables.getVegitableApplicableTaxes();
+        List<String> applicableTaxes = newVegetables.getVegetableApplicableTaxes();
         applicableTaxes.forEach(applicableTax -> {
             Optional<Taxes> taxes = taxService.findByName(applicableTax);
             if (taxes.isEmpty()) {
@@ -119,22 +113,22 @@ public class Validations {
 
     }
 
-    public ValidationResponse validateInventory(String vegSubId, UpdateVegitablesInventoryRequest updateVegitablesInventoryRequest) {
-        Optional<VegitablesInventory> vegitablesInventory = vegitableInventoryService.findVegitableInventoryBySubId(vegSubId);
-        if (vegitablesInventory.isPresent()) {
+    public ValidationResponse validateInventory(String vegSubId, UpdateVegetablesInventoryRequest updateVegetablesInventoryRequest) {
+        Optional<VegetablesInventory> vegetablesInventory = vegetableInventoryService.findVegetableInventoryBySubId(vegSubId);
+        if (vegetablesInventory.isPresent()) {
             return
                     createResponse.createValidationResponse(
                             400,
                             "This item with provided details already exists",
-                            "Try updating the quantity only: /api/v1/retailer/vegitables/update/quantity/<id>/<quantity>",
-                            vegitablesInventory
+                            "Try updating the quantity only: /api/v1/retailer/vegetables/update/quantity/<id>/<quantity>",
+                            vegetablesInventory
                     );
         }
 
-        if(updateVegitablesInventoryRequest.getVegitableSellingPrice() < updateVegitablesInventoryRequest.getVegitableInventoryCostPrice()) {
+        if(updateVegetablesInventoryRequest.getVegetableSellingPrice() < updateVegetablesInventoryRequest.getVegetableInventoryCostPrice()) {
             return createResponse.createValidationResponse(
                     badRequestCode,
-                    "Selling price of the vegitable is less than the cost price",
+                    "Selling price of the vegetable is less than the cost price",
                     "Selling price must be more than cost price to make a profit",
                     null
             );
@@ -148,9 +142,13 @@ public class Validations {
         int ordersItemsListLength = orderedItemsList.size();
         Set<Long> validatorSet = new HashSet<>();
 
+        // This method is buggy
         for (int i = 0; i < ordersItemsListLength; i++) {
             if(!validatorSet.add(orderedItemsList.get(i).getProductTableId())) {
-                return createResponse.createValidationResponse(422, "Duplicate items in the list", "Increase the quantity of the items in the list instead of adding duplicates", null);
+                return createResponse.createValidationResponse(
+                    422, "Duplicate items in the list",
+                    "Increase the quantity of the items in the list instead of adding duplicates",
+                    null);
             }
         }
 
@@ -164,18 +162,27 @@ public class Validations {
 
             /* If applied discount is not active */
             if(customerDiscount.isPresent() && !customerDiscount.get().getDiscountActive()) {
-                return createResponse.createValidationResponse(400, "Special discount applied is not active",
-                        "Apply an active discount or remove it to default to 0", null);
+                return createResponse.createValidationResponse(
+                    400,
+                    "Special discount applied is not active",
+                    "Apply an active discount or remove it to default to 0",
+                    null);
             }
 
             /* if there is no customer discount found with given discount names */
             if(customerDiscount.isEmpty() && !specialDiscountName.equals("loyaltyDiscount")) {
-                return createResponse.createValidationResponse(400, "Special discount applied does not exist",
-                        "Apply a valid discount or remove it to default to 0", null);
+                return createResponse.createValidationResponse(
+                    400,
+                    "Special discount applied does not exist",
+                    "Apply a valid discount or remove it to default to 0", null);
             }
         }
 
-        return createResponse.createValidationResponse(validationSuccessCode, "OK", null, customerDiscount);
+        return createResponse.createValidationResponse(
+            validationSuccessCode,
+            "OK",
+            null,
+            customerDiscount);
     }
 
     public  ValidationResponse validateNewDiscount (CustomerOrdersDiscount customerOrdersDiscount) {

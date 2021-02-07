@@ -52,8 +52,8 @@ public class Utils {
 
     public OpsResponse saveFiles(List<MultipartFile> images, String caseType) throws IOException {
         switch(caseType) {
-            case "vegitableImages":
-                return saveProductImage(images, constants.vegitableImageLocationFolderName);
+            case "vegetableImages":
+                return saveProductImage(images, constants.vegetableImageLocationFolderName);
             case "edibleProductImages":
                 return saveProductImage(images, constants.edibleProductImageLocationFolderName);
             case "FMCGProductImages":
@@ -83,8 +83,8 @@ public class Utils {
         return itemCategory.toLowerCase() +"-" + itemSubCategory.toLowerCase();
     }
 
-    public String createVegitableSubId (String vegitableName, String vegitableVariant, Float vegitableInventoryFixedCost, Float vegitableInventoryCostPrice) {
-        return vegitableName.toLowerCase() + "-" + vegitableVariant.toLowerCase() + "-" + vegitableInventoryFixedCost.toString() + "-" + vegitableInventoryCostPrice.toString();
+    public String createVegetableSubId (String vegetableName, String vegetableVariant, Float vegetableInventoryFixedCost, Float vegetableInventoryCostPrice) {
+        return vegetableName.toLowerCase() + "-" + vegetableVariant.toLowerCase() + "-" + vegetableInventoryFixedCost.toString() + "-" + vegetableInventoryCostPrice.toString();
     }
 
     public String createEdibleProductSubId(

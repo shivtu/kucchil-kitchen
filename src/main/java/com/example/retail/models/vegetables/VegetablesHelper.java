@@ -1,15 +1,13 @@
-package com.example.retail.models.vegitables;
+package com.example.retail.models.vegetables;
 
 import com.example.retail.models.taxutility.TaxCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Component
-public class VegitablesHelper {
+public class VegetablesHelper {
 
     @Autowired
     TaxCalculator taxCalculator;

@@ -14,6 +14,6 @@ public class EdibleProductsInventoryRepositoryImpl extends EdibleProductsInvento
     EntityManager entityManager;
 
     // @Override
-    // Custom native queries here, see example from VegitableInventoryRepositoryImpl
+    // Custom native queries here, see example from VegetableInventoryRepositoryImpl
     // Add this method to EdibleProductsInventoryRepositoryCustom
 }

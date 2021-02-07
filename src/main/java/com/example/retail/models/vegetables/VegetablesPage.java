@@ -1,13 +1,13 @@
-package com.example.retail.models.vegitables;
+package com.example.retail.models.vegetables;
 
 import org.springframework.data.domain.Sort;
 
-public class VegitablesPage {
+public class VegetablesPage {
 
     private int pageNo = 0;
     private int pageSize = 10;
     private Sort.Direction sortDirection = Sort.Direction.DESC;
-    private String sortBy = "vegitableTableId";
+    private String sortBy = "vegetableTableId";
 
     public int getPageNo() {
         return pageNo;

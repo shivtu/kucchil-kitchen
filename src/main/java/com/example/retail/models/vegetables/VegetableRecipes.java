@@ -1,17 +1,17 @@
-package com.example.retail.models.vegitables;
+package com.example.retail.models.vegetables;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class VegitableRecipes implements Serializable {
+public class VegetableRecipes implements Serializable {
 
     private String recipeName;
     private String recipeGuide;
     private List<String> recipeComponents;
 
-    public VegitableRecipes(){}
+    public VegetableRecipes(){}
 
-    public VegitableRecipes(String recipeName, String recipeGuide, List<String> recipeComponents) {
+    public VegetableRecipes(String recipeName, String recipeGuide, List<String> recipeComponents) {
         this.recipeName = recipeName;
         this.recipeGuide = recipeGuide;
         this.recipeComponents = recipeComponents;

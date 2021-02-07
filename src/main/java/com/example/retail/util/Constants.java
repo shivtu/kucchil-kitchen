@@ -9,11 +9,11 @@ public class Constants {
     public final String edibleProductInventory = "edibleProductInventory";
     public final String edibleProductInventoryList = "edibleProductInventoryList";
     public final String edibleProductAndInventoryList = "edibleProductAndInventoryList";
-    public final String vegitable = "vegitable";
-    public final String vegitableList = "vegitablesList";
-    public final String vegitableInventory = "vegitableInventory";
-    public final String vegitableInventoryList = "vegitableInventoryList";
-    public final String vegitableAndInventoryList = "vegitableAndInventoryList";
+    public final String vegetable = "vegetable";
+    public final String vegetableList = "vegetablesList";
+    public final String vegetableInventory = "vegetableInventory";
+    public final String vegetableInventoryList = "vegetableInventoryList";
+    public final String vegetableAndInventoryList = "vegetableAndInventoryList";
     public final String FMCGProduct = "FMCGProduct";
     public final String FMCGProductList = "FMCGProductList";
     public final String FMCGProductInventory = "FMCGProductInventory";
@@ -32,11 +32,11 @@ public class Constants {
 
     // Image locatoin strings
     public final String FMCGProductImageLocationFolderName = "fmcg-product-images";
-    public final String vegitableImageLocationFolderName = "edible-product-images";
+    public final String vegetableImageLocationFolderName = "edible-product-images";
     public final String edibleProductImageLocationFolderName = "edible-product-images";
 
     // Save image switch case type
-    public final String saveImageSwitchCaseVegitables = "vegitableImages";
+    public final String saveImageSwitchCaseVegetables = "vegetableImages";
     public final String saveImageSwitchCaseFMCGProducts = "FMCGProductImages";
     public final String saveImageSwitchCaseEdibleProducts = "edibleProductImages";
 

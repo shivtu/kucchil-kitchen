@@ -8,7 +8,7 @@ public class DeliveryCharges {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="deliveryCharge_tableid")
+    @Column(name="delivery_charge_tableid")
     private Integer deliveryChargeTableId;
 
     @NotNull

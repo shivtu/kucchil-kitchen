@@ -4,7 +4,6 @@ import com.example.retail.models.customerorders.CustomerOrders;
 import com.example.retail.models.customerorders.CustomerOrdersHelper;
 import com.example.retail.models.customerorders.repository.CustomerOrdersRepository;
 import com.example.retail.models.discounts.CustomerOrdersDiscount;
-import com.example.retail.models.discounts.DiscountCalculator;
 import com.example.retail.models.discounts.services.CustomerOrdersDiscountServices;
 import com.example.retail.users.profiles.UsersProfile;
 import com.example.retail.users.profiles.UsersProfileService;
@@ -12,7 +11,6 @@ import com.example.retail.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
@@ -49,6 +47,7 @@ public class CustomerOrderServices {
     @Autowired
     CustomerOrdersHelper customerOrdersHelper;
 
+    // TODO: validate product-sub-id
     public ResponseEntity<Object> createCustomerOrder(HttpServletRequest request, CustomerOrders customerOrders) {
         try {
             /* Validate the order */
@@ -57,8 +56,8 @@ public class CustomerOrderServices {
 
             if(validationResStatusCode != validations.validationSuccessCode) {
                 return ResponseEntity.status(validationResStatusCode).body(
-                        createResponse.createErrorResponse(validationResStatusCode, validationRes.getStatusMessage(),
-                                validationRes.getAdditionalInfo())
+                    createResponse.createErrorResponse(validationResStatusCode, validationRes.getStatusMessage(),
+                        validationRes.getAdditionalInfo())
                 );
             }
 

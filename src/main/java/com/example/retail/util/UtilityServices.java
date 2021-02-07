@@ -4,9 +4,7 @@ import com.example.retail.models.deliveryutility.DeliveryCharges;
 import com.example.retail.models.deliveryutility.services.DeliveryChargeServices;
 import com.example.retail.models.discounts.CustomerOrdersDiscount;
 import com.example.retail.models.discounts.services.CustomerOrdersDiscountServices;
-import com.example.retail.models.edibleproducts.EdibleProducts;
 import com.example.retail.models.edibleproducts.services.EdibleProductsService;
-import com.example.retail.models.fmcgproducts.FMCGProducts;
 import com.example.retail.models.fmcgproducts.services.FMCGProductsServices;
 import com.example.retail.models.itemcategories.ItemCategories;
 import com.example.retail.models.itemcategories.service.ItemCategoriesService;
@@ -14,12 +12,9 @@ import com.example.retail.models.nonvegproducts.NonVegProducts;
 import com.example.retail.models.nonvegproducts.services.NonVegProductsService;
 import com.example.retail.models.taxutility.Taxes;
 import com.example.retail.models.taxutility.services.TaxService;
-import com.example.retail.models.variantandcategory.VariantAndCategory;
 import com.example.retail.models.variantandcategory.services.VariantAndCategoryService;
-import com.example.retail.models.vegitables.Vegitables;
-import com.example.retail.models.vegitables.services.VegitablesService;
+import com.example.retail.models.vegetables.services.VegetablesService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -46,7 +41,7 @@ public class UtilityServices {
     VariantAndCategoryService variantAndCategoryService;
 
     @Autowired
-    VegitablesService vegitablesService;
+    VegetablesService vegetablesService;
 
     @Autowired
     FMCGProductsServices fmcgProductsServices;
@@ -80,7 +75,7 @@ public class UtilityServices {
 
     public Map<String, List<?>> findAllProducts() {
 
-            List<?> vegitablesAndInventory = vegitablesService.findAllVegitablesWithInventory();
+            List<?> vegetablesAndInventory = vegetablesService.findAllVegetablesWithInventory();
             List<?> fmcgProducts = fmcgProductsServices.findAllFMCGProductsWithInventory();
             List<?> edibleProducts = edibleProductsService.findAllEdibleProductsWithInventory();
             // TODO: write method to find all nonVeg products
@@ -88,7 +83,7 @@ public class UtilityServices {
 
             Map<String, List<?>> res = new HashMap<>();
 
-            res.put(constants.vegitableAndInventoryList, vegitablesAndInventory);
+            res.put(constants.vegetableAndInventoryList, vegetablesAndInventory);
             res.put(constants.FMCGProductAndInventoryList, fmcgProducts);
             res.put(constants.edibleProductAndInventoryList,edibleProducts);
             res.put(constants.nonVegProductInventoryList, nonVegProducts);
