@@ -5,6 +5,8 @@ import com.example.retail.controllers.retailer.vegetables_retailer.UpdateVegetab
 import com.example.retail.models.customerorders.CustomerOrders;
 import com.example.retail.models.customerorders.CustomerOrdersItemsList;
 import com.example.retail.models.deliveryutility.DeliveryCharges;
+import com.example.retail.models.deliveryutility.DeliveryLocations;
+import com.example.retail.models.deliveryutility.repository.DeliveryLocationsRepository;
 import com.example.retail.models.discounts.CustomerOrdersDiscount;
 import com.example.retail.models.discounts.services.CustomerOrdersDiscountServices;
 import com.example.retail.models.edibleproducts.EdibleProducts;
@@ -56,6 +58,9 @@ public class Validations {
 
     @Autowired
     FMCGProductsRepository fmcgProductsRepository;
+
+    @Autowired
+    DeliveryLocationsRepository deliveryLocationsRepository;
 
     public int validationSuccessCode = 1;
     public int unprocessableRequestCode = 422;
@@ -305,6 +310,24 @@ public class Validations {
         return createResponse.createValidationResponse(
             validationSuccessCode,
             "Product can be created",
+            "NA",
+            null
+        );
+    }
+
+    public ValidationResponse validateNewDeliveryLocation (String deliveryLocationsSubId) {
+        Optional<DeliveryLocations> deliveryLocations = deliveryLocationsRepository.findDeliveryLocationBySubId(deliveryLocationsSubId);
+        if(deliveryLocations.isPresent()) {
+            return createResponse.createValidationResponse(
+                unprocessableRequestCode,
+                "This item already exists",
+                deliveryLocations.get().getAreaName() + " with pin code: " + deliveryLocations.get().getAreaPinCode() + " already exists",
+                deliveryLocations
+            );
+        }
+        return createResponse.createValidationResponse(
+            validationSuccessCode,
+            "Delivery location can be added",
             "NA",
             null
         );

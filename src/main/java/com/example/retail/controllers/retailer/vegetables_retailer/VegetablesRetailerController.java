@@ -168,14 +168,6 @@ public class VegetablesRetailerController {
 
     @RequestMapping(value = "/findAll/paginated", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> findAllVegetablesWithPagination(VegetablesPage vegetablesPage) {
-        Page<Vegetables> result = vegetablesService.findPaginatedVegetables(vegetablesPage);
-
-        return ResponseEntity.status(200).body(
-                createResponse.createSuccessResponse(
-                        200,
-                        "",
-                        result
-                )
-        );
+        return vegetablesService.findPaginatedVegetables(vegetablesPage);
     }
 }

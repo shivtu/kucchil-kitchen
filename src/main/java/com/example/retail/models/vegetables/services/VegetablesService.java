@@ -308,9 +308,16 @@ public class VegetablesService {
         return vegetablesRepository.findVegetablesByItemCategory(itemCategory);
     }
 
-    public Page<Vegetables> findPaginatedVegetables(VegetablesPage vegetablesPage) {
-        Sort sort = Sort.by(vegetablesPage.getSortDirection(), vegetablesPage.getSortBy());
-        Pageable pageable = PageRequest.of(vegetablesPage.getPageNo(), vegetablesPage.getPageSize(), sort);
-        return vegetablesRepository.findAll(pageable);
+    public ResponseEntity<Object> findPaginatedVegetables(VegetablesPage vegetablesPage) {
+        try {
+            Sort sort = Sort.by(vegetablesPage.getSortDirection(), vegetablesPage.getSortBy());
+            Pageable pageable = PageRequest.of(vegetablesPage.getPageNo(), vegetablesPage.getPageSize(), sort);
+            Page<Vegetables> res =  vegetablesRepository.findAll(pageable);
+            return ResponseEntity.status(200).body(
+                createResponse.createSuccessResponse(201, res.getTotalElements() + " itesms found", res)
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(createResponse.createErrorResponse(500, e.getLocalizedMessage(), "NA"));
+        }
     }
 }
