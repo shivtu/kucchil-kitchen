@@ -1,6 +1,6 @@
 package com.example.retail.controllers.retailer.fmcg_retailer;
 
-import com.example.retail.models.fmcgproducts.services.FMCGProductsServices;
+import com.example.retail.services.fmcgproducts.FMCGProductsServices;
 import com.example.retail.util.CreateResponse;
 import com.example.retail.util.JWTDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

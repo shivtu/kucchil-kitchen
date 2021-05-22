@@ -1,6 +1,6 @@
 package com.example.retail.controllers.retailer.edibleproducts_retailer;
 
-import com.example.retail.models.edibleproducts.services.EdibleProductsService;
+import com.example.retail.services.edibleproducts.EdibleProductsService;
 import com.example.retail.util.CreateResponse;
 import com.example.retail.util.JWTDetails;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.example.retail.controllers.retailer.taxes_retailer;
 
 import com.example.retail.models.taxutility.Taxes;
-import com.example.retail.models.taxutility.services.TaxService;
+import com.example.retail.services.taxutility.TaxService;
 import com.example.retail.util.CreateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

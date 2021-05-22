@@ -1,7 +1,7 @@
 package com.example.retail.controllers.retailer.itemcategory_retailer;
 
 import com.example.retail.models.itemcategories.ItemCategories;
-import com.example.retail.models.itemcategories.service.ItemCategoriesService;
+import com.example.retail.services.itemcategories.ItemCategoriesService;
 import com.example.retail.util.CreateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

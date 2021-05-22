@@ -1,7 +1,7 @@
 package com.example.retail.controllers.retailer.discounts_retailer;
 
 import com.example.retail.models.discounts.CustomerOrdersDiscount;
-import com.example.retail.models.discounts.services.CustomerOrdersDiscountServices;
+import com.example.retail.services.discounts.CustomerOrdersDiscountServices;
 import com.example.retail.util.CreateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

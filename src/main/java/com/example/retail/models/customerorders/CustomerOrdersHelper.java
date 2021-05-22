@@ -1,12 +1,9 @@
 package com.example.retail.models.customerorders;
 
 import com.example.retail.models.discounts.DiscountCalculator;
-import com.example.retail.models.taxutility.repository.TaxRepository;
-import com.example.retail.models.taxutility.services.TaxService;
+import com.example.retail.repository.taxutility.TaxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class CustomerOrdersHelper {

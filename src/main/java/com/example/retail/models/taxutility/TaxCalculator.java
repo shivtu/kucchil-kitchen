@@ -1,13 +1,11 @@
 package com.example.retail.models.taxutility;
 
-import com.example.retail.models.taxutility.repository.TaxRepository;
+import com.example.retail.repository.taxutility.TaxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Component

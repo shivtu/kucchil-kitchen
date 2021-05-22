@@ -1,19 +1,19 @@
 package com.example.retail.util;
 
 import com.example.retail.models.deliveryutility.DeliveryCharges;
-import com.example.retail.models.deliveryutility.services.DeliveryChargeServices;
+import com.example.retail.services.deliveryutility.DeliveryChargeServices;
 import com.example.retail.models.discounts.CustomerOrdersDiscount;
-import com.example.retail.models.discounts.services.CustomerOrdersDiscountServices;
-import com.example.retail.models.edibleproducts.services.EdibleProductsService;
-import com.example.retail.models.fmcgproducts.services.FMCGProductsServices;
+import com.example.retail.services.discounts.CustomerOrdersDiscountServices;
+import com.example.retail.services.edibleproducts.EdibleProductsService;
+import com.example.retail.services.fmcgproducts.FMCGProductsServices;
 import com.example.retail.models.itemcategories.ItemCategories;
-import com.example.retail.models.itemcategories.service.ItemCategoriesService;
+import com.example.retail.services.itemcategories.ItemCategoriesService;
 import com.example.retail.models.nonvegproducts.NonVegProducts;
-import com.example.retail.models.nonvegproducts.services.NonVegProductsService;
+import com.example.retail.services.nonvegproducts.NonVegProductsService;
 import com.example.retail.models.taxutility.Taxes;
-import com.example.retail.models.taxutility.services.TaxService;
-import com.example.retail.models.variantandcategory.services.VariantAndCategoryService;
-import com.example.retail.models.vegetables.services.VegetablesService;
+import com.example.retail.services.taxutility.TaxService;
+import com.example.retail.services.variantandcategory.VariantAndCategoryService;
+import com.example.retail.services.vegetables.VegetablesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

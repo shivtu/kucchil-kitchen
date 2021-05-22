@@ -1,7 +1,7 @@
 package com.example.retail.models.discounts;
 
 import com.example.retail.models.customerorders.CustomerOrders;
-import com.example.retail.models.customerorders.repository.CustomerOrdersRepository;
+import com.example.retail.repository.customerorders.CustomerOrdersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

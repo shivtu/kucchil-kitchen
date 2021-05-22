@@ -2,11 +2,10 @@ package com.example.retail.controllers.retailer.vegetables_retailer;
 
 import com.example.retail.models.vegetables.Vegetables;
 import com.example.retail.models.vegetables.VegetablesPage;
-import com.example.retail.models.vegetables.services.VegetableInventoryService;
-import com.example.retail.models.vegetables.services.VegetablesService;
+import com.example.retail.services.vegetables.VegetableInventoryService;
+import com.example.retail.services.vegetables.VegetablesService;
 import com.example.retail.util.CreateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
